@@ -1,6 +1,6 @@
 {
     "name": "CODEGA",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "build": "20260501",
     "author": "CODEGA",
     "author_url": "https://codega.com.tr",
@@ -11,6 +11,11 @@
         "php": ">=7.4"
     },
     "changelog": {
+        "1.0.1": [
+            "Geçici debug modu — pages/index.php boş sayfa sorunu için error reporting + try/catch include sarıcı",
+            "Render markeri eklendi — sayfa kaynağında 'CODEGA THEME LOADED' yorumu görünür",
+            "v1.0.2 release'inde debug modu kaldırılacak"
+        ],
         "1.0.0": [
             "İlk sürüm — Codega marka kimliği (Navy/Gold)",
             "codega.com.tr SSO köprüsü (HMAC imzalı token)",

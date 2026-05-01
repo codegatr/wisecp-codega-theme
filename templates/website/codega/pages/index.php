@@ -4,14 +4,34 @@
  */
 defined('CORE_FOLDER') OR exit('You can not get in here!');
 
+// === DEBUG MODE (v1.0.1) ===
+// Tema aktif edilemiyor / boş sayfa hatası ayıklaması için geçici.
+// Sorun çözülünce bu blok kaldırılacak (v1.0.2'de).
+@error_reporting(E_ALL);
+@ini_set('display_errors', '1');
+@ini_set('log_errors', '1');
+$cg_debug_marker = "<!-- CODEGA THEME v1.0.1 — pages/index.php LOADED " . date('Y-m-d H:i:s') . " — \$params=" . json_encode($params ?? []) . " -->\n";
+echo $cg_debug_marker;
+// === END DEBUG ===
+
 $title = "CODEGA — Premium Hosting ve Web Çözümleri";
 $description = "Konya merkezli profesyonel web çözümleri. Kurumsal hosting, domain tescili ve özel yazılım hizmetleri. %99.9 uptime garantisi, 7/24 destek.";
 
-include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . 'meta.php';
+try {
+    include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . 'meta.php';
+} catch (\Throwable $e) {
+    echo '<div style="background:#fee;border:2px solid #c00;padding:16px;margin:16px;font-family:monospace;">META ERROR: ' . htmlspecialchars($e->getMessage()) . ' @ ' . htmlspecialchars($e->getFile()) . ':' . $e->getLine() . '</div>';
+}
 ?>
 <body>
 
-<?php include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . 'header.php'; ?>
+<?php
+try {
+    include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . 'header.php';
+} catch (\Throwable $e) {
+    echo '<div style="background:#fee;border:2px solid #c00;padding:16px;margin:16px;font-family:monospace;">HEADER ERROR: ' . htmlspecialchars($e->getMessage()) . ' @ ' . htmlspecialchars($e->getFile()) . ':' . $e->getLine() . '</div>';
+}
+?>
 
 <!-- ===== HERO ===== -->
 <section class="cg-hero">
@@ -224,4 +244,11 @@ include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'inc' . DIR
     <div style="position:absolute; right:-100px; top:-100px; width:400px; height:400px; background: radial-gradient(circle, rgba(212,165,116,0.15), transparent 60%); pointer-events:none;"></div>
 </section>
 
-<?php include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . 'footer.php'; ?>
+<?php
+try {
+    include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . 'footer.php';
+} catch (\Throwable $e) {
+    echo '<div style="background:#fee;border:2px solid #c00;padding:16px;margin:16px;font-family:monospace;">FOOTER ERROR: ' . htmlspecialchars($e->getMessage()) . ' @ ' . htmlspecialchars($e->getFile()) . ':' . $e->getLine() . '</div>';
+}
+echo "\n<!-- CODEGA THEME — render complete -->\n";
+?>
