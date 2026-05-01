@@ -1,0 +1,46 @@
+{
+    "name": "CODEGA WiseCP Theme",
+    "slug": "codega",
+    "version": "1.0.0",
+    "build": "20260501",
+    "author": "CODEGA",
+    "author_url": "https://codega.com.tr",
+    "repo": "codegatr/wisecp-codega-theme",
+    "type": "wisecp-theme",
+    "install_path": "templates/website/codega",
+    "compatibility": {
+        "wisecp": ">=3.0.0",
+        "php": ">=7.4"
+    },
+    "files": {
+        "exclude": [
+            "*.md",
+            ".git*",
+            ".DS_Store",
+            "node_modules/",
+            "tests/"
+        ]
+    },
+    "migration": null,
+    "post_install": {
+        "instructions": [
+            "WiseCP Admin → Themes → Activate CODEGA",
+            "Themes → CODEGA → Settings: Set codega_shared_secret (run: openssl rand -hex 32)",
+            "Copy the same secret to codega.com.tr environment as CODEGA_WISECP_SECRET"
+        ]
+    },
+    "changelog": {
+        "1.0.0": {
+            "date": "2026-05-01",
+            "changes": [
+                "İlk sürüm — Codega marka kimliği (Navy/Gold)",
+                "codega.com.tr SSO köprüsü (HMAC-SHA256 imzalı token)",
+                "API endpointleri: /codega-api/{ping|summary|services|invoices}",
+                "Müşteri paneli: dashboard, hizmetler, faturalar",
+                "Cormorant Garamond + Inter typography pairing",
+                "Tam responsive tasarım (5 breakpoint)",
+                "Replay korumalı nonce cache (1000 entry, 60s skew)"
+            ]
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "name": "CODEGA",
+    "version": "1.0.0",
+    "build": "20260501",
+    "author": "CODEGA",
+    "author_url": "https://codega.com.tr",
+    "support_url": "https://codega.com.tr/destek",
+    "description": "Premium Navy/Gold theme for CODEGA hosting & services. Integrated with codega.com.tr (SSO + API bridge).",
+    "compatibility": {
+        "wisecp": ">=3.0.0",
+        "php": ">=7.4"
+    },
+    "changelog": {
+        "1.0.0": [
+            "İlk sürüm — Codega marka kimliği (Navy/Gold)",
+            "codega.com.tr SSO köprüsü (HMAC imzalı token)",
+            "API endpointleri: codega-api/services, codega-api/invoices",
+            "Müşteri paneli: dashboard, hizmetler, faturalar",
+            "Mağaza ön yüzü: hosting, domain arama",
+            "Tam responsive tasarım (5 breakpoint)",
+            "Cormorant Garamond + Inter typography pairing"
+        ]
+    }
+}
