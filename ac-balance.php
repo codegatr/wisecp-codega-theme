@@ -93,13 +93,31 @@ $transactions = isset($list) ? $list : (isset($transactions) ? $transactions : [
         </button>
     </div>
     <div class="cdg-card">
-        <h4 style="margin-bottom:12px;"><i class="bi bi-gear"></i> Otomatik Odeme</h4>
-        <p style="font-size:13px;color:var(--cdg-muted);">Faturalariniz vade tarihinde bakiyenizden otomatik odensin.</p>
-        <label class="cdg-checkbox" style="margin-top:10px;">
-            <input type="checkbox" name="auto_payment_by_credit" id="auto_payment_by_credit"
-                <?php echo (class_exists('User') && isset(User::$init->info['auto_payment_by_credit']) && User::$init->info['auto_payment_by_credit']) ? 'checked' : ''; ?>>
-            <span>Otomatik odemeyi etkinlestir</span>
-        </label>
+        <h4 style="margin-bottom:12px;"><i class="bi bi-gear"></i> Otomatik Odeme Ayarlari</h4>
+        <p style="font-size:13px;color:var(--cdg-muted);margin-bottom:14px;">Faturalariniz vade tarihinde bakiyenizden otomatik odensin.</p>
+
+        <form method="post" action="<?php echo isset($links['controller']) ? htmlspecialchars($links['controller']) : ''; ?>" id="cdg-balance-settings">
+            <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('account'); ?>
+            <input type="hidden" name="operation" value="update_settings">
+
+            <label class="cdg-checkbox" style="margin-bottom:12px;display:flex;align-items:center;gap:8px;cursor:pointer;">
+                <input type="checkbox" name="auto_payment_by_credit" value="1" id="auto_payment_by_credit"
+                    <?php echo (class_exists('User') && isset(User::$init->info['auto_payment_by_credit']) && User::$init->info['auto_payment_by_credit']) ? 'checked' : ''; ?>>
+                <span style="font-weight:600;">Otomatik odemeyi etkinlestir</span>
+            </label>
+
+            <div class="cdg-form-group">
+                <label class="cdg-form-label" style="font-size:12px;">Minimum Bakiye Uyari Esigi</label>
+                <input type="number" min="0" step="0.01" name="balance_min" class="cdg-form-control"
+                    value="<?php echo htmlspecialchars(isset(User::$init->info['balance_min']) ? User::$init->info['balance_min'] : '0'); ?>"
+                    placeholder="Ornek: 100">
+                <small style="font-size:11px;color:var(--cdg-muted);">Bakiyeniz bu degerin altina dustugunde uyari gelir.</small>
+            </div>
+
+            <button type="submit" class="cdg-btn cdg-btn-primary cdg-btn-sm" style="width:100%;">
+                <i class="bi bi-check2"></i> Ayarlari Kaydet
+            </button>
+        </form>
     </div>
 </div>
 

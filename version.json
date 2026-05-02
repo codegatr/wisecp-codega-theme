@@ -1,26 +1,16 @@
 {
-    "version": "3.4.8",
+    "version": "3.4.9",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.4.8-codega",
-    "tag": "v3.4.8-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.4.9-codega",
+    "tag": "v3.4.9-codega",
     "changelog": [
-        "v3.4.8 - Fatura detay + Ticket dosya eki duzeltmeleri",
-        "FIX: ac-detail-invoice.php user_data parsing",
-        "  full_name primary, name+surname fallback",
-        "  identity (TC) ve company_tax_number ayri (kind'e gore gosteriliyor)",
-        "  counti (ilce), zipcode adres bilesenlerine eklendi",
-        "  Bireysel/Kurumsal dogru sirayla bilgileri gosteriyor",
-        "FIX: ac-detail-invoice.php komisyon ve iade detayi",
-        "  pmethod_commission ve pmethod_commission_rate (Odendi notunda gosteriliyor)",
-        "  refunddate (Iade durumunda goruntuleniyor)",
-        "  sendbta ve sendbta_amount degiskenleri okunuyor",
-        "FIX: ac-detail-ticket-request.php dosya eki eksikti",
-        "  Reply formu artik enctype=multipart/form-data",
-        "  Yeni input: name='attachments[]' multiple",
-        "  Dashed border'li dosya secim alani (toplam boyut + isim listesi)",
-        "  cdgTdShowFiles JS function (5MB sinir uyarisi)",
-        "FIX: ac-create-ticket-request.php attachment[] -> attachments[]",
-        "  Classic ile uyumlu (cogul - 's' eklendi)"
+        "v3.4.9 - Bakiye otomatik odeme formu islevsel hale getirildi",
+        "FIX: ac-balance.php otomatik odeme checkbox'i form ile baglandi",
+        "  Eskiden: sadece gorsel checkbox (form yok, kaydetmiyordu)",
+        "  Yeni: form method=post, operation=update_settings, CSRF token",
+        "  Eklenen alan: balance_min (minimum bakiye uyari esigi)",
+        "  Tum WiseCP balance ayarlari artik kaydedilebilir",
+        "  Otomatik odeme + Min bakiye + Kaydet butonu tek formda"
     ]
 }
