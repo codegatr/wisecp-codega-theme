@@ -1,12 +1,12 @@
 {
-    "version": "2.1.8",
+    "version": "2.1.9",
     "release_date": "2026-05-02",
-    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.8/Codega-v2.1.8.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.8",
+    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.9/Codega-v2.1.9.zip",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.9",
     "changelog": [
-        "v2.1.8 - KRITIK: jQuery main-head.php'ye eklendi",
-        "$ is not defined hatasi cozuldu - Cloudflare CDN'den jQuery 3.7.1 yukleniyor",
-        "WiseCP MioAjax/alert_error/open_modal gibi global JS fonksiyonlar artik calisir",
-        "View::main_script() jQuery'den SONRA yukleniyor (bagimlilik sirasi dogru)"
+        "v2.1.9 - KRITIK: Giris butonu click handler fallback eklendi",
+        "MioAjax yuklenmemis olsa bile jQuery AJAX ile manuel submit yapar",
+        "getJson, alert_error, open_modal fallback fonksiyonlari",
+        "X-Requested-With: XMLHttpRequest header otomatik (CSRF kabul edilir)"
     ]
 }

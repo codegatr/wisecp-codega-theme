@@ -264,5 +264,78 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
     $sf = __DIR__.DS."inc".DS."sign-footer.php";
     if(file_exists($sf)) include $sf;
 ?>
+
+<!-- MIO-AJAX FALLBACK: WiseCP global JS yuklenmemisse manuel submit -->
+<script type="text/javascript">
+$(document).ready(function(){
+    // mio-ajax-submit butonlarina click handler (event delegation)
+    $(document).on('click', '.mio-ajax-submit', function(e){
+        e.preventDefault();
+        var btn = $(this);
+        if(btn.prop('disabled')) return false;
+
+        var optsStr = btn.attr('mio-ajax-options') || '{}';
+        var opts = {};
+        try { opts = JSON.parse(optsStr); } catch(err) { console.error('mio-ajax-options parse:', err); }
+
+        var form = btn.closest('form');
+        if(form.length === 0){ console.error('Form bulunamadi'); return false; }
+
+        // 1) MioAjaxElement varsa orijinal yontemi kullan
+        if(typeof MioAjaxElement === 'function'){
+            try {
+                MioAjaxElement(btn[0], $.extend({form: form}, opts));
+                return false;
+            } catch(err) { console.warn('MioAjaxElement hata, fallback kullaniliyor:', err); }
+        }
+
+        // 2) Manuel jQuery AJAX fallback
+        var origHtml = btn.html();
+        btn.prop('disabled', true).html((opts.waiting_text || 'Bekleyiniz...') + ' <i class="bi bi-three-dots"></i>');
+
+        $.ajax({
+            url: form.attr('action') || window.location.href,
+            method: form.attr('method') || 'POST',
+            data: form.serialize(),
+            dataType: 'text',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            success: function(result){
+                btn.prop('disabled', false).html(origHtml);
+                // Sonuc handler'ini cagir (signin_submit / forget_submit / signup_submit)
+                if(opts.result && typeof window[opts.result] === 'function'){
+                    window[opts.result](result);
+                } else {
+                    // Default: JSON parse + redirect
+                    try {
+                        var data = JSON.parse(result);
+                        if(data.status === 'successful' && data.redirect){ window.location.href = data.redirect; }
+                        else if(data.status === 'error' && data.message){ alert(data.message); }
+                    } catch(err) { console.log('Response:', result); }
+                }
+            },
+            error: function(xhr, status, err){
+                btn.prop('disabled', false).html(origHtml);
+                console.error('AJAX hata:', status, err, xhr.responseText);
+                alert('Baglanti hatasi: ' + (xhr.responseText || err || 'Bilinmeyen hata'));
+            }
+        });
+
+        return false;
+    });
+
+    // getJson helper (Classic tema bekler)
+    if(typeof window.getJson !== 'function'){
+        window.getJson = function(s){ try { return JSON.parse(s); } catch(e){ return false; } };
+    }
+    // alert_error fallback
+    if(typeof window.alert_error !== 'function'){
+        window.alert_error = function(msg, t){ alert(msg); };
+    }
+    // open_modal fallback
+    if(typeof window.open_modal !== 'function'){
+        window.open_modal = function(id){ $('#'+id).fadeIn(200).css('display','flex'); };
+    }
+});
+</script>
 </body>
 </html>
