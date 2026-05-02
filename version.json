@@ -1,17 +1,24 @@
 {
-    "version": "2.9.9",
+    "version": "3.0.0",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.9-codega",
-    "tag": "v2.9.9-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.0.0-codega",
+    "tag": "v3.0.0-codega",
     "changelog": [
-        "v2.9.9 - HESABIM SAYFASI GERI GELDI + ANASAYFA CAPTCHA KORUNDU",
-        "Onceki sorun: v2.9.5-2.9.8 arasinda CSS'e ekledigim seyler dashboard'u bozdu",
-        "Cozum: v2.8.4 cevre stabil CSS'e geri donuldu (3723 satir)",
-        "Sadece captcha inline + domain badge + sonuc kartlari sona EKLENDI",
-        "Toplam: 3889 satir (v2.8.4 + sadece gerekli yeni eklemeler)",
-        "ac-head.php tekrar sade hale (sadece main-head include)",
-        "Dashboard, sidebar, ac-wrap, ac-main hepsi v2.8.4 stilleri ile calisiyor",
-        "Anasayfa + /alan-adi captcha hala butonun solunda (responsive)"
+        "v3.0.0 - HESABIM SAYFASI SIFIRDAN YAZILDI",
+        "ac-dashboard.php komple bastan yazildi (709 satir)",
+        "INLINE CSS (self-contained) - dis style.css'e BAGIMLI DEGIL",
+        "Bu sayede dis CSS'te ne degisirse degissin dashboard duzgun",
+        "WiseCP runtime variables dogru kullaniliyor:",
+        "  - $orders, $tickets, $news, $links, $acsidebar_links, User::init->info",
+        "BOLUMLER:",
+        "  1. Hero: avatar + selamlama + 2 CTA (Yeni Hizmet/Destek)",
+        "  2. 4 stat card: Aktif Hizmet/Bekleyen Fatura/Acik Talep/Bakiye",
+        "  3. 6 hizli erisim: Hizmetlerim/Domain/Fatura/Destek/Bakiye/Yeni",
+        "  4. 2 sutunlu: Aktif Hizmetler listesi + Son Talepler",
+        "  5. Duyurular ($news varsa)",
+        "  6. Destek promo (WhatsApp + telefon)",
+        "RESPONSIVE: 992px alti 2-col stat, 540px alti tek col",
+        "DEFANSIF: Tum WiseCP variable'lari isset() ile kontrol ediliyor"
     ]
 }
