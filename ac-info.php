@@ -77,6 +77,12 @@ if(!empty($udata['gsm'])) {
     <button type="button" class="cdg-info-tab active" data-tab="profile" onclick="cdgInfoTab('profile')">
         <i class="bi bi-person-badge"></i> Profil Bilgileri
     </button>
+    <button type="button" class="cdg-info-tab" data-tab="addresses" onclick="cdgInfoTab('addresses')">
+        <i class="bi bi-geo-alt"></i> Adreslerim
+    </button>
+    <button type="button" class="cdg-info-tab" data-tab="preferences" onclick="cdgInfoTab('preferences')">
+        <i class="bi bi-sliders"></i> Tercihler
+    </button>
     <button type="button" class="cdg-info-tab" data-tab="password" onclick="cdgInfoTab('password')">
         <i class="bi bi-shield-lock"></i> Sifre Degistir
     </button>
@@ -145,6 +151,9 @@ if(!empty($udata['gsm'])) {
                     <span style="display:inline-block;margin-left:6px;color:#f59e0b;font-size:11px;font-weight:700;">
                         <i class="bi bi-exclamation-triangle-fill"></i> Onaylanmadi
                     </span>
+                    <button type="button" onclick="cdgVrfOpen('email', <?php echo json_encode($u('email')); ?>)" style="margin-left:8px;background:#1e40af;color:#fff;border:0;padding:3px 10px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;">
+                        <i class="bi bi-shield-check"></i> Dogrula
+                    </button>
                     <?php endif; ?>
                 </label>
                 <input type="email" name="email" class="cdg-form-control" value="<?php echo htmlspecialchars($u('email')); ?>" <?php echo (!$editable['email'] && $u('email')) ? 'disabled' : ''; ?> required>
@@ -158,6 +167,13 @@ if(!empty($udata['gsm'])) {
                     <span style="display:inline-block;margin-left:6px;color:#10b981;font-size:11px;font-weight:700;">
                         <i class="bi bi-patch-check-fill"></i> Onaylandi
                     </span>
+                    <?php elseif($gsm_full): ?>
+                    <span style="display:inline-block;margin-left:6px;color:#f59e0b;font-size:11px;font-weight:700;">
+                        <i class="bi bi-exclamation-triangle-fill"></i> Onaylanmadi
+                    </span>
+                    <button type="button" onclick="cdgVrfOpen('gsm', <?php echo json_encode($gsm_full); ?>)" style="margin-left:8px;background:#1e40af;color:#fff;border:0;padding:3px 10px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;">
+                        <i class="bi bi-shield-check"></i> Dogrula
+                    </button>
                     <?php endif; ?>
                 </label>
                 <input type="text" id="cdg-info-gsm" class="cdg-form-control" value="<?php echo htmlspecialchars($gsm_full); ?>" placeholder="+90 555 123 45 67" <?php echo (!$editable['gsm'] && $gsm_full) ? 'disabled' : ''; ?>>
@@ -289,6 +305,32 @@ if(!empty($udata['gsm'])) {
             </div>
         </form>
     </div>
+</div>
+
+<!-- TAB: ADRESLERIM -->
+<div class="cdg-info-pane" id="cdg-info-pane-addresses" style="display:none;">
+    <?php
+    $addr_inc = __DIR__ . DS . 'inc' . DS . 'ac-address-management.php';
+    if(file_exists($addr_inc)) {
+        include $addr_inc;
+    } else {
+        echo '<div class="cdg-card"><div class="cdg-card-head"><h3><i class="bi bi-geo-alt"></i> Adreslerim</h3></div>';
+        echo '<div style="text-align:center;padding:30px;color:#94a3b8;">Adres yonetimi modulu yuklenemedi.</div></div>';
+    }
+    ?>
+</div>
+
+<!-- TAB: TERCIHLER -->
+<div class="cdg-info-pane" id="cdg-info-pane-preferences" style="display:none;">
+    <?php
+    $pref_inc = __DIR__ . DS . 'inc' . DS . 'ac-preferences.php';
+    if(file_exists($pref_inc)) {
+        include $pref_inc;
+    } else {
+        echo '<div class="cdg-card"><div class="cdg-card-head"><h3><i class="bi bi-sliders"></i> Tercihler</h3></div>';
+        echo '<div style="text-align:center;padding:30px;color:#94a3b8;">Tercihler modulu yuklenemedi.</div></div>';
+    }
+    ?>
 </div>
 
 <!-- TAB: SIFRE DEGISTIR -->
@@ -525,3 +567,7 @@ if(file_exists($stored_cards_inc)) include $stored_cards_inc;
 // === KVKK / GDPR Talepleri ===
 $gdpr_inc = __DIR__ . DS . 'inc' . DS . 'ac-gdpr.php';
 if(file_exists($gdpr_inc)) include $gdpr_inc;
+
+// === E-posta / GSM Dogrulama Modal ===
+$verify_inc = __DIR__ . DS . 'inc' . DS . 'ac-verify-modal.php';
+if(file_exists($verify_inc)) include $verify_inc;
