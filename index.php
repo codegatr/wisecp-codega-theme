@@ -1,5 +1,32 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 
+// Diagnostic: ?_diag=1 ile TLD durumunu kontrol
+if(isset($_GET['_diag']) && $_GET['_diag'] === '1') {
+    header('Content-Type: text/plain; charset=utf-8');
+    echo "=== INDEX.PHP TLD DIAGNOSTIC ===\n\n";
+    echo "GLOBALS['tldList']: " . (isset($GLOBALS['tldList']) && is_array($GLOBALS['tldList']) ? 'SET (' . count($GLOBALS['tldList']) . ' adet)' : 'NOT SET') . "\n";
+    echo "Tld class exists: " . (class_exists('Tld') ? 'YES' : 'NO') . "\n";
+    if(class_exists('Tld')) {
+        echo "Tld methods:\n";
+        foreach(['getActives','getList','getAll','getall','lister'] as $m) {
+            echo "  - $m: " . (method_exists('Tld', $m) ? 'YES' : 'NO') . "\n";
+        }
+    }
+    echo "Domains class exists: " . (class_exists('Domains') ? 'YES' : 'NO') . "\n";
+    if(class_exists('Domains')) {
+        $methods = get_class_methods('Domains');
+        echo "Domains methods: " . implode(', ', array_slice($methods ?? [], 0, 15)) . "\n";
+    }
+    echo "DB class exists: " . (class_exists('DB') ? 'YES' : 'NO') . "\n";
+    echo "\n=== INSTALLED CORE CLASSES (WiseCP related) ===\n";
+    foreach(get_declared_classes() as $cls) {
+        if(stripos($cls, 'Tld') !== false || stripos($cls, 'Domain') !== false) {
+            echo "  - $cls\n";
+        }
+    }
+    exit;
+}
+
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
         if(class_exists('Controllers') && isset(Controllers::$init)) {
@@ -50,41 +77,135 @@ $pricing_categories = [
     ],
 ];
 
-// === DOMAIN FİYATLARI - WiseCP API'den gerçek çekim ===
+// === DOMAIN FİYATLARI - WiseCP'den gerçek çekim ===
 $popular_tlds = [];
 $tld_loaded_from_api = false;
+$override_usrcurrency = isset($override_usrcurrency) ? $override_usrcurrency : false;
 
 if($mod_domain) {
-    $wanted_tlds = ['com.tr', 'com', 'net', 'org', 'tr', 'xyz'];
+    $wanted_exts = ['com.tr', 'com', 'net', 'org', 'tr', 'xyz'];
 
-    // Yöntem 1: Domains sınıfı varsa
-    if(class_exists('Domains') && method_exists('Domains', 'getList')) {
-        try {
-            $tlds_data = @Domains::getList(['status' => 'active']);
-            if(is_array($tlds_data) && !empty($tlds_data)) {
-                $by_ext = [];
-                foreach($tlds_data as $td) {
-                    $ext = ltrim($td['name'] ?? $td['extension'] ?? '', '.');
-                    if($ext) $by_ext[strtolower($ext)] = $td;
+    // Yardımcı: TLD'yi popular_tlds yapısına dönüştür
+    $build_tld = function($name, $reg_amount, $reg_cid) use ($override_usrcurrency) {
+        $price_str = '-';
+        $symbol = '₺';
+        if(class_exists('Money') && method_exists('Money', 'formatter_symbol') && $reg_amount !== null) {
+            try {
+                $formatted = Money::formatter_symbol($reg_amount, $reg_cid, !$override_usrcurrency);
+                // Sembolü ayır
+                $parts = explode(' ', trim($formatted));
+                if(count($parts) >= 2) {
+                    if(!preg_match('/\d/', $parts[0])) {
+                        $symbol = $parts[0];
+                        $price_str = implode(' ', array_slice($parts, 1));
+                    } elseif(!preg_match('/\d/', end($parts))) {
+                        $symbol = end($parts);
+                        array_pop($parts);
+                        $price_str = implode(' ', $parts);
+                    } else {
+                        $price_str = $formatted;
+                    }
+                } else {
+                    $price_str = $formatted;
                 }
-                foreach($wanted_tlds as $w) {
-                    if(isset($by_ext[$w])) {
-                        $td = $by_ext[$w];
-                        $popular_tlds[] = [
-                            'ext'   => '.' . $w,
-                            'price' => isset($td['register_price']) ? $td['register_price'] : (isset($td['price']) ? $td['price'] : '-'),
-                            'old'   => '',
-                            'badge' => '',
-                            'currency' => isset($td['currency']) ? $td['currency'] : '₺',
-                        ];
+            } catch(Exception $e) {
+                $price_str = (string)$reg_amount;
+            }
+        } elseif($reg_amount !== null) {
+            $price_str = (string)$reg_amount;
+        }
+        return [
+            'ext'      => '.' . ltrim($name, '.'),
+            'price'    => $price_str,
+            'currency' => $symbol,
+            'old'      => '',
+            'badge'    => '',
+        ];
+    };
+
+    // Yöntem 1: Global $tldList (WiseCP domain sayfasından gelir, anasayfada yok)
+    if(isset($GLOBALS['tldList']) && is_array($GLOBALS['tldList']) && count($GLOBALS['tldList']) > 0) {
+        $by_ext = [];
+        foreach($GLOBALS['tldList'] as $t) {
+            $by_ext[strtolower(ltrim($t['name'] ?? '', '.'))] = $t;
+        }
+        foreach($wanted_exts as $we) {
+            if(isset($by_ext[$we])) {
+                $t = $by_ext[$we];
+                $popular_tlds[] = $build_tld(
+                    $t['name'],
+                    $t['reg_price']['amount'] ?? null,
+                    $t['reg_price']['cid'] ?? 1
+                );
+            }
+        }
+        if(!empty($popular_tlds)) $tld_loaded_from_api = true;
+    }
+
+    // Yöntem 2: Tld::getActives veya Tld::getList (WiseCP core class)
+    if(!$tld_loaded_from_api && class_exists('Tld')) {
+        $methods = ['getActives', 'getList', 'getAll', 'getall', 'lister'];
+        foreach($methods as $m) {
+            if(method_exists('Tld', $m)) {
+                try {
+                    $list = call_user_func(['Tld', $m]);
+                    if(is_array($list) && count($list) > 0) {
+                        $by_ext = [];
+                        foreach($list as $t) {
+                            $tname = strtolower(ltrim($t['name'] ?? '', '.'));
+                            if($tname) $by_ext[$tname] = $t;
+                        }
+                        foreach($wanted_exts as $we) {
+                            if(isset($by_ext[$we])) {
+                                $t = $by_ext[$we];
+                                $reg_amount = $t['reg_price']['amount'] ?? $t['register_price'] ?? $t['price'] ?? null;
+                                $reg_cid = $t['reg_price']['cid'] ?? $t['cid'] ?? 1;
+                                $popular_tlds[] = $build_tld($t['name'], $reg_amount, $reg_cid);
+                            }
+                        }
+                        if(!empty($popular_tlds)) {
+                            $tld_loaded_from_api = true;
+                            break;
+                        }
+                    }
+                } catch(Exception $e) { continue; }
+            }
+        }
+    }
+
+    // Yöntem 3: Veritabanından doğrudan (DB::table varsa)
+    if(!$tld_loaded_from_api && class_exists('DB')) {
+        try {
+            // Yaygın WiseCP tablo adları: tlds, domain_tlds, dl_tlds
+            $candidates = ['tlds', 'domain_tlds'];
+            foreach($candidates as $tbl) {
+                if(method_exists('DB', 'table')) {
+                    $rows = @DB::table($tbl)->where('status', 1)->get();
+                    if($rows && is_array($rows)) {
+                        $by_ext = [];
+                        foreach($rows as $r) {
+                            $rn = strtolower(ltrim($r['name'] ?? $r['tld'] ?? '', '.'));
+                            if($rn) $by_ext[$rn] = $r;
+                        }
+                        foreach($wanted_exts as $we) {
+                            if(isset($by_ext[$we])) {
+                                $r = $by_ext[$we];
+                                $reg = $r['register'] ?? $r['register_price'] ?? $r['price'] ?? null;
+                                $cid = $r['cid'] ?? $r['currency_id'] ?? 1;
+                                $popular_tlds[] = $build_tld($r['name'] ?? $r['tld'], $reg, $cid);
+                            }
+                        }
+                        if(!empty($popular_tlds)) {
+                            $tld_loaded_from_api = true;
+                            break;
+                        }
                     }
                 }
-                if(!empty($popular_tlds)) $tld_loaded_from_api = true;
             }
         } catch(Exception $e) { /* fallback */ }
     }
 
-    // Yöntem 2: Theme settings'ten oku (eğer admin tanımlamışsa)
+    // Yöntem 4: theme-config.php'den (admin tanımlamışsa)
     if(!$tld_loaded_from_api) {
         $config = include __DIR__ . DS . 'theme-config.php';
         $ts_settings = isset($config['settings']) ? $config['settings'] : [];
@@ -94,17 +215,8 @@ if($mod_domain) {
         }
     }
 
-    // Yöntem 3: Fallback (Yunus admin paneline TLD eklerse otomatik gelecek)
-    if(!$tld_loaded_from_api) {
-        $popular_tlds = [
-            ['ext' => '.com.tr', 'price' => '199', 'old' => '', 'badge' => '', 'currency' => '₺'],
-            ['ext' => '.com',    'price' => '299', 'old' => '', 'badge' => '', 'currency' => '₺'],
-            ['ext' => '.net',    'price' => '349', 'old' => '', 'badge' => '', 'currency' => '₺'],
-            ['ext' => '.org',    'price' => '329', 'old' => '', 'badge' => '', 'currency' => '₺'],
-            ['ext' => '.tr',     'price' => '149', 'old' => '', 'badge' => '', 'currency' => '₺'],
-            ['ext' => '.xyz',    'price' => '99',  'old' => '', 'badge' => '', 'currency' => '₺'],
-        ];
-    }
+    // Hiçbir yöntem başarısız olursa: BOŞ bırak (sahte veri yok)
+    // Yunus admin panelinde TLD tanımladığında otomatik gelecek
 }
 
 // Tech stack
