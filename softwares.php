@@ -297,7 +297,7 @@ $service_categories = [
         <div class="cdg-soft-process">
             <div class="cdg-soft-step">
                 <div class="cdg-soft-step-num">01</div>
-                <h3>Ihtiyac Analizi</h3>
+                <h3>İhtiyaç Analizi</h3>
                 <p>Projenizi anlamak için detaylı toplantilar, kullanıci akislari ve gereksinim analizi.</p>
             </div>
             <div class="cdg-soft-step">
@@ -353,7 +353,7 @@ $service_categories = [
             <p>24 saat içinde detaylı teklif gonderiyoruz. İşter hazir urunlerimizden, işter sifirdan ozel gelistirme.</p>
             <div class="cdg-final-cta-actions">
                 <a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-primary cdg-btn-lg cdg-btn-glow"><i class="bi bi-envelope-paper-fill"></i> Teklif İşte</a>
-                <a href="https://wa.me/903329099656" target="_blank" rel="noopener" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+                <a href="https://wa.me/905102204206" target="_blank" rel="noopener" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-whatsapp"></i> WhatsApp</a>
             </div>
             <div class="cdg-final-trust">
                 <span><i class="bi bi-shield-check"></i> KVKK Uyumlu</span>

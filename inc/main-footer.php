@@ -34,7 +34,7 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
                     CODEGA
                 </div>
                 <p class="desc">
-                    Modern PHP altyapisiyla web yazilim, hosting, domain ve ozel yazilim cozumleri sunuyoruz.
+                    Modern PHP altyapısıyla web yazılım, hosting, domain ve özel yazılım çözümleri sunuyoruz.
                 </p>
                 <div class="social">
                     <?php if(!empty($social['instagram'])): ?><a href="<?php echo $social['instagram']; ?>" target="_blank" rel="noopener"><i class="bi bi-instagram"></i></a><?php endif; ?>
@@ -52,17 +52,17 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
             </div>
 
             <div>
-                <h4>Sirket</h4>
+                <h4>Şirket</h4>
                 <ul>
                     <li><a href="<?php echo cdg_link('references'); ?>">Referanslar</a></li>
-                    <li><a href="<?php echo cdg_link('knowledgebase'); ?>">Bilgi Bankasi</a></li>
+                    <li><a href="<?php echo cdg_link('knowledgebase'); ?>">Bilgi Bankası</a></li>
                     <li><a href="<?php echo cdg_link('news'); ?>">Haberler</a></li>
-                    <li><a href="<?php echo cdg_link('contact'); ?>">Iletisim</a></li>
+                    <li><a href="<?php echo cdg_link('contact'); ?>">İletişim</a></li>
                 </ul>
             </div>
 
             <div>
-                <h4>Iletisim</h4>
+                <h4>İletişim</h4>
                 <ul>
                     <?php if($phone): ?>
                         <li><i class="bi bi-telephone"></i> <a href="tel:<?php echo preg_replace('/[^0-9+]/','',$phone); ?>"><?php echo htmlspecialchars($phone); ?></a></li>
@@ -79,7 +79,7 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
         </div>
 
         <div class="cdg-footer-bottom">
-            <div>&copy; <?php echo $year; ?> CODEGA - Tum haklari saklidir.</div>
+            <div>&copy; <?php echo $year; ?> CODEGA - Tüm haklari saklidir.</div>
             <?php if(class_exists('View') && method_exists('View', 'show_brand')) View::show_brand(); ?>
         </div>
     </div>

@@ -422,7 +422,7 @@ $(document).ready(function(){
             headers: { 'X-Requested-With': 'XMLHttpRequest' },
             success: function(result){
                 btn.prop('disabled', false).html(origHtml);
-                // Sonuc handler'ini cagir (signin_submit / forget_submit / signup_submit)
+                // Sonuç handler'ini cagir (signin_submit / forget_submit / signup_submit)
                 if(opts.result && typeof window[opts.result] === 'function'){
                     window[opts.result](result);
                 } else {

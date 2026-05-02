@@ -675,7 +675,7 @@ $faqs = [
                 <h2>Yardım mı gerekiyor? <span class="cdg-text-gradient-light">Buradayız!</span></h2>
                 <p>CODEGA destek ekibi sorularınıza haftanın 7 günü, günün 24 saati cevap vermek için hazır.</p>
                 <div class="cdg-support-features">
-                    <div class="cdg-support-feature"><i class="bi bi-telephone-fill"></i><div><div class="title">Telefon</div><div class="meta">0 332 909 9656</div></div></div>
+                    <div class="cdg-support-feature"><i class="bi bi-telephone-fill"></i><div><div class="title">Telefon</div><div class="meta">0 510 220 42 06</div></div></div>
                     <div class="cdg-support-feature"><i class="bi bi-whatsapp"></i><div><div class="title">WhatsApp</div><div class="meta">Anlık destek</div></div></div>
                     <div class="cdg-support-feature"><i class="bi bi-chat-dots-fill"></i><div><div class="title">Canlı Destek</div><div class="meta">7/24</div></div></div>
                 </div>
@@ -709,7 +709,7 @@ $faqs = [
 </section>
 
 <!-- WhatsApp -->
-<a href="https://wa.me/903329099656" class="cdg-floating-wa" target="_blank" rel="noopener" title="WhatsApp Destek">
+<a href="https://wa.me/905102204206" class="cdg-floating-wa" target="_blank" rel="noopener" title="WhatsApp Destek">
     <i class="bi bi-whatsapp"></i>
     <span class="cdg-floating-pulse"></span>
 </a>

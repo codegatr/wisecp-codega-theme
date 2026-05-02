@@ -15,9 +15,9 @@ $ts        = isset($config['settings']) ? $config['settings'] : [];
 $contact_i = isset($ts['contact']) ? $ts['contact'] : [];
 
 $company_address = !empty($contact_i['address']) ? $contact_i['address'] : 'Konya, Türkiye';
-$company_phone   = !empty($contact_i['phone']) ? $contact_i['phone'] : '+90 332 909 9656';
+$company_phone   = !empty($contact_i['phone']) ? $contact_i['phone'] : '+90 510 220 42 06';
 $company_email   = !empty($contact_i['email']) ? $contact_i['email'] : 'info@codega.com.tr';
-$company_wa      = !empty($contact_i['whatsapp']) ? $contact_i['whatsapp'] : '903329099656';
+$company_wa      = !empty($contact_i['whatsapp']) ? $contact_i['whatsapp'] : '905102204206';
 $company_hours   = !empty($contact_i['hours']) ? $contact_i['hours'] : 'Pazartesi - Cuma: 09:00 - 18:00';
 
 // Form gonderim
@@ -257,7 +257,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
             </details>
             <details class="cdg-faq-item">
                 <summary><span>Hosting taşımasi için ne yapmaliyim?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">Hosting paketinizi aldiktan sonra "Taşıma Talebi" formunu doldurun. Mevcut hosting bilgilerinizi paylasin, ekibimiz veri kaybi olmadan taşımayi yapsin. 5 sitee kadar UCRETSIZ taşıriz.</div>
+                <div class="cdg-faq-answer">Hosting paketinizi aldiktan sonra "Taşıma Talebi" formunu doldurun. Mevcut hosting bilgilerinizi paylasin, ekibimiz veri kaybi olmadan taşımayi yapsin. 5 siteye kadar UCRETSIZ taşıriz.</div>
             </details>
         </div>
     </div>

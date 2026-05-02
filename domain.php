@@ -1,4 +1,32 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
+
+// Diagnostic mode: ?_diag=1 ile global'leri kontrol et
+if(isset($_GET['_diag']) && $_GET['_diag'] === '1') {
+    header('Content-Type: text/plain; charset=utf-8');
+    echo "=== CODEGA DOMAIN DIAGNOSTIC ===\n\n";
+    echo "tldList exists: " . (isset($tldList) ? 'YES' : 'NO') . "\n";
+    if(isset($tldList) && is_array($tldList)) {
+        echo "tldList count: " . count($tldList) . "\n";
+        echo "First 3 TLDs:\n";
+        foreach(array_slice($tldList, 0, 3) as $t) {
+            echo "  - " . ($t['name'] ?? '?') . " (reg: " . ($t['reg_price']['amount'] ?? '?') . ")\n";
+        }
+    }
+    echo "\nbox_tldList exists: " . (isset($box_tldList) ? 'YES' : 'NO') . "\n";
+    if(isset($box_tldList) && is_array($box_tldList)) {
+        echo "box_tldList count: " . count($box_tldList) . "\n";
+    }
+    echo "\nDomains class exists: " . (class_exists('Domains') ? 'YES' : 'NO') . "\n";
+    echo "Tld class exists: " . (class_exists('Tld') ? 'YES' : 'NO') . "\n";
+    echo "Money class exists: " . (class_exists('Money') ? 'YES' : 'NO') . "\n";
+    echo "\nHosting:\n";
+    echo "  showCategory: " . (isset($showCategory) ? 'YES (' . ($showCategory['title'] ?? '?') . ')' : 'NO') . "\n";
+    echo "  category: " . (isset($category) ? 'YES (' . ($category['title'] ?? '?') . ')' : 'NO') . "\n";
+    echo "  get_list: " . (isset($get_list) && is_callable($get_list) ? 'YES' : 'NO') . "\n";
+    echo "  get_categories: " . (isset($get_categories) && is_callable($get_categories) ? 'YES' : 'NO') . "\n";
+    exit;
+}
+
 $hoptions = [
     'page' => 'domain',
     'jquery-ui',

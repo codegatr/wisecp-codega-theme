@@ -52,12 +52,12 @@ if(!function_exists('cdg_link')) {
             </button>
 
             <ul class="cdg-nav">
-                <li><a href="<?php echo $home_link; ?>" class="<?php echo cdg_active(['index',''], $current_page); ?>">Anasayfa</a></li>
+                <li><a href="<?php echo $home_link; ?>" class="<?php echo cdg_active(['index',''], $current_page); ?>">Ana Sayfa</a></li>
                 <li><a href="<?php echo cdg_link('products', ['hosting']); ?>" class="<?php echo cdg_active(['products','hosting-products'], $current_page); ?>">Hosting</a></li>
                 <li><a href="<?php echo cdg_link('domain'); ?>"                class="<?php echo cdg_active('domain', $current_page); ?>">Domain</a></li>
-                <li><a href="<?php echo cdg_link('softwares'); ?>"             class="<?php echo cdg_active(['softwares','special-products'], $current_page); ?>">Yazilim</a></li>
+                <li><a href="<?php echo cdg_link('softwares'); ?>"             class="<?php echo cdg_active(['softwares','special-products'], $current_page); ?>">Yazılım</a></li>
                 <li><a href="<?php echo cdg_link('knowledgebase'); ?>"         class="<?php echo cdg_active(['knowledgebase','articles','news'], $current_page); ?>">Bilgi</a></li>
-                <li><a href="<?php echo cdg_link('contact'); ?>"               class="<?php echo cdg_active('contact', $current_page); ?>">Iletisim</a></li>
+                <li><a href="<?php echo cdg_link('contact'); ?>"               class="<?php echo cdg_active('contact', $current_page); ?>">İletişim</a></li>
             </ul>
 
             <div class="cdg-nav-actions">
@@ -69,14 +69,14 @@ if(!function_exists('cdg_link')) {
 
                 <?php if($sign_in): ?>
                     <a href="<?php echo (isset($my_account_link) && $my_account_link && $my_account_link != '#') ? $my_account_link : cdg_link('my-account'); ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">
-                        <i class="bi bi-person-circle"></i> Hesabim
+                        <i class="bi bi-person-circle"></i> Hesabım
                     </a>
-                    <a href="<?php echo (isset($logout_link) && $logout_link && $logout_link != '#') ? $logout_link : cdg_link('logout'); ?>" class="cdg-btn cdg-btn-ghost cdg-btn-sm" title="Cikis">
+                    <a href="<?php echo (isset($logout_link) && $logout_link && $logout_link != '#') ? $logout_link : cdg_link('logout'); ?>" class="cdg-btn cdg-btn-ghost cdg-btn-sm" title="Çıkış">
                         <i class="bi bi-box-arrow-right"></i>
                     </a>
                 <?php else: ?>
-                    <a href="<?php echo (isset($login_link) && $login_link && $login_link != '#') ? $login_link : cdg_link('sign-in'); ?>"    class="cdg-btn cdg-btn-ghost cdg-btn-sm">Giris</a>
-                    <a href="<?php echo (isset($register_link) && $register_link && $register_link != '#') ? $register_link : cdg_link('sign-up'); ?>" class="cdg-btn cdg-btn-primary cdg-btn-sm">Kayit Ol</a>
+                    <a href="<?php echo (isset($login_link) && $login_link && $login_link != '#') ? $login_link : cdg_link('sign-in'); ?>"    class="cdg-btn cdg-btn-ghost cdg-btn-sm">Giriş</a>
+                    <a href="<?php echo (isset($register_link) && $register_link && $register_link != '#') ? $register_link : cdg_link('sign-up'); ?>" class="cdg-btn cdg-btn-primary cdg-btn-sm">Kayıt Ol</a>
                 <?php endif; ?>
             </div>
 

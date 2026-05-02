@@ -153,8 +153,8 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
                         <?php if(isset($kind_status) && $kind_status): ?>
                         <div class="kind-content kind_2" style="display:none;">
                             <div class="cdg-form-group">
-                                <label class="cdg-form-label">Sirket Adi</label>
-                                <input name="company_name" type="text" class="cdg-form-control" placeholder="Sirket Adi">
+                                <label class="cdg-form-label">Şirket Adi</label>
+                                <input name="company_name" type="text" class="cdg-form-control" placeholder="Şirket Adi">
                             </div>
                             <div class="cdg-form-row">
                                 <div class="cdg-form-group">
@@ -171,14 +171,14 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
 
                         <div class="cdg-form-row">
                             <div class="cdg-form-group">
-                                <label class="cdg-form-label">Sifre</label>
+                                <label class="cdg-form-label">Şifre</label>
                                 <div class="cdg-input-icon">
                                     <i class="bi bi-lock"></i>
                                     <input name="password" type="password" id="password_primary" class="cdg-form-control" placeholder="••••••••" required>
                                 </div>
                             </div>
                             <div class="cdg-form-group">
-                                <label class="cdg-form-label">Sifre (Tekrar)</label>
+                                <label class="cdg-form-label">Şifre (Tekrar)</label>
                                 <div class="cdg-input-icon">
                                     <i class="bi bi-lock-fill"></i>
                                     <input name="password_again" type="password" class="cdg-form-control" placeholder="••••••••" required>
@@ -317,7 +317,7 @@ $(document).ready(function(){
             headers: { 'X-Requested-With': 'XMLHttpRequest' },
             success: function(result){
                 btn.prop('disabled', false).html(origHtml);
-                // Sonuc handler'ini cagir (signin_submit / forget_submit / signup_submit)
+                // Sonuç handler'ini cagir (signin_submit / forget_submit / signup_submit)
                 if(opts.result && typeof window[opts.result] === 'function'){
                     window[opts.result](result);
                 } else {
