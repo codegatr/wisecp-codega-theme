@@ -1,18 +1,14 @@
 {
-    "version": "2.4.0",
+    "version": "2.4.1",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "file_url_alt": "https://cdn.jsdelivr.net/gh/codegatr/wisecp-codega-theme@main/Codega-v2.4.0.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.4.0-codega",
-    "tag": "v2.4.0-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.4.1-codega",
+    "tag": "v2.4.1-codega",
     "changelog": [
-        "v2.4.0 - GERCEK PAKETLER + 3 SEKMELİ PRICING",
-        "WiseCP global'inden gercek hosting paketleri otomatik cekiliyor",
-        "Fallback: Yunus'un panelindeki paketler (Linux 1-4, Profesyonel 1-3, Bayi S/M/L)",
-        "Pricing tab sistemi: Ekonomik / Profesyonel / Bayi sekmeleri",
-        "Sunucu bolumu kaldirildi (sadece hosting + domain)",
-        "Her paket altinda kategori tag (yesil/mavi/mor)",
-        "13 bolum: Hero, Performans, TLD, Pricing-Tabs, WP, Sektor, Avantaj, DC, Stats, Yorumlar, FAQ, Sertifika, Destek, Son CTA",
-        "Floating WhatsApp butonu"
+        "v2.4.1 - KRITIK FIX: ac-index.php login durumunu kontrol ediyor",
+        "Login OLMAMIS kullanici / acsa = public landing (index.php) gorur",
+        "Login OLMUS kullanici / acsa = dashboard (ac-dashboard.php) gorur",
+        "Onceden ac-index.php her durumda dashboard gosteriyordu",
+        "3 farkli login tespit yontemi: User::init->logged_in, User::user_id(), session"
     ]
 }
