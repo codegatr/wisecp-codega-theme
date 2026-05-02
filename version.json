@@ -1,26 +1,13 @@
 {
-    "version": "3.1.6",
+    "version": "3.1.7",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.1.6-codega",
-    "tag": "v3.1.6-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.1.7-codega",
+    "tag": "v3.1.7-codega",
     "changelog": [
-        "v3.1.6 - DOMAIN YONETIM PLACEHOLDER'LARI GERCEK OPERASYONLARA BAGLANDI",
-        "YENI: inc/ac-domain-dns-records.php (318 satir)",
-        "  DNS Records modal: A/AAAA/CNAME/MX/TXT/SRV/NS",
-        "  Type'a gore dinamik placeholder, MX priority, 11 TTL secenegi",
-        "YENI: inc/ac-domain-cns.php (70 satir)",
-        "  Child Nameserver modal: hostname + IP form + liste",
-        "YENI: inc/ac-domain-dnssec.php (123 satir)",
-        "  DNSSEC modal: Digest + Key Tag + Digest Type + Algorithm",
-        "  Module config'den dinamik degerler (yoksa varsayilanlar)",
-        "GUNCELLEME: ac-product-domain.php (1066 -> 1316 satir)",
-        "  Modal include + ESC/outside click ile kapatma",
-        "  cancelDomain() -> gercek canceled_product operation",
-        "  dnsRecordAdd/Delete -> add_dns_record / delete_dns_record",
-        "  cnsAdd -> domain_add_cns",
-        "  dnssecAdd -> add_dns_sec_record",
-        "  requestEpp + toggleTransferLock -> on-doldurulmus destek talebi yonlendirme",
-        "Tum dosyalar PHP -l ile syntax temiz"
+        "v3.1.7 - Hero captcha alani UX iyilestirme",
+        "FIX: css/style.css - captcha img min-width 90->78, max-width 120->108 (kompakt)",
+        "FIX: css/style.css - captcha alani min-width:200, flex 1 1 220 (Guvenlik Kodu placeholder kesilmeyecek)",
+        "Sol-altta gorunen 'Tamam' overlay tarayici eklentisi/macOS Private Access Tokens kaynaklidir, koddan degil"
     ]
 }

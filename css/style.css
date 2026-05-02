@@ -3770,10 +3770,10 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
 }
 .cdg-hero-domain-captcha,
 .cdg-domain-search-captcha{
-    display:flex;align-items:center;gap:8px;
-    flex:1 1 240px;
-    padding:0 8px;
-    min-width:0;
+    display:flex;align-items:center;gap:6px;
+    flex:1 1 220px;
+    padding:0 6px;
+    min-width:200px;
 }
 @media (min-width:1100px){
     .cdg-hero-domain-with-captcha .cdg-hero-domain-input,
@@ -3787,9 +3787,9 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
 .cdg-domain-captcha-img{
     flex-shrink:0;background:#f8fafc;
     border:1px solid #e2e8f0;border-radius:8px;
-    padding:4px 8px;height:38px;
+    padding:3px 6px;height:38px;
     display:flex;align-items:center;justify-content:center;
-    min-width:90px;max-width:120px;
+    min-width:78px;max-width:108px;
 }
 .cdg-hero-captcha-img-inline img,
 .cdg-hero-captcha-img-inline > div,
