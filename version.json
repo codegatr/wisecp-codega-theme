@@ -1,20 +1,23 @@
 {
-    "version": "3.2.9",
+    "version": "3.3.0",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.2.9-codega",
-    "tag": "v3.2.9-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.3.0-codega",
+    "tag": "v3.3.0-codega",
     "changelog": [
-        "v3.2.9 - Paket Yukseltme modulu (hosting/server/software/special icin ortak)",
-        "YENI: inc/ac-product-upgrade.php (310 satir)",
-        "  Generic upgrade card grid (responsive 280px+)",
-        "  Her paket icin: ad + aciklama + ozellikler (ilk 5) + period dropdown + buton",
-        "  Money::formatter_symbol + View::period ile WiseCP fiyat/donem formatlari",
-        "  Confirmation modal: paket adi + odenecek tutar + bilgi notu",
-        "  Sari/turuncu gradient (yukseltme renk kodu)",
-        "GUNCELLEME: inc/ac-product-detail-template.php",
-        "  Template sonunda upgrade include (hosting/server/software/special)",
-        "Operation: set_upgrade_product (product_id + pirce_id - WiseCP API typo korundu)",
-        "WiseCP runtime: $upgrade array (yukseltilebilir paket listesi)"
+        "v3.3.0 - Software Lisans Yonetimi (domain degistir + reissue)",
+        "YENI: inc/ac-software-extras.php (271 satir)",
+        "  Kart 1: Lisans Domain'i Degistir",
+        "    - Mevcut domain gosterimi (code blok)",
+        "    - Kalan degisiklik hakki sayaci (limit/used)",
+        "    - Yeni domain input + format validasyonu",
+        "    - Limit dolmusssa uyari kutusu",
+        "  Kart 2: Lisansi Yeniden Bas (Reissue)",
+        "    - Bilgilendirme: ne zaman kullanilir",
+        "    - Onay mesaji ile reissue_software call",
+        "GUNCELLEME: ac-product-software.php",
+        "  Generic template sonrasi software extras include",
+        "Operations: change_software_domain, reissue_software",
+        "WiseCP runtime: $change_domain_limit, $change_domain_used, $change_domain_has_expired, $current_domain"
     ]
 }
