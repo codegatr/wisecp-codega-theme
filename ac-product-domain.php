@@ -2250,6 +2250,9 @@ window.cdgPdmWhoisFillFromProfile = function(sel, ctKey) {
 <?php
 // === Domain Modalları (DNS Records / CNS / DNSSEC / Email Forwards / Documents) ===
 $cdg_domain_modals_loaded = ['css' => false];
+// === Domain Modallari CSS (her zaman yuklenir, tum modullerin ozel ihtiyaci) ===
+include __DIR__ . DS . 'inc' . DS . 'ac-domain-modals-css.php';
+
 if($allow_dns_records) include __DIR__ . DS . 'inc' . DS . 'ac-domain-dns-records.php';
 if($allow_dns_cns)     include __DIR__ . DS . 'inc' . DS . 'ac-domain-cns.php';
 if($allow_dns_sec_records) include __DIR__ . DS . 'inc' . DS . 'ac-domain-dnssec.php';
