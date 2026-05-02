@@ -489,7 +489,7 @@ function cdg_domain_status_label($status) {
                 $period_text = $row_period . ' ' . $row_ptime;
             }
         ?>
-        <div class="cdg-pd-card" data-status="<?php echo htmlspecialchars($row_status); ?>">
+        <div class="cdg-pd-card" data-status="<?php echo htmlspecialchars(strtolower($row_status)); ?>">
             <div class="cdg-pd-card-icon">
                 <i class="bi bi-globe2"></i>
             </div>
@@ -527,18 +527,19 @@ function cdg_domain_status_label($status) {
 
 <script>
 (function(){
-    // Tab filtre
+    // Tab filtre - case-insensitive ve display:grid restore
     document.querySelectorAll('.cdg-pd-tab').forEach(function(tab){
-        tab.addEventListener('click', function(){
-            var filter = this.getAttribute('data-filter');
+        tab.addEventListener('click', function(e){
+            e.preventDefault();
+            var filter = (this.getAttribute('data-filter') || '').toLowerCase();
             document.querySelectorAll('.cdg-pd-tab').forEach(function(t){ t.classList.remove('active'); });
             this.classList.add('active');
 
             var visible = 0;
             document.querySelectorAll('.cdg-pd-card').forEach(function(card){
-                var s = card.getAttribute('data-status');
+                var s = (card.getAttribute('data-status') || '').toLowerCase();
                 if(filter === 'all' || s === filter) {
-                    card.style.display = '';
+                    card.style.display = 'grid';
                     visible++;
                 } else {
                     card.style.display = 'none';
@@ -552,8 +553,8 @@ function cdg_domain_status_label($status) {
                 if(!emptyMsg) {
                     emptyMsg = document.createElement('div');
                     emptyMsg.id = 'cdg-no-result';
-                    emptyMsg.style.cssText = 'text-align:center;padding:32px;color:#64748b;font-size:14px;';
-                    emptyMsg.innerHTML = '<i class="bi bi-funnel" style="font-size:32px;display:block;margin-bottom:8px;color:#cbd5e1;"></i>Bu filtreye uygun domain bulunamadı.';
+                    emptyMsg.style.cssText = 'text-align:center;padding:32px;color:#64748b;font-size:14px;background:#fff;border:2px dashed #e2e8f0;border-radius:14px;margin-top:12px;';
+                    emptyMsg.innerHTML = '<i class="bi bi-funnel" style="font-size:32px;display:block;margin-bottom:8px;color:#cbd5e1;"></i>Bu filtreye uygun domain bulunamadi.';
                     grid.parentNode.insertBefore(emptyMsg, grid.nextSibling);
                 }
                 emptyMsg.style.display = '';
