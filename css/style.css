@@ -1899,3 +1899,303 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     .cdg-stat-banner-num{font-size:32px;}
     .cdg-final-cta-content{padding:40px 20px;}
 }
+
+/* ==================== PREMIUM LANDING v2 - Yeni Bölümler ==================== */
+
+/* HERO PRO - Daha lüks */
+.cdg-hero-pro{padding:90px 0 110px;}
+.cdg-hero-pro h1{font-size:60px;letter-spacing:-2px;}
+.cdg-hero-glow-3{
+    top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;
+    background:radial-gradient(circle,rgba(139,92,246,0.10) 0%,transparent 70%);
+}
+.cdg-hero-pulse{
+    width:8px;height:8px;border-radius:50%;background:#10b981;
+    box-shadow:0 0 0 0 rgba(16,185,129,0.7);
+    animation:cdgPulse 2s infinite;
+}
+@keyframes cdgPulse{
+    0%{box-shadow:0 0 0 0 rgba(16,185,129,0.7);}
+    70%{box-shadow:0 0 0 10px rgba(16,185,129,0);}
+    100%{box-shadow:0 0 0 0 rgba(16,185,129,0);}
+}
+.cdg-hero-popular-tlds{
+    display:flex;gap:14px;margin-bottom:28px;font-size:13px;flex-wrap:wrap;align-items:center;
+}
+.cdg-hero-popular-tlds .muted{color:#94a3b8;font-weight:500;}
+.cdg-hero-popular-tlds a{
+    color:#475569;text-decoration:none;display:flex;gap:4px;
+    padding:4px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:99px;
+    transition:all 0.2s;
+}
+.cdg-hero-popular-tlds a:hover{border-color:#1e40af;color:#1e40af;transform:translateY(-1px);}
+.cdg-hero-popular-tlds a strong{color:#1e40af;}
+
+/* Hero ring & visual zenginleştirme */
+.cdg-hero-orb-wrap{position:absolute;width:380px;height:380px;display:grid;place-items:center;}
+.cdg-hero-ring{
+    position:absolute;border-radius:50%;
+    border:2px dashed rgba(30,64,175,0.20);
+    animation:cdgSpin 20s linear infinite;
+}
+.cdg-hero-ring-1{width:440px;height:440px;}
+.cdg-hero-ring-2{width:520px;height:520px;animation-direction:reverse;animation-duration:30s;border-color:rgba(251,191,36,0.20);}
+@keyframes cdgSpin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+
+.cdg-float-stat{
+    position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+    background:#fff;border-radius:14px;padding:14px 24px;
+    box-shadow:0 16px 40px rgba(0,0,0,0.12);
+    text-align:center;z-index:2;
+    border:1px solid #e2e8f0;
+}
+.cdg-float-stat .num{font-size:24px;font-weight:800;color:#10b981;line-height:1;}
+.cdg-float-stat .lbl{font-size:11px;color:#64748b;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-top:4px;}
+
+/* PERFORMANS GÖSTERGELERİ */
+.cdg-section{padding:80px 0;}
+.cdg-perf-section{
+    padding:60px 0;background:#fff;
+    border-bottom:1px solid #f1f5f9;border-top:1px solid #f1f5f9;
+}
+.cdg-perf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.cdg-perf-card{text-align:center;padding:20px;}
+.cdg-perf-icon{font-size:36px;margin-bottom:12px;}
+.cdg-perf-num{font-size:48px;font-weight:800;color:#0f172a;line-height:1;letter-spacing:-1px;}
+.cdg-perf-num span{font-size:24px;color:#64748b;font-weight:600;}
+.cdg-perf-lbl{font-size:14px;color:#1e40af;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin:8px 0 6px;}
+.cdg-perf-desc{font-size:13px;color:#64748b;line-height:1.5;}
+
+/* TLD - eski fiyat stilini güçlendir */
+.cdg-tld-section{background:linear-gradient(180deg,#f8fafc,#fff);}
+.cdg-tld-old{font-size:13px;color:#94a3b8;text-decoration:line-through;margin-bottom:4px;}
+.cdg-tld-card .cdg-tld-price{margin-top:0;}
+.cdg-badge-gold{background:linear-gradient(135deg,#fbbf24,#f59e0b);}
+.cdg-badge-blue{background:linear-gradient(135deg,#3b82f6,#1e40af);}
+.cdg-badge-green{background:linear-gradient(135deg,#10b981,#059669);}
+.cdg-badge-purple{background:linear-gradient(135deg,#8b5cf6,#6d28d9);}
+
+/* PRICING - garanti vurgusu */
+.cdg-price-guarantee{
+    margin-top:14px;padding:8px;text-align:center;
+    background:rgba(16,185,129,0.08);color:#059669;
+    font-size:12px;font-weight:600;border-radius:8px;
+}
+.cdg-price-guarantee i{margin-right:4px;}
+
+/* WORDPRESS BÖLÜMÜ */
+.cdg-wp-section{background:linear-gradient(180deg,#fff,#f8fafc);}
+.cdg-wp-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.cdg-wp-logo{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:10px 18px;background:#fff;border-radius:99px;
+    border:1px solid #e2e8f0;box-shadow:0 4px 14px rgba(0,0,0,0.06);
+    margin-bottom:24px;font-weight:700;color:#0f172a;
+}
+.cdg-wp-logo i{font-size:24px;color:#21759b;}
+.cdg-wp-content h2{font-size:42px;letter-spacing:-1px;line-height:1.1;margin-bottom:18px;color:#0f172a;}
+.cdg-wp-lead{font-size:16px;color:#475569;line-height:1.6;margin-bottom:28px;}
+.cdg-wp-features{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;}
+.cdg-wp-feat{display:flex;align-items:flex-start;gap:10px;}
+.cdg-wp-feat i{color:#10b981;font-size:18px;flex-shrink:0;margin-top:2px;}
+.cdg-wp-feat strong{display:block;color:#0f172a;font-size:14px;font-weight:700;margin-bottom:2px;}
+.cdg-wp-feat span{font-size:12px;color:#64748b;line-height:1.5;}
+
+/* WP MOCKUP */
+.cdg-wp-mockup{
+    background:#fff;border-radius:16px;
+    box-shadow:0 30px 80px rgba(30,64,175,0.18);
+    border:1px solid #e2e8f0;overflow:hidden;
+    transform:rotate(-2deg);transition:transform 0.4s;
+}
+.cdg-wp-mockup:hover{transform:rotate(0);}
+.cdg-wp-mockup-bar{
+    display:flex;align-items:center;gap:6px;
+    padding:12px 16px;background:#f1f5f9;border-bottom:1px solid #e2e8f0;
+}
+.cdg-wp-mockup-bar > span{
+    width:10px;height:10px;border-radius:50%;background:#cbd5e1;
+}
+.cdg-wp-mockup-bar > span:first-child{background:#ef4444;}
+.cdg-wp-mockup-bar > span:nth-child(2){background:#fbbf24;}
+.cdg-wp-mockup-bar > span:nth-child(3){background:#10b981;}
+.cdg-wp-mockup-url{
+    margin-left:auto;background:#fff;padding:4px 14px;border-radius:99px;
+    font-family:'Menlo','Monaco',monospace;font-size:12px;color:#475569;
+    border:1px solid #e2e8f0;
+}
+.cdg-wp-mockup-body{padding:30px;display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center;}
+.cdg-wp-perf{
+    text-align:center;padding:18px;
+    background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(52,211,153,0.04));
+    border-radius:14px;border:2px solid rgba(16,185,129,0.18);
+}
+.cdg-wp-perf .num{font-size:48px;font-weight:800;color:#10b981;line-height:1;letter-spacing:-1px;}
+.cdg-wp-perf .lbl{font-size:11px;color:#059669;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-top:6px;}
+.cdg-wp-bars{display:flex;flex-direction:column;gap:10px;}
+.cdg-wp-bar{display:grid;grid-template-columns:36px 50px 1fr;gap:10px;align-items:center;}
+.cdg-wp-bar .lbl{font-size:11px;font-weight:700;color:#0f172a;}
+.cdg-wp-bar .val{font-size:11px;color:#64748b;font-weight:600;}
+.cdg-wp-bar .track{height:6px;background:#f1f5f9;border-radius:99px;overflow:hidden;}
+.cdg-wp-bar .fill{height:100%;background:linear-gradient(90deg,#10b981,#34d399);border-radius:99px;}
+
+/* SEKTÖREL ÇÖZÜMLER */
+.cdg-solutions-section{background:#fff;}
+.cdg-solutions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.cdg-solution-card{
+    padding:28px;border-radius:18px;
+    background:#fff;border:1px solid #e2e8f0;
+    text-decoration:none;color:inherit;transition:all 0.25s;
+    display:flex;flex-direction:column;
+}
+.cdg-solution-card:hover{
+    transform:translateY(-4px);box-shadow:0 16px 40px rgba(30,64,175,0.10);
+    border-color:rgba(30,64,175,0.20);
+}
+.cdg-solution-icon{
+    width:54px;height:54px;border-radius:14px;
+    color:#fff;display:grid;place-items:center;font-size:24px;margin-bottom:16px;
+}
+.cdg-solution-card h3{font-size:18px;font-weight:700;color:#0f172a;margin-bottom:6px;}
+.cdg-solution-card p{font-size:13px;color:#64748b;line-height:1.5;margin-bottom:14px;flex:1;}
+.cdg-solution-cta{font-size:12px;font-weight:600;color:#1e40af;display:inline-flex;align-items:center;gap:4px;}
+
+/* SUNUCU - spec list ekle */
+.cdg-server-spec-list{list-style:none;padding:0;margin:14px 0;}
+.cdg-server-spec-list li{
+    padding:6px 0;font-size:13px;color:#475569;
+    display:flex;align-items:center;gap:8px;
+    border-bottom:1px solid #f1f5f9;
+}
+.cdg-server-card-featured .cdg-server-spec-list li{color:rgba(255,255,255,0.85);border-color:rgba(255,255,255,0.10);}
+.cdg-server-spec-list li:last-child{border:0;}
+.cdg-server-spec-list li i{color:#1e40af;font-size:14px;}
+.cdg-server-card-featured .cdg-server-spec-list li i{color:#fbbf24;}
+.cdg-server-card-cta{font-size:13px;font-weight:600;color:#1e40af;margin-top:8px;display:inline-flex;align-items:center;gap:4px;}
+.cdg-server-card-featured .cdg-server-card-cta{color:#fbbf24;}
+
+/* AVANTAJLAR - 4 sutun */
+.cdg-adv-grid-4{grid-template-columns:repeat(4,1fr)!important;}
+.cdg-advantages-section{background:linear-gradient(180deg,#f8fafc,#fff);}
+
+/* VERİ MERKEZLERİ */
+.cdg-dc-section{background:#fff;}
+.cdg-dc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.cdg-dc-card{
+    padding:32px;border-radius:18px;
+    background:linear-gradient(180deg,#fff,#f8fafc);
+    border:1px solid #e2e8f0;text-align:center;
+    transition:all 0.25s;
+}
+.cdg-dc-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(30,64,175,0.10);}
+.cdg-dc-flag{font-size:42px;line-height:1;margin-bottom:12px;}
+.cdg-dc-card h3{font-size:18px;font-weight:700;color:#0f172a;margin-bottom:6px;}
+.cdg-dc-card p{font-size:13px;color:#64748b;margin-bottom:14px;line-height:1.5;}
+.cdg-dc-specs{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+.cdg-dc-specs span{font-size:11px;color:#475569;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
+.cdg-dc-specs i{color:#1e40af;}
+
+/* STATS - icon ekle */
+.cdg-stat-banner-icon{font-size:28px;color:#fbbf24;margin-bottom:12px;}
+
+/* MÜŞTERİ YORUMLARI */
+.cdg-testimonial-section{background:linear-gradient(180deg,#fff,#f8fafc);}
+.cdg-testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.cdg-testimonial-card{
+    padding:30px;background:#fff;border:1px solid #e2e8f0;
+    border-radius:18px;transition:all 0.25s;
+}
+.cdg-testimonial-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(30,64,175,0.10);border-color:rgba(30,64,175,0.20);}
+.cdg-test-rating{color:#fbbf24;font-size:16px;margin-bottom:14px;display:flex;gap:2px;}
+.cdg-test-text{
+    font-size:15px;color:#334155;line-height:1.6;margin-bottom:20px;
+    font-style:italic;
+}
+.cdg-test-author{display:flex;align-items:center;gap:12px;}
+.cdg-test-avatar{
+    width:44px;height:44px;border-radius:50%;
+    background:linear-gradient(135deg,#1e40af,#3b82f6);
+    color:#fff;display:grid;place-items:center;
+    font-weight:700;font-size:17px;
+}
+.cdg-test-name{font-size:14px;font-weight:700;color:#0f172a;}
+.cdg-test-company{font-size:12px;color:#64748b;}
+
+/* SERTİFİKALAR BANDI */
+.cdg-certs-section{
+    padding:32px 0;background:#0f172a;color:#fff;
+    border-top:1px solid rgba(255,255,255,0.10);
+    border-bottom:1px solid rgba(255,255,255,0.10);
+}
+.cdg-certs-row{
+    display:flex;justify-content:space-between;gap:20px;
+    flex-wrap:wrap;
+}
+.cdg-cert-item{
+    display:flex;align-items:center;gap:10px;
+    flex:1;min-width:180px;
+}
+.cdg-cert-item i{
+    font-size:28px;color:#fbbf24;
+    background:rgba(251,191,36,0.10);padding:10px;border-radius:10px;
+    flex-shrink:0;
+}
+.cdg-cert-item strong{display:block;font-size:13px;font-weight:700;color:#fff;}
+.cdg-cert-item span{font-size:11px;color:rgba(255,255,255,0.65);}
+
+/* SON CTA - trust ekle */
+.cdg-final-trust{
+    display:flex;justify-content:center;gap:24px;
+    margin-top:24px;flex-wrap:wrap;
+    padding-top:24px;border-top:1px solid #e2e8f0;
+}
+.cdg-final-trust span{
+    font-size:13px;color:#475569;
+    display:inline-flex;align-items:center;gap:6px;font-weight:500;
+}
+.cdg-final-trust i{color:#10b981;font-size:16px;}
+
+/* FLOATING WHATSAPP */
+.cdg-floating-wa{
+    position:fixed;bottom:24px;right:24px;z-index:1000;
+    width:60px;height:60px;border-radius:50%;
+    background:linear-gradient(135deg,#25d366,#128c7e);
+    color:#fff;display:grid;place-items:center;
+    font-size:30px;text-decoration:none;
+    box-shadow:0 8px 24px rgba(37,211,102,0.40);
+    transition:transform 0.2s;
+}
+.cdg-floating-wa:hover{transform:scale(1.10);color:#fff;}
+.cdg-floating-pulse{
+    position:absolute;inset:0;border-radius:50%;
+    background:rgba(37,211,102,0.40);
+    animation:cdgWaPulse 2s infinite;
+}
+@keyframes cdgWaPulse{
+    0%{transform:scale(1);opacity:0.8;}
+    100%{transform:scale(1.5);opacity:0;}
+}
+
+/* RESPONSIVE - yeni bölümler */
+@media (max-width:1100px){
+    .cdg-hero-pro h1{font-size:42px;}
+    .cdg-perf-grid{grid-template-columns:repeat(2,1fr);}
+    .cdg-wp-grid{grid-template-columns:1fr;gap:40px;}
+    .cdg-wp-content h2{font-size:30px;}
+    .cdg-wp-features{grid-template-columns:1fr;}
+    .cdg-solutions-grid{grid-template-columns:repeat(2,1fr);}
+    .cdg-adv-grid-4{grid-template-columns:repeat(2,1fr)!important;}
+    .cdg-dc-grid{grid-template-columns:1fr;}
+    .cdg-testimonial-grid{grid-template-columns:1fr;}
+}
+@media (max-width:768px){
+    .cdg-hero-pro{padding:48px 0 60px;}
+    .cdg-hero-pro h1{font-size:32px;}
+    .cdg-perf-grid{grid-template-columns:1fr;}
+    .cdg-wp-content h2{font-size:24px;}
+    .cdg-solutions-grid{grid-template-columns:1fr;}
+    .cdg-adv-grid-4{grid-template-columns:1fr!important;}
+    .cdg-certs-row{justify-content:flex-start;}
+    .cdg-cert-item{min-width:calc(50% - 10px);}
+    .cdg-floating-wa{width:52px;height:52px;font-size:26px;bottom:16px;right:16px;}
+}
