@@ -1,20 +1,17 @@
 {
-    "version": "2.5.0",
+    "version": "2.6.0",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.5.0-codega",
-    "tag": "v2.5.0-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.6.0-codega",
+    "tag": "v2.6.0-codega",
     "changelog": [
-        "v2.5.0 - GELECEGIN HOSTING SIRKETI: 18 bolumlu premium landing",
-        "Hero PRO MAX: animated mesh gradient + 10 floating particle + 3 ring + glassmorphism cards",
-        "LIVE TICKER: 4 anlik metric (15.847 site, 234 yeni hesap, 892 destek, 28ms yanit) - counter animasyonu",
-        "TECH STACK: 8 teknoloji logosu (NVMe/LiteSpeed/Cloudflare/cPanel/PHP/MariaDB/Redis/Imunify360)",
-        "COMPARE TABLE: 11 ozellik 4 paket karsilastirma matrisi - EN POPULER badge",
-        "AI HOSTING: yapay zeka odakli bolum + animated radar + 4 dot pulse + 4 feature",
-        "SECURITY SHIELD: animated shield + 3 orbit + 6 guvenlik ozellik + counter (847.000 saldiri)",
-        "MIGRATION WIZARD: 3 adimli gorsel akis + arrow animasyonu",
-        "Veri merkezleri: pulse animasyon (yesil dot)",
-        "Counter animation: IntersectionObserver ile lazy",
-        "Neon glow buttons + glassmorphism cards + mesh gradient"
+        "v2.6.0 - YAN SAYFALAR: Iletisim, Yazilim, Bilgi Bankasi tamamen yeniden yazildi",
+        "Header: SMS ve Sunucu menuleri kaldirildi (sadece Hosting/Domain/Yazilim/Bilgi/Iletisim)",
+        "Footer: SMS ve Sunucu kaldirildi",
+        "ILETISIM: 5 bolumlu kurumsal sayfa (Hero, Channels, Form+Info, Map, FAQ)",
+        "YAZILIM: 9 urun + 6 hizmet kategorisi + 5 adim sureci (CodeGa ERP, XNEWS, MaliMusafir, KamyonGaraji, Tekcanmetal, AkilliTicaret, CMiner, Minya 3D, KiraTakip)",
+        "BILGI: 7 kategori, 40+ SSS (Hosting, Domain, Guvenlik, WordPress, E-posta, ERP/Yazilim, Fatura)",
+        "Bilgi sayfasinda live search (anahtar kelime ile filtreleme)",
+        "Tum yan sayfalarda animated mesh gradient hero"
     ]
 }

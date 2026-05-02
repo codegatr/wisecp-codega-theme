@@ -47,9 +47,7 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
                 <h4>Hizmetler</h4>
                 <ul>
                     <li><a href="<?php echo cdg_link('products', ['hosting']); ?>">Hosting</a></li>
-                    <li><a href="<?php echo cdg_link('products', ['server']); ?>">Sunucu</a></li>
                     <li><a href="<?php echo cdg_link('domain'); ?>">Domain</a></li>
-                    <li><a href="<?php echo cdg_link('products', ['sms']); ?>">Toplu SMS</a></li>
                 </ul>
             </div>
 

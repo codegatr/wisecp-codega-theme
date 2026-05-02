@@ -54,9 +54,7 @@ if(!function_exists('cdg_link')) {
             <ul class="cdg-nav">
                 <li><a href="<?php echo $home_link; ?>" class="<?php echo cdg_active(['index',''], $current_page); ?>">Anasayfa</a></li>
                 <li><a href="<?php echo cdg_link('products', ['hosting']); ?>" class="<?php echo cdg_active(['products','hosting-products'], $current_page); ?>">Hosting</a></li>
-                <li><a href="<?php echo cdg_link('products', ['server']); ?>"  class="<?php echo cdg_active(['server-products'], $current_page); ?>">Sunucu</a></li>
                 <li><a href="<?php echo cdg_link('domain'); ?>"                class="<?php echo cdg_active('domain', $current_page); ?>">Domain</a></li>
-                <li><a href="<?php echo cdg_link('products', ['sms']); ?>"     class="<?php echo cdg_active('sms-products', $current_page); ?>">SMS</a></li>
                 <li><a href="<?php echo cdg_link('softwares'); ?>"             class="<?php echo cdg_active(['softwares','special-products'], $current_page); ?>">Yazilim</a></li>
                 <li><a href="<?php echo cdg_link('knowledgebase'); ?>"         class="<?php echo cdg_active(['knowledgebase','articles','news'], $current_page); ?>">Bilgi</a></li>
                 <li><a href="<?php echo cdg_link('contact'); ?>"               class="<?php echo cdg_active('contact', $current_page); ?>">Iletisim</a></li>
