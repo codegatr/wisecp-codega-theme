@@ -1,14 +1,20 @@
 {
-    "version": "2.4.1",
+    "version": "2.5.0",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.4.1-codega",
-    "tag": "v2.4.1-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.5.0-codega",
+    "tag": "v2.5.0-codega",
     "changelog": [
-        "v2.4.1 - KRITIK FIX: ac-index.php login durumunu kontrol ediyor",
-        "Login OLMAMIS kullanici / acsa = public landing (index.php) gorur",
-        "Login OLMUS kullanici / acsa = dashboard (ac-dashboard.php) gorur",
-        "Onceden ac-index.php her durumda dashboard gosteriyordu",
-        "3 farkli login tespit yontemi: User::init->logged_in, User::user_id(), session"
+        "v2.5.0 - GELECEGIN HOSTING SIRKETI: 18 bolumlu premium landing",
+        "Hero PRO MAX: animated mesh gradient + 10 floating particle + 3 ring + glassmorphism cards",
+        "LIVE TICKER: 4 anlik metric (15.847 site, 234 yeni hesap, 892 destek, 28ms yanit) - counter animasyonu",
+        "TECH STACK: 8 teknoloji logosu (NVMe/LiteSpeed/Cloudflare/cPanel/PHP/MariaDB/Redis/Imunify360)",
+        "COMPARE TABLE: 11 ozellik 4 paket karsilastirma matrisi - EN POPULER badge",
+        "AI HOSTING: yapay zeka odakli bolum + animated radar + 4 dot pulse + 4 feature",
+        "SECURITY SHIELD: animated shield + 3 orbit + 6 guvenlik ozellik + counter (847.000 saldiri)",
+        "MIGRATION WIZARD: 3 adimli gorsel akis + arrow animasyonu",
+        "Veri merkezleri: pulse animasyon (yesil dot)",
+        "Counter animation: IntersectionObserver ile lazy",
+        "Neon glow buttons + glassmorphism cards + mesh gradient"
     ]
 }
