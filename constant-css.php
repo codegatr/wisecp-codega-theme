@@ -67,4 +67,28 @@ html { scroll-behavior: smooth; }
 ::selection { background: rgba(30,64,175,0.18); color: #0f172a; }
 ::-moz-selection { background: rgba(30,64,175,0.18); color: #0f172a; }
 
+/* Public header - Sepet butonu badge */
+.cdg-cart-btn {
+    position: relative;
+}
+.cdg-cart-btn .cdg-cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 100px;
+    box-shadow: 0 2px 6px rgba(220,38,38,0.40);
+    border: 2px solid #fff;
+    box-sizing: content-box;
+}
+.cdg-cart-btn:hover { transform: translateY(-1px); }
+
 </style>

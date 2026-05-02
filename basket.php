@@ -650,64 +650,286 @@
 </script>
 
 <style>
-    .banner.withheader {
-    padding-top: 10px;
+/* CODEGA - Sepet sayfası modern stil */
+#wrapper, .basket_wrapper {
+    background: #f8fafc;
+    padding: 32px 0 60px;
+    min-height: 60vh;
 }
-.sepetbaslik {
-    background: var(--color-primary-two);
-    border-radius: 3px;
-}
-.green-label {
-    background-color: var(--color-primary);
-}
-.sepetright .gonderbtn {
-    background: var(--color-primary);
-    border-radius: 4px;
-}
-.sepetsipinfo .totalamountinfo h5 {
-    color: var(--color-primary);
-}
-.yesilbtn {
-    background: var(--color-primary-two);
-}
-.gonderbtn {
-    border-radius: 10px;
-}
-.yesilbtn:hover {
-    background: var(--color-primary-two);
-}
-.sepetright .gonderbtn:hover {
-    background: var(--color-primary-two);
-}
-.sepetright .gonderbtn {
-    background: var(--color-primary);
-}
-.lbtn {
-    border: 2px solid var(--color-primary-two);
-    color: var(--color-primary-two);
-}
-.lbtn:hover {
-    border: 2px solid var(--color-primary-two);
-    color: #ffffff;
-    background: var(--color-primary-two);
-}
-.checkbox-custom:checked+.checkbox-custom-label:before {
-    background: var(--color-primary-two);
-}
-.checkbox-custom+.checkbox-custom-label:before, .radio-custom+.radio-custom-label:before {
-    border: 1.5px solid var(--color-primary-two);
-}
-#rehber .checkbox-custom+.checkbox-custom-label:before, .radio-custom+.radio-custom-label:before {
-    border-radius: 10%;
-}
-.checkbox-custom+.checkbox-custom-label:before, .radio-custom+.radio-custom-label:before {
-    border: 1.5px solid var(--color-primary);
-    line-height: 15px;
+.cdg-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
+/* Sepet GRID (sol: items, sağ: order summary) */
+.sepet {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+    align-items: flex-start;
+}
+@media (max-width: 900px) {
+    .sepet { grid-template-columns: 1fr; }
+}
+
+/* Sol panel (items) */
+.sepetleft {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 0;
+    overflow: hidden;
+    width: 100% !important;
+    float: none !important;
+}
+
+/* Tablo başlıkları */
+.sepetbaslik {
+    background: linear-gradient(135deg, #1e40af, #2563eb);
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 0 !important;
+}
+.sepetbaslik > div { display: flex !important; gap: 12px; align-items: center; padding: 0 !important; }
+.uhinfo, .uhperiyod, .uhtutar {
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.uhinfo { flex: 1; }
+.uhperiyod { width: 120px; text-align: center; }
+.uhtutar { width: 140px; text-align: right; }
+
+/* Boş sepet mesajı */
+.info#empty_list {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border: 1px solid #6ee7b7;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 20px;
+    text-align: center;
+    color: #065f46;
+}
+.info#empty_list i {
+    display: block;
+    font-size: 48px;
+    color: #10b981;
+    margin-bottom: 12px;
+}
+.info#empty_list h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #065f46;
+    line-height: 1.6;
+}
+
+/* Item list container */
+#item_list { padding: 0 20px; }
+
+/* "Alışverişe Devam Et" butonu */
+#continueshopbtn,
+.lbtn.gonderbtn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px !important;
+    background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+    color: #fff !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    margin: 12px 20px 20px;
+    transition: all 0.2s;
+}
+#continueshopbtn:hover,
+.lbtn.gonderbtn:hover {
+    background: linear-gradient(135deg, #1e40af, #1e3a8a) !important;
+    color: #fff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(30,64,175,0.20);
+}
+
+/* Payment logos / SSL notice - güvenlik bandı */
+.paymentlogos {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    padding: 18px 20px;
+    margin: 20px -20px -20px;
+    text-align: center;
+}
+.paymentlogos img { display: none !important; }
+.paymentlogos::before {
+    content: '';
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
+    vertical-align: middle;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2310b981'><path d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z'/></svg>");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.paymentlogos span {
+    color: #475569;
+    font-size: 13px;
+    font-weight: 500;
+    vertical-align: middle;
+}
+
+/* Sağ panel: Sipariş özeti */
+.sepetright {
+    width: 100% !important;
+    float: none !important;
+    position: sticky;
+    top: 90px;
+}
+.sepetrightshadow {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+.sepetright .sepetbaslik {
+    background: linear-gradient(135deg, #0a1f44, #1e40af);
+    padding: 16px 20px;
+    border-radius: 0;
+}
+.sepetright .sepetbaslik > div {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+    text-align: center !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0 !important;
+}
+
+.sepetrightcon { padding: 20px; }
+.sepetsipinfo { width: 100%; border-collapse: collapse; }
+.sepetsipinfo td {
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13px;
+    color: #475569;
+}
+.sepetsipinfo td:last-child { text-align: right; font-weight: 700; color: #0f172a; }
+.sepetsipinfo tr:last-child td { border-bottom: 0; }
+.sepetsipinfo .totalamountinfo {
+    text-align: center !important;
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border-radius: 10px;
+    padding: 16px !important;
+    border-bottom: 0 !important;
+}
+.sepetsipinfo .totalamountinfo strong {
+    display: block;
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+.sepetsipinfo .totalamountinfo h5 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 900;
+    color: #1e40af;
+}
+
+/* "Devam Et" butonları (sağ panel altı) */
+.gonderbtn {
+    display: block !important;
+    text-align: center !important;
+    margin: 14px 20px 20px;
+    padding: 14px 24px !important;
+    background: linear-gradient(135deg, #1e40af, #2563eb) !important;
+    color: #fff !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    font-size: 14px;
+    font-weight: 800;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(30,64,175,0.20);
+    transition: all 0.2s;
+}
+.gonderbtn:hover {
+    background: linear-gradient(135deg, #1e3a8a, #1e40af) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(30,64,175,0.30) !important;
+    color: #fff !important;
+}
+#continue_block.gonderbtn,
+#continue_block.graybtn {
+    background: #cbd5e1 !important;
+    color: #94a3b8 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+}
+#continue_block.gonderbtn:hover { transform: none !important; box-shadow: none !important; }
+
+/* Loaders */
+#OrderSummary_loader, #basket_loader {
+    text-align: center;
+    padding: 30px 0;
+}
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #1e40af;
+    border-radius: 50%;
+    margin: 0 auto;
+    animation: cdg-spin 0.8s linear infinite;
+}
+@keyframes cdg-spin { to { transform: rotate(360deg); } }
+
+/* Renk override (Classic değişkenler) */
+.green-label { background-color: #10b981 !important; color: #fff !important; }
+.yesilbtn { background: #10b981 !important; }
+.yesilbtn:hover { background: #059669 !important; }
+.lbtn {
+    border: 2px solid #1e40af !important;
+    color: #1e40af !important;
+}
+.lbtn:hover {
+    border-color: #1e3a8a !important;
+    color: #fff !important;
+    background: #1e40af !important;
+}
+.row-label.green-label {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* Checkbox renk override */
+.checkbox-custom:checked + .checkbox-custom-label:before {
+    background: #1e40af !important;
+    border-color: #1e40af !important;
+}
+.checkbox-custom + .checkbox-custom-label:before,
+.radio-custom + .radio-custom-label:before {
+    border: 1.5px solid #cbd5e1 !important;
+}
+
+/* clear */
+.clear { clear: both; }
 </style>
 
 <div id="wrapper" style="margin-top: 30px;">
+    <div class="cdg-container">
 
     <div class="sepet">
 
@@ -723,7 +945,7 @@
 
             <div class="clear"></div>
             <div class="info" id="empty_list">
-                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <i class="bi bi-cart-x"></i>
                 <h4><?php echo __("website/basket/empty-list"); ?></h4>
             </div>
             <div id="basket_loader" style="margin-top: 7%;    margin-bottom: 40px; text-align: center;">
@@ -732,7 +954,7 @@
             <div class="clear"></div>
             <div id="item_list" style="display: none;"></div>
 
-            <div align="center"><a class="lbtn gonderbtn" id="continueshopbtn"  href="<?php echo $home_link ?? ''; ?>"><i class="fa fa-angle-double-left" aria-hidden="true"></i> <?php echo __("website/basket/continue-to-shopping"); ?></a></div>
+            <div align="center" style="margin-top:8px;"><a class="lbtn gonderbtn" id="continueshopbtn"  href="<?php echo $home_link ?? ''; ?>"><i class="bi bi-arrow-left"></i> <?php echo __("website/basket/continue-to-shopping"); ?></a></div>
 
             <div class="paymentlogos">
                 <img class="plogos1" src="<?php echo $tadress ?? ''; ?>images/credit-cards.png">
@@ -747,7 +969,8 @@
         <div class="sepetright">
             <div class="sepetrightshadow">
                 <div class="sepetbaslik">
-                    <div style="padding:0px 12px;text-align:right;">
+                    <div style="padding:0;text-align:center;">
+                        <i class="bi bi-receipt" style="margin-right:6px;"></i>
                         <?php echo __("website/basket/order-summary"); ?>
                     </div>
                 </div>
@@ -804,11 +1027,12 @@
 
 
             </div>
-            <a href="<?php echo $links["payment"]; ?>" style="display: none;" class="gonderbtn" id="continue_go"><?php echo __("website/basket/continue-button"); ?></a>
-            <a class="graybtn gonderbtn" id="continue_block" style="background: #CCCCCC; cursor: no-drop;"><?php echo __("website/basket/continue-button"); ?></a>
+            <a href="<?php echo $links["payment"]; ?>" style="display: none;" class="gonderbtn" id="continue_go"><i class="bi bi-arrow-right-circle"></i> <?php echo __("website/basket/continue-button"); ?></a>
+            <a class="graybtn gonderbtn" id="continue_block"><i class="bi bi-lock"></i> <?php echo __("website/basket/continue-button"); ?></a>
         </div>
 
     </div>
+    </div><!-- /.cdg-container -->
 </div>
 
 <div id="cart-ns-details" style="display: none">

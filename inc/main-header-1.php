@@ -106,11 +106,29 @@ if(!function_exists('cdg_link')) {
             </ul>
 
             <div class="cdg-nav-actions">
-                <?php if($visibility_basket): ?>
-                    <a href="<?php echo (isset($basket_link) && $basket_link && $basket_link != '#') ? $basket_link : cdg_link('basket'); ?>" class="cdg-btn cdg-btn-ghost cdg-btn-sm" title="Sepetim">
-                        <i class="bi bi-cart"></i>
-                    </a>
-                <?php endif; ?>
+                <?php
+                // Sepet item sayisi - WiseCP'nin farkli versiyonlari icin defansif
+                $cdg_basket_count = 0;
+                if(class_exists('Basket')) {
+                    if(method_exists('Basket', 'count')) {
+                        try { $cdg_basket_count = (int) Basket::count(); } catch(\Throwable $e) {}
+                    } elseif(isset(Basket::$items) && is_array(Basket::$items)) {
+                        $cdg_basket_count = count(Basket::$items);
+                    } elseif(method_exists('Basket', 'getItems')) {
+                        try { $items = Basket::getItems(); $cdg_basket_count = is_array($items) ? count($items) : 0; } catch(\Throwable $e) {}
+                    }
+                }
+                if(!$cdg_basket_count && isset($basket_count)) $cdg_basket_count = (int)$basket_count;
+                if(!$cdg_basket_count && isset($_SESSION['Basket']) && is_array($_SESSION['Basket'])) {
+                    $cdg_basket_count = count($_SESSION['Basket']);
+                }
+                ?>
+                <a href="<?php echo (isset($basket_link) && $basket_link && $basket_link != '#') ? $basket_link : cdg_link('basket'); ?>" class="cdg-btn cdg-btn-ghost cdg-btn-sm cdg-cart-btn" title="Sepetim">
+                    <i class="bi bi-cart3"></i>
+                    <?php if($cdg_basket_count > 0): ?>
+                    <span class="cdg-cart-badge"><?php echo (int)$cdg_basket_count; ?></span>
+                    <?php endif; ?>
+                </a>
 
                 <?php if($sign_in): ?>
                     <a href="<?php echo (isset($my_account_link) && $my_account_link && $my_account_link != '#') ? $my_account_link : cdg_link('my-account'); ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">
