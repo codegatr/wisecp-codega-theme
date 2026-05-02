@@ -961,6 +961,80 @@ $transfer_lock = !empty($options['transferlock']);
                 </div>
             </div>
         </div>
+
+        <!-- Müşteri-Müşteri Domain Transferi -->
+        <div class="cdg-pdm-card" style="margin-top:18px;">
+            <div class="cdg-pdm-card-head">
+                <h3><i class="bi bi-people"></i> Domain Sahipliğini Başka Müşteriye Transfer</h3>
+            </div>
+            <div class="cdg-pdm-card-body">
+                <div class="cdg-pdm-alert cdg-pdm-alert-info">
+                    <i class="bi bi-info-circle"></i>
+                    <div>Domaininizi platformumuzdaki başka bir müşteriye transfer edebilirsiniz. Hedef kullanıcının e-posta adresi ile talep oluşturun. Onaylandıktan sonra domain sahipliği değişir.</div>
+                </div>
+
+                <div class="cdg-pdm-grid-2" style="gap:18px;">
+                    <div>
+                        <h4 style="font-size:13px;font-weight:800;margin:0 0 10px;text-transform:uppercase;color:#475569;letter-spacing:0.5px;">
+                            <i class="bi bi-send"></i> Yeni Transfer Talebi
+                        </h4>
+                        <div class="cdg-pdm-field">
+                            <label class="cdg-pdm-label">Hedef Müşteri E-Posta</label>
+                            <input type="email" id="cdg-tsv-email" class="cdg-pdm-input" placeholder="hedef@example.com">
+                        </div>
+                        <div class="cdg-pdm-field">
+                            <label class="cdg-pdm-label">Şifreniz</label>
+                            <input type="password" id="cdg-tsv-password" class="cdg-pdm-input" placeholder="Hesap şifreniz">
+                        </div>
+                        <button type="button" class="cdg-pdm-btn cdg-pdm-btn-primary" onclick="cdgDomain.transferServiceCreate()">
+                            <i class="bi bi-arrow-right-circle"></i> Transfer Talebi Oluştur
+                        </button>
+                    </div>
+                    <div>
+                        <h4 style="font-size:13px;font-weight:800;margin:0 0 10px;text-transform:uppercase;color:#475569;letter-spacing:0.5px;">
+                            <i class="bi bi-list-check"></i> Bekleyen Transferler
+                        </h4>
+                        <?php if(isset($ctoc_s_t_list) && is_array($ctoc_s_t_list) && !empty($ctoc_s_t_list)): ?>
+                        <div class="cdg-dm-table-wrap" style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;">
+                            <table class="cdg-dm-table" style="font-size:12px;">
+                                <thead>
+                                    <tr><th>E-Posta</th><th style="width:90px;">Tarih</th><th style="width:50px;"></th></tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach($ctoc_s_t_list as $tsv):
+                                    $evt = (class_exists('Utility') && method_exists('Utility','jdecode'))
+                                        ? Utility::jdecode($tsv['data'] ?? '', true)
+                                        : (is_string($tsv['data'] ?? '') ? json_decode($tsv['data'], true) : ($tsv['data'] ?? []));
+                                    $to_email = $evt['to_email'] ?? '';
+                                    $cdate = $tsv['cdate'] ?? '';
+                                    $cdate_fmt = $cdate;
+                                    if(class_exists('DateManager') && method_exists('DateManager','format') && class_exists('Config')) {
+                                        try { $cdate_fmt = DateManager::format(Config::get("options/date-format") . " H:i", $cdate); } catch(\Throwable $e) {}
+                                    }
+                                ?>
+                                <tr id="cdg-tsv-row-<?php echo (int)($tsv['id'] ?? 0); ?>">
+                                    <td><?php echo htmlspecialchars($to_email); ?></td>
+                                    <td style="font-size:11px;color:#64748b;"><?php echo htmlspecialchars($cdate_fmt); ?></td>
+                                    <td>
+                                        <button type="button" class="cdg-dm-row-btn cdg-dm-row-btn-danger" onclick="cdgDomain.transferServiceCancel(<?php echo (int)($tsv['id'] ?? 0); ?>)" title="Talebi iptal et">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php else: ?>
+                        <div style="text-align:center;padding:20px;color:#94a3b8;border:1px dashed #e2e8f0;border-radius:10px;">
+                            <i class="bi bi-inbox" style="font-size:32px;display:block;margin-bottom:6px;"></i>
+                            <span style="font-size:12px;">Bekleyen transfer talebi yok</span>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -1508,6 +1582,57 @@ window.cdgDomain = {
                 if(r && r.status === 'successful') {
                     if(typeof alert_success === 'function') alert_success(r.message || 'Belgeler gönderildi', {timer: 2500});
                     setTimeout(function(){ window.location.reload(); }, 2000);
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+
+    // === TRANSFER SERVICE (Müşteri-Müşteri Domain Transferi) ===
+    transferServiceCreate: function(){
+        var emailEl = document.getElementById('cdg-tsv-email');
+        var pwEl = document.getElementById('cdg-tsv-password');
+        if(!emailEl || !pwEl) return;
+        var email = emailEl.value.trim();
+        var pw = pwEl.value;
+
+        if(!email || !pw) {
+            if(typeof alert_error === 'function') alert_error('E-posta ve şifre zorunludur', {timer: 3000});
+            return;
+        }
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            if(typeof alert_error === 'function') alert_error('Geçerli bir e-posta girin', {timer: 3000});
+            return;
+        }
+        if(!confirm('Domain sahipliğini ' + email + ' adresine transfer etmek istediğinize emin misiniz? Onaylanırsa domain üzerindeki tüm haklarınız kaybolur.')) return;
+        if(typeof MioAjax !== 'function') return;
+
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: { operation: 'transfer_service', id: this.domainId, email: email, password: pw },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    pwEl.value = '';
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Transfer talebi oluşturuldu', {timer: 2500});
+                    setTimeout(function(){ window.location.reload(); }, 2000);
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+    transferServiceCancel: function(tsvId){
+        if(!confirm('Bu transfer talebini iptal etmek istediğinize emin misiniz?')) return;
+        if(typeof MioAjax !== 'function') return;
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: { operation: 'remove_transfer_service', id: this.domainId, tsv_id: tsvId },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    var row = document.getElementById('cdg-tsv-row-' + tsvId);
+                    if(row) row.remove();
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Transfer talebi iptal edildi', {timer: 1500});
                 } else if(r && r.message && typeof alert_error === 'function') {
                     alert_error(r.message, {timer: 3000});
                 }

@@ -1,18 +1,16 @@
 {
-    "version": "3.2.2",
+    "version": "3.2.3",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.2.2-codega",
-    "tag": "v3.2.2-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.2.3-codega",
+    "tag": "v3.2.3-codega",
     "changelog": [
-        "v3.2.2 - Domain belge yukleme modali (ulke kodlu domainler icin)",
-        "YENI: inc/ac-domain-documents.php (115 satir)",
-        "  3 input tipi: text/select/file (auto-toggle doc_id'ye gore)",
-        "  multipart/form-data + MioAjaxElement file upload",
-        "GUNCELLEME: ac-product-domain.php",
-        "  Guvenlik tab'inda Belge Yonetimi karti (allow_documents flag)",
-        "  cdgDomain JS: openDocuments, docTypeChange, docAdd, docSend",
-        "  Global cdgDocAddHandle (MioAjaxElement callback)",
-        "Operations: add_domain_doc, sent_domain_doc"
+        "v3.2.3 - Musteri-Musteri Domain Transfer Service eklendi",
+        "GUNCELLEME: ac-product-domain.php Transfer tab'i",
+        "  Yeni kart: Domain Sahipligini Baska Musteriye Transfer",
+        "  Form: hedef email + sifre",
+        "  Bekleyen transferler tablosu (CtoC list)",
+        "  Tek tek talep iptali",
+        "Operations: transfer_service, remove_transfer_service"
     ]
 }
