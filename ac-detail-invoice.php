@@ -31,6 +31,9 @@ if(!function_exists('cdg_link')) {
             'products-t'              => 'ac-ps-products-t',
             'product'                 => 'ac-ps-product',
             'sms'                     => 'ac-ps-sms',
+            'affiliate'               => 'ac-affiliate',
+            'ac-affiliate'            => 'ac-affiliate',
+            'reseller'                => 'ac-reseller',
             'domains'                 => 'ac-products-domain',
             'products-domain'         => 'ac-products-domain',
             'whois-profiles'          => 'ac-products-domain-whois-profiles',
@@ -65,9 +68,20 @@ if(!function_exists('cdg_link')) {
 
 // === Defansif defaults ===
 $invoice      = isset($invoice) && is_array($invoice) ? $invoice : [];
-$items        = [];
-if(isset($invoice['items']) && is_array($invoice['items'])) $items = $invoice['items'];
-elseif(isset($items) && is_array($items)) { /* zaten set */ } else { $items = []; }
+
+// Items 3 katmanli fallback: invoice.items / global $items / Invoices::item_listing
+$inv_items_arr = [];
+if(isset($invoice['items']) && is_array($invoice['items']) && !empty($invoice['items'])) {
+    $inv_items_arr = $invoice['items'];
+} elseif(isset($items) && is_array($items) && !empty($items)) {
+    $inv_items_arr = $items;
+} elseif(isset($invoice['id']) && class_exists('Invoices') && method_exists('Invoices', 'item_listing')) {
+    try {
+        $tmp = Invoices::item_listing($invoice['id']);
+        if(is_array($tmp)) $inv_items_arr = $tmp;
+    } catch(\Throwable $e) {}
+}
+$items = $inv_items_arr;
 
 $form_action  = isset($form_action) ? $form_action : '';
 $methods      = isset($methods) && is_array($methods) ? $methods : [];
@@ -79,7 +93,23 @@ $inv_total    = $invoice['total'] ?? 0;
 $inv_subtotal = $invoice['subtotal'] ?? 0;
 $inv_tax      = $invoice['tax'] ?? 0;
 $inv_taxrate  = $invoice['taxrate'] ?? 0;
-$inv_currency = $invoice['currency'] ?? 'TRY';
+
+// Currency: hem code (TRY) hem id (147) gelebilir, normalize et
+$inv_currency_raw = $invoice['currency'] ?? 'TRY';
+$inv_currency_id  = $invoice['cid'] ?? (is_numeric($inv_currency_raw) ? (int)$inv_currency_raw : 0);
+$inv_currency = 'TRY';
+if(is_numeric($inv_currency_raw) && class_exists('Money') && method_exists('Money', 'getCurrency')) {
+    try {
+        $cur = Money::getCurrency((int)$inv_currency_raw);
+        if(is_array($cur) && isset($cur['code'])) $inv_currency = $cur['code'];
+        elseif(is_array($cur) && isset($cur['name'])) $inv_currency = $cur['name'];
+    } catch(\Throwable $e) {}
+} elseif(!is_numeric($inv_currency_raw)) {
+    $inv_currency = (string)$inv_currency_raw;
+}
+// inv_currency_id - cdg_inv_money'e geçecek
+if(!$inv_currency_id && is_numeric($inv_currency_raw)) $inv_currency_id = (int)$inv_currency_raw;
+
 $inv_cdate    = $invoice['cdate'] ?? '';
 $inv_duedate  = $invoice['duedate'] ?? '';
 $inv_datepaid = $invoice['datepaid'] ?? '';
@@ -98,10 +128,13 @@ function cdg_inv_date($date) {
     return date('d.m.Y', strtotime($date));
 }
 
-// Fiyat formatla
+// Fiyat formatla - cid currency ID veya string olabilir, sadece numeric ID Money'e geçer
 function cdg_inv_money($amount, $cid = 0) {
-    if(class_exists('Money') && method_exists('Money','formatter_symbol') && $cid) {
-        return Money::formatter_symbol($amount, $cid);
+    $cid_int = is_numeric($cid) ? (int)$cid : 0;
+    if(class_exists('Money') && method_exists('Money','formatter_symbol') && $cid_int > 0) {
+        try {
+            return Money::formatter_symbol((float)$amount, $cid_int);
+        } catch(\Throwable $e) {}
     }
     return number_format((float)$amount, 2, ',', '.');
 }
@@ -131,14 +164,23 @@ if(!$u_name) {
 }
 $u_email       = $user_data['email'] ?? '';
 $u_phone       = $user_data['phone'] ?? ($user_data['gsm'] ?? '');
-$u_address     = $user_data['address'] ?? '';
-$u_city        = $user_data['city'] ?? '';
-$u_counti      = $user_data['counti'] ?? '';
-$u_zipcode     = $user_data['zipcode'] ?? '';
-$u_country     = $user_data['country'] ?? ($user_data['country_id'] ?? '');
-$u_identity    = $user_data['identity'] ?? '';
-$u_taxoffice   = $user_data['company_tax_office'] ?? '';
-$u_taxnumber   = $user_data['company_tax_number'] ?? '';
+
+// Adres bazen array gelebilir (eski/yeni WiseCP versiyonu)
+$u_address_raw = $user_data['address'] ?? '';
+if(is_array($u_address_raw)) {
+    // Array: ['line1', 'line2', ...] veya ['street'=>..., 'no'=>...]
+    $u_address = trim(implode(', ', array_filter(array_map('strval', $u_address_raw), 'strlen')));
+} else {
+    $u_address = (string)$u_address_raw;
+}
+
+$u_city        = is_array($user_data['city'] ?? '') ? '' : ($user_data['city'] ?? '');
+$u_counti      = is_array($user_data['counti'] ?? '') ? '' : ($user_data['counti'] ?? '');
+$u_zipcode     = is_array($user_data['zipcode'] ?? '') ? '' : ($user_data['zipcode'] ?? '');
+$u_country     = is_array($user_data['country'] ?? '') ? '' : ($user_data['country'] ?? ($user_data['country_id'] ?? ''));
+$u_identity    = is_array($user_data['identity'] ?? '') ? '' : ($user_data['identity'] ?? '');
+$u_taxoffice   = is_array($user_data['company_tax_office'] ?? '') ? '' : ($user_data['company_tax_office'] ?? '');
+$u_taxnumber   = is_array($user_data['company_tax_number'] ?? '') ? '' : ($user_data['company_tax_number'] ?? '');
 
 // Komisyon ve refund (Classic uyumlu)
 $inv_commission     = $invoice['pmethod_commission'] ?? 0;
@@ -559,7 +601,7 @@ $discounted_total = $inv_subtotal - $total_discount;
         </div>
         <div class="cdg-inv-hero-amount">
             <div class="cdg-inv-hero-amount-label">Toplam</div>
-            <div class="cdg-inv-hero-amount-value"><?php echo htmlspecialchars(cdg_inv_money($inv_total), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+            <div class="cdg-inv-hero-amount-value"><?php echo htmlspecialchars(cdg_inv_money($inv_total, $inv_currency_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
         </div>
     </section>
 
@@ -572,7 +614,7 @@ $discounted_total = $inv_subtotal - $total_discount;
             <p>
                 Ödeme tarihi: <?php echo htmlspecialchars(cdg_inv_date($inv_datepaid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> · Yöntem: <?php echo htmlspecialchars($inv_pmethod ?: 'Bilinmiyor', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 <?php if($inv_commission > 0): ?>
-                · Komisyon: <strong><?php echo htmlspecialchars(cdg_inv_money($inv_commission, $inv_currency), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
+                · Komisyon: <strong><?php echo htmlspecialchars(cdg_inv_money($inv_commission, $inv_currency_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
                 <?php if($inv_commission_rate): ?>(<?php echo htmlspecialchars($inv_commission_rate, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>%)<?php endif; ?>
                 <?php endif; ?>
             </p>
@@ -717,7 +759,7 @@ $discounted_total = $inv_subtotal - $total_discount;
                             <div class="cdg-inv-item-name"><i class="bi bi-tag-fill"></i> <?php echo htmlspecialchars($dname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                             <div class="cdg-inv-item-desc">İndirim uygulandı</div>
                         </td>
-                        <td>-<?php echo htmlspecialchars(cdg_inv_money($damount), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                        <td>-<?php echo htmlspecialchars(cdg_inv_money($damount, $inv_currency_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                     </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -728,23 +770,23 @@ $discounted_total = $inv_subtotal - $total_discount;
         <div class="cdg-inv-totals">
             <div class="cdg-inv-total-row">
                 <span>Ara Toplam</span>
-                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_subtotal), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
+                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_subtotal, $inv_currency_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
             </div>
             <?php if($total_discount > 0): ?>
             <div class="cdg-inv-total-row" style="color:#92400e;">
                 <span>İndirim</span>
-                <strong>-<?php echo htmlspecialchars(cdg_inv_money($total_discount), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
+                <strong>-<?php echo htmlspecialchars(cdg_inv_money($total_discount, $inv_currency_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
             </div>
             <?php endif; ?>
             <?php if($inv_tax > 0): ?>
             <div class="cdg-inv-total-row">
                 <span>KDV (<?php echo (int)$inv_taxrate; ?>%)</span>
-                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_tax), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
+                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_tax, $inv_currency_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
             </div>
             <?php endif; ?>
             <div class="cdg-inv-total-row cdg-inv-total-final">
                 <span>GENEL TOPLAM</span>
-                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_total), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
+                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_total, $inv_currency_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
             </div>
         </div>
     </div>
@@ -869,7 +911,7 @@ $discounted_total = $inv_subtotal - $total_discount;
 
                 <div style="display:flex;justify-content:flex-end;margin-top:20px;">
                     <button type="submit" class="cdg-inv-btn cdg-inv-btn-pay">
-                        <i class="bi bi-shield-lock-fill"></i> Güvenli Öde · <?php echo htmlspecialchars(cdg_inv_money($inv_total), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                        <i class="bi bi-shield-lock-fill"></i> Güvenli Öde · <?php echo htmlspecialchars(cdg_inv_money($inv_total, $inv_currency_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </button>
                 </div>
             </form>

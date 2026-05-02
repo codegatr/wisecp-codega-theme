@@ -91,4 +91,67 @@ html { scroll-behavior: smooth; }
 }
 .cdg-cart-btn:hover { transform: translateY(-1px); }
 
+/* Codega buton variant'lari (header + butun temada kullaniliyor) */
+.cdg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1;
+    white-space: nowrap;
+    font-family: inherit;
+}
+.cdg-btn-sm {
+    padding: 8px 14px;
+    font-size: 13px;
+    border-radius: 8px;
+}
+.cdg-btn-primary {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: #fff !important;
+    border-color: transparent;
+}
+.cdg-btn-primary:hover {
+    background: linear-gradient(135deg, #1e40af, #1e3a8a);
+    color: #fff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(30,64,175,0.30);
+}
+.cdg-btn-outline {
+    background: transparent;
+    color: #0f172a !important;
+    border-color: #cbd5e1;
+}
+.cdg-btn-outline:hover {
+    background: #f8fafc;
+    border-color: #1e40af;
+    color: #1e40af !important;
+}
+.cdg-btn-ghost {
+    background: transparent;
+    color: #0f172a !important;
+    border-color: transparent;
+}
+.cdg-btn-ghost:hover {
+    background: #f1f5f9;
+    color: #1e40af !important;
+}
+.cdg-btn-ghost i, .cdg-btn-outline i, .cdg-btn-primary i { font-size: 16px; }
+
+/* Header nav actions container */
+.cdg-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
 </style>

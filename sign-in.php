@@ -25,6 +25,8 @@ if(class_exists('Config') && Config::get("options/crtacwshop")) $sign_up = false
             });
         });
     </script>
+
+    <?php include __DIR__.DIRECTORY_SEPARATOR."inc".DIRECTORY_SEPARATOR."cdg-auth-styles.php"; ?>
 </head>
 <body id="cdg-auth">
 

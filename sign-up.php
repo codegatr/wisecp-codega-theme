@@ -37,6 +37,7 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
         });
     </script>
     <?php endif; ?>
+    <?php include __DIR__.DIRECTORY_SEPARATOR."inc".DIRECTORY_SEPARATOR."cdg-auth-styles.php"; ?>
 </head>
 <body id="cdg-auth">
 

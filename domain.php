@@ -60,6 +60,9 @@ if(!function_exists('cdg_link')) {
             'products-t'              => 'ac-ps-products-t',
             'product'                 => 'ac-ps-product',
             'sms'                     => 'ac-ps-sms',
+            'affiliate'               => 'ac-affiliate',
+            'ac-affiliate'            => 'ac-affiliate',
+            'reseller'                => 'ac-reseller',
             'domains'                 => 'ac-products-domain',
             'products-domain'         => 'ac-products-domain',
             'whois-profiles'          => 'ac-products-domain-whois-profiles',
@@ -237,56 +240,73 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
 }
 
 /* DOMAIN INPUT WRAP */
-.cdg-domain-search-wrap {
+.cdg-domain-hero .cdg-domain-search-wrap {
     margin: 0 auto;
     max-width: 760px;
+    padding: 0;
 }
-.cdg-domain-search-input {
-    display: flex;
-    align-items: stretch;
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.30), 0 0 0 1px rgba(255,255,255,0.10) inset;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.cdg-domain-hero .cdg-domain-search-input {
+    display: flex !important;
+    align-items: stretch !important;
+    background: #fff !important;
+    border-radius: 14px !important;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.30), 0 0 0 1px rgba(255,255,255,0.10) inset !important;
+    overflow: hidden !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
-.cdg-domain-search-input:hover {
+.cdg-domain-hero .cdg-domain-search-input:hover {
     transform: translateY(-2px);
-    box-shadow: 0 32px 80px rgba(0,0,0,0.40);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.40) !important;
 }
-.cdg-domain-search-input-main {
-    flex: 1 1 auto;
-    display: flex;
-    align-items: center;
-    padding: 0 18px;
-    gap: 12px;
+.cdg-domain-hero .cdg-domain-search-input-main {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 18px !important;
+    gap: 12px !important;
+    min-width: 0 !important;
+    position: relative !important;
 }
-.cdg-domain-search-input-main > i {
-    color: #1e40af;
-    font-size: 22px;
+.cdg-domain-hero .cdg-domain-search-input-main > i,
+.cdg-domain-hero .cdg-domain-search-input-main > .bi {
+    color: #1e40af !important;
+    font-size: 22px !important;
+    flex-shrink: 0 !important;
+    position: static !important;
 }
-.cdg-domain-search-input-main input {
-    flex: 1;
-    border: 0;
-    outline: none;
-    padding: 18px 4px;
-    font-size: 17px;
-    color: #0f172a;
-    background: transparent;
-    font-weight: 600;
+.cdg-domain-hero .cdg-domain-search-input-main input[type=text],
+.cdg-domain-hero .cdg-domain-search-input-main input {
+    flex: 1 1 auto !important;
+    border: 0 !important;
+    outline: none !important;
+    padding: 18px 4px !important;
+    font-size: 17px !important;
+    color: #0f172a !important;
+    background: transparent !important;
+    font-weight: 600 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-shadow: none !important;
+    height: auto !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
 }
-.cdg-domain-search-input-main input::placeholder {
-    color: #94a3b8;
-    font-weight: 500;
+.cdg-domain-hero .cdg-domain-search-input-main input::placeholder {
+    color: #94a3b8 !important;
+    font-weight: 500 !important;
+    opacity: 1 !important;
 }
-.cdg-domain-search-captcha {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 14px;
-    border-left: 1px solid #e2e8f0;
+.cdg-domain-hero .cdg-domain-search-captcha {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 0 14px !important;
+    border-left: 1px solid #e2e8f0 !important;
+    flex-shrink: 0 !important;
 }
-.cdg-domain-captcha-img {
+.cdg-domain-hero .cdg-domain-captcha-img {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 6px;
@@ -294,52 +314,60 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
     height: 38px;
     display: flex;
     align-items: center;
-}
-.cdg-domain-captcha-img img {
-    height: 30px !important;
-    border-radius: 3px;
-}
-.cdg-domain-search-captcha input {
-    width: 110px;
-    padding: 11px 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.2s;
-    background: #fff;
-}
-.cdg-domain-search-captcha input:focus {
-    border-color: #1e40af;
-    box-shadow: 0 0 0 3px rgba(30,64,175,0.15);
-}
-.cdg-btn-glow {
     flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 32px;
-    background: linear-gradient(135deg, #2563eb, #1e40af);
-    color: #fff;
-    font-size: 15px;
-    font-weight: 800;
-    text-decoration: none;
-    transition: all 0.3s;
-    border: 0;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
 }
-.cdg-btn-glow::before {
+.cdg-domain-hero .cdg-domain-captcha-img img {
+    height: 30px !important;
+    width: auto !important;
+    border-radius: 3px;
+    display: block;
+}
+.cdg-domain-hero .cdg-domain-search-captcha input[type=text] {
+    width: 110px !important;
+    padding: 11px 12px !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    outline: none !important;
+    transition: border-color 0.2s !important;
+    background: #fff !important;
+    color: #0f172a !important;
+    flex-shrink: 0 !important;
+}
+.cdg-domain-hero .cdg-domain-search-captcha input:focus {
+    border-color: #1e40af !important;
+    box-shadow: 0 0 0 3px rgba(30,64,175,0.15) !important;
+}
+.cdg-domain-hero .cdg-btn-glow {
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 0 32px !important;
+    background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+    color: #fff !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+    transition: all 0.3s !important;
+    border: 0 !important;
+    cursor: pointer !important;
+    position: relative !important;
+    overflow: hidden !important;
+    min-height: 56px;
+    white-space: nowrap;
+}
+.cdg-domain-hero .cdg-btn-glow::before {
     content: '';
     position: absolute; inset: 0;
     background: linear-gradient(135deg, #1e40af, #1e3a8a);
     opacity: 0;
     transition: opacity 0.3s;
 }
-.cdg-btn-glow:hover::before { opacity: 1; }
-.cdg-btn-glow > * { position: relative; z-index: 1; }
-.cdg-btn-glow i { font-size: 18px; }
+.cdg-domain-hero .cdg-btn-glow:hover::before { opacity: 1; }
+.cdg-domain-hero .cdg-btn-glow > * { position: relative; z-index: 1; }
+.cdg-domain-hero .cdg-btn-glow i { font-size: 18px; }
 
 .cdg-domain-transfer-toggle {
     display: inline-flex;
@@ -413,10 +441,21 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
 /* Mobile responsive */
 @media (max-width: 768px) {
     .cdg-domain-hero { padding: 60px 0 80px; }
-    .cdg-domain-search-input { flex-direction: column; }
-    .cdg-domain-search-input-main { padding: 14px 18px; }
-    .cdg-domain-search-captcha { padding: 12px 18px; border-left: 0; border-top: 1px solid #e2e8f0; justify-content: center; }
-    .cdg-btn-glow { padding: 16px; justify-content: center; }
+    .cdg-domain-hero .cdg-domain-search-input { flex-direction: column !important; }
+    .cdg-domain-hero .cdg-domain-search-input-main { padding: 14px 18px !important; width: 100% !important; }
+    .cdg-domain-hero .cdg-domain-search-captcha {
+        padding: 12px 18px !important;
+        border-left: 0 !important;
+        border-top: 1px solid #e2e8f0 !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+    }
+    .cdg-domain-hero .cdg-btn-glow {
+        padding: 16px !important;
+        width: 100% !important;
+        justify-content: center !important;
+        min-height: 52px;
+    }
 }
 </style>
 
