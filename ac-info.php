@@ -161,3 +161,7 @@ $f = function($key, $default = '') use ($info) {
 // === Saklı Kart Yönetimi ===
 $stored_cards_inc = __DIR__ . DS . 'inc' . DS . 'ac-stored-cards.php';
 if(file_exists($stored_cards_inc)) include $stored_cards_inc;
+
+// === KVKK / GDPR Talepleri ===
+$gdpr_inc = __DIR__ . DS . 'inc' . DS . 'ac-gdpr.php';
+if(file_exists($gdpr_inc)) include $gdpr_inc;

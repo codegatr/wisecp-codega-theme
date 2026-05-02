@@ -406,18 +406,24 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
             <div class="cdg-sms-card-title"><i class="bi bi-list-ul"></i> Mevcut Gönderici Adları</div>
             <table class="cdg-sms-table">
                 <thead>
-                    <tr><th>Gönderici Adı</th><th style="width:100px;">Durum</th><th style="width:140px;">Talep Tarihi</th></tr>
+                    <tr><th>Gönderici Adı</th><th style="width:100px;">Durum</th><th style="width:140px;">Talep Tarihi</th><th style="width:50px;"></th></tr>
                 </thead>
                 <tbody>
                 <?php foreach($origins as $o):
+                    $o_id = (int)($o['id'] ?? 0);
                     $st = $o['status'] ?? 'pending';
                     $st_label = ['active' => '✓ Aktif', 'pending' => '⏳ Onay Bekliyor', 'rejected' => '✗ Reddedildi'][$st] ?? $st;
                     $st_color = ['active' => '#10b981', 'pending' => '#f59e0b', 'rejected' => '#ef4444'][$st] ?? '#64748b';
                 ?>
-                <tr>
+                <tr id="cdg-sms-origin-row-<?php echo $o_id; ?>">
                     <td><strong><?php echo htmlspecialchars($o['name'] ?? ''); ?></strong></td>
                     <td><span style="font-size:11px;font-weight:700;color:<?php echo $st_color; ?>;"><?php echo $st_label; ?></span></td>
                     <td style="font-size:11px;color:#64748b;"><?php echo htmlspecialchars($o['cdate'] ?? ''); ?></td>
+                    <td>
+                        <button type="button" class="cdg-sms-group-action danger" onclick="cdgSmsDeleteOrigin(<?php echo $o_id; ?>)" title="Sil">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
                 </tbody>
@@ -781,6 +787,24 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
                 if(r && r.status === 'successful') {
                     if(typeof alert_success === 'function') alert_success(r.message || 'Talep gönderildi', {timer: 2000});
                     setTimeout(function(){ window.location.reload(); }, 1500);
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 4000});
+                }
+            }
+        });
+    };
+
+    window.cdgSmsDeleteOrigin = function(oid) {
+        if(!confirm('Bu gönderici adını silmek istediğinize emin misiniz?')) return;
+        if(typeof MioAjax !== 'function') return;
+        MioAjax({
+            url: cdgSmsUrl, type: 'post',
+            data: { operation: 'delete_origin', id: oid },
+            result: function(r) {
+                if(r && r.status === 'successful') {
+                    var row = document.getElementById('cdg-sms-origin-row-' + oid);
+                    if(row) row.remove();
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Gönderici adı silindi', {timer: 1500});
                 } else if(r && r.message && typeof alert_error === 'function') {
                     alert_error(r.message, {timer: 4000});
                 }
