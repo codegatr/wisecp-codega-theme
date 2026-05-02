@@ -22,42 +22,90 @@ $mod_domain  = isset($pg_activation['domain'])  ? !empty($pg_activation['domain'
 $pricing_categories = [
     [
         'id' => 'ekonomik', 'name' => 'Ekonomik SSD Hosting', 'icon' => 'bi-rocket-takeoff', 'color' => '#10b981',
-        'desc' => 'Bireysel ve kucuk projeler icin uygun fiyatli paketler',
+        'desc' => 'Bireysel ve küçük projeler için uygun fiyatlı paketler',
         'packages' => [
-            ['name' => 'Linux Hosting 1', 'subtitle' => 'Bireysel siteler', 'price' => '150', 'currency' => '₺', 'period' => 'yillik', 'highlight' => false, 'features' => ['1 Web Sitesi', '5 GB NVMe SSD', '50 GB Trafik', '5 E-posta', 'Ucretsiz SSL', 'Gunluk Yedekleme']],
-            ['name' => 'Linux Hosting 2', 'subtitle' => 'Hobi siteleri', 'price' => '289', 'currency' => '₺', 'period' => 'yillik', 'highlight' => true, 'features' => ['3 Web Sitesi', '20 GB NVMe SSD', 'Sinirsiz Trafik', '20 E-posta', 'Ucretsiz SSL', 'LiteSpeed', 'Gunluk Yedekleme']],
-            ['name' => 'Linux Hosting 3', 'subtitle' => 'Kucuk isletme', 'price' => '389', 'currency' => '₺', 'period' => 'yillik', 'highlight' => false, 'features' => ['5 Web Sitesi', '50 GB NVMe SSD', 'Sinirsiz Trafik', 'Sinirsiz E-posta', 'Ucretsiz SSL', 'LiteSpeed', 'Saatlik Yedek']],
-            ['name' => 'Linux Hosting 4', 'subtitle' => 'Genis projeler', 'price' => '450', 'currency' => '₺', 'period' => 'yillik', 'highlight' => false, 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sinirsiz Trafik', 'Sinirsiz E-posta', 'Ucretsiz SSL', 'LiteSpeed Enterprise', 'Saatlik Yedek']],
+            ['name' => 'Linux Hosting 1', 'subtitle' => 'Bireysel siteler', 'price' => '150', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['1 Web Sitesi', '5 GB NVMe SSD', '50 GB Trafik', '5 E-posta', 'Ücretsiz SSL', 'Günlük Yedekleme']],
+            ['name' => 'Linux Hosting 2', 'subtitle' => 'Hobi siteleri', 'price' => '289', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true, 'features' => ['3 Web Sitesi', '20 GB NVMe SSD', 'Sınırsız Trafik', '20 E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Günlük Yedekleme']],
+            ['name' => 'Linux Hosting 3', 'subtitle' => 'Küçük işletme', 'price' => '389', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['5 Web Sitesi', '50 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Saatlik Yedek']],
+            ['name' => 'Linux Hosting 4', 'subtitle' => 'Geniş projeler', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Saatlik Yedek']],
         ],
     ],
     [
         'id' => 'profesyonel', 'name' => 'Profesyonel SSD Hosting', 'icon' => 'bi-stars', 'color' => '#1e40af',
-        'desc' => 'Yuksek trafikli siteler ve kurumsal cozumler icin',
+        'desc' => 'Yüksek trafikli siteler ve kurumsal çözümler için',
         'packages' => [
-            ['name' => 'Profesyonel 1', 'subtitle' => 'Kurumsal baslangic', 'price' => '450', 'currency' => '₺', 'period' => 'yillik', 'highlight' => false, 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sinirsiz Trafik', '2 Core CPU', '2 GB RAM', 'Ucretsiz SSL', 'LiteSpeed Enterprise']],
-            ['name' => 'Profesyonel 2', 'subtitle' => 'Buyuk kurumsal', 'price' => '750', 'currency' => '₺', 'period' => 'yillik', 'highlight' => true, 'features' => ['25 Web Sitesi', '250 GB NVMe SSD', 'Sinirsiz Trafik', '4 Core CPU', '4 GB RAM', 'Ucretsiz SSL', 'LiteSpeed Enterprise', 'Oncelikli Destek']],
-            ['name' => 'Profesyonel 3', 'subtitle' => 'Yuksek trafik', 'price' => '1.200', 'currency' => '₺', 'period' => 'yillik', 'highlight' => false, 'features' => ['Sinirsiz Site', '500 GB NVMe SSD', 'Sinirsiz Trafik', '8 Core CPU', '8 GB RAM', 'Ucretsiz SSL', 'LiteSpeed Enterprise', 'Dedicated IP']],
+            ['name' => 'Profesyonel 1', 'subtitle' => 'Kurumsal başlangıç', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', '2 Core CPU', '2 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise']],
+            ['name' => 'Profesyonel 2', 'subtitle' => 'Büyük kurumsal', 'price' => '750', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true, 'features' => ['25 Web Sitesi', '250 GB NVMe SSD', 'Sınırsız Trafik', '4 Core CPU', '4 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Öncelikli Destek']],
+            ['name' => 'Profesyonel 3', 'subtitle' => 'Yüksek trafik', 'price' => '1.200', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['Sınırsız Site', '500 GB NVMe SSD', 'Sınırsız Trafik', '8 Core CPU', '8 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Dedicated IP']],
         ],
     ],
     [
         'id' => 'bayi', 'name' => 'Bayi (Reseller) Hosting', 'icon' => 'bi-people-fill', 'color' => '#8b5cf6',
-        'desc' => 'Web tasarimcilari ve ajanslar icin bayilik cozumleri',
+        'desc' => 'Web tasarımcıları ve ajanslar için bayilik çözümleri',
         'packages' => [
-            ['name' => 'S BAYİ', 'subtitle' => 'Kucuk bayilik', 'price' => '14', 'currency' => '$', 'period' => 'aylik', 'highlight' => false, 'features' => ['10 cPanel Hesabi', '20 GB NVMe SSD', '200 GB Trafik', 'WHM Yonetim', 'Ucretsiz SSL', 'White Label']],
-            ['name' => 'M BAYİ', 'subtitle' => 'Orta bayilik', 'price' => '24', 'currency' => '$', 'period' => 'aylik', 'highlight' => true, 'features' => ['25 cPanel Hesabi', '50 GB NVMe SSD', 'Sinirsiz Trafik', 'WHM Yonetim', 'Ucretsiz SSL', 'White Label', 'cPanel Lisansi']],
-            ['name' => 'L BAYİ', 'subtitle' => 'Buyuk bayilik', 'price' => '39', 'currency' => '$', 'period' => 'aylik', 'highlight' => false, 'features' => ['50 cPanel Hesabi', '100 GB NVMe SSD', 'Sinirsiz Trafik', 'WHM Yonetim', 'Ucretsiz SSL', 'White Label', 'Marka Cozumleri']],
+            ['name' => 'S BAYİ', 'subtitle' => 'Küçük bayilik', 'price' => '14', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'features' => ['10 cPanel Hesabı', '20 GB NVMe SSD', '200 GB Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label']],
+            ['name' => 'M BAYİ', 'subtitle' => 'Orta bayilik', 'price' => '24', 'currency' => '$', 'period' => 'aylık', 'highlight' => true, 'features' => ['25 cPanel Hesabı', '50 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'cPanel Lisansı']],
+            ['name' => 'L BAYİ', 'subtitle' => 'Büyük bayilik', 'price' => '39', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'features' => ['50 cPanel Hesabı', '100 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'Marka Çözümleri']],
         ],
     ],
 ];
 
-$popular_tlds = [
-    ['ext' => '.com.tr', 'price' => '199', 'old' => '249', 'badge' => 'POPULER'],
-    ['ext' => '.com',    'price' => '299', 'old' => '349', 'badge' => '%15'],
-    ['ext' => '.net',    'price' => '349', 'old' => '399', 'badge' => ''],
-    ['ext' => '.org',    'price' => '329', 'old' => '379', 'badge' => ''],
-    ['ext' => '.tr',     'price' => '149', 'old' => '199', 'badge' => 'YENI'],
-    ['ext' => '.xyz',    'price' => '99',  'old' => '149', 'badge' => 'UCUZ'],
-];
+// === DOMAIN FİYATLARI - WiseCP API'den gerçek çekim ===
+$popular_tlds = [];
+$tld_loaded_from_api = false;
+
+if($mod_domain) {
+    $wanted_tlds = ['com.tr', 'com', 'net', 'org', 'tr', 'xyz'];
+
+    // Yöntem 1: Domains sınıfı varsa
+    if(class_exists('Domains') && method_exists('Domains', 'getList')) {
+        try {
+            $tlds_data = @Domains::getList(['status' => 'active']);
+            if(is_array($tlds_data) && !empty($tlds_data)) {
+                $by_ext = [];
+                foreach($tlds_data as $td) {
+                    $ext = ltrim($td['name'] ?? $td['extension'] ?? '', '.');
+                    if($ext) $by_ext[strtolower($ext)] = $td;
+                }
+                foreach($wanted_tlds as $w) {
+                    if(isset($by_ext[$w])) {
+                        $td = $by_ext[$w];
+                        $popular_tlds[] = [
+                            'ext'   => '.' . $w,
+                            'price' => isset($td['register_price']) ? $td['register_price'] : (isset($td['price']) ? $td['price'] : '-'),
+                            'old'   => '',
+                            'badge' => '',
+                            'currency' => isset($td['currency']) ? $td['currency'] : '₺',
+                        ];
+                    }
+                }
+                if(!empty($popular_tlds)) $tld_loaded_from_api = true;
+            }
+        } catch(Exception $e) { /* fallback */ }
+    }
+
+    // Yöntem 2: Theme settings'ten oku (eğer admin tanımlamışsa)
+    if(!$tld_loaded_from_api) {
+        $config = include __DIR__ . DS . 'theme-config.php';
+        $ts_settings = isset($config['settings']) ? $config['settings'] : [];
+        if(!empty($ts_settings['featured_tlds']) && is_array($ts_settings['featured_tlds'])) {
+            $popular_tlds = $ts_settings['featured_tlds'];
+            $tld_loaded_from_api = true;
+        }
+    }
+
+    // Yöntem 3: Fallback (Yunus admin paneline TLD eklerse otomatik gelecek)
+    if(!$tld_loaded_from_api) {
+        $popular_tlds = [
+            ['ext' => '.com.tr', 'price' => '199', 'old' => '', 'badge' => '', 'currency' => '₺'],
+            ['ext' => '.com',    'price' => '299', 'old' => '', 'badge' => '', 'currency' => '₺'],
+            ['ext' => '.net',    'price' => '349', 'old' => '', 'badge' => '', 'currency' => '₺'],
+            ['ext' => '.org',    'price' => '329', 'old' => '', 'badge' => '', 'currency' => '₺'],
+            ['ext' => '.tr',     'price' => '149', 'old' => '', 'badge' => '', 'currency' => '₺'],
+            ['ext' => '.xyz',    'price' => '99',  'old' => '', 'badge' => '', 'currency' => '₺'],
+        ];
+    }
+}
 
 // Tech stack
 $tech_stack = [
@@ -71,61 +119,47 @@ $tech_stack = [
     ['name' => 'Imunify360',   'icon' => 'bi-shield-fill',      'color' => '#34d399'],
 ];
 
-// Compare table - 4 paket karşılaştırma
 $compare_features = [
-    ['feature' => 'NVMe SSD Disk',         'starter' => '5 GB',     'pro' => '50 GB',     'business' => '250 GB',   'enterprise' => 'Sinirsiz'],
-    ['feature' => 'Web Sitesi',            'starter' => '1',        'pro' => '5',         'business' => '25',       'enterprise' => 'Sinirsiz'],
+    ['feature' => 'NVMe SSD Disk',         'starter' => '5 GB',     'pro' => '50 GB',     'business' => '250 GB',   'enterprise' => 'Sınırsız'],
+    ['feature' => 'Web Sitesi',            'starter' => '1',        'pro' => '5',         'business' => '25',       'enterprise' => 'Sınırsız'],
     ['feature' => 'CPU Core',              'starter' => '1',        'pro' => '2',         'business' => '4',        'enterprise' => '8'],
     ['feature' => 'RAM',                   'starter' => '1 GB',     'pro' => '2 GB',      'business' => '4 GB',     'enterprise' => '8 GB'],
-    ['feature' => 'Aylik Trafik',          'starter' => '50 GB',    'pro' => 'Sinirsiz',  'business' => 'Sinirsiz', 'enterprise' => 'Sinirsiz'],
-    ['feature' => 'E-posta',               'starter' => '5',        'pro' => 'Sinirsiz',  'business' => 'Sinirsiz', 'enterprise' => 'Sinirsiz'],
-    ['feature' => 'Ucretsiz SSL',          'starter' => 'check',    'pro' => 'check',     'business' => 'check',    'enterprise' => 'check'],
+    ['feature' => 'Aylık Trafik',          'starter' => '50 GB',    'pro' => 'Sınırsız',  'business' => 'Sınırsız', 'enterprise' => 'Sınırsız'],
+    ['feature' => 'E-posta',               'starter' => '5',        'pro' => 'Sınırsız',  'business' => 'Sınırsız', 'enterprise' => 'Sınırsız'],
+    ['feature' => 'Ücretsiz SSL',          'starter' => 'check',    'pro' => 'check',     'business' => 'check',    'enterprise' => 'check'],
     ['feature' => 'LiteSpeed Enterprise',  'starter' => 'cross',    'pro' => 'check',     'business' => 'check',    'enterprise' => 'check'],
     ['feature' => 'Saatlik Yedekleme',     'starter' => 'cross',    'pro' => 'cross',     'business' => 'check',    'enterprise' => 'check'],
     ['feature' => 'Dedicated IP',          'starter' => 'cross',    'pro' => 'cross',     'business' => 'cross',    'enterprise' => 'check'],
-    ['feature' => 'Oncelikli Destek',      'starter' => 'cross',    'pro' => 'cross',     'business' => 'check',    'enterprise' => 'check'],
+    ['feature' => 'Öncelikli Destek',      'starter' => 'cross',    'pro' => 'cross',     'business' => 'check',    'enterprise' => 'check'],
 ];
 
 $advantages = [
-    ['icon' => 'bi-lightning-charge-fill', 'title' => '%100 NVMe SSD',         'desc' => 'NVMe disklerle 10x daha hizli I/O performansi.'],
-    ['icon' => 'bi-speedometer2',          'title' => 'LiteSpeed Enterprise',  'desc' => 'Apache\'den 9 kat hizli, kaynak verimli.'],
-    ['icon' => 'bi-shield-fill-check',     'title' => 'Ucretsiz SSL',          'desc' => 'Tum paketlerde Let\'s Encrypt SSL otomatik.'],
-    ['icon' => 'bi-arrow-clockwise',       'title' => 'Saatlik Yedekleme',     'desc' => 'Verileriniz saat basi yedeklenir.'],
-    ['icon' => 'bi-cloud-arrow-up-fill',   'title' => 'Ucretsiz Tasima',       'desc' => 'Mevcut sitenizi ucretsiz tasiyalim.'],
-    ['icon' => 'bi-fingerprint',           'title' => 'DDoS Korumasi',         'desc' => 'Gelismis firewall + 24/7 izleme.'],
+    ['icon' => 'bi-lightning-charge-fill', 'title' => '%100 NVMe SSD',         'desc' => 'NVMe disklerle 10x daha hızlı I/O performansı.'],
+    ['icon' => 'bi-speedometer2',          'title' => 'LiteSpeed Enterprise',  'desc' => 'Apache\'den 9 kat hızlı, kaynak verimli.'],
+    ['icon' => 'bi-shield-fill-check',     'title' => 'Ücretsiz SSL',          'desc' => 'Tüm paketlerde Let\'s Encrypt SSL otomatik.'],
+    ['icon' => 'bi-arrow-clockwise',       'title' => 'Saatlik Yedekleme',     'desc' => 'Verileriniz saat başı yedeklenir.'],
+    ['icon' => 'bi-cloud-arrow-up-fill',   'title' => 'Ücretsiz Taşıma',       'desc' => 'Mevcut sitenizi ücretsiz taşıyalım.'],
+    ['icon' => 'bi-fingerprint',           'title' => 'DDoS Koruması',         'desc' => 'Gelişmiş firewall + 24/7 izleme.'],
     ['icon' => 'bi-graph-up-arrow',        'title' => '%99.99 Uptime',         'desc' => 'SLA garantili kesintisiz hizmet.'],
-    ['icon' => 'bi-headset',               'title' => '7/24 Destek',           'desc' => 'WhatsApp, telefon, panel uzerinden.'],
+    ['icon' => 'bi-headset',               'title' => '7/24 Destek',           'desc' => 'WhatsApp, telefon, panel üzerinden.'],
 ];
 
 $solutions = [
     ['icon' => 'bi-cart3',           'title' => 'E-Ticaret',     'desc' => 'WooCommerce, OpenCart, PrestaShop optimize',     'color' => '#10b981'],
-    ['icon' => 'bi-wordpress',       'title' => 'WordPress',     'desc' => 'Tek tikla kurulum + WP-CLI + auto update',       'color' => '#21759b'],
-    ['icon' => 'bi-buildings',       'title' => 'Kurumsal',      'desc' => 'Yuksek trafik + dedicated kaynak + SLA',         'color' => '#8b5cf6'],
-    ['icon' => 'bi-mortarboard-fill','title' => 'Egitim',        'desc' => 'Moodle, Open edX, BBB optimize',                 'color' => '#f59e0b'],
-    ['icon' => 'bi-newspaper',       'title' => 'Haber/Blog',    'desc' => 'Yuksek trafik + CDN + cache layer',              'color' => '#ec4899'],
-    ['icon' => 'bi-stack-overflow',  'title' => 'Yazilimci',     'desc' => 'Git, Composer, Node, SSH erisimi',               'color' => '#06b6d4'],
-];
-
-$testimonials = [
-    ['name' => 'Ahmet Y.',  'company' => 'Akinsoft Bayisi',     'avatar' => 'A', 'rating' => 5, 'text' => 'CODEGA ile hosting deneyimimiz mukemmel. Sitelerimiz 3 kat hizlandi, destek ekibi her zaman ulasilabilir.'],
-    ['name' => 'Mehmet K.', 'company' => 'E-ticaret Magazasi',  'avatar' => 'M', 'rating' => 5, 'text' => 'Onceki sirketten gelirken kaygiliyduk ama gecis ucretsiz ve kesintisizdi. Performans %200 arttı.'],
-    ['name' => 'Ayse D.',   'company' => 'Egitim Platformu',    'avatar' => 'A', 'rating' => 5, 'text' => 'Moodle platformumuzu kurumsal pakete tasidik. 5000 kullaniciyi sorunsuz karsiliyoruz.'],
-];
-
-$stats = [
-    ['num' => '15.000+', 'label' => 'Aktif Web Sitesi',  'icon' => 'bi-globe2'],
-    ['num' => '7.500+',  'label' => 'Kayitli Domain',    'icon' => 'bi-tag-fill'],
-    ['num' => '12.000+', 'label' => 'Mutlu Musteri',     'icon' => 'bi-people-fill'],
-    ['num' => '%99.99',  'label' => 'Uptime Garantisi',  'icon' => 'bi-shield-check'],
+    ['icon' => 'bi-wordpress',       'title' => 'WordPress',     'desc' => 'Tek tıkla kurulum + WP-CLI + auto update',       'color' => '#21759b'],
+    ['icon' => 'bi-buildings',       'title' => 'Kurumsal',      'desc' => 'Yüksek trafik + dedicated kaynak + SLA',         'color' => '#8b5cf6'],
+    ['icon' => 'bi-mortarboard-fill','title' => 'Eğitim',        'desc' => 'Moodle, Open edX, BBB optimize',                 'color' => '#f59e0b'],
+    ['icon' => 'bi-newspaper',       'title' => 'Haber/Blog',    'desc' => 'Yüksek trafik + CDN + cache layer',              'color' => '#ec4899'],
+    ['icon' => 'bi-stack-overflow',  'title' => 'Yazılımcı',     'desc' => 'Git, Composer, Node, SSH erişimi',               'color' => '#06b6d4'],
 ];
 
 $faqs = [
-    ['q' => 'Hosting hizmetinde performans nasil saglanir?', 'a' => 'Tum sunucularimizda NVMe SSD diskler, LiteSpeed Enterprise web server, son nesil Intel/AMD islemciler ve ECC RAM kullaniliyor. Bu altyapi ile siteleriniz Apache\'ye gore 9 kat daha hizli yuklenir.'],
-    ['q' => 'Mevcut sitemi CODEGA\'ya nasil tasirim?', 'a' => 'Hosting paketinizi aldiktan sonra panel uzerinden tasima talebi olusturabilirsiniz. Uzman ekibimiz cPanel veya hosting backup\'inizi alir, veri kaybi olmadan tasir. 5 adete kadar UCRETSIZ tasiriz.'],
-    ['q' => 'Ucretsiz SSL sertifikasi nasil aktif olur?', 'a' => 'Tum hosting paketlerinde Let\'s Encrypt SSL otomatik kurulur. Domain\'inizi ekledikten sonra cPanel\'de SSL sekmesinden tek tikla aktif edebilirsiniz. SSL 90 gunde bir otomatik yenilenir.'],
-    ['q' => '7/24 destek hangi kanallardan saglaniyor?', 'a' => 'WhatsApp, telefon, e-posta ve panel uzerinden destek talebi acabilirsiniz. Ortalama yanit suresi 5 dakikanin altindadir.'],
-    ['q' => 'Iade garantisi nasil isliyor?', 'a' => 'Hosting hizmetinden memnun kalmamaniz halinde 30 gun icerisinde kosulsuz iade talebinde bulunabilirsiniz.'],
-    ['q' => 'Domain transferi ucretsiz mi?', 'a' => 'Evet, .com .net .org gibi gTLD\'ler icin transfer islemi UCRETSIZdir, ayrica 1 yil suresine ekleme yapilir.'],
+    ['q' => 'Hosting hizmetinde performans nasıl sağlanır?', 'a' => 'Tüm sunucularımızda NVMe SSD diskler, LiteSpeed Enterprise web server, son nesil Intel/AMD işlemciler ve ECC RAM kullanılıyor. Bu altyapı ile siteleriniz Apache\'ye göre 9 kat daha hızlı yüklenir.'],
+    ['q' => 'Mevcut sitemi CODEGA\'ya nasıl taşırım?', 'a' => 'Hosting paketinizi aldıktan sonra panel üzerinden taşıma talebi oluşturabilirsiniz. Uzman ekibimiz cPanel veya hosting backup\'ınızı alır, veri kaybı olmadan taşır. 5 adete kadar ÜCRETSİZ taşırız.'],
+    ['q' => 'Ücretsiz SSL sertifikası nasıl aktif olur?', 'a' => 'Tüm hosting paketlerinde Let\'s Encrypt SSL otomatik kurulur. Domain\'inizi ekledikten sonra cPanel\'de SSL sekmesinden tek tıkla aktif edebilirsiniz. SSL 90 günde bir otomatik yenilenir.'],
+    ['q' => '7/24 destek hangi kanallardan sağlanıyor?', 'a' => 'WhatsApp, telefon, e-posta ve panel üzerinden destek talebi açabilirsiniz. Ortalama yanıt süresi 5 dakikanın altındadır.'],
+    ['q' => 'İade garantisi nasıl işliyor?', 'a' => 'Hosting hizmetinden memnun kalmamanız halinde 30 gün içerisinde koşulsuz iade talebinde bulunabilirsiniz.'],
+    ['q' => 'Domain transferi ücretsiz mi?', 'a' => 'Evet, .com .net .org gibi gTLD\'ler için transfer işlemi ÜCRETSİZdir, ayrıca 1 yıl süresine ekleme yapılır.'],
 ];
 ?>
 
@@ -133,7 +167,7 @@ $faqs = [
 <div class="cdg-top-banner">
     <div class="cdg-container">
         <i class="bi bi-megaphone-fill"></i>
-        <span><strong>YENI:</strong> Tum hosting paketlerinde %30 indirim! Kampanya icin son 7 gun.</span>
+        <span><strong>YENİ:</strong> Tüm hosting paketlerinde %30 indirim! Kampanya için son 7 gün.</span>
         <a href="<?php echo $hosting_url; ?>" class="cdg-top-banner-cta">Hemen Al <i class="bi bi-arrow-right"></i></a>
     </div>
 </div>
@@ -156,10 +190,10 @@ $faqs = [
             <div class="cdg-hero-content">
                 <div class="cdg-hero-eyebrow cdg-hero-eyebrow-glow">
                     <span class="cdg-hero-pulse"></span>
-                    <span>Turkiye'nin Yeni Nesil Hosting Saglayicisi</span>
+                    <span>Yeni Nesil Hosting Sağlayıcısı</span>
                 </div>
                 <h1>Geleceğin <span class="cdg-text-gradient">hosting</span><br>deneyimi <span class="cdg-text-gradient-cyan">bugün</span></h1>
-                <p class="cdg-hero-lead">CODEGA ile siteleriniz <strong>9 kat daha hizli</strong>, <strong>%99.99 uptime</strong>. AI-tabanli optimizasyon, NVMe SSD, LiteSpeed Enterprise ve 7/24 uzman desteği.</p>
+                <p class="cdg-hero-lead">CODEGA ile siteleriniz <strong>9 kat daha hızlı</strong>, <strong>%99.99 uptime</strong>. AI tabanlı optimizasyon, NVMe SSD, LiteSpeed Enterprise ve 7/24 uzman desteği.</p>
 
                 <?php if($mod_domain): ?>
                 <form action="<?php echo $domain_url; ?>" method="get" class="cdg-hero-domain cdg-hero-domain-glow">
@@ -171,19 +205,21 @@ $faqs = [
                         <i class="bi bi-globe2"></i> <span>Domain Sorgula</span>
                     </button>
                 </form>
+                <?php if(!empty($popular_tlds)): ?>
                 <div class="cdg-hero-popular-tlds">
-                    <span class="muted">Populer:</span>
-                    <a href="<?php echo $domain_url; ?>">.com.tr <strong>199 ₺</strong></a>
-                    <a href="<?php echo $domain_url; ?>">.com <strong>299 ₺</strong></a>
-                    <a href="<?php echo $domain_url; ?>">.tr <strong>149 ₺</strong></a>
+                    <span class="muted">Popüler:</span>
+                    <?php foreach(array_slice($popular_tlds, 0, 3) as $t): ?>
+                    <a href="<?php echo $domain_url; ?>"><?php echo $t['ext']; ?> <strong><?php echo $t['price']; ?> <?php echo $t['currency'] ?? '₺'; ?></strong></a>
+                    <?php endforeach; ?>
                 </div>
+                <?php endif; ?>
                 <?php endif; ?>
 
                 <div class="cdg-hero-trust">
                     <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>%99.99 Uptime</span></div>
-                    <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>30 Gun Iade</span></div>
-                    <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>AI Optimizasyon</span></div>
-                    <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>Ucretsiz Tasima</span></div>
+                    <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>30 Gün İade</span></div>
+                    <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>Ücretsiz SSL</span></div>
+                    <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>Ücretsiz Taşıma</span></div>
                 </div>
             </div>
 
@@ -194,69 +230,33 @@ $faqs = [
                     <div class="cdg-hero-ring cdg-hero-ring-2"></div>
                     <div class="cdg-hero-ring cdg-hero-ring-3"></div>
                 </div>
-                <div class="cdg-float-card cdg-float-card-1 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#10b981,#34d399);"><i class="bi bi-hdd-network"></i></div><div class="body"><div class="title">Hosting</div><div class="meta">15.000+ aktif</div></div></div>
-                <div class="cdg-float-card cdg-float-card-2 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);"><i class="bi bi-globe2"></i></div><div class="body"><div class="title">Domain</div><div class="meta">7.500+ kayit</div></div></div>
-                <div class="cdg-float-card cdg-float-card-3 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#1e40af,#3b82f6);"><i class="bi bi-shield-fill-check"></i></div><div class="body"><div class="title">SSL</div><div class="meta">Ucretsiz</div></div></div>
+                <div class="cdg-float-card cdg-float-card-1 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#10b981,#34d399);"><i class="bi bi-hdd-network"></i></div><div class="body"><div class="title">Hosting</div><div class="meta">NVMe SSD</div></div></div>
+                <div class="cdg-float-card cdg-float-card-2 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);"><i class="bi bi-globe2"></i></div><div class="body"><div class="title">Domain</div><div class="meta">500+ uzantı</div></div></div>
+                <div class="cdg-float-card cdg-float-card-3 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#1e40af,#3b82f6);"><i class="bi bi-shield-fill-check"></i></div><div class="body"><div class="title">SSL</div><div class="meta">Ücretsiz</div></div></div>
                 <div class="cdg-float-card cdg-float-card-4 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);"><i class="bi bi-cpu-fill"></i></div><div class="body"><div class="title">AI</div><div class="meta">Otomatik tune</div></div></div>
-                <div class="cdg-float-stat cdg-glass"><div class="num cdg-counter" data-target="99.99">%99.99</div><div class="lbl">Uptime</div></div>
+                <div class="cdg-float-stat cdg-glass"><div class="num">%99.99</div><div class="lbl">Uptime</div></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 3. LIVE TICKER -->
-<section class="cdg-ticker-section">
-    <div class="cdg-container">
-        <div class="cdg-ticker-grid">
-            <div class="cdg-ticker-item">
-                <div class="cdg-ticker-pulse"></div>
-                <div class="cdg-ticker-body">
-                    <div class="cdg-ticker-num"><span class="cdg-counter" data-target="15847">15.847</span></div>
-                    <div class="cdg-ticker-lbl">Su an aktif site</div>
-                </div>
-            </div>
-            <div class="cdg-ticker-item">
-                <div class="cdg-ticker-pulse" style="background:#10b981;"></div>
-                <div class="cdg-ticker-body">
-                    <div class="cdg-ticker-num"><span class="cdg-counter" data-target="234">234</span></div>
-                    <div class="cdg-ticker-lbl">Bugun yeni hesap</div>
-                </div>
-            </div>
-            <div class="cdg-ticker-item">
-                <div class="cdg-ticker-pulse" style="background:#f59e0b;"></div>
-                <div class="cdg-ticker-body">
-                    <div class="cdg-ticker-num"><span class="cdg-counter" data-target="892">892</span></div>
-                    <div class="cdg-ticker-lbl">Aktif destek talep</div>
-                </div>
-            </div>
-            <div class="cdg-ticker-item">
-                <div class="cdg-ticker-pulse" style="background:#8b5cf6;"></div>
-                <div class="cdg-ticker-body">
-                    <div class="cdg-ticker-num"><span class="cdg-counter" data-target="28">28</span><small>ms</small></div>
-                    <div class="cdg-ticker-lbl">Ortalama yanit</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- 4. POPÜLER TLD -->
-<?php if($mod_domain): ?>
+<!-- 3. POPÜLER TLD'ler -->
+<?php if($mod_domain && !empty($popular_tlds)): ?>
 <section class="cdg-tld-section cdg-section">
     <div class="cdg-container">
         <div class="cdg-section-head">
             <div class="cdg-eyebrow">Domain Sorgulama</div>
-            <h2>Hayalinizdeki <span class="cdg-text-gradient">alan adini</span> kaydedin</h2>
-            <p>500+ uzanti destegi ile her ihtiyaca uygun domain. %30'a varan ilk yil indirimleri.</p>
+            <h2>Hayalinizdeki <span class="cdg-text-gradient">alan adını</span> kaydedin</h2>
+            <p>500+ uzantı desteği ile her ihtiyaça uygun domain. Fiyatlar panelden anlık güncellenir.</p>
         </div>
         <div class="cdg-tld-grid">
             <?php foreach($popular_tlds as $tld): ?>
             <a href="<?php echo $domain_url; ?>" class="cdg-tld-card">
-                <?php if($tld['badge']): ?><span class="cdg-tld-badge"><?php echo $tld['badge']; ?></span><?php endif; ?>
-                <div class="cdg-tld-ext"><?php echo $tld['ext']; ?></div>
-                <div class="cdg-tld-old"><?php echo $tld['old']; ?> ₺</div>
-                <div class="cdg-tld-price"><span class="cdg-tld-amt"><?php echo $tld['price']; ?></span><span class="cdg-tld-curr">₺</span></div>
-                <div class="cdg-tld-period">/yil</div>
+                <?php if(!empty($tld['badge'])): ?><span class="cdg-tld-badge"><?php echo htmlspecialchars($tld['badge']); ?></span><?php endif; ?>
+                <div class="cdg-tld-ext"><?php echo htmlspecialchars($tld['ext']); ?></div>
+                <?php if(!empty($tld['old'])): ?><div class="cdg-tld-old"><?php echo htmlspecialchars($tld['old']); ?> <?php echo $tld['currency'] ?? '₺'; ?></div><?php endif; ?>
+                <div class="cdg-tld-price"><span class="cdg-tld-amt"><?php echo htmlspecialchars($tld['price']); ?></span><span class="cdg-tld-curr"><?php echo $tld['currency'] ?? '₺'; ?></span></div>
+                <div class="cdg-tld-period">/yıl</div>
                 <div class="cdg-tld-cta">Sorgula <i class="bi bi-arrow-right"></i></div>
             </a>
             <?php endforeach; ?>
@@ -265,7 +265,7 @@ $faqs = [
 </section>
 <?php endif; ?>
 
-<!-- 5. TECH STACK -->
+<!-- 4. TECH STACK -->
 <section class="cdg-tech-section">
     <div class="cdg-container">
         <div class="cdg-section-head">
@@ -286,14 +286,14 @@ $faqs = [
     </div>
 </section>
 
-<!-- 6. HOSTING PRICING - 3 SEKMELİ TAB -->
+<!-- 5. HOSTING PRICING -->
 <?php if($mod_hosting): ?>
 <section class="cdg-pricing-tabbed cdg-section">
     <div class="cdg-container">
         <div class="cdg-section-head">
             <div class="cdg-eyebrow">Hosting Paketleri</div>
-            <h2>Her ihtiyaca uygun <span class="cdg-text-gradient">hosting paketleri</span></h2>
-            <p>Bireysel sitelerden bayilik cozumlerine, NVMe SSD + LiteSpeed altyapisi ile.</p>
+            <h2>Her ihtiyaça uygun <span class="cdg-text-gradient">hosting paketleri</span></h2>
+            <p>Bireysel sitelerden bayilik çözümlerine, NVMe SSD + LiteSpeed altyapısı ile.</p>
         </div>
 
         <div class="cdg-pricing-tabs" role="tablist">
@@ -312,7 +312,7 @@ $faqs = [
             <div class="cdg-pricing-grid cdg-pricing-grid-<?php echo count($cat['packages']); ?>">
                 <?php foreach($cat['packages'] as $pkg): ?>
                 <div class="cdg-price-card<?php echo !empty($pkg['highlight']) ? ' cdg-price-card-highlight' : ''; ?>">
-                    <?php if(!empty($pkg['highlight'])): ?><div class="cdg-price-ribbon">EN POPULER</div><?php endif; ?>
+                    <?php if(!empty($pkg['highlight'])): ?><div class="cdg-price-ribbon">EN POPÜLER</div><?php endif; ?>
                     <div class="cdg-price-cat-tag" style="color:<?php echo $cat['color']; ?>;background:<?php echo $cat['color']; ?>15;">
                         <i class="bi <?php echo $cat['icon']; ?>"></i> <?php echo htmlspecialchars($cat['name']); ?>
                     </div>
@@ -331,7 +331,7 @@ $faqs = [
                         <?php endforeach; ?>
                     </ul>
                     <a href="<?php echo $hosting_url; ?>" class="cdg-btn <?php echo !empty($pkg['highlight']) ? 'cdg-btn-primary cdg-btn-glow' : 'cdg-btn-outline'; ?> cdg-btn-block">
-                        <i class="bi bi-cart-plus"></i> Hemen Satin Al
+                        <i class="bi bi-cart-plus"></i> Hemen Satın Al
                     </a>
                 </div>
                 <?php endforeach; ?>
@@ -358,36 +358,23 @@ $faqs = [
 </script>
 <?php endif; ?>
 
-<!-- 7. KARŞILAŞTIRMA TABLOSU -->
+<!-- 6. COMPARE TABLE -->
 <section class="cdg-compare-section cdg-section">
     <div class="cdg-container">
         <div class="cdg-section-head">
-            <div class="cdg-eyebrow">Paket Karsilastirma</div>
-            <h2>Detayli <span class="cdg-text-gradient">paket ozellikleri</span></h2>
-            <p>Hangi paket size uygun? Tum ozellikleri karsilastirin.</p>
+            <div class="cdg-eyebrow">Paket Karşılaştırma</div>
+            <h2>Detaylı <span class="cdg-text-gradient">paket özellikleri</span></h2>
+            <p>Hangi paket size uygun? Tüm özellikleri karşılaştırın.</p>
         </div>
         <div class="cdg-compare-wrap">
             <table class="cdg-compare-table">
                 <thead>
                     <tr>
-                        <th class="cdg-compare-feature-col">Ozellik</th>
-                        <th class="cdg-compare-plan">
-                            <div class="plan-name">Baslangic</div>
-                            <div class="plan-price">150 ₺<small>/yil</small></div>
-                        </th>
-                        <th class="cdg-compare-plan">
-                            <div class="plan-name">Profesyonel</div>
-                            <div class="plan-price">389 ₺<small>/yil</small></div>
-                        </th>
-                        <th class="cdg-compare-plan cdg-compare-plan-popular">
-                            <div class="plan-badge">EN POPULER</div>
-                            <div class="plan-name">Business</div>
-                            <div class="plan-price">750 ₺<small>/yil</small></div>
-                        </th>
-                        <th class="cdg-compare-plan">
-                            <div class="plan-name">Enterprise</div>
-                            <div class="plan-price">1.200 ₺<small>/yil</small></div>
-                        </th>
+                        <th class="cdg-compare-feature-col">Özellik</th>
+                        <th class="cdg-compare-plan"><div class="plan-name">Başlangıç</div><div class="plan-price">150 ₺<small>/yıl</small></div></th>
+                        <th class="cdg-compare-plan"><div class="plan-name">Profesyonel</div><div class="plan-price">389 ₺<small>/yıl</small></div></th>
+                        <th class="cdg-compare-plan cdg-compare-plan-popular"><div class="plan-badge">EN POPÜLER</div><div class="plan-name">Business</div><div class="plan-price">750 ₺<small>/yıl</small></div></th>
+                        <th class="cdg-compare-plan"><div class="plan-name">Enterprise</div><div class="plan-price">1.200 ₺<small>/yıl</small></div></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -407,10 +394,10 @@ $faqs = [
                     <?php endforeach; ?>
                     <tr class="cdg-compare-cta-row">
                         <td></td>
-                        <td><a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">Sec</a></td>
-                        <td><a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">Sec</a></td>
-                        <td><a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-primary cdg-btn-sm">Sec</a></td>
-                        <td><a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">Sec</a></td>
+                        <td><a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">Seç</a></td>
+                        <td><a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">Seç</a></td>
+                        <td><a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-primary cdg-btn-sm">Seç</a></td>
+                        <td><a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">Seç</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -418,7 +405,7 @@ $faqs = [
     </div>
 </section>
 
-<!-- 8. AI HOSTING -->
+<!-- 7. AI HOSTING -->
 <section class="cdg-ai-section cdg-section">
     <div class="cdg-container">
         <div class="cdg-ai-grid">
@@ -427,23 +414,23 @@ $faqs = [
                     <i class="bi bi-cpu-fill"></i> AI-Powered Hosting
                 </div>
                 <h2>Yapay zeka ile <span class="cdg-text-gradient-cyan">otomatik optimizasyon</span></h2>
-                <p>Sitenizin trafik ornuntusunu öğrenen AI sistemi, kaynaklarinizi gercek zamanli olarak optimize eder. Daha hizli, daha verimli, daha akilli hosting.</p>
+                <p>Sitenizin trafik örüntüsünü öğrenen AI sistemi, kaynaklarınızı gerçek zamanlı olarak optimize eder. Daha hızlı, daha verimli, daha akıllı hosting.</p>
                 <div class="cdg-ai-features">
                     <div class="cdg-ai-feat">
                         <div class="cdg-ai-feat-icon" style="background:linear-gradient(135deg,#06b6d4,#0891b2);"><i class="bi bi-graph-up-arrow"></i></div>
-                        <div><strong>Akilli Cache Yonetimi</strong><span>AI, hangi sayfalarin cache'de kalacagini ogrenir.</span></div>
+                        <div><strong>Akıllı Cache Yönetimi</strong><span>AI, hangi sayfaların cache\'de kalacağını öğrenir.</span></div>
                     </div>
                     <div class="cdg-ai-feat">
                         <div class="cdg-ai-feat-icon" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);"><i class="bi bi-shield-shaded"></i></div>
-                        <div><strong>Tehdit Tespiti</strong><span>Anormal davranislari tespit eden makine ogrenmesi.</span></div>
+                        <div><strong>Tehdit Tespiti</strong><span>Anormal davranışları tespit eden makine öğrenmesi.</span></div>
                     </div>
                     <div class="cdg-ai-feat">
                         <div class="cdg-ai-feat-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="bi bi-arrow-repeat"></i></div>
-                        <div><strong>Otomatik Olcekleme</strong><span>Trafik artisinda kaynak otomatik artar.</span></div>
+                        <div><strong>Otomatik Ölçekleme</strong><span>Trafik artışında kaynak otomatik artar.</span></div>
                     </div>
                     <div class="cdg-ai-feat">
                         <div class="cdg-ai-feat-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);"><i class="bi bi-lightning-charge-fill"></i></div>
-                        <div><strong>Predictive Loading</strong><span>Kullanicinin bir sonraki istegini ongoru.</span></div>
+                        <div><strong>Predictive Loading</strong><span>Kullanıcının bir sonraki isteğini öngör.</span></div>
                     </div>
                 </div>
             </div>
@@ -455,21 +442,14 @@ $faqs = [
                     <div class="cdg-ai-radar-dot cdg-ai-radar-dot-2"></div>
                     <div class="cdg-ai-radar-dot cdg-ai-radar-dot-3"></div>
                     <div class="cdg-ai-radar-dot cdg-ai-radar-dot-4"></div>
-                    <div class="cdg-ai-radar-center">
-                        <i class="bi bi-cpu-fill"></i>
-                    </div>
-                </div>
-                <div class="cdg-ai-stats">
-                    <div class="cdg-ai-stat"><span class="num">2.4M</span><span class="lbl">Anlik istek/sn</span></div>
-                    <div class="cdg-ai-stat"><span class="num">847</span><span class="lbl">Engellenen tehdit</span></div>
-                    <div class="cdg-ai-stat"><span class="num">99.8%</span><span class="lbl">Cache hit ratio</span></div>
+                    <div class="cdg-ai-radar-center"><i class="bi bi-cpu-fill"></i></div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 9. WORDPRESS -->
+<!-- 8. WORDPRESS -->
 <section class="cdg-wp-section cdg-section">
     <div class="cdg-container">
         <div class="cdg-wp-grid">
@@ -478,13 +458,13 @@ $faqs = [
                     <i class="bi bi-wordpress"></i>
                     <span>WordPress Hosting</span>
                 </div>
-                <h2>WordPress icin <span class="cdg-text-gradient">optimize edilmis</span> hosting</h2>
-                <p class="cdg-wp-lead">CODEGA WordPress hosting paketleri ile siteniz <strong>3-5 kat daha hizli</strong> calisir.</p>
+                <h2>WordPress için <span class="cdg-text-gradient">optimize edilmiş</span> hosting</h2>
+                <p class="cdg-wp-lead">CODEGA WordPress hosting paketleri ile siteniz <strong>3-5 kat daha hızlı</strong> çalışır.</p>
                 <div class="cdg-wp-features">
-                    <div class="cdg-wp-feat"><i class="bi bi-check-circle-fill"></i><div><strong>Tek Tikla Kurulum</strong><span>Softaculous ile dakikalar icinde aktif.</span></div></div>
-                    <div class="cdg-wp-feat"><i class="bi bi-check-circle-fill"></i><div><strong>Auto Update</strong><span>Core, theme ve eklenti otomatik guncelleme.</span></div></div>
-                    <div class="cdg-wp-feat"><i class="bi bi-check-circle-fill"></i><div><strong>WP-CLI Erisim</strong><span>SSH/Terminal uzerinden komut satiri.</span></div></div>
-                    <div class="cdg-wp-feat"><i class="bi bi-check-circle-fill"></i><div><strong>Staging Site</strong><span>Test ortami + 1 tik production'a aktarma.</span></div></div>
+                    <div class="cdg-wp-feat"><i class="bi bi-check-circle-fill"></i><div><strong>Tek Tıkla Kurulum</strong><span>Softaculous ile dakikalar içinde aktif.</span></div></div>
+                    <div class="cdg-wp-feat"><i class="bi bi-check-circle-fill"></i><div><strong>Auto Update</strong><span>Core, theme ve eklenti otomatik güncelleme.</span></div></div>
+                    <div class="cdg-wp-feat"><i class="bi bi-check-circle-fill"></i><div><strong>WP-CLI Erişim</strong><span>SSH/Terminal üzerinden komut satırı.</span></div></div>
+                    <div class="cdg-wp-feat"><i class="bi bi-check-circle-fill"></i><div><strong>Staging Site</strong><span>Test ortamı + 1 tık production'a aktarma.</span></div></div>
                 </div>
                 <a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-primary"><i class="bi bi-arrow-right-circle"></i> WordPress Paketleri</a>
             </div>
@@ -512,26 +492,22 @@ $faqs = [
     </div>
 </section>
 
-<!-- 10. SECURITY SHIELD -->
+<!-- 9. SECURITY SHIELD -->
 <section class="cdg-security-section">
     <div class="cdg-container">
         <div class="cdg-security-grid">
             <div class="cdg-security-content">
                 <div class="cdg-eyebrow" style="background:rgba(16,185,129,0.15);color:#10b981;border-color:rgba(16,185,129,0.30);">
-                    <i class="bi bi-shield-fill-check"></i> Guvenlik Birinci
+                    <i class="bi bi-shield-fill-check"></i> Güvenlik Birinci
                 </div>
-                <h2>7/24 izlenen <span class="cdg-text-gradient-green">guvenli altyapi</span></h2>
-                <p>Imunify360 firewall, gercek zamanli tehdit izleme, otomatik malware temizleme ve DDoS koruma — sitenizin guvenligi bizim oncelıgımız.</p>
-                <div class="cdg-security-stats">
-                    <div class="cdg-sec-stat"><div class="num cdg-counter" data-target="847000">847.000</div><div class="lbl">Engellenen saldiri (bu ay)</div></div>
-                    <div class="cdg-sec-stat"><div class="num cdg-counter" data-target="99.99">%99.99</div><div class="lbl">Saldiri tespit orani</div></div>
-                </div>
+                <h2>7/24 izlenen <span class="cdg-text-gradient-green">güvenli altyapı</span></h2>
+                <p>Imunify360 firewall, gerçek zamanlı tehdit izleme, otomatik malware temizleme ve DDoS koruma — sitenizin güvenliği bizim önceliğimizdir.</p>
                 <div class="cdg-security-features">
                     <div class="cdg-sec-feat"><i class="bi bi-shield-fill-check"></i> WAF (Web Application Firewall)</div>
                     <div class="cdg-sec-feat"><i class="bi bi-bug-fill"></i> Otomatik Malware Tarama</div>
                     <div class="cdg-sec-feat"><i class="bi bi-cloud-fill"></i> DDoS Koruma (Cloudflare)</div>
                     <div class="cdg-sec-feat"><i class="bi bi-lock-fill"></i> SSL/TLS 1.3</div>
-                    <div class="cdg-sec-feat"><i class="bi bi-eye-fill"></i> 24/7 Tehdit Izleme</div>
+                    <div class="cdg-sec-feat"><i class="bi bi-eye-fill"></i> 24/7 Tehdit İzleme</div>
                     <div class="cdg-sec-feat"><i class="bi bi-arrow-clockwise"></i> Otomatik Yedekleme</div>
                 </div>
             </div>
@@ -539,9 +515,7 @@ $faqs = [
                 <div class="cdg-shield-wrap">
                     <div class="cdg-shield-pulse"></div>
                     <div class="cdg-shield-pulse cdg-shield-pulse-2"></div>
-                    <div class="cdg-shield-icon">
-                        <i class="bi bi-shield-fill-check"></i>
-                    </div>
+                    <div class="cdg-shield-icon"><i class="bi bi-shield-fill-check"></i></div>
                     <div class="cdg-shield-orbits">
                         <div class="cdg-shield-orbit cdg-shield-orbit-1"><span></span></div>
                         <div class="cdg-shield-orbit cdg-shield-orbit-2"><span></span></div>
@@ -553,13 +527,13 @@ $faqs = [
     </div>
 </section>
 
-<!-- 11. SEKTÖREL -->
+<!-- 10. SEKTÖREL -->
 <section class="cdg-solutions-section cdg-section">
     <div class="cdg-container">
         <div class="cdg-section-head">
-            <div class="cdg-eyebrow">Sektorel Cozumler</div>
-            <h2>Ihtiyaciniza ozel <span class="cdg-text-gradient">hosting cozumleri</span></h2>
-            <p>E-ticaretten egitim platformlarina, her sektor icin optimize edilmis altyapi.</p>
+            <div class="cdg-eyebrow">Sektörel Çözümler</div>
+            <h2>İhtiyacınıza özel <span class="cdg-text-gradient">hosting çözümleri</span></h2>
+            <p>E-ticaretten eğitim platformlarına, her sektör için optimize edilmiş altyapı.</p>
         </div>
         <div class="cdg-solutions-grid">
             <?php foreach($solutions as $sol): ?>
@@ -574,13 +548,13 @@ $faqs = [
     </div>
 </section>
 
-<!-- 12. AVANTAJLAR -->
+<!-- 11. AVANTAJLAR -->
 <section class="cdg-advantages-section cdg-section">
     <div class="cdg-container">
         <div class="cdg-section-head">
             <div class="cdg-eyebrow">Neden CODEGA?</div>
-            <h2>Hizli, guvenli, <span class="cdg-text-gradient">profesyonel</span> hosting</h2>
-            <p>Sektorde lider altyapi ve teknolojilerle hizmet veriyoruz.</p>
+            <h2>Hızlı, güvenli, <span class="cdg-text-gradient">profesyonel</span> hosting</h2>
+            <p>Sektörde lider altyapı ve teknolojilerle hizmet veriyoruz.</p>
         </div>
         <div class="cdg-adv-grid cdg-adv-grid-4">
             <?php foreach($advantages as $adv): ?>
@@ -594,113 +568,68 @@ $faqs = [
     </div>
 </section>
 
-<!-- 13. MIGRATION WIZARD -->
+<!-- 12. MIGRATION WIZARD -->
 <section class="cdg-migration-section cdg-section">
     <div class="cdg-container">
         <div class="cdg-section-head">
-            <div class="cdg-eyebrow">Ucretsiz Tasima</div>
-            <h2>Sitenizi <span class="cdg-text-gradient">3 adimda</span> tasiyalim</h2>
-            <p>Mevcut hosting saglayicinizdan CODEGA'ya gecmek artik cok kolay.</p>
+            <div class="cdg-eyebrow">Ücretsiz Taşıma</div>
+            <h2>Sitenizi <span class="cdg-text-gradient">3 adımda</span> taşıyalım</h2>
+            <p>Mevcut hosting sağlayıcınızdan CODEGA'ya geçmek artık çok kolay.</p>
         </div>
         <div class="cdg-migration-steps">
             <div class="cdg-mig-step">
                 <div class="cdg-mig-step-num">01</div>
                 <div class="cdg-mig-step-icon" style="background:linear-gradient(135deg,#1e40af,#3b82f6);"><i class="bi bi-cart-check"></i></div>
-                <h3>Paket Secin</h3>
-                <p>Ihtiyaciniza uygun hosting paketini secin ve siparis verin. Hesabiniz dakikalar icinde aktif olur.</p>
+                <h3>Paket Seçin</h3>
+                <p>İhtiyacınıza uygun hosting paketini seçin ve sipariş verin. Hesabınız dakikalar içinde aktif olur.</p>
             </div>
             <div class="cdg-mig-arrow"><i class="bi bi-arrow-right"></i></div>
             <div class="cdg-mig-step">
                 <div class="cdg-mig-step-num">02</div>
                 <div class="cdg-mig-step-icon" style="background:linear-gradient(135deg,#10b981,#34d399);"><i class="bi bi-cloud-arrow-up-fill"></i></div>
-                <h3>Tasima Talebi</h3>
-                <p>Panel uzerinden tasima talebi olusturun. Mevcut hosting bilgilerinizi paylasin, ekibimiz devraltsin.</p>
+                <h3>Taşıma Talebi</h3>
+                <p>Panel üzerinden taşıma talebi oluşturun. Mevcut hosting bilgilerinizi paylaşın, ekibimiz devralsın.</p>
             </div>
             <div class="cdg-mig-arrow"><i class="bi bi-arrow-right"></i></div>
             <div class="cdg-mig-step">
                 <div class="cdg-mig-step-num">03</div>
                 <div class="cdg-mig-step-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);"><i class="bi bi-check-circle-fill"></i></div>
-                <h3>Hazir!</h3>
-                <p>Uzman ekibimiz sitenizi kesintisiz tasir. DNS yonlendirmesi yapin, hazirsiniz!</p>
+                <h3>Hazır!</h3>
+                <p>Uzman ekibimiz sitenizi kesintisiz taşır. DNS yönlendirmesi yapın, hazırsınız!</p>
             </div>
         </div>
         <div style="text-align:center;margin-top:36px;">
             <a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-primary cdg-btn-lg cdg-btn-glow">
-                <i class="bi bi-rocket-takeoff-fill"></i> Hemen Tasiyalim
+                <i class="bi bi-rocket-takeoff-fill"></i> Hemen Taşıyalım
             </a>
         </div>
     </div>
 </section>
 
-<!-- 14. VERİ MERKEZLERİ -->
+<!-- 13. VERİ MERKEZLERİ -->
 <section class="cdg-dc-section cdg-section">
     <div class="cdg-container">
         <div class="cdg-section-head">
             <div class="cdg-eyebrow">Veri Merkezleri</div>
-            <h2>Tier-3 sertifikali <span class="cdg-text-gradient">veri merkezleri</span></h2>
-            <p>Turkiye ve Avrupa'da yedekli altyapi ile %99.99 uptime garantisi.</p>
+            <h2>Tier-3 sertifikalı <span class="cdg-text-gradient">veri merkezleri</span></h2>
+            <p>Türkiye ve Avrupa'da yedekli altyapı ile %99.99 uptime garantisi.</p>
         </div>
         <div class="cdg-dc-grid">
-            <div class="cdg-dc-card cdg-dc-card-pulse"><div class="cdg-dc-flag">🇹🇷</div><h3>Istanbul</h3><p>Ana veri merkezi · Tier-3 · 24/7 fiziksel guvenlik</p><div class="cdg-dc-specs"><span><i class="bi bi-fire"></i> 7ms ping</span><span><i class="bi bi-shield-fill-check"></i> ISO 27001</span></div></div>
+            <div class="cdg-dc-card cdg-dc-card-pulse"><div class="cdg-dc-flag">🇹🇷</div><h3>İstanbul</h3><p>Ana veri merkezi · Tier-3 · 24/7 fiziksel güvenlik</p><div class="cdg-dc-specs"><span><i class="bi bi-fire"></i> 7ms ping</span><span><i class="bi bi-shield-fill-check"></i> ISO 27001</span></div></div>
             <div class="cdg-dc-card cdg-dc-card-pulse"><div class="cdg-dc-flag">🇩🇪</div><h3>Frankfurt</h3><p>Avrupa hub · Tier-3 · 100 Gbps backbone</p><div class="cdg-dc-specs"><span><i class="bi bi-fire"></i> 35ms ping</span><span><i class="bi bi-shield-fill-check"></i> ISO 27001</span></div></div>
-            <div class="cdg-dc-card cdg-dc-card-pulse"><div class="cdg-dc-flag">🇳🇱</div><h3>Amsterdam</h3><p>AMS-IX hub · Tier-3 · DDoS korumali</p><div class="cdg-dc-specs"><span><i class="bi bi-fire"></i> 42ms ping</span><span><i class="bi bi-shield-fill-check"></i> ISO 27001</span></div></div>
+            <div class="cdg-dc-card cdg-dc-card-pulse"><div class="cdg-dc-flag">🇳🇱</div><h3>Amsterdam</h3><p>AMS-IX hub · Tier-3 · DDoS korumalı</p><div class="cdg-dc-specs"><span><i class="bi bi-fire"></i> 42ms ping</span><span><i class="bi bi-shield-fill-check"></i> ISO 27001</span></div></div>
         </div>
     </div>
 </section>
 
-<!-- 15. STATS -->
-<section class="cdg-stats-section">
-    <div class="cdg-container">
-        <div class="cdg-stats-head">
-            <h2>Binlerce isletmenin <span class="cdg-text-gradient-light">guvendigi</span> hosting</h2>
-            <p>2017'den beri sektorun en hizli ve guvenilir saglayicisi olarak hizmet veriyoruz.</p>
-        </div>
-        <div class="cdg-stats-grid">
-            <?php foreach($stats as $stat): ?>
-            <div class="cdg-stat-banner">
-                <div class="cdg-stat-banner-icon"><i class="bi <?php echo $stat['icon']; ?>"></i></div>
-                <div class="cdg-stat-banner-num"><?php echo $stat['num']; ?></div>
-                <div class="cdg-stat-banner-label"><?php echo $stat['label']; ?></div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
-
-<!-- 16. YORUMLAR -->
-<section class="cdg-testimonial-section cdg-section">
-    <div class="cdg-container">
-        <div class="cdg-section-head">
-            <div class="cdg-eyebrow">Musteri Yorumlari</div>
-            <h2>Kullanicilarimiz <span class="cdg-text-gradient">ne diyor?</span></h2>
-            <p>12.000+ memnun musterimiz CODEGA'yi tercih ediyor.</p>
-        </div>
-        <div class="cdg-testimonial-grid">
-            <?php foreach($testimonials as $t): ?>
-            <div class="cdg-testimonial-card">
-                <div class="cdg-test-rating"><?php for($i=0;$i<$t['rating'];$i++): ?><i class="bi bi-star-fill"></i><?php endfor; ?></div>
-                <p class="cdg-test-text">"<?php echo $t['text']; ?>"</p>
-                <div class="cdg-test-author">
-                    <div class="cdg-test-avatar"><?php echo $t['avatar']; ?></div>
-                    <div>
-                        <div class="cdg-test-name"><?php echo $t['name']; ?></div>
-                        <div class="cdg-test-company"><?php echo $t['company']; ?></div>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
-
-<!-- 17. FAQ -->
+<!-- 14. FAQ -->
 <section class="cdg-faq-section cdg-section">
     <div class="cdg-container">
         <div class="cdg-faq-grid">
             <div class="cdg-faq-intro">
-                <div class="cdg-eyebrow">Sik Sorulan Sorular</div>
-                <h2>Aklinizdaki <span class="cdg-text-gradient">tum sorulara cevap</span></h2>
-                <p>En cok sorulan sorulari sizin icin derledik.</p>
+                <div class="cdg-eyebrow">Sık Sorulan Sorular</div>
+                <h2>Aklınızdaki <span class="cdg-text-gradient">tüm sorulara cevap</span></h2>
+                <p>En çok sorulan soruları sizin için derledik.</p>
                 <div class="cdg-faq-cta">
                     <a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-primary"><i class="bi bi-chat-dots-fill"></i> Bize Sorun</a>
                 </div>
@@ -720,15 +649,15 @@ $faqs = [
     </div>
 </section>
 
-<!-- 18. SERTİFİKALAR -->
+<!-- 15. SERTİFİKALAR -->
 <section class="cdg-certs-section">
     <div class="cdg-container">
         <div class="cdg-certs-row">
-            <div class="cdg-cert-item"><i class="bi bi-shield-fill-check"></i><div><strong>ISO 27001</strong><span>Bilgi Guvenligi</span></div></div>
-            <div class="cdg-cert-item"><i class="bi bi-award-fill"></i><div><strong>ETBIS Kayitli</strong><span>E-Ticaret Sistemi</span></div></div>
+            <div class="cdg-cert-item"><i class="bi bi-shield-fill-check"></i><div><strong>ISO 27001</strong><span>Bilgi Güvenliği</span></div></div>
+            <div class="cdg-cert-item"><i class="bi bi-award-fill"></i><div><strong>ETBİS Kayıtlı</strong><span>E-Ticaret Sistemi</span></div></div>
             <div class="cdg-cert-item"><i class="bi bi-file-earmark-lock-fill"></i><div><strong>KVKK Uyumlu</strong><span>Veri Koruma</span></div></div>
-            <div class="cdg-cert-item"><i class="bi bi-patch-check-fill"></i><div><strong>SSL Korumali</strong><span>256-bit AES</span></div></div>
-            <div class="cdg-cert-item"><i class="bi bi-trophy-fill"></i><div><strong>2017'den Beri</strong><span>9 yillik tecrube</span></div></div>
+            <div class="cdg-cert-item"><i class="bi bi-patch-check-fill"></i><div><strong>SSL Korumalı</strong><span>256-bit AES</span></div></div>
+            <div class="cdg-cert-item"><i class="bi bi-trophy-fill"></i><div><strong>Yerli Yazılım</strong><span>%100 Türk yapımı</span></div></div>
         </div>
     </div>
 </section>
@@ -743,16 +672,16 @@ $faqs = [
             </div>
             <div class="cdg-support-content">
                 <div class="cdg-eyebrow" style="color:rgba(255,255,255,0.85);">7/24 Destek</div>
-                <h2>Yardim mi gerekiyor? <span class="cdg-text-gradient-light">Buradayiz!</span></h2>
-                <p>CODEGA destek ekibi sorulariniza haftanin 7 gunu, gunun 24 saati cevap vermek icin hazir.</p>
+                <h2>Yardım mı gerekiyor? <span class="cdg-text-gradient-light">Buradayız!</span></h2>
+                <p>CODEGA destek ekibi sorularınıza haftanın 7 günü, günün 24 saati cevap vermek için hazır.</p>
                 <div class="cdg-support-features">
                     <div class="cdg-support-feature"><i class="bi bi-telephone-fill"></i><div><div class="title">Telefon</div><div class="meta">0 332 909 9656</div></div></div>
-                    <div class="cdg-support-feature"><i class="bi bi-whatsapp"></i><div><div class="title">WhatsApp</div><div class="meta">Anlik destek</div></div></div>
-                    <div class="cdg-support-feature"><i class="bi bi-chat-dots-fill"></i><div><div class="title">Canli Destek</div><div class="meta">7/24</div></div></div>
+                    <div class="cdg-support-feature"><i class="bi bi-whatsapp"></i><div><div class="title">WhatsApp</div><div class="meta">Anlık destek</div></div></div>
+                    <div class="cdg-support-feature"><i class="bi bi-chat-dots-fill"></i><div><div class="title">Canlı Destek</div><div class="meta">7/24</div></div></div>
                 </div>
                 <div class="cdg-support-actions">
-                    <a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-white"><i class="bi bi-envelope-fill"></i> Iletisim</a>
-                    <a href="<?php echo $register_url; ?>" class="cdg-btn cdg-btn-ghost"><i class="bi bi-person-plus-fill"></i> Kayit Ol</a>
+                    <a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-white"><i class="bi bi-envelope-fill"></i> İletişim</a>
+                    <a href="<?php echo $register_url; ?>" class="cdg-btn cdg-btn-ghost"><i class="bi bi-person-plus-fill"></i> Kayıt Ol</a>
                 </div>
             </div>
         </div>
@@ -762,16 +691,16 @@ $faqs = [
 <section class="cdg-final-cta">
     <div class="cdg-container">
         <div class="cdg-final-cta-content">
-            <div class="cdg-eyebrow">Hemen Baslayin</div>
-            <h2>Profesyonel hosting deneyimine<br><span class="cdg-text-gradient">CODEGA</span> ile baslayin</h2>
-            <p>Bugun kayit olun, %30 indirim + ucretsiz domain + 30 gun para iade garantisi.</p>
+            <div class="cdg-eyebrow">Hemen Başlayın</div>
+            <h2>Profesyonel hosting deneyimine<br><span class="cdg-text-gradient">CODEGA</span> ile başlayın</h2>
+            <p>Bugün kayıt olun, %30 indirim + ücretsiz domain + 30 gün para iade garantisi.</p>
             <div class="cdg-final-cta-actions">
                 <?php if($mod_hosting): ?><a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-primary cdg-btn-lg cdg-btn-glow"><i class="bi bi-rocket-takeoff-fill"></i> Hosting Al</a><?php endif; ?>
                 <?php if($mod_domain): ?><a href="<?php echo $domain_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-globe2"></i> Domain Sorgula</a><?php endif; ?>
             </div>
             <div class="cdg-final-trust">
                 <span><i class="bi bi-shield-check"></i> %99.99 Uptime</span>
-                <span><i class="bi bi-arrow-counterclockwise"></i> 30 Gun Iade</span>
+                <span><i class="bi bi-arrow-counterclockwise"></i> 30 Gün İade</span>
                 <span><i class="bi bi-headset"></i> 7/24 Destek</span>
                 <span><i class="bi bi-cpu-fill"></i> AI Optimizasyon</span>
             </div>
@@ -779,42 +708,8 @@ $faqs = [
     </div>
 </section>
 
-<!-- WhatsApp + Live Chat -->
+<!-- WhatsApp -->
 <a href="https://wa.me/903329099656" class="cdg-floating-wa" target="_blank" rel="noopener" title="WhatsApp Destek">
     <i class="bi bi-whatsapp"></i>
     <span class="cdg-floating-pulse"></span>
 </a>
-
-<!-- Counter animation -->
-<script>
-(function(){
-    var counters = document.querySelectorAll('.cdg-counter');
-    var animateCounter = function(el, target){
-        var duration = 1500, steps = 60, current = 0, decimals = (target % 1 !== 0) ? 2 : 0;
-        var increment = target / steps;
-        var step = function(){
-            current += increment;
-            if(current >= target){ current = target; el.textContent = formatNum(target, decimals); return; }
-            el.textContent = formatNum(current, decimals);
-            setTimeout(step, duration / steps);
-        };
-        step();
-    };
-    var formatNum = function(n, d){
-        if(d > 0) return n.toFixed(d).replace('.', ',');
-        return Math.round(n).toLocaleString('tr-TR');
-    };
-    if('IntersectionObserver' in window){
-        var io = new IntersectionObserver(function(entries){
-            entries.forEach(function(entry){
-                if(entry.isIntersecting){
-                    var target = parseFloat(entry.target.getAttribute('data-target'));
-                    if(!isNaN(target)) animateCounter(entry.target, target);
-                    io.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.3 });
-        counters.forEach(function(c){ io.observe(c); });
-    }
-})();
-</script>

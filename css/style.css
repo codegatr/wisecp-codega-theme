@@ -2920,3 +2920,205 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     .cdg-kb-cat-head-icon{width:48px;height:48px;font-size:22px;}
     .cdg-kb-cat-head h2{font-size:18px;}
 }
+
+/* ==================== v2.7.0 - KRALİYET SARAYI TEMASI ==================== */
+
+.cdg-royal-section{
+    position:relative;
+    min-height:calc(100vh - 80px);
+    padding:60px 0;
+    background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 35%,#3730a3 70%,#581c87 100%);
+    overflow:hidden;
+    color:#fff;
+}
+
+.cdg-royal-bg{position:absolute;inset:0;pointer-events:none;}
+.cdg-royal-bg-gradient{
+    position:absolute;inset:0;
+    background:
+        radial-gradient(at 20% 30%, rgba(252,211,77,0.20) 0%, transparent 50%),
+        radial-gradient(at 80% 70%, rgba(168,85,247,0.25) 0%, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(220,38,38,0.15) 0%, transparent 50%);
+    animation: cdgRoyalShift 30s ease-in-out infinite alternate;
+}
+@keyframes cdgRoyalShift{
+    0%{transform:scale(1) rotate(0deg);}
+    100%{transform:scale(1.15) rotate(8deg);}
+}
+.cdg-royal-bg-pattern{
+    position:absolute;inset:0;
+    background-image:
+        radial-gradient(circle at 25% 25%, rgba(252,211,77,0.06) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(252,211,77,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity:0.5;
+}
+.cdg-royal-orb{
+    position:absolute;border-radius:50%;
+    background:radial-gradient(circle,rgba(252,211,77,0.30),rgba(252,211,77,0) 70%);
+    filter:blur(40px);
+    animation: cdgRoyalFloat 12s ease-in-out infinite;
+}
+.cdg-royal-orb-1{width:400px;height:400px;top:-100px;left:-100px;}
+.cdg-royal-orb-2{width:500px;height:500px;bottom:-150px;right:-150px;animation-delay:6s;}
+@keyframes cdgRoyalFloat{
+    0%,100%{transform:translate(0,0);}
+    50%{transform:translate(30px,-30px);}
+}
+
+.cdg-royal-grid{
+    display:grid;grid-template-columns:1fr 1.05fr;gap:48px;
+    align-items:center;
+    min-height:calc(100vh - 200px);
+    position:relative;z-index:2;
+}
+
+/* Kraliyet Promo (sol) */
+.cdg-royal-promo{
+    color:#fff;text-align:left;padding:20px 0;
+}
+.cdg-royal-crown-wrap{
+    text-align:center;margin-bottom:24px;
+    position:relative;
+}
+.cdg-royal-crown{
+    width:120px;height:72px;margin:0 auto;
+    filter:drop-shadow(0 8px 24px rgba(252,211,77,0.50));
+    animation: cdgCrownGlow 3s ease-in-out infinite;
+}
+.cdg-royal-crown svg{width:100%;height:100%;}
+@keyframes cdgCrownGlow{
+    0%,100%{filter:drop-shadow(0 8px 24px rgba(252,211,77,0.50));transform:translateY(0);}
+    50%{filter:drop-shadow(0 12px 32px rgba(252,211,77,0.80));transform:translateY(-6px);}
+}
+.cdg-royal-stars{
+    display:flex;justify-content:center;gap:8px;margin-top:8px;
+}
+.cdg-royal-stars span{
+    color:#fde047;font-size:18px;
+    animation: cdgTwinkle 2s ease-in-out infinite;
+}
+.cdg-royal-stars span:nth-child(2){animation-delay:0.5s;font-size:22px;}
+.cdg-royal-stars span:nth-child(3){animation-delay:1s;}
+@keyframes cdgTwinkle{
+    0%,100%{opacity:0.3;transform:scale(1);}
+    50%{opacity:1;transform:scale(1.2);}
+}
+
+.cdg-royal-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 16px;
+    background:linear-gradient(135deg,rgba(252,211,77,0.15),rgba(252,211,77,0.08));
+    border:1px solid rgba(252,211,77,0.40);
+    border-radius:99px;
+    color:#fde047;font-size:12px;font-weight:700;
+    text-transform:uppercase;letter-spacing:0.8px;
+    backdrop-filter:blur(10px);
+    margin-bottom:18px;
+}
+.cdg-royal-eyebrow i{color:#fde047;}
+
+.cdg-royal-promo h1{
+    font-size:42px;font-weight:800;letter-spacing:-1px;line-height:1.1;
+    margin-bottom:14px;color:#fff;
+}
+.cdg-text-gold{
+    background:linear-gradient(135deg,#fde047,#facc15,#ca8a04);
+    -webkit-background-clip:text;background-clip:text;
+    color:transparent;
+    text-shadow:0 0 30px rgba(252,211,77,0.30);
+}
+
+.cdg-royal-promo p{
+    font-size:15px;line-height:1.7;color:rgba(255,255,255,0.85);
+    margin-bottom:24px;
+}
+
+.cdg-royal-features{
+    list-style:none;padding:0;margin:0 0 28px;
+    display:flex;flex-direction:column;gap:10px;
+}
+.cdg-royal-features li{
+    font-size:14px;color:rgba(255,255,255,0.92);
+    display:flex;align-items:center;gap:10px;font-weight:500;
+}
+.cdg-royal-features li i{
+    color:#fde047;font-size:18px;
+    filter:drop-shadow(0 0 8px rgba(252,211,77,0.50));
+}
+
+.cdg-royal-cta{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(252,211,77,0.20);
+    border-radius:14px;
+    padding:18px 22px;
+    backdrop-filter:blur(10px);
+    margin-bottom:18px;
+}
+.cdg-royal-cta p{
+    font-size:13px;color:rgba(255,255,255,0.85);
+    margin-bottom:10px;font-weight:500;
+}
+
+.cdg-btn-gold{
+    background:linear-gradient(135deg,#fde047,#facc15,#ca8a04)!important;
+    color:#1e3a8a!important;border:0;font-weight:700!important;
+    box-shadow:0 8px 20px rgba(252,211,77,0.30);
+}
+.cdg-btn-gold:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 28px rgba(252,211,77,0.50);
+    color:#1e3a8a!important;
+}
+
+.cdg-royal-seal{
+    display:flex;align-items:center;gap:8px;
+    font-size:11px;color:rgba(255,255,255,0.65);
+    text-transform:uppercase;letter-spacing:0.5px;font-weight:600;
+}
+.cdg-royal-seal i{color:#fde047;font-size:14px;}
+
+/* Form (sağ) - mevcut cdg-auth-card kullanılıyor, sadece beyaz/koyu zit */
+.cdg-royal-section .cdg-auth-form-wrap{
+    position:relative;z-index:2;
+}
+.cdg-royal-section .cdg-auth-card{
+    background:rgba(255,255,255,0.97);
+    backdrop-filter:blur(24px);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.30),
+        0 0 0 1px rgba(252,211,77,0.20),
+        0 0 80px rgba(252,211,77,0.15);
+    border:1px solid rgba(252,211,77,0.25);
+    border-radius:20px;
+    position:relative;
+}
+.cdg-royal-section .cdg-auth-card::before{
+    content:'';position:absolute;
+    top:-1px;left:-1px;right:-1px;bottom:-1px;
+    background:linear-gradient(135deg,#fde047,#facc15,#fde047);
+    border-radius:20px;z-index:-1;
+    opacity:0.4;
+    filter:blur(8px);
+}
+
+.cdg-royal-section .cdg-auth-card-head h2{
+    color:#1e3a8a;font-weight:800;letter-spacing:-0.5px;
+}
+
+/* Mobil */
+@media (max-width:900px){
+    .cdg-royal-grid{
+        grid-template-columns:1fr;gap:32px;
+        min-height:auto;
+    }
+    .cdg-royal-promo{text-align:center;padding:0;}
+    .cdg-royal-promo h1{font-size:32px;}
+    .cdg-royal-features li{justify-content:center;}
+    .cdg-royal-seal{justify-content:center;}
+}
+
+@media (max-width:520px){
+    .cdg-royal-promo h1{font-size:26px;}
+    .cdg-royal-crown{width:90px;height:54px;}
+}

@@ -126,36 +126,63 @@ if(class_exists('Config') && Config::get("options/crtacwshop")) $sign_up = false
 ?>
 
 <!-- AUTH SAYFA -->
-<section class="cdg-auth-section">
-    <div class="cdg-auth-bg">
-        <div class="cdg-auth-glow"></div>
-        <div class="cdg-auth-dots"></div>
+<section class="cdg-royal-section cdg-royal-auth">
+    <div class="cdg-royal-bg">
+        <div class="cdg-royal-bg-gradient"></div>
+        <div class="cdg-royal-bg-pattern"></div>
+        <div class="cdg-royal-orb cdg-royal-orb-1"></div>
+        <div class="cdg-royal-orb cdg-royal-orb-2"></div>
     </div>
     <div class="cdg-container">
-        <div class="cdg-auth-grid">
+        <div class="cdg-royal-grid">
 
-            <!-- SOL: Promo -->
-            <div class="cdg-auth-promo">
-                <div class="cdg-auth-promo-badge">
-                    <i class="bi bi-shield-fill-check"></i>
-                    <span>Guvenli Giris</span>
+            <!-- SOL: KRALIYET PROMO -->
+            <div class="cdg-royal-promo">
+                <div class="cdg-royal-crown-wrap">
+                    <div class="cdg-royal-crown">
+                        <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#fde047"/>
+                                    <stop offset="50%" style="stop-color:#facc15"/>
+                                    <stop offset="100%" style="stop-color:#ca8a04"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M10,50 L15,20 L30,35 L50,10 L70,35 L85,20 L90,50 Z" fill="url(#goldGrad)" stroke="#854d0e" stroke-width="1"/>
+                            <circle cx="15" cy="20" r="4" fill="#dc2626" stroke="#7f1d1d" stroke-width="0.5"/>
+                            <circle cx="50" cy="10" r="5" fill="#dc2626" stroke="#7f1d1d" stroke-width="0.5"/>
+                            <circle cx="85" cy="20" r="4" fill="#dc2626" stroke="#7f1d1d" stroke-width="0.5"/>
+                            <rect x="10" y="50" width="80" height="6" fill="url(#goldGrad)" stroke="#854d0e" stroke-width="0.5"/>
+                        </svg>
+                    </div>
+                    <div class="cdg-royal-stars">
+                        <span>★</span><span>★</span><span>★</span>
+                    </div>
                 </div>
-                <h1>Hizmetlerinizi <span class="cdg-text-gradient">tek panelden</span> yonetin</h1>
-                <p>Hosting, domain, sunucu ve diger tum hizmetlerinize hizli erisim. SSL korumali, iki adimli dogrulamali guvenli giris.</p>
-                <ul class="cdg-auth-features">
-                    <li><i class="bi bi-check-circle-fill"></i> 7/24 destek erisimi</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Faturalarinizi anlik gorun</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Hizmet detaylari ve yenileme</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Iki adimli dogrulama destegi</li>
+                <div class="cdg-royal-eyebrow">
+                    <i class="bi bi-gem"></i>
+                    <span>CODEGA Kraliyet Sarayı</span>
+                </div>
+                <h1>Sarayınıza <span class="cdg-text-gold">hoş geldiniz</span>, Majesteleri</h1>
+                <p>Tüm hizmetlerinizin krallığı tek panelden yönetilir. Hosting, domain, fatura ve destek — hepsi parmaklarınızın ucunda.</p>
+                <ul class="cdg-royal-features">
+                    <li><i class="bi bi-stars"></i> Kraliyet seviyesinde güvenlik</li>
+                    <li><i class="bi bi-stars"></i> İki adımlı doğrulama desteği</li>
+                    <li><i class="bi bi-stars"></i> Anlık fatura ve hizmet kontrolü</li>
+                    <li><i class="bi bi-stars"></i> 7/24 sadık destek ekibi</li>
                 </ul>
                 <?php if(isset($sign_up) && $sign_up): ?>
-                <div class="cdg-auth-promo-cta">
-                    <p>Henuz hesabiniz yok mu?</p>
-                    <a href="<?php echo $register_link; ?>" class="cdg-btn cdg-btn-outline">
-                        <i class="bi bi-person-plus"></i> Yeni Hesap Olustur
+                <div class="cdg-royal-cta">
+                    <p>Henüz tebamız değil mişiniz?</p>
+                    <a href="<?php echo $register_link; ?>" class="cdg-btn cdg-btn-gold">
+                        <i class="bi bi-person-plus-fill"></i> Kraliyet Ailesine Katıl
                     </a>
                 </div>
                 <?php endif; ?>
+                <div class="cdg-royal-seal">
+                    <i class="bi bi-shield-fill-check"></i>
+                    <span>SSL Korumalı · KVKK Uyumlu</span>
+                </div>
             </div>
 
             <!-- SAĞ: Form -->
@@ -169,7 +196,7 @@ if(class_exists('Config') && Config::get("options/crtacwshop")) $sign_up = false
 
                         <div class="cdg-auth-card-head">
                             <h2><?php echo __("website/sign/in"); ?></h2>
-                            <p>Hesabiniza giris yaparak hizmetlerinizi yonetin</p>
+                            <p>Hesabınıza giriş yaparak hizmetlerinizi yönetin</p>
                         </div>
 
                         <?php if($connectionButtons): ?>

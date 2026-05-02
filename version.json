@@ -1,17 +1,19 @@
 {
-    "version": "2.6.0",
+    "version": "2.7.0",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.6.0-codega",
-    "tag": "v2.6.0-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.7.0-codega",
+    "tag": "v2.7.0-codega",
     "changelog": [
-        "v2.6.0 - YAN SAYFALAR: Iletisim, Yazilim, Bilgi Bankasi tamamen yeniden yazildi",
-        "Header: SMS ve Sunucu menuleri kaldirildi (sadece Hosting/Domain/Yazilim/Bilgi/Iletisim)",
-        "Footer: SMS ve Sunucu kaldirildi",
-        "ILETISIM: 5 bolumlu kurumsal sayfa (Hero, Channels, Form+Info, Map, FAQ)",
-        "YAZILIM: 9 urun + 6 hizmet kategorisi + 5 adim sureci (CodeGa ERP, XNEWS, MaliMusafir, KamyonGaraji, Tekcanmetal, AkilliTicaret, CMiner, Minya 3D, KiraTakip)",
-        "BILGI: 7 kategori, 40+ SSS (Hosting, Domain, Guvenlik, WordPress, E-posta, ERP/Yazilim, Fatura)",
-        "Bilgi sayfasinda live search (anahtar kelime ile filtreleme)",
-        "Tum yan sayfalarda animated mesh gradient hero"
+        "v2.7.0 - KRALIYET SARAYI + TURKCE KARAKTER + GERCEK VERILER",
+        "Sign-in: Kraliyet Sarayina giris temasi (altin tac SVG, mor-mavi-altin gradient, glassmorphism form)",
+        "Sign-up: Kraliyet Ailesine katilim temasi (yesil mucevherli tac, kraliyet hediyesi metni)",
+        "Domain fiyatlari: WiseCP API'den gercek cekim (Domains::getList) + theme-config fallback",
+        "Yaniltici sayilar kaldirildi: 15.847 site / 234 hesap / 892 destek / 8.000+ musteri vs hep silindi",
+        "Live ticker bolumu kaldirildi (gercek olmayan veri yerine)",
+        "Stats banner kaldirildi (12.000+ musteri vs)",
+        "Musteri yorumlari bolumu kaldirildi (sahte testimonial yerine)",
+        "Tum sayfalarda Turkce karakter duzeltmesi (i->I, c->C, g->G, o->O, s->S, u->U)",
+        "ETBIS -> ETBIS (kayitli), Yerli Yazilim sertifikasi eklendi"
     ]
 }

@@ -49,32 +49,59 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
     elseif(file_exists(__DIR__.DS."inc".DS."main-header-1.php")) include __DIR__.DS."inc".DS."main-header-1.php";
 ?>
 
-<section class="cdg-auth-section">
-    <div class="cdg-auth-bg">
-        <div class="cdg-auth-glow"></div>
-        <div class="cdg-auth-dots"></div>
+<section class="cdg-royal-section cdg-royal-auth">
+    <div class="cdg-royal-bg">
+        <div class="cdg-royal-bg-gradient"></div>
+        <div class="cdg-royal-bg-pattern"></div>
+        <div class="cdg-royal-orb cdg-royal-orb-1"></div>
+        <div class="cdg-royal-orb cdg-royal-orb-2"></div>
     </div>
     <div class="cdg-container">
-        <div class="cdg-auth-grid">
+        <div class="cdg-royal-grid">
 
-            <div class="cdg-auth-promo">
-                <div class="cdg-auth-promo-badge">
-                    <i class="bi bi-rocket-takeoff"></i>
-                    <span>Hosting Yolculugunuz Basliyor</span>
+            <div class="cdg-royal-promo">
+                <div class="cdg-royal-crown-wrap">
+                    <div class="cdg-royal-crown">
+                        <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="goldGradUp" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#fde047"/>
+                                    <stop offset="50%" style="stop-color:#facc15"/>
+                                    <stop offset="100%" style="stop-color:#ca8a04"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M10,50 L15,20 L30,35 L50,10 L70,35 L85,20 L90,50 Z" fill="url(#goldGradUp)" stroke="#854d0e" stroke-width="1"/>
+                            <circle cx="15" cy="20" r="4" fill="#10b981" stroke="#065f46" stroke-width="0.5"/>
+                            <circle cx="50" cy="10" r="5" fill="#10b981" stroke="#065f46" stroke-width="0.5"/>
+                            <circle cx="85" cy="20" r="4" fill="#10b981" stroke="#065f46" stroke-width="0.5"/>
+                            <rect x="10" y="50" width="80" height="6" fill="url(#goldGradUp)" stroke="#854d0e" stroke-width="0.5"/>
+                        </svg>
+                    </div>
+                    <div class="cdg-royal-stars">
+                        <span>★</span><span>★</span><span>★</span>
+                    </div>
                 </div>
-                <h1>Profesyonel <span class="cdg-text-gradient">hosting deneyimi</span> sizi bekliyor</h1>
-                <p>Hesap olusturarak ucretsiz hosting paketleri, indirim kuponlari ve oncelikli destege anlik erisim kazanin.</p>
-                <ul class="cdg-auth-features">
-                    <li><i class="bi bi-check-circle-fill"></i> Ucretsiz domain kontrol araci</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Profesyonel destek ekibi</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Yedekli sunucu altyapisi</li>
-                    <li><i class="bi bi-check-circle-fill"></i> 30 gun para iade garantisi</li>
+                <div class="cdg-royal-eyebrow">
+                    <i class="bi bi-bookmark-star-fill"></i>
+                    <span>Kraliyet Ailesine Katılım</span>
+                </div>
+                <h1>Soylu bir <span class="cdg-text-gold">unvana</span> hazır mısınız?</h1>
+                <p>CODEGA Kraliyet Ailesi'ne katılın. Ücretsiz domain araçları, kraliyet seviyesinde destek, özel indirimler ve daha fazlası sizi bekliyor.</p>
+                <ul class="cdg-royal-features">
+                    <li><i class="bi bi-stars"></i> Kraliyet hediyesi: İlk yıl ücretsiz domain</li>
+                    <li><i class="bi bi-stars"></i> 30 gün koşulsuz iade hakkı</li>
+                    <li><i class="bi bi-stars"></i> Yedekli kraliyet sunucu altyapısı</li>
+                    <li><i class="bi bi-stars"></i> Öncelikli kraliyet desteği</li>
                 </ul>
-                <div class="cdg-auth-promo-cta">
-                    <p>Zaten hesabiniz var mi?</p>
-                    <a href="<?php echo $login_link; ?>" class="cdg-btn cdg-btn-outline">
-                        <i class="bi bi-box-arrow-in-right"></i> Giris Yap
+                <div class="cdg-royal-cta">
+                    <p>Zaten kraliyet ailesinde mişiniz?</p>
+                    <a href="<?php echo $login_link; ?>" class="cdg-btn cdg-btn-gold">
+                        <i class="bi bi-box-arrow-in-right"></i> Sarayınıza Dönün
                     </a>
+                </div>
+                <div class="cdg-royal-seal">
+                    <i class="bi bi-shield-fill-check"></i>
+                    <span>SSL Korumalı · KVKK Uyumlu</span>
                 </div>
             </div>
 
@@ -87,7 +114,7 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
 
                         <div class="cdg-auth-card-head">
                             <h2><?php echo __("website/sign/up"); ?></h2>
-                            <p>Bilgilerinizi girerek hesabinizi olusturun</p>
+                            <p>Bilgilerinizi girerek kraliyet hesabınızı oluşturun</p>
                         </div>
 
                         <?php if($connectionButtons): ?>
