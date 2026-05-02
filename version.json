@@ -1,15 +1,19 @@
 {
-    "version": "2.2.0",
+    "version": "2.2.1",
     "release_date": "2026-05-02",
-    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.2.0/Codega-v2.2.0.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.2.0",
+    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.2.1-codega/Codega-v2.2.1.zip",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.2.1-codega",
     "changelog": [
-        "v2.2.0 - DASHBOARD YENILENDI: Hizmetleri sergileyen zengin anasayfa",
-        "Karsilama hero: gradient mavi orb + 'Hosgeldiniz [isim]' + 2 CTA",
-        "Stat kartlari: gradient ikonlar (mavi/sari/yesil/mor) + tiklanabilir link",
-        "Aktif hizmetler + destek talepleri (varsa) - 2 sutun grid",
-        "HIZMETLERIMIZ sergi: 6 servis kart (Hosting/Sunucu/Domain/SSL/SMS/Ozel)",
-        "Aktif hizmet yoksa: gradient CTA banner '%30 kazanin'",
-        "Domainlerim mini tablosu (varsa)"
+        "v2.2.1 - PUBLIC ANASAYFA: Hostingdunyam tarzi 10 bolumlu landing",
+        "1) Ust duyuru bannerini (kampanya)",
+        "2) Hero: gradient orb + 4 floating card + domain arama formu",
+        "3) Populer TLD grid (6 uzanti, fiyat + indirim badge)",
+        "4) Hosting paketleri (4 kart, EN POPULER vurgu)",
+        "5) Avantajlar grid (6 ozellik)",
+        "6) Sunucu paketleri (VPS/VDS/Dedicated)",
+        "7) Istatistik banner (gradient siyah, sari rakamlar)",
+        "8) FAQ accordion (6 soru)",
+        "9) Destek CTA (gradient kart, telefon/whatsapp)",
+        "10) Son CTA banner"
     ]
 }
