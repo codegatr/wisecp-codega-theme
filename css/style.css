@@ -3643,3 +3643,46 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     .cdg-dash-greeting-text h1{font-size:20px;}
 }
 
+
+/* ==================== v2.8.1 - WiseCP Real API ==================== */
+
+.cdg-domain-transfer-toggle{
+    display:flex;align-items:center;gap:8px;
+    margin-top:12px;color:rgba(255,255,255,0.85);font-size:13px;
+    cursor:pointer;justify-content:center;
+}
+.cdg-domain-transfer-toggle input[type="checkbox"]{accent-color:#fde047;}
+
+.cdg-domain-epp{
+    width:100%;padding:12px 14px;border:0;border-radius:10px;
+    font-family:inherit;font-size:14px;background:#fff;color:#0f172a;
+    box-shadow:0 4px 12px rgba(0,0,0,0.10);
+}
+
+/* Promo TLD card */
+.cdg-tld-card-pro.promo{
+    border:2px solid #10b981;
+    background:linear-gradient(135deg,#fff,#f0fdf4);
+}
+.cdg-tld-promo-badge{
+    position:absolute;top:14px;right:14px;
+    background:linear-gradient(135deg,#10b981,#059669);color:#fff;
+    padding:3px 10px;border-radius:99px;
+    font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;
+    display:inline-flex;align-items:center;gap:4px;
+}
+.cdg-tld-card-pro{position:relative;}
+.cdg-tld-paperwork{
+    font-size:11px;color:#64748b;margin:8px 0;
+    display:flex;align-items:center;gap:5px;
+}
+
+/* Period select on price card */
+.cdg-price-period-select{
+    width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;
+    font-family:inherit;font-size:13px;color:#0f172a;background:#fff;
+    margin:8px 0;
+}
+
+/* Loading state */
+.cdg-search-result.loading{justify-content:center;color:#64748b;}

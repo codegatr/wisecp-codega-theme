@@ -1,4 +1,12 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
+$hoptions = [
+    'page' => 'domain',
+    'jquery-ui',
+];
+
+if(class_exists('Config') && method_exists('Config', 'get') && Config::get("theme/only-panel")) {
+    $meta["robots"] = "NOINDEX,NOFOLLOW";
+}
 
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
@@ -11,160 +19,35 @@ if(!function_exists('cdg_link')) {
 
 $contact_url = cdg_link('contact');
 $hosting_url = cdg_link('products', ['hosting']);
-$basket_url  = cdg_link('basket');
 
-// === WiseCP API'den TLD'leri çek ===
-$all_tlds = [];
-$tld_loaded = false;
-
-if(class_exists('Domains') && method_exists('Domains', 'getList')) {
-    try {
-        $tlds_data = @Domains::getList(['status' => 'active']);
-        if(is_array($tlds_data) && !empty($tlds_data)) {
-            foreach($tlds_data as $td) {
-                $ext = '.' . ltrim($td['name'] ?? $td['extension'] ?? '', '.');
-                if($ext === '.') continue;
-                $all_tlds[] = [
-                    'ext'      => $ext,
-                    'register' => $td['register_price'] ?? $td['price'] ?? '-',
-                    'transfer' => $td['transfer_price'] ?? $td['register_price'] ?? '-',
-                    'renew'    => $td['renewal_price'] ?? $td['register_price'] ?? '-',
-                    'currency' => $td['currency'] ?? '₺',
-                    'category' => $td['category'] ?? 'gtld',
-                    'meta'     => $td['description'] ?? '',
-                ];
-            }
-            if(!empty($all_tlds)) $tld_loaded = true;
-        }
-    } catch(Exception $e) { /* fallback */ }
-}
-
-// Yöntem 2: Tld sınıfı
-if(!$tld_loaded && class_exists('Tld') && method_exists('Tld', 'getList')) {
-    try {
-        $tlds_data = @Tld::getList(['status' => 'active']);
-        if(is_array($tlds_data) && !empty($tlds_data)) {
-            foreach($tlds_data as $td) {
-                $ext = '.' . ltrim($td['name'] ?? '', '.');
-                if($ext === '.') continue;
-                $all_tlds[] = [
-                    'ext'      => $ext,
-                    'register' => $td['register'] ?? $td['price'] ?? '-',
-                    'transfer' => $td['transfer'] ?? '-',
-                    'renew'    => $td['renew'] ?? '-',
-                    'currency' => $td['currency'] ?? '₺',
-                    'category' => $td['category'] ?? 'gtld',
-                ];
-            }
-            if(!empty($all_tlds)) $tld_loaded = true;
-        }
-    } catch(Exception $e) { /* fallback */ }
-}
-
-// Yöntem 3: Theme settings'ten oku
-if(!$tld_loaded) {
-    $config = include __DIR__ . DS . 'theme-config.php';
-    $ts_settings = isset($config['settings']) ? $config['settings'] : [];
-    if(!empty($ts_settings['featured_tlds']) && is_array($ts_settings['featured_tlds'])) {
-        $all_tlds = $ts_settings['featured_tlds'];
-        $tld_loaded = true;
+// Currency symbol cache
+$currency_symbols = [];
+if(class_exists('Money') && method_exists('Money', 'getCurrencies')) {
+    foreach(Money::getCurrencies() AS $currency){
+        $symbol = !empty($currency["prefix"]) ? trim($currency["prefix"]) : trim($currency["suffix"] ?? '');
+        if(!$symbol) $symbol = $currency["code"] ?? '₺';
+        $currency_symbols[] = $symbol;
     }
 }
 
-// Yöntem 4: Statik fallback (admin paneline uzantı eklediğinde otomatik gelir)
-if(!$tld_loaded) {
-    $all_tlds = [
-        ['ext' => '.com.tr', 'register' => '199', 'transfer' => '199', 'renew' => '199', 'currency' => '₺', 'category' => 'cctld'],
-        ['ext' => '.com',    'register' => '299', 'transfer' => '0',   'renew' => '299', 'currency' => '₺', 'category' => 'gtld'],
-        ['ext' => '.net',    'register' => '349', 'transfer' => '0',   'renew' => '349', 'currency' => '₺', 'category' => 'gtld'],
-        ['ext' => '.org',    'register' => '329', 'transfer' => '0',   'renew' => '329', 'currency' => '₺', 'category' => 'gtld'],
-        ['ext' => '.tr',     'register' => '149', 'transfer' => '149', 'renew' => '149', 'currency' => '₺', 'category' => 'cctld'],
-        ['ext' => '.xyz',    'register' => '99',  'transfer' => '99',  'renew' => '149', 'currency' => '₺', 'category' => 'new'],
-        ['ext' => '.online', 'register' => '129', 'transfer' => '129', 'renew' => '199', 'currency' => '₺', 'category' => 'new'],
-        ['ext' => '.shop',   'register' => '149', 'transfer' => '149', 'renew' => '249', 'currency' => '₺', 'category' => 'new'],
-    ];
-}
-
-// Kategori grupları
-$tld_groups = [
-    'popular'  => ['name' => 'Popüler',         'icon' => 'bi-star-fill',     'color' => '#facc15', 'tlds' => []],
-    'cctld'    => ['name' => 'Türkiye',         'icon' => 'bi-flag-fill',     'color' => '#dc2626', 'tlds' => []],
-    'gtld'     => ['name' => 'Klasik',          'icon' => 'bi-globe2',        'color' => '#1e40af', 'tlds' => []],
-    'new'      => ['name' => 'Yeni Nesil',      'icon' => 'bi-stars',         'color' => '#8b5cf6', 'tlds' => []],
-];
-
-$popular_exts = ['.com.tr', '.com', '.net', '.org', '.tr', '.xyz'];
-foreach($all_tlds as $tld) {
-    if(in_array($tld['ext'], $popular_exts)) {
-        $tld_groups['popular']['tlds'][] = $tld;
-    }
-    $cat = $tld['category'] ?? 'gtld';
-    if(isset($tld_groups[$cat])) {
-        $tld_groups[$cat]['tlds'][] = $tld;
-    } else {
-        $tld_groups['gtld']['tlds'][] = $tld;
+// EPP code support listesi
+$epp_code_support = [];
+if(isset($tldList) && $tldList) {
+    foreach($tldList AS $t) {
+        $epp_code_support[$t["name"]] = ($t["epp_code"] ?? 0) == 1;
     }
 }
+$tlds = $epp_code_support ? array_keys($epp_code_support) : [];
+$override_usrcurrency = $override_usrcurrency ?? false;
 
-// Domain sorgulama (POST geldiyse)
-$search_query = trim($_GET['domain'] ?? '');
-$search_results = [];
-$search_message = '';
+// TLD count
+$tld_count = isset($tldList) && is_array($tldList) ? count($tldList) : 0;
 
-if($search_query) {
-    // Domain validasyon
-    $clean = preg_replace('/[^a-z0-9\-\.]/i', '', strtolower($search_query));
-    $clean = preg_replace('/\s+/', '', $clean);
-
-    if(strpos($clean, '.') === false) {
-        // Uzantı yok - en popüler 6 uzantıyı dene
-        $base = $clean;
-        foreach(array_slice($all_tlds, 0, 8) as $tld) {
-            $search_results[] = [
-                'domain' => $base . $tld['ext'],
-                'price'  => $tld['register'],
-                'currency' => $tld['currency'],
-                'available' => null, // bilinmiyor (gerçek API çağrısı pahalı)
-            ];
-        }
-    } else {
-        // Uzantılı - tek bir aramayı yapay olarak 1 sonuç döndür
-        $parts = explode('.', $clean, 2);
-        $base = $parts[0];
-        $ext = '.' . $parts[1];
-        $matched = null;
-        foreach($all_tlds as $tld) {
-            if(strtolower($tld['ext']) === strtolower($ext)) { $matched = $tld; break; }
-        }
-        if($matched) {
-            $search_results[] = [
-                'domain' => $base . $matched['ext'],
-                'price'  => $matched['register'],
-                'currency' => $matched['currency'],
-                'available' => null,
-            ];
-        }
-        // Ayrıca 5 alternatif daha
-        $count = 0;
-        foreach($all_tlds as $tld) {
-            if(strtolower($tld['ext']) === strtolower($ext)) continue;
-            if($count >= 5) break;
-            $search_results[] = [
-                'domain' => $base . $tld['ext'],
-                'price'  => $tld['register'],
-                'currency' => $tld['currency'],
-                'available' => null,
-            ];
-            $count++;
-        }
-    }
-    if(empty($search_results)) {
-        $search_message = 'Aradığınız uzantı sistemde bulunamadı. Lütfen başka bir uzantı deneyin.';
-    }
-}
+// Featured TLD'ler ($box_tldList) - admin panelinden seçilenler
+$featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : [];
 ?>
 
-<!-- 1. PAGE HERO + DOMAIN SORGU -->
+<!-- HERO + DOMAIN SORGU -->
 <section class="cdg-domain-hero">
     <div class="cdg-domain-hero-bg">
         <div class="cdg-mesh-gradient"></div>
@@ -178,137 +61,221 @@ if($search_query) {
         <div class="cdg-domain-hero-content">
             <div class="cdg-eyebrow cdg-eyebrow-glow"><i class="bi bi-globe2"></i> Domain Tescil</div>
             <h1>Hayalinizdeki <span class="cdg-text-gradient-light">alan adınız</span> sizi bekliyor</h1>
-            <p class="cdg-domain-lead"><?php echo count($all_tlds); ?>+ uzantı desteği · Anlık sorgu · Anında aktivasyon</p>
+            <p class="cdg-domain-lead"><?php echo $tld_count > 0 ? $tld_count . '+' : '500+'; ?> uzantı desteği · Anlık sorgu · Anında aktivasyon</p>
 
-            <form action="" method="get" class="cdg-domain-search-form">
+            <form id="domainSearchForm" class="cdg-domain-search-form" onsubmit="return cdgDomainSearch(this);">
                 <div class="cdg-domain-search-input">
                     <i class="bi bi-search"></i>
-                    <input type="text" name="domain" value="<?php echo htmlspecialchars($search_query); ?>" placeholder="alanadi.com" autocomplete="off" required>
-                    <button type="submit" class="cdg-btn cdg-btn-primary cdg-btn-glow">
+                    <input type="text" id="domainInput" name="domain" placeholder="alanadi.com" autocomplete="off" required>
+                    <button type="submit" id="submitnow" class="cdg-btn cdg-btn-primary cdg-btn-glow">
                         <i class="bi bi-search"></i> <span>Sorgula</span>
                     </button>
                 </div>
+                <label class="cdg-domain-transfer-toggle">
+                    <input type="checkbox" id="transferCheckbox">
+                    <span>Mevcut domainimi transfer etmek istiyorum</span>
+                </label>
+                <div class="transfercode" style="display:none;margin-top:10px;">
+                    <input type="text" placeholder="EPP / Auth Kodu" id="eppCode" class="cdg-domain-epp">
+                </div>
             </form>
 
+            <?php if(!empty($featured_tlds)): ?>
             <div class="cdg-domain-quick">
-                <span class="muted">Popüler uzantılar:</span>
-                <?php foreach(array_slice($tld_groups['popular']['tlds'], 0, 5) as $tld): ?>
-                <span class="cdg-domain-chip"><?php echo htmlspecialchars($tld['ext']); ?> <strong><?php echo htmlspecialchars($tld['register']); ?> <?php echo $tld['currency']; ?></strong></span>
+                <span class="muted">Öne çıkan:</span>
+                <?php foreach(array_slice($featured_tlds, 0, 5) as $tld):
+                    $price_amount = '';
+                    if(isset($tld['reg_price']['amount']) && isset($tld['reg_price']['cid'])) {
+                        $price_amount = Money::formatter_symbol($tld['reg_price']['amount'], $tld['reg_price']['cid'], !$override_usrcurrency);
+                    }
+                ?>
+                <span class="cdg-domain-chip">.<?php echo htmlspecialchars($tld['name']); ?> <strong><?php echo $price_amount; ?></strong></span>
                 <?php endforeach; ?>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>
 
-<!-- 2. SEARCH RESULTS (eğer arama yapıldıysa) -->
-<?php if($search_query && !empty($search_results)): ?>
-<section class="cdg-section" id="search-results">
+<!-- SORGU SONUC ALANI (JavaScript ile doldurulacak) -->
+<section class="cdg-section" id="search-results" style="display:none;">
     <div class="cdg-container">
         <div class="cdg-search-results-head">
-            <h2><span class="cdg-text-gradient">"<?php echo htmlspecialchars($search_query); ?>"</span> için sonuçlar</h2>
+            <h2 id="searchTitle"><span class="cdg-text-gradient">Sorgu Sonuçları</span></h2>
             <p>Aşağıdaki uzantıları siparişe ekleyebilirsiniz.</p>
         </div>
-        <div class="cdg-search-results">
-            <?php foreach($search_results as $i => $r): ?>
-            <div class="cdg-search-result<?php echo $i === 0 ? ' primary' : ''; ?>">
-                <div class="cdg-search-result-name">
-                    <i class="bi bi-globe-americas"></i>
-                    <strong><?php echo htmlspecialchars($r['domain']); ?></strong>
-                    <?php if($i === 0): ?><span class="cdg-search-result-badge">İlk Tercih</span><?php endif; ?>
+        <div id="searchResults" class="cdg-search-results">
+            <!-- AJAX results -->
+        </div>
+    </div>
+</section>
+
+<!-- LOADING TEMPLATE (görünmez) -->
+<div id="loading-template" style="display:none;">
+    <div class="cdg-search-result loading">
+        <div class="cdg-search-result-name">
+            <i class="bi bi-hourglass-split" style="animation:cdgSpin 1s linear infinite;"></i>
+            <strong class="domain-name">domain.com</strong>
+        </div>
+        <div class="cdg-search-result-price">
+            <span style="color:#94a3b8;font-size:13px;">Sorgulanıyor...</span>
+        </div>
+        <div></div>
+    </div>
+</div>
+
+<!-- ÖNE ÇIKAN TLD'LER (kart görünümü) -->
+<?php if(!empty($featured_tlds)): ?>
+<section class="cdg-section">
+    <div class="cdg-container">
+        <div class="cdg-section-head">
+            <div class="cdg-eyebrow">Öne Çıkan</div>
+            <h2><span class="cdg-text-gradient">Popüler uzantılarımız</span></h2>
+            <p>Admin panelinde belirlenen öne çıkan uzantılar.</p>
+        </div>
+        <div class="cdg-tld-grid-full">
+            <?php foreach($featured_tlds as $tld):
+                $reg = '';
+                $tra = '';
+                $ren = '';
+                $promo_reg = '';
+                $promo_tra = '';
+
+                if(isset($tld['reg_price']['amount'])) {
+                    $reg = Money::formatter_symbol($tld['reg_price']['amount'], $tld['reg_price']['cid'], !$override_usrcurrency);
+                }
+                if(isset($tld['tra_price']['amount'])) {
+                    $tra = Money::formatter_symbol($tld['tra_price']['amount'], $tld['tra_price']['cid'], !$override_usrcurrency);
+                }
+                if(isset($tld['ren_price']['amount'])) {
+                    $ren = Money::formatter_symbol($tld['ren_price']['amount'], $tld['ren_price']['cid'], !$override_usrcurrency);
+                }
+
+                // Promosyon kontrolü
+                $is_promo = !empty($tld['promo_status']) && (
+                    substr($tld['promo_duedate'] ?? '', 0, 4) == '1881' ||
+                    (class_exists('DateManager') && DateManager::strtotime(($tld['promo_duedate'] ?? '') . " 23:59:59") > DateManager::strtotime())
+                );
+
+                if($is_promo && !empty($tld['promo_register_price']) && $tld['promo_register_price'] > 0) {
+                    $promo_reg = Money::formatter_symbol($tld['promo_register_price'], $tld['currency'] ?? 'TRY', !$override_usrcurrency);
+                }
+            ?>
+            <div class="cdg-tld-card-pro<?php echo $is_promo ? ' promo' : ''; ?>">
+                <?php if($is_promo): ?><div class="cdg-tld-promo-badge"><i class="bi bi-tag-fill"></i> Kampanya</div><?php endif; ?>
+                <div class="cdg-tld-card-ext">.<?php echo htmlspecialchars($tld['name']); ?></div>
+                <?php if(!empty($tld['paperwork'])): ?>
+                <div class="cdg-tld-paperwork" title="Bu uzantı için belge gereklidir">
+                    <i class="bi bi-file-earmark-text"></i> Belge gerekli
                 </div>
-                <div class="cdg-search-result-price">
-                    <span class="num"><?php echo htmlspecialchars($r['price']); ?></span>
-                    <span class="curr"><?php echo $r['currency']; ?></span>
-                    <small>/yıl</small>
+                <?php endif; ?>
+                <div class="cdg-tld-card-prices">
+                    <div class="cdg-tld-card-price-row">
+                        <span class="lbl">Tescil</span>
+                        <span class="val">
+                            <?php if($promo_reg): ?>
+                            <span style="text-decoration:line-through;color:#94a3b8;font-size:12px;"><?php echo $reg; ?></span>
+                            <strong style="color:#10b981;"><?php echo $promo_reg; ?></strong>
+                            <?php else: ?>
+                            <?php echo $reg ?: '-'; ?>
+                            <?php endif; ?>
+                        </span>
+                    </div>
+                    <?php if($tra): ?>
+                    <div class="cdg-tld-card-price-row">
+                        <span class="lbl">Transfer</span>
+                        <span class="val"><?php echo $tra; ?></span>
+                    </div>
+                    <?php endif; ?>
+                    <?php if($ren): ?>
+                    <div class="cdg-tld-card-price-row">
+                        <span class="lbl">Yenileme</span>
+                        <span class="val"><?php echo $ren; ?></span>
+                    </div>
+                    <?php endif; ?>
                 </div>
-                <a href="<?php echo $basket_url . '?add_domain=' . urlencode($r['domain']); ?>" class="cdg-btn cdg-btn-primary cdg-btn-sm">
-                    <i class="bi bi-cart-plus"></i> Sepete Ekle
-                </a>
             </div>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
-<?php elseif($search_query && $search_message): ?>
-<section class="cdg-section">
-    <div class="cdg-container">
-        <div class="cdg-form-alert error" style="text-align:center;justify-content:center;">
-            <i class="bi bi-exclamation-triangle-fill"></i>
-            <span><?php echo htmlspecialchars($search_message); ?></span>
-        </div>
-    </div>
-</section>
 <?php endif; ?>
 
-<!-- 3. TLD KATEGORİLER -->
-<section class="cdg-section">
+<!-- TÜM UZANTILAR TABLOSU -->
+<?php if(!empty($tldList) && is_array($tldList)): ?>
+<section class="cdg-section" style="background:#f8fafc;">
     <div class="cdg-container">
         <div class="cdg-section-head">
-            <div class="cdg-eyebrow">Tüm Uzantılar</div>
-            <h2>Sistemimizde <span class="cdg-text-gradient"><?php echo count($all_tlds); ?> uzantı</span> mevcut</h2>
-            <p>Fiyatlar gerçek zamanlı olarak panelden çekilmektedir.</p>
+            <div class="cdg-eyebrow">Tam Liste</div>
+            <h2>Sistemimizde <span class="cdg-text-gradient"><?php echo $tld_count; ?> uzantı</span> mevcut</h2>
+            <p>Fiyatlar canlı olarak panelden çekilmektedir.</p>
         </div>
 
-        <?php foreach($tld_groups as $key => $group): ?>
-            <?php if($key === 'popular' && !empty($group['tlds'])): ?>
-            <div class="cdg-tld-category">
-                <div class="cdg-tld-cat-head">
-                    <div class="cdg-tld-cat-icon" style="background:linear-gradient(135deg,<?php echo $group['color']; ?>,<?php echo $group['color']; ?>cc);">
-                        <i class="bi <?php echo $group['icon']; ?>"></i>
-                    </div>
-                    <h3><?php echo htmlspecialchars($group['name']); ?> Uzantılar</h3>
-                    <span class="cdg-tld-cat-count"><?php echo count($group['tlds']); ?> uzantı</span>
-                </div>
-                <div class="cdg-tld-grid-full">
-                    <?php foreach($group['tlds'] as $tld): ?>
-                    <div class="cdg-tld-card-pro">
-                        <div class="cdg-tld-card-ext"><?php echo htmlspecialchars($tld['ext']); ?></div>
-                        <div class="cdg-tld-card-prices">
-                            <div class="cdg-tld-card-price-row">
-                                <span class="lbl">Tescil</span>
-                                <span class="val"><?php echo htmlspecialchars($tld['register']); ?> <?php echo $tld['currency']; ?></span>
-                            </div>
-                            <div class="cdg-tld-card-price-row">
-                                <span class="lbl">Transfer</span>
-                                <span class="val"><?php echo $tld['transfer'] === '0' ? 'Ücretsiz' : htmlspecialchars($tld['transfer']) . ' ' . $tld['currency']; ?></span>
-                            </div>
-                            <div class="cdg-tld-card-price-row">
-                                <span class="lbl">Yenileme</span>
-                                <span class="val"><?php echo htmlspecialchars($tld['renew']); ?> <?php echo $tld['currency']; ?></span>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-
-        <!-- Tüm uzantılar tablosu -->
         <div class="cdg-tld-full-table">
-            <h3 style="font-size:18px;font-weight:800;color:#0f172a;margin-bottom:18px;display:flex;align-items:center;gap:10px;">
-                <i class="bi bi-table" style="color:#1e40af;"></i> Tam Fiyat Listesi
-            </h3>
             <div class="cdg-table-wrap">
-                <table class="cdg-tld-table">
+                <table class="cdg-tld-table" id="tldTable">
                     <thead>
                         <tr>
                             <th>Uzantı</th>
                             <th>Tescil</th>
-                            <th>Transfer</th>
                             <th>Yenileme</th>
+                            <th>Transfer</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($all_tlds as $tld): ?>
-                        <tr>
-                            <td><strong style="color:#1e40af;font-size:15px;"><?php echo htmlspecialchars($tld['ext']); ?></strong></td>
-                            <td><?php echo htmlspecialchars($tld['register']); ?> <?php echo $tld['currency']; ?></td>
-                            <td><?php echo $tld['transfer'] === '0' ? '<span style="color:#10b981;font-weight:700;">Ücretsiz</span>' : htmlspecialchars($tld['transfer']) . ' ' . $tld['currency']; ?></td>
-                            <td><?php echo htmlspecialchars($tld['renew']); ?> <?php echo $tld['currency']; ?></td>
+                        <?php foreach($tldList as $row):
+                            $reg = isset($row['reg_price']['amount']) ? Money::formatter_symbol($row['reg_price']['amount'], $row['reg_price']['cid'], !$override_usrcurrency) : '-';
+                            $tra = isset($row['tra_price']['amount']) ? Money::formatter_symbol($row['tra_price']['amount'], $row['tra_price']['cid'], !$override_usrcurrency) : '-';
+                            $ren = isset($row['ren_price']['amount']) ? Money::formatter_symbol($row['ren_price']['amount'], $row['ren_price']['cid'], !$override_usrcurrency) : '-';
+
+                            $is_promo = !empty($row['promo_status']) && (
+                                substr($row['promo_duedate'] ?? '', 0, 4) == '1881' ||
+                                (class_exists('DateManager') && DateManager::strtotime(($row['promo_duedate'] ?? '') . " 23:59:59") > DateManager::strtotime())
+                            );
+
+                            $promo_reg = '';
+                            $promo_tra = '';
+                            if($is_promo) {
+                                if(!empty($row['promo_register_price']) && $row['promo_register_price'] > 0) {
+                                    $promo_reg = Money::formatter_symbol($row['promo_register_price'], $row['currency'] ?? 'TRY', !$override_usrcurrency);
+                                }
+                                if(!empty($row['promo_transfer_price']) && $row['promo_transfer_price'] > 0) {
+                                    $promo_tra = Money::formatter_symbol($row['promo_transfer_price'], $row['currency'] ?? 'TRY', !$override_usrcurrency);
+                                }
+                            }
+                        ?>
+                        <tr<?php echo $is_promo ? ' style="background:#fef9c3;"' : ''; ?>>
                             <td>
-                                <a href="?domain=<?php echo urlencode(str_replace('.', '', $tld['ext'])); ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">Sorgula</a>
+                                <strong style="color:<?php echo $is_promo ? '#10b981' : '#1e40af'; ?>;font-size:15px;">.<?php echo htmlspecialchars($row['name']); ?></strong>
+                                <?php if(!empty($row['paperwork'])): ?>
+                                <i class="bi bi-file-earmark-text" style="color:#94a3b8;margin-left:6px;font-size:12px;" title="Belge gerekli"></i>
+                                <?php endif; ?>
+                                <?php if($is_promo): ?>
+                                <span style="display:inline-block;background:#10b981;color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:6px;">KAMPANYA</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php if($promo_reg): ?>
+                                <span style="text-decoration:line-through;color:#94a3b8;font-size:12px;"><?php echo $reg; ?></span>
+                                <strong style="color:#10b981;"><?php echo $promo_reg; ?></strong>
+                                <?php else: ?>
+                                <?php echo $reg; ?>
+                                <?php endif; ?>
+                            </td>
+                            <td><?php echo $ren; ?></td>
+                            <td>
+                                <?php if($promo_tra): ?>
+                                <span style="text-decoration:line-through;color:#94a3b8;font-size:12px;"><?php echo $tra; ?></span>
+                                <strong style="color:#10b981;"><?php echo $promo_tra; ?></strong>
+                                <?php else: ?>
+                                <?php echo $tra; ?>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <button onclick="document.getElementById('domainInput').value='alanadi.<?php echo htmlspecialchars($row['name']); ?>';document.getElementById('domainInput').focus();window.scrollTo({top:0,behavior:'smooth'});" class="cdg-btn cdg-btn-outline cdg-btn-sm">
+                                    <i class="bi bi-search"></i> Sorgula
+                                </button>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -318,12 +285,13 @@ if($search_query) {
         </div>
     </div>
 </section>
+<?php endif; ?>
 
-<!-- 4. NEDEN BIZE -->
-<section class="cdg-section" style="background:#f8fafc;">
+<!-- AVANTAJLAR -->
+<section class="cdg-section">
     <div class="cdg-container">
         <div class="cdg-section-head">
-            <div class="cdg-eyebrow">CODEGA Domain Avantajları</div>
+            <div class="cdg-eyebrow">Domain Avantajları</div>
             <h2>Profesyonel <span class="cdg-text-gradient">domain hizmeti</span></h2>
         </div>
         <div class="cdg-adv-grid cdg-adv-grid-4">
@@ -339,8 +307,8 @@ if($search_query) {
     </div>
 </section>
 
-<!-- 5. SSS -->
-<section class="cdg-section">
+<!-- SSS -->
+<section class="cdg-section" style="background:#f8fafc;">
     <div class="cdg-container">
         <div class="cdg-section-head">
             <div class="cdg-eyebrow">Sık Sorulan</div>
@@ -349,39 +317,84 @@ if($search_query) {
         <div class="cdg-faq-list" style="max-width:780px;margin:32px auto 0;">
             <details class="cdg-faq-item" open>
                 <summary><span>Domain alımı ne kadar sürede aktif olur?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">Ödeme onayından sonra <strong>dakikalar içinde</strong> domain'iniz aktif olur. .com .net .org gibi gTLD uzantılar 5-10 dakika, .com.tr gibi ulkesel uzantılar 1-2 saat sürebilir.</div>
+                <div class="cdg-faq-answer">Ödeme onayından sonra <strong>dakikalar içinde</strong> domain'iniz aktif olur.</div>
             </details>
             <details class="cdg-faq-item">
                 <summary><span>Mevcut domain'imi nasıl transfer ederim?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">Mevcut sağlayıcınızdan <strong>EPP (auth) kodu</strong> alın, panelimizden "Domain Transfer" sekmesinde domain'i ve EPP kodunu girin. Onay e-postasını okuyup link'e tıklayın. Transfer 5-7 gün sürer, ÜCRETSIZdir, +1 yıl ekleme yapılır.</div>
+                <div class="cdg-faq-answer">Mevcut sağlayıcınızdan <strong>EPP (auth) kodu</strong> alın, yukarıdaki sorgu kutusunda transfer kutusunu işaretleyip kodu girin.</div>
             </details>
             <details class="cdg-faq-item">
                 <summary><span>Hangi domain uzantısı benim için uygun?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">Türkiye odaklı işletme: <strong>.com.tr</strong> (vergi levhası gerekir) veya <strong>.tr</strong>. Uluslararası: <strong>.com</strong>. Teknolojik: <strong>.tech .io</strong>. Marka korumak için birden fazla uzantı almak iyi bir stratejidir.</div>
-            </details>
-            <details class="cdg-faq-item">
-                <summary><span>Domain bilgilerimi nasıl gizlerim?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer"><strong>Whois Gizliliği</strong> hizmeti ile iletişim bilgileriniz halka açık whois sorgularında gizlenir. .com .net .org gibi gTLD'lerde mevcuttur. Panel üzerinden tek tıkla aktif edilir.</div>
-            </details>
-            <details class="cdg-faq-item">
-                <summary><span>Domain süresi bitti, uzatabilir miyim?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">Süresi biten domain <strong>30 gün</strong> grace period'a girer (yenileyebilirsiniz). Sonraki 30 gün <strong>redemption period</strong> (yüksek ücretle yenileme). Ondan sonra domain serbest kalır. Süresi bitmeden yenilemenizi öneririz.</div>
+                <div class="cdg-faq-answer">Türkiye odaklı işletme: <strong>.com.tr</strong> veya <strong>.tr</strong>. Uluslararası: <strong>.com</strong>. Marka korumak için birden fazla uzantı almanızı öneririz.</div>
             </details>
         </div>
     </div>
 </section>
 
-<!-- 6. CTA -->
-<section class="cdg-final-cta">
-    <div class="cdg-container">
-        <div class="cdg-final-cta-content">
-            <div class="cdg-eyebrow">Hemen Başlayın</div>
-            <h2>Hayalinizdeki <span class="cdg-text-gradient">alan adı</span> sizi bekliyor</h2>
-            <p>Bugün kayıt olun, anında aktivasyon + ücretsiz Whois gizliliği.</p>
-            <div class="cdg-final-cta-actions">
-                <a href="#search-results" onclick="document.querySelector('.cdg-domain-search-input input').focus(); return false;" class="cdg-btn cdg-btn-primary cdg-btn-lg cdg-btn-glow"><i class="bi bi-search"></i> Domain Sorgula</a>
-                <a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-hdd-network"></i> Hosting + Domain</a>
-            </div>
-        </div>
-    </div>
-</section>
+<!-- DOMAIN SORGULAMA SCRIPTI -->
+<script type="text/javascript">
+var disabled_style = "background:none; color:#333; cursor:no-drop; opacity:0.3;";
+var situations = [], loading_template;
+situations['unknown'] = '<?php echo class_exists("Hook") ? __("website/domain/situations-unknown") : "Belirsiz"; ?>';
+situations['premium'] = '<?php echo class_exists("Hook") ? __("website/domain/situations-premium") : "Premium"; ?>';
+situations['available'] = '<?php echo class_exists("Hook") ? __("website/domain/situations-available") : "Müsait"; ?>';
+situations['unavailable'] = '<?php echo class_exists("Hook") ? __("website/domain/situations-unavailable") : "Alınmış"; ?>';
+
+var contact_button = '<a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">İletişim</a>';
+var epp_code_support = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($epp_code_support) : json_encode($epp_code_support); ?>;
+var tlds = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($tlds) : json_encode($tlds); ?>;
+
+document.addEventListener('DOMContentLoaded', function(){
+    var transferCb = document.getElementById('transferCheckbox');
+    var transferBox = document.querySelector('.transfercode');
+
+    if(transferCb && transferBox) {
+        transferCb.addEventListener('change', function(){
+            transferBox.style.display = this.checked ? 'block' : 'none';
+        });
+    }
+
+    // URL'den ?domain= parametresi
+    var urlParams = new URLSearchParams(window.location.search);
+    var gDomain = urlParams.get('domain');
+    if(gDomain) {
+        document.getElementById('domainInput').value = gDomain;
+        document.getElementById('domainSearchForm').dispatchEvent(new Event('submit'));
+    }
+});
+
+function cdgDomainSearch(form) {
+    var input = document.getElementById('domainInput');
+    var domain = input.value.trim().toLowerCase();
+    if(!domain) return false;
+
+    var resultsSection = document.getElementById('search-results');
+    var resultsContainer = document.getElementById('searchResults');
+    var searchTitle = document.getElementById('searchTitle');
+
+    resultsSection.style.display = 'block';
+    resultsSection.scrollIntoView({behavior: 'smooth'});
+
+    searchTitle.innerHTML = '<span class="cdg-text-gradient">"' + escapeHTML(domain) + '"</span> için sonuçlar';
+    resultsContainer.innerHTML = '<div class="cdg-search-result loading"><div class="cdg-search-result-name"><i class="bi bi-hourglass-split" style="animation:cdgSpin 1s linear infinite;"></i> <strong>Sorgulanıyor...</strong></div></div>';
+
+    // WiseCP sorgu API'si - eğer sayfa zaten ?domain= ile yüklendiyse browser'a yönlendir
+    if(window.location.search.indexOf('domain=' + encodeURIComponent(domain)) === -1) {
+        window.location.href = '?domain=' + encodeURIComponent(domain);
+        return false;
+    }
+
+    return false;
+}
+
+function escapeHTML(s) {
+    return String(s).replace(/[&<>"']/g, function(c){
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+}
+
+// CSS animation for spinner
+var st = document.createElement('style');
+st.textContent = '@keyframes cdgSpin { from{transform:rotate(0);} to{transform:rotate(360deg);} }';
+document.head.appendChild(st);
+</script>
