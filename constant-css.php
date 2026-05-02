@@ -67,54 +67,58 @@ html { scroll-behavior: smooth; }
 ::selection { background: rgba(30,64,175,0.18); color: #0f172a; }
 ::-moz-selection { background: rgba(30,64,175,0.18); color: #0f172a; }
 
-/* === Codega Cookie Policy Popup === */
+/* === Codega Cookie Policy Popup (Sağ-alt kompakt toast) === */
 /* WiseCP webmio.js'in beklediği #mio-cookie-popup ID'siyle uyumlu */
 #mio-cookie-popup {
     position: fixed;
-    left: 50% !important;
+    right: 20px !important;
     bottom: 20px !important;
-    transform: translateX(-50%) !important;
-    max-width: 540px;
-    width: calc(100% - 32px);
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    max-width: 340px;
+    width: calc(100vw - 40px);
     z-index: 9998;
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    animation: cdgCookieIn 0.4s ease;
+    animation: cdgCookieIn 0.3s ease;
     box-sizing: border-box;
 }
 #mio-cookie-popup *, #mio-cookie-popup *::before, #mio-cookie-popup *::after { box-sizing: border-box; }
 @keyframes cdgCookieIn {
-    from { opacity: 0; transform: translate(-50%, 16px); }
-    to   { opacity: 1; transform: translate(-50%, 0); }
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 #mio-cookie-popup .cdg-cookie-card {
     background: #fff;
-    border-radius: 14px;
-    padding: 18px 20px;
-    box-shadow: 0 16px 40px rgba(15,23,42,0.25);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 12px 32px rgba(15,23,42,0.18);
     border: 1px solid #e2e8f0;
     display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 #mio-cookie-popup .cdg-cookie-icon {
-    width: 44px; height: 44px;
-    border-radius: 12px;
+    width: 32px; height: 32px;
+    border-radius: 8px;
     background: linear-gradient(135deg, #1e40af, #3b82f6);
     color: #fff;
     display: grid; place-items: center;
-    font-size: 22px;
+    font-size: 16px;
     flex-shrink: 0;
 }
-#mio-cookie-popup .cdg-cookie-content { flex: 1; min-width: 200px; }
+#mio-cookie-popup .cdg-cookie-content { flex: 1; min-width: 0; }
 #mio-cookie-popup .cdg-cookie-content h3 {
-    font-size: 14px; font-weight: 800;
-    margin: 0 0 4px;
+    font-size: 12px; font-weight: 800;
+    margin: 0 0 2px;
     color: #0f172a;
+    line-height: 1.3;
 }
 #mio-cookie-popup .cdg-cookie-content p {
-    font-size: 12px; color: #64748b;
-    margin: 0; line-height: 1.5;
+    font-size: 11px; color: #64748b;
+    margin: 0 0 8px; line-height: 1.45;
 }
 #mio-cookie-popup .cdg-cookie-content a {
     color: #1e40af; font-weight: 700; text-decoration: none;
@@ -124,25 +128,29 @@ html { scroll-behavior: smooth; }
 #mio-cookie-popup .cdg-cookie-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 18px;
-    background: linear-gradient(135deg, #10b981, #34d399);
+    gap: 4px;
+    padding: 6px 12px;
+    background: #1e40af;
     color: #fff !important;
     border: 0;
-    border-radius: 8px;
-    font-size: 13px; font-weight: 700;
+    border-radius: 6px;
+    font-size: 11px; font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(16,185,129,0.22);
-    transition: transform 0.18s;
+    transition: background 0.15s;
     font-family: inherit;
     text-decoration: none;
     white-space: nowrap;
+    box-shadow: none;
 }
 #mio-cookie-popup .mio-cookie-popup__c-p-button:hover,
-#mio-cookie-popup .cdg-cookie-btn:hover { transform: translateY(-1px); color: #fff !important; }
-@media (max-width: 600px) {
-    #mio-cookie-popup .cdg-cookie-card { flex-direction: column; text-align: center; }
-    #mio-cookie-popup .cdg-cookie-btn,
-    #mio-cookie-popup .mio-cookie-popup__c-p-button { width: 100%; justify-content: center; }
+#mio-cookie-popup .cdg-cookie-btn:hover { background: #1e3a8a; color: #fff !important; }
+#mio-cookie-popup .mio-cookie-popup__c-p-button i,
+#mio-cookie-popup .cdg-cookie-btn i { font-size: 12px; }
+@media (max-width: 480px) {
+    #mio-cookie-popup {
+        right: 10px !important;
+        bottom: 10px !important;
+        max-width: calc(100vw - 20px);
+    }
 }
 </style>

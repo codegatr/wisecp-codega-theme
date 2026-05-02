@@ -1,22 +1,14 @@
 {
-    "version": "3.1.8",
+    "version": "3.1.9",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.1.8-codega",
-    "tag": "v3.1.8-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.1.9-codega",
+    "tag": "v3.1.9-codega",
     "changelog": [
-        "v3.1.8 - 'Tamam' butonu mystery cozuldu + Edge Tracking Prevention fix",
-        "FIX: constant-css.php - Bootstrap Icons CDN kaldirildi (Edge bloke ediyordu)",
-        "  Tema zaten lokal css/bootstrap-icons.css yukluyor (inc/main-head.php)",
-        "FIX: constant-css.php - Cookie popup CSS ana stiller bloguna tasindi",
-        "  JS ile dynamic inject yerine static CSS",
-        "FIX: constant-js.php - DOMContentLoaded ile sarmalama",
-        "  webmio.js classList hatasini onlemek icin DOM hazir olduktan 500ms sonra ckplcyCheckCookie() cagrilir",
-        "FIX: constant-js.php - try/catch ile webmio cookie init guvenli hale getirildi",
-        "ACIKLAMA: Sol-altta gorunen 'Tamam' butonu BIZIM cookie popup'tan geliyordu",
-        "  - 'Tamam' = WiseCP locale: website/index/cookie-policy-3",
-        "  - icon = bi-check-lg (Bootstrap Icons)",
-        "  - CSS yuklenememesi nedeniyle yari render olmustu (Edge CDN bloke)",
-        "  - Artik lokal CSS + lokal Bootstrap Icons + DOM-ready timing ile tutarli render"
+        "v3.1.9 - Cookie popup sag-alt kompakt toast'a alindi",
+        "FIX: Cookie popup artik sag-altta kucuk toast (max 340px)",
+        "FIX: Padding/font/icon hepsi kompakt hale getirildi (12-14px font)",
+        "FIX: Yesil gradient buton -> Sade mavi (daha az dikkat cekici)",
+        "FIX: Sayfa ortasini kapatmiyor, sag-alta sabit"
     ]
 }
