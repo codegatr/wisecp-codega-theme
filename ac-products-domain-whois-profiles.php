@@ -1,7 +1,7 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 /**
  * Codega - WHOIS Profilleri Listesi
- * WiseCP runtime: $profiles, $links
+ * WiseCP runtime: $list (primary - Classic standardi), $profiles (fallback), $links
  */
 
 if(isset($tpath) && file_exists($tpath . "common-needs.php")) {
@@ -60,7 +60,12 @@ if(!function_exists('cdg_link')) {
     }
 }
 
-$profiles = isset($profiles) && is_array($profiles) ? $profiles : [];
+// WiseCP runtime: $list primary (Classic standardi), $profiles fallback
+if(isset($list) && is_array($list)) {
+    $profiles = $list;
+} elseif(!isset($profiles) || !is_array($profiles)) {
+    $profiles = [];
+}
 $links = isset($links) && is_array($links) ? $links : [];
 $controller_url = $links['controller'] ?? '';
 $create_url = cdg_link('products-domain-create-whois-profile');

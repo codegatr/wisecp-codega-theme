@@ -815,17 +815,44 @@ $discounted_total = $inv_subtotal - $total_discount;
         </div>
         <div class="cdg-inv-card-body">
 
-            <?php if(!empty($methods)): ?>
+            <?php
+            // 2-asamali odeme akisi: $payment_screen set edilmisse 2. asama
+            // (banka bilgileri, kredi karti formu, havale detaylari vb.)
+            $cdg_payment_screen = isset($payment_screen) && is_array($payment_screen) ? $payment_screen : null;
+            $cdg_pmethod_name = isset($pmethod_name) ? $pmethod_name : '';
+            ?>
+
+            <?php if($cdg_payment_screen): ?>
+            <!-- 2. ASAMA: Odeme Detaylari (havale bilgisi, kredi karti formu vs.) -->
+            <div style="margin-bottom:16px;padding:14px;background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                    <div>
+                        <strong style="color:#1e3a8a;">Seçilen Yöntem:</strong>
+                        <span style="color:#1e40af;font-weight:700;"><?php echo htmlspecialchars($cdg_pmethod_name ?: 'Ödeme Yöntemi', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                    </div>
+                    <a href="<?php echo htmlspecialchars($links['controller'] ?? '#', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:#fff;border:1px solid #cbd5e1;border-radius:6px;color:#475569;text-decoration:none;font-size:13px;">
+                        <i class="bi bi-arrow-left"></i> Yöntemi Değiştir
+                    </a>
+                </div>
+            </div>
+            <div id="cdg-payment-screen-content" style="background:#fff;padding:18px;border:1px solid #e2e8f0;border-radius:10px;">
+                <?php echo $cdg_payment_screen['content'] ?? ''; ?>
+            </div>
+            <?php elseif(!empty($methods)): ?>
             <form method="post" action="<?php echo htmlspecialchars($form_action, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" id="cdg-pay-form">
                 <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('pay-invoice'); ?>
 
                 <div class="cdg-inv-pay-methods">
-                    <?php $first = true; foreach($methods as $m_id => $m_data):
+                    <?php
+                    $cdg_selected_pmethod = isset($selected_pmethod) ? $selected_pmethod : '';
+                    $first = true;
+                    foreach($methods as $m_id => $m_data):
                         $m_name = is_array($m_data) ? ($m_data['name'] ?? $m_id) : $m_data;
                         $m_icon = (is_array($m_data) && isset($m_data['icon'])) ? $m_data['icon'] : 'bank2';
+                        $is_selected = ($cdg_selected_pmethod && $cdg_selected_pmethod == $m_id) || ($first && !$cdg_selected_pmethod);
                     ?>
-                    <label class="cdg-inv-pm <?php echo $first ? 'selected' : ''; ?>">
-                        <input type="radio" name="pmethod" value="<?php echo htmlspecialchars($m_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $first ? 'checked' : ''; ?>>
+                    <label class="cdg-inv-pm <?php echo $is_selected ? 'selected' : ''; ?>">
+                        <input type="radio" name="pmethod" value="<?php echo htmlspecialchars($m_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $is_selected ? 'checked' : ''; ?>>
                         <i class="bi bi-<?php echo htmlspecialchars($m_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
                         <div class="cdg-inv-pm-label"><?php echo htmlspecialchars($m_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                     </label>

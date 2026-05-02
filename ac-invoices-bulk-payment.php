@@ -62,8 +62,13 @@ if(!function_exists('cdg_link')) {
     }
 }
 
-$invoices = isset($invoices) && is_array($invoices) ? $invoices : [];
-$payment_methods = isset($payment_methods) && is_array($payment_methods) ? $payment_methods : [];
+// WiseCP runtime: $unpaid_invoices primary (Classic standardi), $invoices fallback
+if(isset($unpaid_invoices) && is_array($unpaid_invoices)) {
+    $invoices = $unpaid_invoices;
+} elseif(!isset($invoices) || !is_array($invoices)) {
+    $invoices = [];
+}
+$payment_methods = isset($payment_methods) && is_array($payment_methods) ? $payment_methods : (isset($methods) && is_array($methods) ? $methods : []);
 $links = isset($links) && is_array($links) ? $links : [];
 $payment_screen = isset($payment_screen) ? $payment_screen : null;
 $selected_pmethod = $selected_pmethod ?? 'none';

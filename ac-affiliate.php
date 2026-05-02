@@ -64,10 +64,21 @@ if(!function_exists('cdg_link')) {
 }
 
 // === Defansif defaults ===
+// WiseCP runtime - Classic standardi: $transaction_list, $withdrawals_list, $hits, $banners
 $aff          = isset($aff) && is_array($aff) ? $aff : [];
 $links        = isset($links) && is_array($links) ? $links : [];
-$transactions = isset($transactions) && is_array($transactions) ? $transactions : [];
-$withdrawals  = isset($withdrawals) && is_array($withdrawals) ? $withdrawals : [];
+
+// Classic primary, bizim eski isimler fallback
+if(isset($transaction_list) && is_array($transaction_list)) {
+    $transactions = $transaction_list;
+} elseif(!isset($transactions) || !is_array($transactions)) {
+    $transactions = [];
+}
+if(isset($withdrawals_list) && is_array($withdrawals_list)) {
+    $withdrawals = $withdrawals_list;
+} elseif(!isset($withdrawals) || !is_array($withdrawals)) {
+    $withdrawals = [];
+}
 $hits         = isset($hits) && is_array($hits) ? $hits : [];
 $banners      = isset($banners) && is_array($banners) ? $banners : [];
 $rates_conditions = isset($rates_conditions) ? $rates_conditions : null;

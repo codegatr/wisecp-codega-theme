@@ -575,9 +575,67 @@ foreach($options as $opt_k => $opt_v) {
             $ftp_info         = isset($options['ftp_info']) && is_array($options['ftp_info']) ? $options['ftp_info'] : [];
             $creation_info    = isset($options['creation_info']) && is_array($options['creation_info']) ? $options['creation_info'] : [];
 
+            // WiseCP runtime: $server array (hostname, ip, status, vb.)
+            $cdg_server_info = isset($server) && is_array($server) ? $server : [];
+            $server_hostname = $cdg_server_info['hostname'] ?? ($options['server_hostname'] ?? '');
+            $server_ip       = $cdg_server_info['ip'] ?? ($options['server_ip'] ?? '');
+            $server_status   = $cdg_server_info['status'] ?? '';
+            $server_panel_url = $cdg_server_info['panel_url'] ?? ($options['panel_url'] ?? $panel_link);
+
             $has_quota = $disk_limit !== null || $bandwidth_limit !== null || $email_limit !== null || $database_limit !== null;
-            $has_panel = $panel_type || $panel_link;
+            $has_panel = $panel_type || $panel_link || $server_panel_url;
+            $has_server = !empty($server_hostname) || !empty($server_ip);
         ?>
+
+        <?php if($has_server): ?>
+        <!-- Sunucu Bilgi Karti ($server runtime variable) -->
+        <div class="cdg-pd2-card" style="margin-top:18px;">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-server"></i> Sunucu Bilgileri</h3>
+                <?php if($server_status === 'active'): ?>
+                <span style="background:#dcfce7;color:#166534;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;">
+                    <i class="bi bi-check-circle"></i> Aktif
+                </span>
+                <?php endif; ?>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <ul class="cdg-pd2-info">
+                    <?php if($server_hostname): ?>
+                    <li>
+                        <span class="cdg-pd2-info-label">Sunucu Hostname</span>
+                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#1e40af;">
+                            <?php echo htmlspecialchars($server_hostname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                            <button type="button" onclick="navigator.clipboard.writeText('<?php echo htmlspecialchars(addslashes($server_hostname), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>'); this.innerHTML='<i class=\'bi bi-check\'></i>';" style="margin-left:6px;background:#f1f5f9;border:0;padding:2px 6px;border-radius:4px;cursor:pointer;font-size:11px;color:#64748b;" title="Kopyala">
+                                <i class="bi bi-clipboard"></i>
+                            </button>
+                        </span>
+                    </li>
+                    <?php endif; ?>
+                    <?php if($server_ip): ?>
+                    <li>
+                        <span class="cdg-pd2-info-label">Sunucu IP</span>
+                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#1e40af;">
+                            <?php echo htmlspecialchars($server_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                            <button type="button" onclick="navigator.clipboard.writeText('<?php echo htmlspecialchars(addslashes($server_ip), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>'); this.innerHTML='<i class=\'bi bi-check\'></i>';" style="margin-left:6px;background:#f1f5f9;border:0;padding:2px 6px;border-radius:4px;cursor:pointer;font-size:11px;color:#64748b;" title="Kopyala">
+                                <i class="bi bi-clipboard"></i>
+                            </button>
+                        </span>
+                    </li>
+                    <?php endif; ?>
+                    <?php if(!empty($hosting_dns)): ?>
+                    <li>
+                        <span class="cdg-pd2-info-label">DNS Sunucularimiz</span>
+                        <span class="cdg-pd2-info-value">
+                            <?php foreach($hosting_dns as $idx => $dns): ?>
+                            <code style="display:block;background:#f1f5f9;padding:4px 8px;border-radius:4px;font-size:12px;margin:2px 0;"><?php echo htmlspecialchars($dns, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
+                            <?php endforeach; ?>
+                        </span>
+                    </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+        <?php endif; ?>
 
         <?php if($has_quota): ?>
         <div class="cdg-pd2-card" style="margin-top:18px;">
@@ -908,10 +966,59 @@ foreach($options as $opt_k => $opt_v) {
                 <?php endif; ?>
 
                 <div style="margin-top:16px;">
+                    <?php
+                    // Subscription detay kontrolu (Classic uyumlu)
+                    // $subscription set ve status != cancelled ise: aktif abonelik var
+                    // $subscription set degilse veya cancelled: auto_pay manuel checkbox
+                    $cdg_subscription = isset($subscription) && is_array($subscription) ? $subscription : null;
+                    $cdg_sub_status = $cdg_subscription['status'] ?? '';
+                    $cdg_has_active_sub = $cdg_subscription && $cdg_sub_status !== 'cancelled';
+                    $cdg_stored_cards = isset($stored_cards) && is_array($stored_cards) && !empty($stored_cards);
+                    ?>
+
+                    <?php if($cdg_has_active_sub): ?>
+                    <!-- AKTIF ABONELIK - subscription_detail AJAX -->
+                    <div style="padding:14px;background:#dcfce7;border-left:4px solid #10b981;border-radius:8px;margin-bottom:10px;">
+                        <div style="font-weight:800;color:#166534;margin-bottom:6px;">
+                            <i class="bi bi-arrow-repeat"></i> Otomatik Yenileme Aktif
+                        </div>
+                        <div id="cdg-pd2-subscription-status" style="font-size:13px;color:#15803d;">
+                            <i class="bi bi-arrow-clockwise" style="animation:spin 1s linear infinite;"></i> Abonelik bilgileri yükleniyor...
+                        </div>
+                        <?php
+                        $cdg_sub_amount = $cdg_subscription['amount'] ?? '';
+                        $cdg_sub_next_date = $cdg_subscription['next_payment_date'] ?? ($cdg_subscription['next_date'] ?? '');
+                        $cdg_sub_period = $cdg_subscription['period'] ?? '';
+                        if($cdg_sub_amount || $cdg_sub_next_date):
+                        ?>
+                        <div style="margin-top:8px;font-size:12px;color:#166534;">
+                            <?php if($cdg_sub_amount): ?>
+                            <div><strong>Tutar:</strong> <?php echo htmlspecialchars($cdg_sub_amount, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                            <?php endif; ?>
+                            <?php if($cdg_sub_next_date): ?>
+                            <div><strong>Sonraki Ödeme:</strong> <?php echo htmlspecialchars($cdg_sub_next_date, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                            <?php endif; ?>
+                            <?php if($cdg_sub_period): ?>
+                            <div><strong>Periyot:</strong> <?php echo htmlspecialchars($cdg_sub_period, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="width:100%;justify-content:center;" onclick="cdgPd2.cancelSubscription()">
+                        <i class="bi bi-x-circle"></i> Aboneliği İptal Et
+                    </button>
+                    <?php else: ?>
+                    <!-- ABONELIK YOK - manuel auto_pay checkbox (stored_cards gerekir) -->
                     <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="width:100%;justify-content:center;" onclick="cdgPd2.toggleAutoPay()">
                         <i class="bi bi-credit-card-2-back"></i>
                         Otomatik Ödeme: <strong><?php echo $d_autopay ? 'Aktif' : 'Pasif'; ?></strong>
                     </button>
+                    <?php if(!$cdg_stored_cards && !$d_autopay): ?>
+                    <div style="margin-top:8px;padding:8px 10px;background:#fef3c7;border-left:3px solid #f59e0b;border-radius:6px;font-size:12px;color:#92400e;">
+                        <i class="bi bi-info-circle"></i> Otomatik ödeme aktif edilebilmesi için önce hesabınıza kart eklemeniz gerekir.
+                    </div>
+                    <?php endif; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -1065,6 +1172,12 @@ foreach($options as $opt_k => $opt_v) {
         var tab = document.querySelector('.cdg-pd2-tab[data-pane="' + hash + '"]');
         if(tab) tab.click();
     }
+    // Subscription detayini yukle (varsa)
+    if(document.getElementById('cdg-pd2-subscription-status')) {
+        if(typeof cdgPd2 !== 'undefined' && cdgPd2.loadSubscriptionDetail) {
+            cdgPd2.loadSubscriptionDetail();
+        }
+    }
 })();
 
 window.cdgPd2 = {
@@ -1099,6 +1212,38 @@ window.cdgPd2 = {
                 if(r && r.status === 'successful') {
                     if(typeof alert_success === 'function') alert_success(r.message || 'Güncellendi', {timer: 1500});
                     setTimeout(function(){ location.reload(); }, 1200);
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+
+    // Aktif abonelik detaylarini AJAX ile cek (Classic'in subscription_detail operation)
+    loadSubscriptionDetail: function(){
+        var statusBox = document.getElementById('cdg-pd2-subscription-status');
+        if(!statusBox || !window.jQuery) return;
+        // Classic format: GET ?operation=subscription_detail
+        jQuery.get(this.controllerUrl + '?operation=subscription_detail', function(html){
+            if(html && html.trim()) statusBox.innerHTML = html;
+        }).fail(function(){
+            // Hata durumunda PHP-side'tan render edilmis bilgileri biraz
+            statusBox.innerHTML = '<i class="bi bi-info-circle"></i> Otomatik yenileme bilgileri Classic detay endpoint\'inden alinamadi. PHP-side renderdaki bilgiler gecerlidir.';
+        });
+    },
+
+    // Aboneligi iptal et
+    cancelSubscription: function(){
+        if(!confirm('Otomatik yenilemeyi iptal etmek istediğinize emin misiniz? İptalden sonra ürününüz manuel olarak yenilenebilir.')) return;
+        if(typeof MioAjax !== 'function') return;
+        MioAjax({
+            url: this.controllerUrl,
+            type: 'post',
+            data: { operation: 'cancel_subscription', id: this.productId },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Abonelik iptal edildi', {timer: 1500});
+                    setTimeout(function(){ location.reload(); }, 1500);
                 } else if(r && r.message && typeof alert_error === 'function') {
                     alert_error(r.message, {timer: 3000});
                 }

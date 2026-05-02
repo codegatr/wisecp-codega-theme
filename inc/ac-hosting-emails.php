@@ -4,7 +4,8 @@
  * Operations: hosting_add_new_email, hosting_update_email, hosting_delete_email,
  *             hosting_add_new_email_forward, hosting_delete_email_forward
  *
- * WiseCP runtime: $mailDomains, $emailAccounts, $emailForwards, $supported, $links
+ * WiseCP runtime: $mail_domains (Classic), $email_accounts, $email_forwards, $supported, $links
+ *   (camelCase fallback'ler de denenir - bazi WiseCP surumlerinde farkli olabilir)
  */
 
 $d_status = strtolower($proanse['status'] ?? 'unknown');
@@ -13,9 +14,10 @@ $can_manage = ($d_status === 'active' && $server_active && in_array('manage-emai
 
 if(!$can_manage) return;
 
-$mail_domains = isset($mailDomains) && is_array($mailDomains) ? $mailDomains : [];
-$email_accounts = isset($emailAccounts) && is_array($emailAccounts) ? $emailAccounts : [];
-$email_forwards = isset($emailForwards) && is_array($emailForwards) ? $emailForwards : [];
+// Snake_case primary (Classic standardi), camelCase fallback
+$mail_domains = isset($mail_domains) && is_array($mail_domains) ? $mail_domains : (isset($mailDomains) && is_array($mailDomains) ? $mailDomains : []);
+$email_accounts = isset($email_accounts) && is_array($email_accounts) ? $email_accounts : (isset($emailAccounts) && is_array($emailAccounts) ? $emailAccounts : []);
+$email_forwards = isset($email_forwards) && is_array($email_forwards) ? $email_forwards : (isset($emailForwards) && is_array($emailForwards) ? $emailForwards : []);
 $controller_url = $links['controller'] ?? '';
 $no_unlimited = in_array('no-unlimited-email-account', $supported ?? []);
 ?>
