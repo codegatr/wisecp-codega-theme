@@ -1,17 +1,18 @@
 {
-    "version": "2.9.4",
+    "version": "2.9.5",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.4-codega",
-    "tag": "v2.9.4-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.5-codega",
+    "tag": "v2.9.5-codega",
     "changelog": [
-        "v2.9.4 - Inline captcha duzgun yerlestirildi (hem anasayfa hem domain)",
-        "FIX: Anasayfa input'ta arama ikonu yazinin uzerine biniyordu - padding-left:48px eklendi",
-        "DOMAIN: /alan-adi sayfasinda da captcha input ile buton arasina alindi",
-        "DOMAIN: cdg-domain-search-with-captcha + cdg-domain-search-input-main yapisi",
-        "DOMAIN: JS submitnow - captchainputs degeri WiseCP form'una hidden olarak ekleniyor",
-        "DOMAIN: Captcha bos ise kirmizi shadow + focus + return false",
-        "TASARIM: Tek satirda [Input] | [Captcha resim + kod] | [Sorgula]",
-        "MOBIL: 900px alti input alta, captcha+buton yan yana; 560px alti dikey yigin"
+        "v2.9.5 - Akilli responsive layout + 13 inc ekran fix",
+        "STRATEGY: 1280px ustu yan yana, 1100px alti dikey yigin",
+        "13INC: 1100-1280px arasi sıkı yan yana (kompakt padding)",
+        "FIX: Yatay overflow korumasi (html, body overflow-x:hidden)",
+        "FIX: flex-wrap:wrap + min-width:0 - flexbox shrink calismasi icin",
+        "FIX: Input flex:2 1 280px - en az 280px genislik garantili",
+        "FIX: Captcha flex:1 1 240px - kompakt ama okunaklı",
+        "MOBIL: 560px alti - input font 14px, ikon 16px, captcha wrapping",
+        "Box-sizing border-box tum form elemanlarinda"
     ]
 }
