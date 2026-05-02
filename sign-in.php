@@ -24,9 +24,8 @@
                 <div class="cdg-alert cdg-alert-success"><i class="bi bi-check-circle"></i> <?php echo $success; ?></div>
             <?php endif; ?>
 
-            <form action="" method="post" autocomplete="off">
-                <?php if(class_exists('Validation') && method_exists('Validation', 'get_csrf_token')) echo Validation::get_csrf_token('sign'); ?>
-                <input type="hidden" name="action" value="sign-in">
+            <form action="<?php echo isset($login_link) ? $login_link : ''; ?>" method="post" id="Signin_Form" autocomplete="off">
+                <?php echo Validation::get_csrf_token('sign'); ?>
 
                 <div class="cdg-form-group">
                     <label class="cdg-form-label">E-posta</label>
@@ -36,7 +35,7 @@
                 <div class="cdg-form-group">
                     <div style="display:flex;justify-content:space-between;align-items:baseline;">
                         <label class="cdg-form-label">Sifre</label>
-                        <a href="javascript:void(0);" onclick="if(typeof forget_password==='function'){forget_password();}else{var em=document.querySelector('input[name=email]'); if(em && em.value){alert('Sifre sifirlama linki '+em.value+' adresine gonderilecek. Sistem yoneticiniz aktif etmelidir.');}else{alert('Lutfen once e-posta adresinizi girin.');}} return false;" style="font-size:12px;">Sifremi unuttum</a>
+                        <a href="javascript:void(0);" onclick="if(typeof forget_password==='function'){forget_password();return false;}" style="font-size:12px;">Sifremi unuttum</a>
                     </div>
                     <input type="password" name="password" class="cdg-form-control" required>
                 </div>
@@ -48,13 +47,14 @@
                     </label>
                 </div>
 
-                <button type="submit" class="cdg-btn cdg-btn-primary" style="width:100%;padding:13px;">
+                <button type="submit" class="cdg-btn cdg-btn-primary mio-ajax-submit" style="width:100%;padding:13px;">
                     <i class="bi bi-box-arrow-in-right"></i> Giris Yap
                 </button>
             </form>
 
             <div class="text-center mt-3" style="font-size:14px;color:var(--cdg-muted);">
-                Henuz uye degil misiniz? <a href="<?php echo (class_exists('Controllers') ? Controllers::$init->CRLink('sign-up') : '/sign-up'); ?>" style="font-weight:600;">Hemen kayit olun</a>
+                Henuz uye degil misiniz?
+                <a href="<?php echo isset($register_link) ? $register_link : (class_exists('Controllers') ? Controllers::$init->CRLink('sign-up') : '/sign-up'); ?>" style="font-weight:600;">Hemen kayit olun</a>
             </div>
         </div>
     </div>

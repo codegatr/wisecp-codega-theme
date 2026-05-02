@@ -24,9 +24,8 @@
                 <div class="cdg-alert cdg-alert-success"><i class="bi bi-check-circle"></i> <?php echo $success; ?></div>
             <?php endif; ?>
 
-            <form action="" method="post" autocomplete="off">
-                <?php if(class_exists('Validation') && method_exists('Validation', 'get_csrf_token')) echo Validation::get_csrf_token('sign'); ?>
-                <input type="hidden" name="action" value="sign-up">
+            <form action="<?php echo isset($register_link) ? $register_link : ''; ?>" method="post" id="Signup_Form" autocomplete="off">
+                <?php echo Validation::get_csrf_token('sign'); ?>
 
                 <div class="cdg-form-row">
                     <div class="cdg-form-group">

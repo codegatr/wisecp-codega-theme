@@ -1,18 +1,14 @@
 {
-    "version": "2.1.5",
+    "version": "2.1.6",
     "release_date": "2026-05-02",
-    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.5/Codega-v2.1.5.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.5",
+    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.6/Codega-v2.1.6.zip",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.6",
     "changelog": [
-        "v2.1.5 - Modern Public Landing Page (anasayfa)",
-        "Hero: gradient mavi orb + 4 floating glassmorphism kart (NVMe SSD, Imunify360, Yedekleme, LiteSpeed)",
-        "Domain arama formu: TLD chip'leri + dinamik fiyat",
-        "Hizmetler grid: 6 servis kart (Hosting, Sunucu, Domain, SSL, SMS, Ozel Cozumler) - WiseCP modul aktivasyonuna gore",
-        "Neden Biz: 6 ozellik (Yildirim hizinda, Guvenlik, Destek, Uptime, Tasima, Iade)",
-        "Hosting Paketleri: 3 fiyat karti (Baslangic, Profesyonel populer, Kurumsal)",
-        "Stats banner: gradient mavi 4 sayisal vurgu (10K+, 99.9%, 7/24, 15+)",
-        "CTA: koyu zemin gradient kart - Hosting Sec / Bize Ulasin",
-        "Mobile responsive 992px ve 640px breakpoint",
-        "WiseCP global'leri: pg_activation, first_tld_price, cfeedbacks"
+        "v2.1.6 - KRITIK GIRIS FORM CSRF FIX",
+        "sign-in.php: action=$login_link (Netwise pattern), action input kaldirildi",
+        "sign-up.php: action=$register_link, gereksiz hidden input kaldirildi",
+        "sign-reset-password.php: action=$forget_password_link",
+        "Validation::get_csrf_token('sign') kosulsuz cagri (artik garantili)",
+        "Form id'leri WiseCP convention: Signin_Form, Signup_Form, ForgotPassword_Form"
     ]
 }

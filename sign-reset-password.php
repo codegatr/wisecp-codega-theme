@@ -24,9 +24,8 @@
                 <div class="cdg-alert cdg-alert-success"><i class="bi bi-check-circle"></i> <?php echo $success; ?></div>
             <?php endif; ?>
 
-            <form action="" method="post">
-                <?php if(class_exists('Validation') && method_exists('Validation', 'get_csrf_token')) echo Validation::get_csrf_token('sign'); ?>
-                <input type="hidden" name="action" value="reset-password">
+            <form action="<?php echo isset($forget_password_link) ? $forget_password_link : ''; ?>" method="post" id="ForgotPassword_Form">
+                <?php echo Validation::get_csrf_token('sign'); ?>
 
                 <div class="cdg-form-group">
                     <label class="cdg-form-label">E-posta</label>
