@@ -3686,3 +3686,38 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
 
 /* Loading state */
 .cdg-search-result.loading{justify-content:center;color:#64748b;}
+
+/* ==================== v2.8.4 - Domain Hero Badge + AJAX UI ==================== */
+
+/* Okunabilir Domain Tescil rozeti (mavi hero üstünde) */
+.cdg-domain-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 18px;border-radius:99px;
+    background:linear-gradient(135deg,#fde047,#facc15);
+    color:#1e3a8a;
+    font-size:12px;font-weight:800;
+    text-transform:uppercase;letter-spacing:1px;
+    box-shadow:0 4px 14px rgba(252,211,77,0.40);
+    margin-bottom:18px;
+}
+.cdg-domain-badge i{color:#1e3a8a;font-size:14px;}
+
+/* AJAX yanıt sonuçlarında kullanılan stiller */
+.cdg-search-result{
+    display:grid;grid-template-columns:1fr auto auto;gap:18px;align-items:center;
+    background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px 22px;
+    transition:all 0.2s;
+}
+.cdg-search-result:hover:not(.loading){box-shadow:0 8px 24px rgba(0,0,0,0.08);border-color:#3b82f6;}
+.cdg-search-result.loading{
+    justify-content:flex-start;
+    background:linear-gradient(135deg,#f8fafc,#fff);
+    border-color:#cbd5e1;
+}
+.cdg-search-result.primary{
+    border:2px solid #1e40af;
+    background:linear-gradient(135deg,#fff,#eff6ff);
+}
+
+@keyframes cdgSpin {from{transform:rotate(0);}to{transform:rotate(360deg);}}
+

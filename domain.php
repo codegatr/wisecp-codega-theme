@@ -87,17 +87,22 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
     </div>
     <div class="cdg-container">
         <div class="cdg-domain-hero-content">
-            <div class="cdg-eyebrow cdg-eyebrow-glow"><i class="bi bi-globe2"></i> Domain Tescil</div>
+            <div class="cdg-domain-badge"><i class="bi bi-globe2"></i> Domain Tescil</div>
             <h1>Hayalinizdeki <span class="cdg-text-gradient-light">alan adınız</span> sizi bekliyor</h1>
             <p class="cdg-domain-lead"><?php echo $tld_count > 0 ? $tld_count . '+' : '500+'; ?> uzantı desteği · Anlık sorgu · Anında aktivasyon</p>
 
-            <form id="domainSearchForm" class="cdg-domain-search-form" onsubmit="return cdgDomainSearch(this);">
+            <form id="checkForm" action="<?php echo isset($links["controller"]) ? $links["controller"] : ""; ?>" method="POST" class="cdg-domain-search-form mio-ajax-form">
+                <input type="hidden" name="type" value="domain">
+                <input type="hidden" name="domain" id="hiddenDomain">
+                <input type="hidden" name="tcode" id="hiddenTcode" value="">
+                <?php if(class_exists("CSRF")) echo CSRF::input(); ?>
+
                 <div class="cdg-domain-search-input">
                     <i class="bi bi-search"></i>
-                    <input type="text" id="domainInput" name="domain" placeholder="alanadi.com" autocomplete="off" required>
-                    <button type="submit" id="submitnow" class="cdg-btn cdg-btn-primary cdg-btn-glow">
+                    <input type="text" id="domainInput" placeholder="alanadi.com" autocomplete="off" required>
+                    <a href="javascript:void(0);" id="submitnow" class="cdg-btn cdg-btn-primary cdg-btn-glow">
                         <i class="bi bi-search"></i> <span>Sorgula</span>
-                    </button>
+                    </a>
                 </div>
                 <label class="cdg-domain-transfer-toggle">
                     <input type="checkbox" id="transferCheckbox">
@@ -359,70 +364,254 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
     </div>
 </section>
 
-<!-- DOMAIN SORGULAMA SCRIPTI -->
+<!-- DOMAIN SORGULAMA SCRIPTI - WiseCP MioAjax Pattern -->
 <script type="text/javascript">
-var disabled_style = "background:none; color:#333; cursor:no-drop; opacity:0.3;";
-var situations = [], loading_template;
-situations['unknown'] = '<?php echo class_exists("Hook") ? __("website/domain/situations-unknown") : "Belirsiz"; ?>';
-situations['premium'] = '<?php echo class_exists("Hook") ? __("website/domain/situations-premium") : "Premium"; ?>';
-situations['available'] = '<?php echo class_exists("Hook") ? __("website/domain/situations-available") : "Müsait"; ?>';
-situations['unavailable'] = '<?php echo class_exists("Hook") ? __("website/domain/situations-unavailable") : "Alınmış"; ?>';
+var situations = {};
+situations['unknown'] = '<?php echo function_exists("__") ? __("website/domain/situations-unknown") : "Belirsiz"; ?>';
+situations['premium'] = '<?php echo function_exists("__") ? __("website/domain/situations-premium") : "Premium"; ?>';
+situations['available'] = '<?php echo function_exists("__") ? __("website/domain/situations-available") : "Müsait"; ?>';
+situations['unavailable'] = '<?php echo function_exists("__") ? __("website/domain/situations-unavailable") : "Alındı"; ?>';
 
-var contact_button = '<a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">İletişim</a>';
 var epp_code_support = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($epp_code_support) : json_encode($epp_code_support); ?>;
 var tlds = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($tlds) : json_encode($tlds); ?>;
 
-document.addEventListener('DOMContentLoaded', function(){
-    var transferCb = document.getElementById('transferCheckbox');
-    var transferBox = document.querySelector('.transfercode');
+(function(){
+    var ready = function(fn){
+        if(document.readyState !== 'loading') fn();
+        else document.addEventListener('DOMContentLoaded', fn);
+    };
 
-    if(transferCb && transferBox) {
-        transferCb.addEventListener('change', function(){
-            transferBox.style.display = this.checked ? 'block' : 'none';
-        });
-    }
+    ready(function(){
+        var transferCb  = document.getElementById('transferCheckbox');
+        var transferBox = document.querySelector('.transfercode');
+        var btn         = document.getElementById('submitnow');
+        var input       = document.getElementById('domainInput');
+        var hiddenInp   = document.getElementById('hiddenDomain');
+        var hiddenTcode = document.getElementById('hiddenTcode');
 
-    // URL'den ?domain= parametresi
-    var urlParams = new URLSearchParams(window.location.search);
-    var gDomain = urlParams.get('domain');
-    if(gDomain) {
-        document.getElementById('domainInput').value = gDomain;
-        document.getElementById('domainSearchForm').dispatchEvent(new Event('submit'));
-    }
-});
+        if(transferCb && transferBox) {
+            transferCb.addEventListener('change', function(){
+                transferBox.style.display = this.checked ? 'block' : 'none';
+                var eppI = document.getElementById('eppCode');
+                if(this.checked && eppI) eppI.focus();
+            });
+        }
 
-function cdgDomainSearch(form) {
-    var input = document.getElementById('domainInput');
-    var domain = input.value.trim().toLowerCase();
-    if(!domain) return false;
+        // Submit button click
+        if(btn) {
+            btn.addEventListener('click', function(){
+                cdgDoSubmit();
+            });
+        }
 
-    var resultsSection = document.getElementById('search-results');
-    var resultsContainer = document.getElementById('searchResults');
-    var searchTitle = document.getElementById('searchTitle');
+        // Enter tuşu
+        if(input) {
+            input.addEventListener('keydown', function(e){
+                if(e.key === 'Enter') {
+                    e.preventDefault();
+                    cdgDoSubmit();
+                }
+            });
+        }
 
-    resultsSection.style.display = 'block';
-    resultsSection.scrollIntoView({behavior: 'smooth'});
-
-    searchTitle.innerHTML = '<span class="cdg-text-gradient">"' + escapeHTML(domain) + '"</span> için sonuçlar';
-    resultsContainer.innerHTML = '<div class="cdg-search-result loading"><div class="cdg-search-result-name"><i class="bi bi-hourglass-split" style="animation:cdgSpin 1s linear infinite;"></i> <strong>Sorgulanıyor...</strong></div></div>';
-
-    // WiseCP sorgu API'si - eğer sayfa zaten ?domain= ile yüklendiyse browser'a yönlendir
-    if(window.location.search.indexOf('domain=' + encodeURIComponent(domain)) === -1) {
-        window.location.href = '?domain=' + encodeURIComponent(domain);
-        return false;
-    }
-
-    return false;
-}
-
-function escapeHTML(s) {
-    return String(s).replace(/[&<>"']/g, function(c){
-        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+        // ?domain= ile geldiyse otomatik sorgula
+        var urlParams = new URLSearchParams(window.location.search);
+        var gDomain = urlParams.get('domain');
+        if(gDomain && input) {
+            input.value = gDomain;
+            setTimeout(cdgDoSubmit, 300);
+        }
     });
-}
 
-// CSS animation for spinner
-var st = document.createElement('style');
-st.textContent = '@keyframes cdgSpin { from{transform:rotate(0);} to{transform:rotate(360deg);} }';
-document.head.appendChild(st);
+    window.cdgDoSubmit = function(){
+        var btn       = document.getElementById('submitnow');
+        var input     = document.getElementById('domainInput');
+        var hiddenInp = document.getElementById('hiddenDomain');
+        var hiddenTc  = document.getElementById('hiddenTcode');
+        var eppInput  = document.getElementById('eppCode');
+        var transferCb= document.getElementById('transferCheckbox');
+
+        if(!input) return;
+        var domain = (input.value || '').trim().toLowerCase();
+        if(!domain) {
+            input.focus();
+            return;
+        }
+
+        if(btn && btn.getAttribute('data-pending') === 'true') return;
+        if(btn) btn.setAttribute('data-pending', 'true');
+
+        if(hiddenInp) hiddenInp.value = domain;
+        if(hiddenTc)  hiddenTc.value  = (transferCb && transferCb.checked && eppInput) ? eppInput.value : '';
+
+        var resultsSection = document.getElementById('search-results');
+        var resultsContainer = document.getElementById('searchResults');
+        var searchTitle = document.getElementById('searchTitle');
+
+        resultsSection.style.display = 'block';
+        searchTitle.innerHTML = '<span class="cdg-text-gradient">"' + cdgEscapeHTML(domain) + '"</span> için sonuçlar';
+        resultsContainer.innerHTML = '<div class="cdg-search-result loading"><div class="cdg-search-result-name"><i class="bi bi-hourglass-split" style="animation:cdgSpin 1s linear infinite;"></i> <strong>Sorgulanıyor...</strong></div></div>';
+
+        setTimeout(function(){
+            resultsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }, 100);
+
+        // jQuery + MioAjax kullan
+        if(typeof window.jQuery !== 'undefined' && typeof window.MioAjax !== 'undefined') {
+            var request = window.MioAjax({
+                action: window.jQuery('#checkForm').attr('action'),
+                form:   window.jQuery('#checkForm'),
+                method: 'POST',
+            }, true, true);
+
+            request.done(function(result){
+                if(btn) btn.removeAttribute('data-pending');
+                cdgRenderResults(result, domain);
+            });
+
+            request.fail(function(xhr, status, err){
+                if(btn) btn.removeAttribute('data-pending');
+                cdgRenderError('Sorgulama sırasında hata oluştu: ' + (err || status));
+            });
+
+        } else if(typeof window.jQuery !== 'undefined') {
+            // jQuery var ama MioAjax yok - native ajax
+            window.jQuery.post(
+                window.jQuery('#checkForm').attr('action'),
+                window.jQuery('#checkForm').serialize()
+            ).done(function(result){
+                if(btn) btn.removeAttribute('data-pending');
+                cdgRenderResults(result, domain);
+            }).fail(function(xhr, status, err){
+                if(btn) btn.removeAttribute('data-pending');
+                cdgRenderError('Sorgulama hatasi: ' + (err || status));
+            });
+
+        } else {
+            // jQuery yok - vanilla fetch
+            var formData = new FormData(document.getElementById('checkForm'));
+            fetch(document.getElementById('checkForm').action, {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin',
+            })
+            .then(function(r){ return r.text(); })
+            .then(function(text){
+                if(btn) btn.removeAttribute('data-pending');
+                cdgRenderResults(text, domain);
+            })
+            .catch(function(err){
+                if(btn) btn.removeAttribute('data-pending');
+                cdgRenderError('Sorgulama hatasi: ' + err.message);
+            });
+        }
+    };
+
+    window.cdgRenderResults = function(result, query){
+        var container = document.getElementById('searchResults');
+        if(!result) {
+            cdgRenderError('Sunucudan boş yanıt geldi.');
+            return;
+        }
+
+        var solve = null;
+        try {
+            if(typeof result === 'string') {
+                solve = JSON.parse(result);
+            } else {
+                solve = result;
+            }
+        } catch(e) {
+            // JSON değil - HTML içinde olabilir
+            var match = (result || '').match(/\{[\s\S]*\}/);
+            if(match) {
+                try { solve = JSON.parse(match[0]); } catch(e2) {}
+            }
+        }
+
+        if(!solve) {
+            cdgRenderError('Yanit ayrıştırılamadı. Lütfen tekrar deneyin.');
+            return;
+        }
+
+        if(solve.status === 'error') {
+            cdgRenderError(solve.message || 'Bilinmeyen hata.');
+            return;
+        }
+
+        if(!solve.data || !solve.data.length) {
+            container.innerHTML = '<div class="cdg-search-result"><div class="cdg-search-result-name"><i class="bi bi-info-circle"></i> Sonuç bulunamadı.</div></div>';
+            return;
+        }
+
+        var html = '';
+        solve.data.forEach(function(item, idx){
+            var name = (item.domain || item.name || '').toString();
+            var status = item.status || 'unknown';
+            var statusLabel = situations[status] || status;
+            var statusColor = '#94a3b8';
+            var statusIcon = 'bi-question-circle';
+            if(status === 'available') { statusColor = '#10b981'; statusIcon = 'bi-check-circle-fill'; }
+            else if(status === 'unavailable') { statusColor = '#ef4444'; statusIcon = 'bi-x-circle-fill'; }
+            else if(status === 'premium') { statusColor = '#f59e0b'; statusIcon = 'bi-star-fill'; }
+
+            var priceHTML = '';
+            if(item.price) priceHTML = '<span class="num">' + cdgEscapeHTML(item.price.toString()) + '</span>';
+            else if(item.amount) priceHTML = '<span class="num">' + cdgEscapeHTML(item.amount.toString()) + '</span>';
+
+            var actionHTML = '';
+            if(status === 'available' && item.order_link) {
+                actionHTML = '<a href="' + cdgEscapeHTML(item.order_link) + '" class="cdg-btn cdg-btn-primary cdg-btn-sm"><i class="bi bi-cart-plus"></i> Sepete Ekle</a>';
+            } else if(status === 'unavailable') {
+                actionHTML = '<button class="cdg-btn cdg-btn-outline cdg-btn-sm" disabled><i class="bi bi-x"></i> Alındı</button>';
+            } else if(status === 'premium') {
+                actionHTML = '<a href="' + cdgEscapeHTML(item.order_link || '#') + '" class="cdg-btn cdg-btn-outline cdg-btn-sm" style="border-color:#f59e0b;color:#f59e0b;"><i class="bi bi-star-fill"></i> Premium</a>';
+            } else {
+                actionHTML = '<span style="color:#94a3b8;font-size:13px;">—</span>';
+            }
+
+            var primaryClass = idx === 0 ? ' primary' : '';
+            html += '<div class="cdg-search-result' + primaryClass + '">' +
+                '<div class="cdg-search-result-name">' +
+                '<i class="bi ' + statusIcon + '" style="color:' + statusColor + ';"></i> ' +
+                '<strong>' + cdgEscapeHTML(name) + '</strong>' +
+                (idx === 0 ? '<span class="cdg-search-result-badge">İlk Tercih</span>' : '') +
+                '<span style="color:' + statusColor + ';font-weight:600;font-size:13px;margin-left:8px;">' + cdgEscapeHTML(statusLabel) + '</span>' +
+                '</div>' +
+                '<div class="cdg-search-result-price">' + priceHTML + '</div>' +
+                '<div>' + actionHTML + '</div>' +
+            '</div>';
+        });
+
+        container.innerHTML = html;
+    };
+
+    window.cdgRenderError = function(msg){
+        var container = document.getElementById('searchResults');
+        container.innerHTML = '<div class="cdg-search-result" style="border-color:#fca5a5;background:#fee2e2;">' +
+            '<div class="cdg-search-result-name" style="color:#991b1b;">' +
+            '<i class="bi bi-exclamation-triangle-fill"></i> ' +
+            '<strong>' + cdgEscapeHTML(msg) + '</strong>' +
+            '</div>' +
+            '<div></div>' +
+            '<div></div>' +
+        '</div>';
+    };
+
+    window.cdgEscapeHTML = function(s){
+        return String(s == null ? '' : s).replace(/[&<>"\']/g, function(c){
+            return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+        });
+    };
+})();
+
+// Spinner animation
+(function(){
+    if(!document.getElementById('cdgSpinStyle')) {
+        var st = document.createElement('style');
+        st.id = 'cdgSpinStyle';
+        st.textContent = '@keyframes cdgSpin { from{transform:rotate(0);} to{transform:rotate(360deg);} }';
+        document.head.appendChild(st);
+    }
+})();
 </script>

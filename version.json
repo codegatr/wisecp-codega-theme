@@ -1,16 +1,19 @@
 {
-    "version": "2.8.3",
+    "version": "2.8.4",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.8.3-codega",
-    "tag": "v2.8.3-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.8.4-codega",
+    "tag": "v2.8.4-codega",
     "changelog": [
-        "v2.8.3 - theme-config.php telefon duzeltmesi",
-        "FIX: theme-config.php'deki '+90 (332) 000 00 00' placeholder'i kaldirildi",
-        "FIX: Yeni numara: +90 510 220 42 06",
-        "FIX: WhatsApp: 905102204206",
-        "FIX: Calisma saatleri eklendi: Pazartesi - Cuma 09:00 - 18:00",
-        "FIX: Adres Konya, Turkiye -> Konya, Turkiye (utf-8)",
-        "iletisim sayfasi artik dogru numarayi gosteriyor (theme-config'den okuyor)"
+        "v2.8.4 - DOMAIN AJAX SORGU + UPDATER CACHE FIX",
+        "DOMAIN: Sorgulama artik WiseCP'nin gercek MioAjax pattern'ini kullaniyor",
+        "DOMAIN: $links['controller'] action + CSRF token gondererek sorgu yapiliyor",
+        "DOMAIN: jQuery + MioAjax fallback + native fetch ucu kademeli destek",
+        "DOMAIN: Sonuc yapisi {status, data:[{domain, status, price, order_link}]} parse",
+        "DOMAIN: 4 durum gosterimi (available/unavailable/premium/unknown) ayri renkli",
+        "DOMAIN: 'Domain Tescil' rozeti altın gradient (mavi hero uzerinde okunabilir)",
+        "UPDATER: Cache buster (?_cb=time) version.json'a eklendi",
+        "UPDATER: Cache-Control no-cache header'lari (curl + file_get_contents)",
+        "UPDATER: CURLOPT_FRESH_CONNECT - eski TCP baglantilari kullanma"
     ]
 }

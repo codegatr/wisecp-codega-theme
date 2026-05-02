@@ -3,7 +3,7 @@ return [
     'meta' => [
         'name'        => 'Codega',
         'description' => 'Modern, mavi agirlikli CODEGA klasik temasi. Web yazilim, hosting, domain, SMS ve ozel yazilim hizmetleri icin tasarlanmistir.',
-        'version'     => '2.8.3',
+        'version'     => '2.8.4',
         'provider'    => 'CODEGA',
         'website'     => 'https://codega.com.tr',
         'image'       => '',
