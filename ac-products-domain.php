@@ -63,14 +63,52 @@ if(!function_exists('cdg_link')) {
 }
 
 // === Defansif defaults ===
-// WiseCP runtime: $list primary (Classic standardi), $orders ve $products fallback
-if(isset($list) && is_array($list)) {
+// WiseCP runtime: $list, $orders, $products, $domain_orders gibi farkli isimler kullanabilir
+$products = [];
+$cdg_debug_source = 'NONE';
+
+// Once dogrudan listeleri dene
+if(isset($list) && is_array($list) && !empty($list)) {
     $products = $list;
-} elseif(isset($orders) && is_array($orders)) {
+    $cdg_debug_source = '$list';
+} elseif(isset($orders) && is_array($orders) && !empty($orders)) {
     $products = $orders;
-} elseif(!isset($products) || !is_array($products)) {
-    $products = [];
+    $cdg_debug_source = '$orders';
+} elseif(isset($GLOBALS['products']) && is_array($GLOBALS['products']) && !empty($GLOBALS['products'])) {
+    $products = $GLOBALS['products'];
+    $cdg_debug_source = '$GLOBALS[products]';
 }
+
+// Domain kategorize edilmis array yapisi: $domain_orders["all"], ["active"] vs.
+if(empty($products) && isset($domain_orders) && is_array($domain_orders)) {
+    if(isset($domain_orders['all']) && is_array($domain_orders['all'])) {
+        $products = $domain_orders['all'];
+        $cdg_debug_source = '$domain_orders[all]';
+    } else {
+        // $domain_orders zaten flat array olabilir
+        $products = $domain_orders;
+        $cdg_debug_source = '$domain_orders';
+    }
+}
+
+// Diagnostic mode: ?_codega_diag=1 ile sayfanin uzerinde teknik bilgi goster
+$cdg_show_diag = isset($_GET['_codega_diag']) && $_GET['_codega_diag'] === '1';
+if($cdg_show_diag) {
+    $cdg_diag_info = [
+        '$list_isset'         => isset($list) ? 'YES (' . (is_array($list) ? count($list) . ' items' : gettype($list)) . ')' : 'NO',
+        '$orders_isset'       => isset($orders) ? 'YES (' . (is_array($orders) ? count($orders) . ' items' : gettype($orders)) . ')' : 'NO',
+        '$products_isset'     => isset($GLOBALS['products']) ? 'YES (' . (is_array($GLOBALS['products']) ? count($GLOBALS['products']) . ' items' : gettype($GLOBALS['products'])) . ')' : 'NO',
+        '$domain_orders'      => isset($domain_orders) ? 'YES (' . (is_array($domain_orders) ? count($domain_orders) . ' keys: ' . implode(',', array_keys($domain_orders)) : gettype($domain_orders)) . ')' : 'NO',
+        '$filter_counts'      => isset($filter_counts) ? json_encode($filter_counts) : 'NO',
+        '$filter_status'      => isset($filter_status) ? $filter_status : 'NO',
+        'final_$products'     => count($products) . ' items',
+        'data_source'         => $cdg_debug_source,
+    ];
+    if(!empty($products)) {
+        $cdg_diag_info['first_item_keys'] = implode(',', array_keys((array)$products[array_key_first($products)] ?? []));
+    }
+}
+
 $filter_counts  = isset($filter_counts) && is_array($filter_counts) ? $filter_counts : [];
 $situations     = isset($situations) && is_array($situations) ? $situations : [];
 $links          = isset($links) && is_array($links) ? $links : [];
@@ -499,6 +537,22 @@ function cdg_domain_status_label($status) {
     </div>
 
     <!-- DOMAIN LİSTESİ -->
+
+    <?php if($cdg_show_diag): ?>
+    <div style="background:#fef3c7;border:2px solid #f59e0b;border-radius:10px;padding:16px;margin:16px 0;font-family:monospace;font-size:13px;">
+        <h4 style="margin:0 0 10px;color:#92400e;">🔍 Codega Tani (Diagnostic) - Domain Liste</h4>
+        <p style="margin:0 0 10px;color:#78350f;font-size:12px;">Bu bilgileri Yunus'a iletiniz, sorunu cozmemize yardimci olur. URL'den ?_codega_diag=1 kaldirarak normal goruntuye donebilirsiniz.</p>
+        <table style="width:100%;border-collapse:collapse;">
+            <?php foreach($cdg_diag_info as $k => $v): ?>
+            <tr style="border-bottom:1px solid #fbbf24;">
+                <td style="padding:6px;font-weight:700;color:#78350f;width:200px;"><?php echo htmlspecialchars($k, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                <td style="padding:6px;color:#451a03;word-break:break-all;"><?php echo htmlspecialchars(is_array($v) ? json_encode($v) : (string)$v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+    <?php endif; ?>
+
     <?php if(empty($products)): ?>
     <div class="cdg-pd-empty">
         <div class="cdg-pd-empty-icon"><i class="bi bi-globe"></i></div>
