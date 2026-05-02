@@ -113,7 +113,20 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                 <input type="hidden" name="type" value="domain">
                 <input type="hidden" name="domain" value="">
                 <input type="hidden" name="tcode" value="">
-                <?php /* Captcha kaldırıldı - domain sorgulamasında gerekli değil */ ?>
+                <?php if(isset($captcha) && $captcha): ?>
+                    <div class="cdg-domain-captcha">
+                        <div class="cdg-domain-captcha-label">
+                            <i class="bi bi-shield-fill-check"></i>
+                            <span>Robot olmadığınızı doğrulayın</span>
+                        </div>
+                        <div class="cdg-domain-captcha-row">
+                            <div class="cdg-domain-captcha-image"><?php echo $captcha->getOutput(); ?></div>
+                            <?php if($captcha->input): ?>
+                            <input id="captchainputs" name="<?php echo $captcha->input_name; ?>" type="text" placeholder="Yandaki kodu yazın" class="cdg-domain-captcha-input" autocomplete="off">
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </form>
 
             <?php if(!empty($featured_tlds)): ?>
