@@ -1,13 +1,16 @@
 {
-    "version": "2.9.7",
+    "version": "2.9.8",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.7-codega",
-    "tag": "v2.9.7-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.8-codega",
+    "tag": "v2.9.8-codega",
     "changelog": [
-        "v2.9.7 - v2.9.6 ile ayni icerik, sadece versiyon yukseldi",
-        "Updater bazen ayni icerikli sürümü gormuyor - bu sebeple force-bump",
-        "v2.9.5'teki overflow-x:hidden body kuralı KALDIRILDI",
-        "Hesabim sayfasi v2.9.4 ile ayni duzgun gorunmeli"
+        "v2.9.8 - HESABIM SAYFASI CSS DUZELTMESI",
+        "Sorun: /hesabim sayfasi tamamen stilsiz (HTML var, CSS yok) cikiyor",
+        "Sebep: inc/ac-head.php tek satir main-head include yapiyordu",
+        "Eger WiseCP main-head'i baska yoldan cagiriyorsa CSS yuklenmiyor",
+        "Cozum: ac-head.php artik kendi basina da style.css yukleyebiliyor",
+        "Fallback eklendi: main-head bulunamazsa direkt CSS link veriyor",
+        "Google Fonts, Bootstrap Icons, wisecp.css, style.css, jQuery hepsi self-contained"
     ]
 }
