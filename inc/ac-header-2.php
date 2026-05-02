@@ -71,11 +71,11 @@ if(class_exists('User') && method_exists('User', 'logged_in') && User::logged_in
         $user_name = trim((isset($info['name']) ? $info['name'] : '') . ' ' . (isset($info['surname']) ? $info['surname'] : ''));
     }
 }
-if(!$user_name) $user_name = 'Musteri';
+if(!$user_name) $user_name = 'Müşteri';
 ?>
 <div class="cdg-ac-topbar">
     <div>
-        <h1><?php echo isset($page_title) ? $page_title : 'Hos geldiniz, ' . htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
+        <h1><?php echo isset($page_title) ? $page_title : 'Hoş geldiniz, ' . htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:10px;">

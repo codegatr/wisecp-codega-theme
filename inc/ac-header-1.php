@@ -65,13 +65,21 @@ if(!function_exists('cdg_link')) {
 }
 
 $user_name = '';
-if(class_exists('User') && method_exists('User', 'logged_in') && User::logged_in()) {
-    if(isset(User::$init->info)) {
-        $info = User::$init->info;
-        $user_name = isset($info['full_name']) && $info['full_name'] ? trim($info['full_name']) : trim((isset($info['name']) ? $info['name'] : '') . ' ' . (isset($info['surname']) ? $info['surname'] : ''));
-    }
+// WiseCP runtime: $udata primary (Classic standardi), User::$init->info fallback
+$cdg_uinfo = isset($udata) && is_array($udata) ? $udata : [];
+if(empty($cdg_uinfo) && class_exists('User') && method_exists('User', 'logged_in') && User::logged_in() && isset(User::$init->info)) {
+    $cdg_uinfo = User::$init->info;
 }
-if(!$user_name) $user_name = 'Musteri';
+if(!empty($cdg_uinfo)) {
+    $user_name = isset($cdg_uinfo['full_name']) && $cdg_uinfo['full_name']
+        ? trim($cdg_uinfo['full_name'])
+        : trim((isset($cdg_uinfo['name']) ? $cdg_uinfo['name'] : '') . ' ' . (isset($cdg_uinfo['surname']) ? $cdg_uinfo['surname'] : ''));
+    if(!$user_name) {
+        $user_name = trim((isset($cdg_uinfo['firstname']) ? $cdg_uinfo['firstname'] : '') . ' ' . (isset($cdg_uinfo['lastname']) ? $cdg_uinfo['lastname'] : ''));
+    }
+    if(!$user_name && isset($cdg_uinfo['username'])) $user_name = $cdg_uinfo['username'];
+}
+if(!$user_name) $user_name = 'Müşteri';
 ?>
 <?php
 // Bildirim verilerini WiseCP runtime'dan al
@@ -84,7 +92,12 @@ if(class_exists('User') && method_exists('User', 'getNotifications')) {
 }
 $cdg_notif_count = (int)($cdg_notifications['bubble_count'] ?? 0);
 $cdg_notif_items = isset($cdg_notifications['items']) && is_array($cdg_notifications['items']) ? $cdg_notifications['items'] : [];
-$cdg_notif_url = isset($links['controller']) ? $links['controller'] : (isset($operation_link) ? $operation_link : '');
+// Bildirim AJAX endpoint - Classic 'my-account' route'una POST eder
+$cdg_notif_url = '';
+if(isset($links['my-account']) && $links['my-account']) $cdg_notif_url = $links['my-account'];
+if(!$cdg_notif_url && isset($links['controller'])) $cdg_notif_url = $links['controller'];
+if(!$cdg_notif_url && isset($operation_link)) $cdg_notif_url = $operation_link;
+if(!$cdg_notif_url) $cdg_notif_url = cdg_link('my-account');
 ?>
 
 <style>
@@ -200,7 +213,7 @@ $cdg_notif_url = isset($links['controller']) ? $links['controller'] : (isset($op
 
 <div class="cdg-ac-topbar">
     <div>
-        <h1><?php echo isset($page_title) ? $page_title : 'Hos geldiniz, ' . htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
+        <h1><?php echo isset($page_title) ? $page_title : 'Hoş geldiniz, ' . htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:10px;">
@@ -277,29 +290,72 @@ $cdg_notif_url = isset($links['controller']) ? $links['controller'] : (isset($op
     };
 
     window.cdgNotifReadAll = function(btn) {
-        if(typeof MioAjax !== 'function') return;
         var orig = btn.innerHTML;
         btn.disabled = true;
         btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> İşleniyor...';
 
-        MioAjax({
-            url: cdgNotifUrl, type: 'post',
-            data: { operation: 'read_all_notifications' },
-            result: function(r) {
-                btn.disabled = false; btn.innerHTML = orig;
-                if(r && r.status === 'successful') {
-                    document.querySelectorAll('.cdg-notif-item.unread').forEach(function(el){ el.classList.remove('unread'); });
-                    var bubble = document.getElementById('cdg-notif-bubble');
-                    if(bubble) bubble.remove();
-                    var ct = document.getElementById('cdg-notif-count-text');
-                    if(ct) ct.textContent = '0';
-                    btn.parentNode.style.display = 'none';
-                    if(typeof alert_success === 'function') alert_success(r.message || 'Tüm bildirimler okundu işaretlendi', {timer: 1500});
-                } else if(r && r.message && typeof alert_error === 'function') {
-                    alert_error(r.message, {timer: 3000});
-                }
+        var afterSuccess = function(r) {
+            // r bir string olabilir (MioAjax getJson) ya da object (jQuery)
+            if(typeof r === 'string') {
+                try { r = JSON.parse(r); } catch(e) { r = null; }
             }
-        });
+            btn.disabled = false; btn.innerHTML = orig;
+            if(r && (r.status === 'successful' || r.status === true)) {
+                document.querySelectorAll('.cdg-notif-item.unread').forEach(function(el){ el.classList.remove('unread'); });
+                var bubble = document.getElementById('cdg-notif-bubble');
+                if(bubble) bubble.remove();
+                var ct = document.getElementById('cdg-notif-count-text');
+                if(ct) ct.textContent = '0';
+                if(btn.parentNode) btn.parentNode.style.display = 'none';
+                if(typeof alert_success === 'function') {
+                    alert_success((r && r.message) || 'Tüm bildirimler okundu işaretlendi', {timer: 1500});
+                }
+            } else if(r && r.message && typeof alert_error === 'function') {
+                alert_error(r.message, {timer: 3000});
+            }
+        };
+
+        var afterFail = function() {
+            btn.disabled = false; btn.innerHTML = orig;
+            if(typeof alert_error === 'function') {
+                alert_error('İstek başarısız oldu, tekrar deneyin.', {timer: 3000});
+            }
+        };
+
+        // Classic MioAjax API: action/method/data + .done() callback
+        if(typeof MioAjax === 'function') {
+            try {
+                var req = MioAjax({
+                    button_element: btn,
+                    action: cdgNotifUrl,
+                    method: 'POST',
+                    data: { operation: 'read_all_notifications' }
+                }, true, true);
+                if(req && typeof req.done === 'function') {
+                    req.done(afterSuccess).fail(afterFail);
+                    return;
+                }
+            } catch(e) { /* fallback'e geç */ }
+        }
+
+        // jQuery fallback
+        if(typeof jQuery !== 'undefined') {
+            jQuery.ajax({
+                url: cdgNotifUrl,
+                type: 'POST',
+                data: { operation: 'read_all_notifications' },
+                dataType: 'text'
+            }).done(afterSuccess).fail(afterFail);
+            return;
+        }
+
+        // Native fetch fallback
+        var fd = new FormData();
+        fd.append('operation', 'read_all_notifications');
+        fetch(cdgNotifUrl, { method: 'POST', body: fd, credentials: 'same-origin' })
+            .then(function(res){ return res.text(); })
+            .then(afterSuccess)
+            .catch(afterFail);
     };
 
     // Dışarı tıklamayla kapat

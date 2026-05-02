@@ -145,8 +145,14 @@ $inv_refunddate     = $invoice['refunddate'] ?? '';
 $inv_sendbta        = !empty($invoice['sendbta']);
 $inv_sendbta_amount = $invoice['sendbta_amount'] ?? 0;
 
-// PDF link
-$pdf_link = cdg_link('detail-invoice-pdf', [(int)($invoice['id'] ?? 0)]);
+// PDF link - Classic format: mevcut sayfaya ?print=pdf parametresi
+$controller_url = $links['controller'] ?? '';
+if($controller_url) {
+    $sep = (strpos($controller_url, '?') !== false) ? '&' : '?';
+    $pdf_link = $controller_url . $sep . 'print=pdf';
+} else {
+    $pdf_link = cdg_link('detail-invoice-pdf', [(int)($invoice['id'] ?? 0)]);
+}
 $invoices_url = cdg_link('invoices');
 
 // İndirimler

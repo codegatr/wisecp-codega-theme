@@ -62,6 +62,69 @@ if(!function_exists('cdg_link')) {
 }
 
 $messages = isset($messages) && is_array($messages) ? $messages : [];
+
+// $messages bos ise WiseCP runtime'dan bildirim itemlarini cek (Classic'te DataTable AJAX kullanir)
+if(empty($messages)) {
+    // 1) User class'i uzerinden Messages metodu var mi
+    if(class_exists('User') && method_exists('User', 'getMessages')) {
+        try {
+            $tmp = User::getMessages();
+            if(is_array($tmp)) $messages = $tmp;
+        } catch(\Throwable $e) {}
+    }
+    // 2) SqlManager ile direkt sorgu
+    if(empty($messages) && class_exists('SqlManager') && class_exists('User') && isset(User::$init->info['id'])) {
+        try {
+            $uid = (int)User::$init->info['id'];
+            if($uid > 0) {
+                $sql = "SELECT id, subject, body, status, cdate FROM cm_messages WHERE user_id = ? ORDER BY id DESC LIMIT 100";
+                if(method_exists('SqlManager', 'getRows')) {
+                    $tmp = SqlManager::getRows($sql, [$uid]);
+                } elseif(method_exists('SqlManager', 'getVar')) {
+                    $tmp = SqlManager::getVar($sql, [$uid]);
+                } else {
+                    $tmp = null;
+                }
+                if(is_array($tmp)) {
+                    foreach($tmp as $r) {
+                        $messages[] = [
+                            'id'      => $r['id'] ?? 0,
+                            'subject' => $r['subject'] ?? 'Mesaj',
+                            'date'    => $r['cdate'] ?? '',
+                            'status'  => $r['status'] ?? 'read',
+                            'unread'  => isset($r['status']) && $r['status'] === 'unread',
+                            'from'    => 'Sistem',
+                        ];
+                    }
+                }
+            }
+        } catch(\Throwable $e) {}
+    }
+    // 3) Son care: Bildirimleri mesaj olarak goster (header'daki cdg_notifications)
+    if(empty($messages)) {
+        $cdg_notif_for_msg = ['items' => []];
+        if(class_exists('User') && method_exists('User', 'getNotifications')) {
+            try {
+                $tmp = User::getNotifications();
+                if(is_array($tmp)) $cdg_notif_for_msg = array_merge($cdg_notif_for_msg, $tmp);
+            } catch(\Throwable $e) {}
+        }
+        if(!empty($cdg_notif_for_msg['items']) && is_array($cdg_notif_for_msg['items'])) {
+            foreach($cdg_notif_for_msg['items'] as $n) {
+                $n_id = $n['id'] ?? 0;
+                $messages[] = [
+                    'id'      => $n_id,
+                    'subject' => $n['title'] ?? ($n['message'] ?? ($n['text'] ?? 'Bildirim')),
+                    'date'    => $n['date'] ?? ($n['cdate'] ?? ($n['time'] ?? '')),
+                    'unread'  => !empty($n['unread']) || (isset($n['read']) && !$n['read']),
+                    'from'    => 'Sistem',
+                    'detail_link' => $n['link'] ?? ($n['url'] ?? '#'),
+                ];
+            }
+        }
+    }
+}
+
 $links    = isset($links) && is_array($links) ? $links : [];
 $ajax_url = $links['ajax'] ?? '';
 

@@ -85,10 +85,10 @@ if(!function_exists('cdg_link')) {
             <span class="icon"><i class="bi bi-speedometer2"></i></span> Panelim
         </a></li>
 
-        <li class="group">Urunlerim</li>
+        <li class="group">Ürünlerim</li>
 
         <li><a href="<?php echo cdg_link('ac-ps-products'); ?>" class="<?php echo cdg_ac_active(['ac-ps-products','ac-products-all'], $current_page); ?>">
-            <span class="icon"><i class="bi bi-grid"></i></span> Tum Urunler
+            <span class="icon"><i class="bi bi-grid"></i></span> Tüm Ürünler
         </a></li>
         <li><a href="<?php echo cdg_link('ac-ps-products-t', ['hosting']); ?>" class="<?php echo cdg_ac_active(['ac-ps-products-t','ac-products-hosting'], $current_page); ?>">
             <span class="icon"><i class="bi bi-hdd-network"></i></span> Hosting
@@ -106,7 +106,7 @@ if(!function_exists('cdg_link')) {
         <li class="group">Finansal</li>
 
         <li><a href="<?php echo cdg_link('ac-ps-invoices'); ?>" class="<?php echo cdg_ac_active(['ac-ps-invoices','ac-invoices'], $current_page); ?>">
-            <span class="icon"><i class="bi bi-receipt"></i></span> Faturalarim
+            <span class="icon"><i class="bi bi-receipt"></i></span> Faturalarım
         </a></li>
         <li><a href="<?php echo cdg_link('ac-ps-balance'); ?>" class="<?php echo cdg_ac_active(['ac-ps-balance','ac-balance'], $current_page); ?>">
             <span class="icon"><i class="bi bi-wallet2"></i></span> Bakiyem
@@ -130,7 +130,7 @@ if(!function_exists('cdg_link')) {
             <span class="icon"><i class="bi bi-person"></i></span> Hesap Bilgilerim
         </a></li>
         <li><a href="<?php echo (isset($logout_link) && $logout_link && $logout_link != '#') ? $logout_link : cdg_link('logout'); ?>" style="color:#ef4444;">
-            <span class="icon"><i class="bi bi-box-arrow-right"></i></span> Cikis
+            <span class="icon"><i class="bi bi-box-arrow-right"></i></span> Çıkış
         </a></li>
     </ul>
 </aside>

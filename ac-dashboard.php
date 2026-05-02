@@ -75,21 +75,31 @@ $user_email   = '';
 $user_balance = '0,00';
 $user_initial = 'M';
 
-if(class_exists('User') && isset(User::$init->info)) {
-    $info = User::$init->info;
-    // WiseCP runtime: full_name (tam ad) primary, name+surname fallback
-    $full = isset($info['full_name']) ? trim($info['full_name']) : '';
+// WiseCP runtime: $udata primary (Classic standardi), User::$init->info fallback
+$cdg_uinfo = isset($udata) && is_array($udata) ? $udata : [];
+if(empty($cdg_uinfo) && class_exists('User') && isset(User::$init->info)) {
+    $cdg_uinfo = User::$init->info;
+}
+
+if(!empty($cdg_uinfo)) {
+    // full_name primary, name+surname fallback, ad+soyad, vs.
+    $full = isset($cdg_uinfo['full_name']) ? trim($cdg_uinfo['full_name']) : '';
     if(!$full) {
-        $first = isset($info['name']) ? trim($info['name']) : '';
-        $last  = isset($info['surname']) ? trim($info['surname']) : '';
+        $first = isset($cdg_uinfo['name']) ? trim($cdg_uinfo['name']) : '';
+        $last  = isset($cdg_uinfo['surname']) ? trim($cdg_uinfo['surname']) : '';
         $full  = trim($first . ' ' . $last);
     }
-    if(!$full) $full = isset($info['username']) ? $info['username'] : 'Müşteri';
+    if(!$full) {
+        $first = isset($cdg_uinfo['firstname']) ? trim($cdg_uinfo['firstname']) : '';
+        $last  = isset($cdg_uinfo['lastname']) ? trim($cdg_uinfo['lastname']) : '';
+        $full  = trim($first . ' ' . $last);
+    }
+    if(!$full) $full = isset($cdg_uinfo['username']) ? $cdg_uinfo['username'] : 'Müşteri';
     $user_name = $full;
-    $user_email = $info['email'] ?? '';
+    $user_email = $cdg_uinfo['email'] ?? '';
 
-    $bal_amount = isset($info['balance']) ? $info['balance'] : 0;
-    $bal_cid = isset($info['balance_cid']) ? $info['balance_cid'] : 0;
+    $bal_amount = isset($cdg_uinfo['balance']) ? $cdg_uinfo['balance'] : 0;
+    $bal_cid = isset($cdg_uinfo['balance_cid']) ? $cdg_uinfo['balance_cid'] : 0;
     if(class_exists('Money') && method_exists('Money', 'formatter_symbol') && $bal_cid) {
         $user_balance = Money::formatter_symbol($bal_amount, $bal_cid);
     } else {
@@ -100,34 +110,52 @@ if(class_exists('User') && isset(User::$init->info)) {
 }
 
 // === İstatistikler (WiseCP runtime'dan al, yoksa say) ===
-$count_active_products = 0;
 $count_total_products  = 0;
-$count_unpaid_invoices = 0;
-$count_open_tickets    = 0;
-
-// Aktif ürünler
 if(isset($orders) && is_array($orders)) {
+    $count_total_products = count($orders);
+}
+
+// === Classic-uyumlu statistic1-4 runtime variables (PRIMARY) ===
+// $statistic1 = aktif urun sayisi
+// $statistic2 = domain sayisi
+// $statistic3 = bekleyen fatura sayisi
+// $statistic4 = acik ticket sayisi
+$count_active_products = isset($statistic1) ? (int)$statistic1 : 0;
+$count_active_domains  = isset($statistic2) ? (int)$statistic2 : 0;
+$count_unpaid_invoices = isset($statistic3) ? (int)$statistic3 : 0;
+$count_open_tickets    = isset($statistic4) ? (int)$statistic4 : 0;
+
+// Statistic'lar yok ise array'lerden manuel say (fallback)
+if($count_active_products === 0 && isset($orders) && is_array($orders)) {
     foreach($orders as $o) {
-        $count_total_products++;
         if(isset($o['status']) && in_array($o['status'], ['active', 'Active', 'aktif'])) {
             $count_active_products++;
         }
     }
 }
+if($count_active_domains === 0 && isset($domain_orders) && is_array($domain_orders)) {
+    foreach($domain_orders as $do) {
+        if(isset($do['status']) && in_array($do['status'], ['active', 'Active', 'aktif'])) {
+            $count_active_domains++;
+        }
+    }
+}
 
 // Faturalar (WiseCP $unpaid_invoices set ediyorsa)
-if(isset($unpaid_invoices) && is_array($unpaid_invoices)) {
-    $count_unpaid_invoices = count($unpaid_invoices);
-} elseif(isset($invoices) && is_array($invoices)) {
-    foreach($invoices as $inv) {
-        if(isset($inv['status']) && in_array($inv['status'], ['unpaid', 'Unpaid', 'odenmemis'])) {
-            $count_unpaid_invoices++;
+if($count_unpaid_invoices === 0) {
+    if(isset($unpaid_invoices) && is_array($unpaid_invoices)) {
+        $count_unpaid_invoices = count($unpaid_invoices);
+    } elseif(isset($invoices) && is_array($invoices)) {
+        foreach($invoices as $inv) {
+            if(isset($inv['status']) && in_array($inv['status'], ['unpaid', 'Unpaid', 'odenmemis'])) {
+                $count_unpaid_invoices++;
+            }
         }
     }
 }
 
 // Talepler
-if(isset($tickets) && is_array($tickets)) {
+if($count_open_tickets === 0 && isset($tickets) && is_array($tickets)) {
     foreach($tickets as $t) {
         if(isset($t['status']) && in_array($t['status'], ['Customer-Reply', 'open', 'Open', 'acik', 'Answered'])) {
             $count_open_tickets++;
@@ -142,11 +170,13 @@ elseif($hour >= 12 && $hour < 18)  $greeting = 'İyi günler';
 else                               $greeting = 'İyi akşamlar';
 
 // === Linkler ===
-$products_url = isset($acsidebar_links['products']) ? $acsidebar_links['products'] : cdg_link('products');
-$invoices_url = isset($acsidebar_links['invoices']) ? $acsidebar_links['invoices'] : cdg_link('invoices');
-$tickets_url  = isset($acsidebar_links['tickets'])  ? $acsidebar_links['tickets']  : cdg_link('tickets');
-$balance_url  = isset($acsidebar_links['balance'])  ? $acsidebar_links['balance']  : cdg_link('balance');
-$domains_url  = isset($acsidebar_links['domains'])  ? $acsidebar_links['domains']  : cdg_link('domains');
+// Quick action linkleri - $acsidebar_links bazi WiseCP versiyonlarinda yanlis URL doner
+// (orn: 'products' icin /products-hosting). Bu yuzden direkt cdg_link kullan.
+$products_url = cdg_link('all-orders');  // Tum Urunler sayfasi (ac-ps-products)
+$invoices_url = cdg_link('invoices');
+$tickets_url  = cdg_link('tickets');
+$balance_url  = cdg_link('balance');
+$domains_url  = cdg_link('domains');
 $shop_url     = cdg_link('products', ['hosting']);
 $contact_url  = cdg_link('contact');
 ?>

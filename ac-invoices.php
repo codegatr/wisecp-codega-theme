@@ -94,9 +94,18 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
                     $iid = isset($row['id']) ? $row['id'] : '';
                     $num = isset($row['number']) ? $row['number'] : (isset($row['num']) ? $row['num'] : $iid);
 
+                    // Tutar: WiseCP'de farkli surumlerde farkli key adlari olabilir
+                    // total / amount / value / fee
+                    $r_total = $row['total'] ?? ($row['amount'] ?? ($row['value'] ?? ($row['fee'] ?? null)));
+                    $r_cid   = $row['currency'] ?? ($row['cid'] ?? ($row['amount_cid'] ?? null));
+
                     $amount = '';
-                    if(class_exists('Money') && method_exists('Money', 'formatter_symbol') && isset($row['amount']) && isset($row['amount_cid'])) {
-                        $amount = Money::formatter_symbol($row['amount'], $row['amount_cid']);
+                    if(class_exists('Money') && method_exists('Money', 'formatter_symbol') && $r_total !== null && $r_cid !== null) {
+                        $amount = Money::formatter_symbol($r_total, $r_cid);
+                    } elseif($r_total !== null) {
+                        // Money sinifi yoksa basit format
+                        $amount = number_format((float)$r_total, 2, ',', '.');
+                        if($r_cid && is_string($r_cid)) $amount .= ' ' . $r_cid;
                     }
 
                     // Classic: cdate (olusturulma), duedate (son odeme), datepaid (odendi)
