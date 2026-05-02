@@ -74,7 +74,30 @@ $d_name = $proanse['name'] ?? ($options['domain'] ?? 'domain.com');
                         </tr>
                     </thead>
                     <tbody id="getEmailForwards_tbody">
-                        <tr><td colspan="4"><div class="cdg-dm-loading"><i class="bi bi-arrow-clockwise"></i>Yönlendirmeler yükleniyor...</div></td></tr>
+                        <?php
+                        $cdg_email_forwards = isset($cdg_email_forwards) && is_array($cdg_email_forwards) ? $cdg_email_forwards : [];
+                        if(empty($cdg_email_forwards)):
+                        ?>
+                        <tr><td colspan="4"><div class="cdg-dm-empty" style="padding:24px;text-align:center;color:#64748b;"><i class="bi bi-envelope" style="font-size:32px;display:block;margin-bottom:6px;opacity:0.4;"></i><p style="margin:0;font-size:13px;">Henuz email yonlendirme yok</p></div></td></tr>
+                        <?php else:
+                            foreach($cdg_email_forwards as $ek => $em):
+                                $em_id = $em['id'] ?? $ek;
+                                $em_from = $em['source'] ?? ($em['from'] ?? '');
+                                $em_to = $em['target'] ?? ($em['to'] ?? '');
+                        ?>
+                        <tr id="EmailForward_<?php echo htmlspecialchars($em_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
+                            data-prefix="<?php echo htmlspecialchars($em_from, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
+                            data-target="<?php echo htmlspecialchars($em_to, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+                            <td style="font-family:monospace;font-size:13px;"><?php echo htmlspecialchars($em_from, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                            <td style="text-align:center;color:#94a3b8;"><i class="bi bi-arrow-right"></i></td>
+                            <td style="font-family:monospace;font-size:13px;"><?php echo htmlspecialchars($em_to, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                            <td style="text-align:center;">
+                                <button type="button" onclick="cdgDomain.emailForwardDelete('<?php echo htmlspecialchars(addslashes($em_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Sil" style="background:#ef4444;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <?php endforeach; endif; ?>
                     </tbody>
                 </table>
             </div>

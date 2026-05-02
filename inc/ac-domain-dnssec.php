@@ -114,7 +114,35 @@ if(empty($algorithms)) {
                         </tr>
                     </thead>
                     <tbody id="getDnsSecRecords_tbody">
-                        <tr><td colspan="5"><div class="cdg-dm-loading"><i class="bi bi-arrow-clockwise"></i>DNSSEC kayıtları yükleniyor...</div></td></tr>
+                        <?php
+                        $cdg_dnssec_records = isset($cdg_dnssec_records) && is_array($cdg_dnssec_records) ? $cdg_dnssec_records : [];
+                        if(empty($cdg_dnssec_records)):
+                        ?>
+                        <tr><td colspan="5"><div class="cdg-dm-empty" style="padding:24px;text-align:center;color:#64748b;"><i class="bi bi-shield" style="font-size:32px;display:block;margin-bottom:6px;opacity:0.4;"></i><p style="margin:0;font-size:13px;">Henuz DNSSEC kaydi yok</p></div></td></tr>
+                        <?php else:
+                            foreach($cdg_dnssec_records as $sk => $sec):
+                                $sec_id = $sec['id'] ?? $sk;
+                                $sec_keytag = $sec['key_tag'] ?? '';
+                                $sec_alg = $sec['algorithm'] ?? '';
+                                $sec_dt = $sec['digest_type'] ?? '';
+                                $sec_digest = $sec['digest'] ?? '';
+                        ?>
+                        <tr id="DnsSecRecord_<?php echo htmlspecialchars($sec_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
+                            data-key-tag="<?php echo htmlspecialchars($sec_keytag, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
+                            data-algorithm="<?php echo htmlspecialchars($sec_alg, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
+                            data-digest-type="<?php echo htmlspecialchars($sec_dt, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
+                            data-digest="<?php echo htmlspecialchars($sec_digest, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+                            <td style="font-family:monospace;"><?php echo htmlspecialchars($sec_keytag, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                            <td><?php echo htmlspecialchars($sec_alg, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                            <td><?php echo htmlspecialchars($sec_dt, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                            <td style="font-family:monospace;font-size:11px;word-break:break-all;max-width:280px;"><?php echo htmlspecialchars($sec_digest, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                            <td style="text-align:center;">
+                                <button type="button" onclick="cdgDomain.dnssecDelete('<?php echo htmlspecialchars(addslashes($sec_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Sil" style="background:#ef4444;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <?php endforeach; endif; ?>
                     </tbody>
                 </table>
             </div>

@@ -309,7 +309,42 @@ $ttl_options = [
                         </tr>
                     </thead>
                     <tbody id="getDnsRecords_tbody">
-                        <tr><td colspan="5"><div class="cdg-dm-loading"><i class="bi bi-arrow-clockwise"></i>Kayıtlar yükleniyor...</div></td></tr>
+                        <?php
+                        $cdg_dns_records = isset($cdg_dns_records) && is_array($cdg_dns_records) ? $cdg_dns_records : [];
+                        if(empty($cdg_dns_records)):
+                        ?>
+                        <tr><td colspan="5"><div class="cdg-dm-empty" style="padding:24px;text-align:center;color:#64748b;"><i class="bi bi-inbox" style="font-size:32px;display:block;margin-bottom:6px;opacity:0.4;"></i><p style="margin:0;font-size:13px;">Henuz DNS kaydi yok</p></div></td></tr>
+                        <?php else:
+                            foreach($cdg_dns_records as $k => $r):
+                                $r_type = $r['type'] ?? '';
+                                $r_name = $r['name'] ?? '';
+                                $r_value = $r['value'] ?? '';
+                                $r_ttl = (int)($r['ttl'] ?? 3600);
+                                $r_identity = $r['identity'] ?? '';
+
+                                // TTL formatlanmasi
+                                $ttl_text = $r_ttl . ' sn';
+                                if($r_ttl >= 86400) $ttl_text = round($r_ttl / 86400) . ' gun';
+                                elseif($r_ttl >= 3600) $ttl_text = round($r_ttl / 3600) . ' sa';
+                                elseif($r_ttl >= 60) $ttl_text = round($r_ttl / 60) . ' dk';
+                        ?>
+                        <tr id="DnsRecord_<?php echo (int)$k; ?>" data-record-key="<?php echo (int)$k; ?>">
+                            <td style="font-weight:700;color:#1e40af;"><?php echo htmlspecialchars($r_type, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                            <td style="font-family:monospace;font-size:13px;"><?php echo htmlspecialchars($r_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                            <td style="font-family:monospace;font-size:13px;word-break:break-all;"><?php echo htmlspecialchars($r_value, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                            <td><?php echo htmlspecialchars($ttl_text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                            <td style="text-align:center;">
+                                <button type="button" onclick="cdgDomain.dnsRecordEdit(<?php echo (int)$k; ?>, <?php echo htmlspecialchars(json_encode([
+                                    'type' => $r_type, 'name' => $r_name, 'value' => $r_value, 'ttl' => $r_ttl, 'identity' => $r_identity
+                                ], JSON_UNESCAPED_UNICODE), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>)" title="Duzenle" style="background:#3b82f6;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;margin-right:4px;">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button type="button" onclick="cdgDomain.dnsRecordDelete(<?php echo (int)$k; ?>, '<?php echo htmlspecialchars(addslashes($r_identity), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', '<?php echo htmlspecialchars(addslashes($r_type), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', '<?php echo htmlspecialchars(addslashes($r_name), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Sil" style="background:#ef4444;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <?php endforeach; endif; ?>
                     </tbody>
                 </table>
             </div>
