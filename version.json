@@ -1,12 +1,13 @@
 {
-    "version": "2.9.6",
+    "version": "2.9.7",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.6-codega",
-    "tag": "v2.9.6-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.7-codega",
+    "tag": "v2.9.7-codega",
     "changelog": [
-        "v2.9.6 - HOTFIX: overflow-x:hidden body'den kaldirildi",
-        "v2.9.5'te eklenen 'html, body { overflow-x:hidden }' kuralı bazı dashboard sayfalarinda layout'u bozuyor olabilir",
-        "Sadece .cdg-container'a max-width:100% + box-sizing kaldı"
+        "v2.9.7 - v2.9.6 ile ayni icerik, sadece versiyon yukseldi",
+        "Updater bazen ayni icerikli sürümü gormuyor - bu sebeple force-bump",
+        "v2.9.5'teki overflow-x:hidden body kuralı KALDIRILDI",
+        "Hesabim sayfasi v2.9.4 ile ayni duzgun gorunmeli"
     ]
 }
