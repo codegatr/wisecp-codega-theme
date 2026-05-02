@@ -78,31 +78,31 @@ $client_area_types = [
 
     <div class="form-group">
         <label class="form-label"><strong>Başlık</strong></label>
-        <input type="text" name="banner_heading" value="<?php echo htmlspecialchars($banner['heading'] ?? ''); ?>" class="form-control" placeholder="Modern Yazılımla İşinizi Büyütün">
+        <input type="text" name="banner_heading" value="<?php echo htmlspecialchars($banner['heading'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="form-control" placeholder="Modern Yazılımla İşinizi Büyütün">
         <small class="form-help">HTML kullanılabilir. Satır atlama için &lt;br&gt; kullanın.</small>
     </div>
 
     <div class="form-group">
         <label class="form-label"><strong>Açıklama</strong></label>
-        <textarea name="banner_content" class="form-control" rows="3"><?php echo htmlspecialchars($banner['content'] ?? ''); ?></textarea>
+        <textarea name="banner_content" class="form-control" rows="3"><?php echo htmlspecialchars($banner['content'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></textarea>
     </div>
 
     <div class="form-group" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div>
             <label class="form-label">Birinci Buton Yazısı</label>
-            <input type="text" name="banner_button_text1" value="<?php echo htmlspecialchars($banner['button_text1'] ?? ''); ?>" class="form-control">
+            <input type="text" name="banner_button_text1" value="<?php echo htmlspecialchars($banner['button_text1'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="form-control">
         </div>
         <div>
             <label class="form-label">Birinci Buton Linki</label>
-            <input type="text" name="banner_button_link1" value="<?php echo htmlspecialchars($banner['button_link1'] ?? ''); ?>" class="form-control">
+            <input type="text" name="banner_button_link1" value="<?php echo htmlspecialchars($banner['button_link1'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="form-control">
         </div>
         <div>
             <label class="form-label">İkinci Buton Yazısı</label>
-            <input type="text" name="banner_button_text2" value="<?php echo htmlspecialchars($banner['button_text2'] ?? ''); ?>" class="form-control">
+            <input type="text" name="banner_button_text2" value="<?php echo htmlspecialchars($banner['button_text2'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="form-control">
         </div>
         <div>
             <label class="form-label">İkinci Buton Linki</label>
-            <input type="text" name="banner_button_link2" value="<?php echo htmlspecialchars($banner['button_link2'] ?? ''); ?>" class="form-control">
+            <input type="text" name="banner_button_link2" value="<?php echo htmlspecialchars($banner['button_link2'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="form-control">
         </div>
     </div>
 

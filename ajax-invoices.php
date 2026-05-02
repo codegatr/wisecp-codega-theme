@@ -28,7 +28,7 @@ function cdg_inv_badge($status, $situations) {
     $st = strtolower((string)$status);
     $style = $classes[$st] ?? 'background:#f1f5f9;color:#475569;';
 
-    return '<span style="display:inline-flex;align-items:center;padding:4px 12px;border-radius:99px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;' . $style . '">' . htmlspecialchars($label) . '</span>';
+    return '<span style="display:inline-flex;align-items:center;padding:4px 12px;border-radius:99px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;' . $style . '">' . htmlspecialchars($label, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</span>';
 }
 
 foreach($list as $row) {
@@ -52,7 +52,7 @@ foreach($list as $row) {
     }
 
     // Buton (Codega stili)
-    $btn = '<a href="' . htmlspecialchars($r_link) . '" '
+    $btn = '<a href="' . htmlspecialchars($r_link, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '" '
          . 'style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#fff;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;transition:all 0.18s;" '
          . 'onmouseover="this.style.borderColor=\'#1e40af\';this.style.color=\'#1e40af\';" '
          . 'onmouseout="this.style.borderColor=\'#e2e8f0\';this.style.color=\'#0f172a\';">'
@@ -60,16 +60,16 @@ foreach($list as $row) {
 
     // Durum unpaid ise hemen öde butonu da ekle
     if($r_status === 'unpaid') {
-        $btn .= ' <a href="' . htmlspecialchars($r_link) . '" '
+        $btn .= ' <a href="' . htmlspecialchars($r_link, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '" '
               . 'style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;margin-left:6px;background:linear-gradient(135deg,#10b981,#34d399);color:#fff;border:0;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;box-shadow:0 4px 10px rgba(16,185,129,0.22);">'
               . '<i class="bi bi-credit-card"></i> Öde</a>';
     }
 
     $item = [
-        '<strong>' . htmlspecialchars($r_number) . '</strong>',
-        htmlspecialchars($r_cdate),
-        htmlspecialchars($r_due),
-        '<strong>' . htmlspecialchars($amount_str) . '</strong>',
+        '<strong>' . htmlspecialchars($r_number, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</strong>',
+        htmlspecialchars($r_cdate, ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+        htmlspecialchars($r_due, ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+        '<strong>' . htmlspecialchars($amount_str, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</strong>',
         cdg_inv_badge($r_status, $situations),
         $btn
     ];

@@ -109,11 +109,11 @@ if(isset($visibility_invoice) && $visibility_invoice && isset($statistic3) && $s
         <div class="cdg-rmd-title">Bekleyen Faturanız Var</div>
         <div class="cdg-rmd-desc">
             <strong><?php echo $count; ?></strong> adet ödenmemiş faturanız bulunuyor.
-            Toplam tutar: <strong><?php echo htmlspecialchars($total_str); ?></strong>
+            Toplam tutar: <strong><?php echo htmlspecialchars($total_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
         </div>
     </div>
-    <a href="<?php echo htmlspecialchars($bulk_url); ?>" class="cdg-rmd-btn">
-        <i class="bi bi-credit-card"></i> <?php echo htmlspecialchars($btn_label); ?>
+    <a href="<?php echo htmlspecialchars($bulk_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-rmd-btn">
+        <i class="bi bi-credit-card"></i> <?php echo htmlspecialchars($btn_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
     </a>
 </div>
 <?php

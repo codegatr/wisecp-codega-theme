@@ -200,7 +200,7 @@ $cdg_notif_url = isset($links['controller']) ? $links['controller'] : (isset($op
 
 <div class="cdg-ac-topbar">
     <div>
-        <h1><?php echo isset($page_title) ? $page_title : 'Hos geldiniz, ' . htmlspecialchars($user_name); ?></h1>
+        <h1><?php echo isset($page_title) ? $page_title : 'Hos geldiniz, ' . htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:10px;">
@@ -230,11 +230,11 @@ $cdg_notif_url = isset($links['controller']) ? $links['controller'] : (isset($op
                             $n_icon = $n['icon'] ?? 'bi-info-circle';
                             if(strpos($n_icon, 'bi-') !== 0) $n_icon = 'bi-info-circle';
                     ?>
-                    <a href="<?php echo htmlspecialchars($n_link); ?>" class="cdg-notif-item<?php echo $n_unread ? ' unread' : ''; ?>">
-                        <div class="cdg-notif-icon"><i class="bi <?php echo htmlspecialchars($n_icon); ?>"></i></div>
+                    <a href="<?php echo htmlspecialchars($n_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-notif-item<?php echo $n_unread ? ' unread' : ''; ?>">
+                        <div class="cdg-notif-icon"><i class="bi <?php echo htmlspecialchars($n_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i></div>
                         <div class="cdg-notif-content">
-                            <p class="cdg-notif-text"><?php echo htmlspecialchars(strip_tags($n_text)); ?></p>
-                            <span class="cdg-notif-date"><?php echo htmlspecialchars($n_date); ?></span>
+                            <p class="cdg-notif-text"><?php echo htmlspecialchars(strip_tags($n_text), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
+                            <span class="cdg-notif-date"><?php echo htmlspecialchars($n_date, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                         </div>
                     </a>
                     <?php endforeach; else: ?>
@@ -261,7 +261,7 @@ $cdg_notif_url = isset($links['controller']) ? $links['controller'] : (isset($op
             <i class="bi bi-plus-lg"></i> Yeni Siparis
         </a>
         <div style="width:38px;height:38px;border-radius:50%;background:var(--cdg-gradient);color:white;display:grid;place-items:center;font-weight:700;font-size:14px;">
-            <?php echo strtoupper(mb_substr($user_name, 0, 1)); ?>
+            <?php echo mb_strtoupper(mb_substr($user_name, 0, 1, 'UTF-8'), 'UTF-8'); ?>
         </div>
     </div>
 </div>

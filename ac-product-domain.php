@@ -557,7 +557,7 @@ $transfer_lock = !empty($options['transferlock']);
 <div class="cdg-pdm">
 <div class="cdg-pdm-wrap">
 
-    <a href="<?php echo htmlspecialchars($products_url); ?>" class="cdg-pdm-back">
+    <a href="<?php echo htmlspecialchars($products_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pdm-back">
         <i class="bi bi-arrow-left"></i> Domainlerime Dön
     </a>
 
@@ -567,19 +567,19 @@ $transfer_lock = !empty($options['transferlock']);
             <div class="cdg-pdm-hero-icon"><i class="bi bi-globe2"></i></div>
             <div class="cdg-pdm-hero-text">
                 <div class="cdg-pdm-hero-eyebrow">DOMAIN YÖNETİMİ</div>
-                <h1><?php echo htmlspecialchars($d_name); ?></h1>
+                <h1><?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
                 <div class="cdg-pdm-hero-meta">
                     <?php if($d_duedate): ?>
-                    <span><i class="bi bi-calendar-check"></i> Bitiş: <?php echo htmlspecialchars(cdg_pdom_date($d_duedate)); ?></span>
+                    <span><i class="bi bi-calendar-check"></i> Bitiş: <?php echo htmlspecialchars(cdg_pdom_date($d_duedate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                     <?php if($d_period && $d_ptime): ?>
-                    <span><i class="bi bi-clock-history"></i> <?php echo htmlspecialchars($d_period . ' ' . $d_ptime); ?></span>
+                    <span><i class="bi bi-clock-history"></i> <?php echo htmlspecialchars($d_period . ' ' . $d_ptime, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="cdg-pdm-hero-status">
-                <i class="bi bi-<?php echo htmlspecialchars($st_meta['icon']); ?>"></i>
-                <?php echo htmlspecialchars($st_meta['lbl']); ?>
+                <i class="bi bi-<?php echo htmlspecialchars($st_meta['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
+                <?php echo htmlspecialchars($st_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
             </div>
         </div>
     </section>
@@ -656,22 +656,22 @@ $transfer_lock = !empty($options['transferlock']);
                 </div>
                 <div class="cdg-pdm-card-body">
                     <ul class="cdg-pdm-info">
-                        <li><span class="cdg-pdm-info-label">Domain</span><span class="cdg-pdm-info-value"><?php echo htmlspecialchars($d_name); ?></span></li>
+                        <li><span class="cdg-pdm-info-label">Domain</span><span class="cdg-pdm-info-value"><?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php if($tld): ?>
-                        <li><span class="cdg-pdm-info-label">TLD</span><span class="cdg-pdm-info-value">.<?php echo htmlspecialchars(ltrim($tld, '.')); ?></span></li>
+                        <li><span class="cdg-pdm-info-label">TLD</span><span class="cdg-pdm-info-value">.<?php echo htmlspecialchars(ltrim($tld, '.'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
-                        <li><span class="cdg-pdm-info-label">Durum</span><span class="cdg-pdm-info-value"><span class="cdg-pdm-badge <?php echo $st_meta['cls']; ?>"><?php echo htmlspecialchars($st_meta['lbl']); ?></span></span></li>
+                        <li><span class="cdg-pdm-info-label">Durum</span><span class="cdg-pdm-info-value"><span class="cdg-pdm-badge <?php echo $st_meta['cls']; ?>"><?php echo htmlspecialchars($st_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></span></li>
                         <?php if($d_cdate): ?>
-                        <li><span class="cdg-pdm-info-label">Kayıt Tarihi</span><span class="cdg-pdm-info-value"><?php echo htmlspecialchars(cdg_pdom_date($d_cdate)); ?></span></li>
+                        <li><span class="cdg-pdm-info-label">Kayıt Tarihi</span><span class="cdg-pdm-info-value"><?php echo htmlspecialchars(cdg_pdom_date($d_cdate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($d_duedate): ?>
-                        <li><span class="cdg-pdm-info-label">Bitiş Tarihi</span><span class="cdg-pdm-info-value"><?php echo htmlspecialchars(cdg_pdom_date($d_duedate)); ?></span></li>
+                        <li><span class="cdg-pdm-info-label">Bitiş Tarihi</span><span class="cdg-pdm-info-value"><?php echo htmlspecialchars(cdg_pdom_date($d_duedate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($d_renewal): ?>
-                        <li><span class="cdg-pdm-info-label">Yenileme Tarihi</span><span class="cdg-pdm-info-value"><?php echo htmlspecialchars(cdg_pdom_date($d_renewal)); ?></span></li>
+                        <li><span class="cdg-pdm-info-label">Yenileme Tarihi</span><span class="cdg-pdm-info-value"><?php echo htmlspecialchars(cdg_pdom_date($d_renewal), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($d_period && $d_ptime): ?>
-                        <li><span class="cdg-pdm-info-label">Periyot</span><span class="cdg-pdm-info-value"><?php echo htmlspecialchars($d_period . ' ' . $d_ptime); ?></span></li>
+                        <li><span class="cdg-pdm-info-label">Periyot</span><span class="cdg-pdm-info-value"><?php echo htmlspecialchars($d_period . ' ' . $d_ptime, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                     </ul>
                 </div>
@@ -687,11 +687,11 @@ $transfer_lock = !empty($options['transferlock']);
                         <i class="bi bi-exclamation-triangle-fill"></i>
                         <div>
                             <strong>Bekleyen yenileme faturanız bulunuyor.</strong><br>
-                            Fatura no: #<?php echo htmlspecialchars($invoice['number'] ?? $invoice['id']); ?>
+                            Fatura no: #<?php echo htmlspecialchars($invoice['number'] ?? $invoice['id'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                         </div>
                     </div>
                     <?php if(!empty($invoice['detail_link'])): ?>
-                    <a href="<?php echo htmlspecialchars($invoice['detail_link']); ?>" class="cdg-pdm-btn cdg-pdm-btn-warning" style="width:100%;justify-content:center;margin-bottom:8px;">
+                    <a href="<?php echo htmlspecialchars($invoice['detail_link'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pdm-btn cdg-pdm-btn-warning" style="width:100%;justify-content:center;margin-bottom:8px;">
                         <i class="bi bi-credit-card"></i> Faturayı Görüntüle / Öde
                     </a>
                     <?php endif; ?>
@@ -727,7 +727,7 @@ $transfer_lock = !empty($options['transferlock']);
                     <div>Nameserver değişiklikleri internette yayılması için 24 ila 48 saat sürebilir.</div>
                 </div>
 
-                <form method="post" action="<?php echo htmlspecialchars($controller_url); ?>" id="cdg-ns-form">
+                <form method="post" action="<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" id="cdg-ns-form">
                     <?php echo cdg_csrf('domain_modify_dns'); ?>
                     <input type="hidden" name="operation" value="domain_modify_dns">
                     <input type="hidden" name="id" value="<?php echo (int)$d_id; ?>">
@@ -735,7 +735,7 @@ $transfer_lock = !empty($options['transferlock']);
                     <?php for($i = 1; $i <= 4; $i++): $val = $current_ns[$i-1] ?? ''; ?>
                     <div class="cdg-pdm-field">
                         <label class="cdg-pdm-label">Nameserver <?php echo $i; ?> <?php if($i <= 2): ?><span style="color:#ef4444;">*</span><?php endif; ?></label>
-                        <input type="text" name="dns[]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($val); ?>" placeholder="ns<?php echo $i; ?>.example.com">
+                        <input type="text" name="dns[]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($val, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="ns<?php echo $i; ?>.example.com">
                     </div>
                     <?php endfor; ?>
 
@@ -797,7 +797,7 @@ $transfer_lock = !empty($options['transferlock']);
                 </div>
 
                 <?php if(!empty($whois_profiles)): ?>
-                <form method="post" action="<?php echo htmlspecialchars($controller_url); ?>">
+                <form method="post" action="<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                     <?php echo cdg_csrf('domain_modify_whois'); ?>
                     <input type="hidden" name="operation" value="domain_modify_whois">
                     <input type="hidden" name="id" value="<?php echo (int)$d_id; ?>">
@@ -813,13 +813,13 @@ $transfer_lock = !empty($options['transferlock']);
                                 $pf_pname = $pf['person_name'] ?? '';
                                 $pf_email = $pf['person_email'] ?? '';
                             ?>
-                            <option value="<?php echo (int)$pf_id; ?>"><?php echo htmlspecialchars($pf_name . ($pf_pname ? ' (' . $pf_pname . ')' : '') . ($pf_email ? ' - ' . $pf_email : '')); ?></option>
+                            <option value="<?php echo (int)$pf_id; ?>"><?php echo htmlspecialchars($pf_name . ($pf_pname ? ' (' . $pf_pname . ')' : '') . ($pf_email ? ' - ' . $pf_email : ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
 
                     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-                        <a href="<?php echo htmlspecialchars(cdg_link('products-domain-whois-profiles')); ?>" class="cdg-pdm-btn cdg-pdm-btn-outline">
+                        <a href="<?php echo htmlspecialchars(cdg_link('products-domain-whois-profiles'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pdm-btn cdg-pdm-btn-outline">
                             <i class="bi bi-people"></i> WHOIS Profillerimi Yönet
                         </a>
                         <button type="submit" class="cdg-pdm-btn cdg-pdm-btn-primary">
@@ -834,7 +834,7 @@ $transfer_lock = !empty($options['transferlock']);
                         Henüz WHOIS profiliniz yok. Önce bir profil oluşturarak WHOIS bilgilerinizi yönetebilirsiniz.
                     </div>
                 </div>
-                <a href="<?php echo htmlspecialchars(cdg_link('products-domain-create-whois-profile')); ?>" class="cdg-pdm-btn cdg-pdm-btn-primary">
+                <a href="<?php echo htmlspecialchars(cdg_link('products-domain-create-whois-profile'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pdm-btn cdg-pdm-btn-primary">
                     <i class="bi bi-plus-circle"></i> WHOIS Profili Oluştur
                 </a>
                 <?php endif; ?>
@@ -864,7 +864,7 @@ $transfer_lock = !empty($options['transferlock']);
                     <div>WHOIS bilgilerinizi profil secmeden de manuel olarak duzenleyebilirsiniz. Her kontak tipi icin ayri bilgi girebilirsiniz.</div>
                 </div>
 
-                <form method="post" action="<?php echo htmlspecialchars($controller_url); ?>" id="cdg-pdm-whois-form">
+                <form method="post" action="<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" id="cdg-pdm-whois-form">
                     <?php echo cdg_csrf('domain_modify_whois'); ?>
                     <input type="hidden" name="operation" value="domain_modify_whois">
                     <input type="hidden" name="id" value="<?php echo (int)$d_id; ?>">
@@ -872,11 +872,11 @@ $transfer_lock = !empty($options['transferlock']);
                     <!-- Contact Type Tabs -->
                     <div style="display:flex;gap:4px;background:#f8fafc;padding:5px;border-radius:8px;margin-bottom:14px;flex-wrap:wrap;">
                         <?php $first_ct = true; foreach($cdg_contact_types as $ct_key => $ct_label): ?>
-                        <button type="button" class="cdg-pdm-ct-tab <?php echo $first_ct ? 'active' : ''; ?>" data-ct="<?php echo htmlspecialchars($ct_key); ?>" onclick="cdgPdmCtTab(this, '<?php echo htmlspecialchars($ct_key); ?>')">
+                        <button type="button" class="cdg-pdm-ct-tab <?php echo $first_ct ? 'active' : ''; ?>" data-ct="<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" onclick="cdgPdmCtTab(this, '<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')">
                             <?php
                             $ct_icon = ['registrant' => 'person-fill', 'admin' => 'person-gear', 'tech' => 'tools', 'billing' => 'receipt'][$ct_key] ?? 'person';
                             ?>
-                            <i class="bi bi-<?php echo $ct_icon; ?>"></i> <?php echo htmlspecialchars($ct_label); ?>
+                            <i class="bi bi-<?php echo $ct_icon; ?>"></i> <?php echo htmlspecialchars($ct_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                         </button>
                         <?php $first_ct = false; endforeach; ?>
                     </div>
@@ -885,13 +885,13 @@ $transfer_lock = !empty($options['transferlock']);
                     <?php $first_ct = true; foreach($cdg_contact_types as $ct_key => $ct_label):
                         $cw = $cdg_whois_data[$ct_key] ?? [];
                     ?>
-                    <div class="cdg-pdm-ct-pane" id="cdg-pdm-ct-pane-<?php echo htmlspecialchars($ct_key); ?>" style="display:<?php echo $first_ct ? 'block' : 'none'; ?>;">
+                    <div class="cdg-pdm-ct-pane" id="cdg-pdm-ct-pane-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:<?php echo $first_ct ? 'block' : 'none'; ?>;">
 
                         <!-- Profil Sec (varsa) -->
                         <?php if(!empty($whois_profiles)): ?>
                         <div class="cdg-pdm-field">
                             <label class="cdg-pdm-label">Hizli Profil Secimi</label>
-                            <select name="profile_id[<?php echo htmlspecialchars($ct_key); ?>]" class="cdg-pdm-select" data-ct="<?php echo htmlspecialchars($ct_key); ?>" onchange="cdgPdmWhoisFillFromProfile(this, '<?php echo htmlspecialchars($ct_key); ?>')">
+                            <select name="profile_id[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>]" class="cdg-pdm-select" data-ct="<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" onchange="cdgPdmWhoisFillFromProfile(this, '<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')">
                                 <option value="0">— Manuel doldurun veya profil secin —</option>
                                 <?php foreach($whois_profiles as $pf):
                                     if(!is_array($pf)) continue;
@@ -900,8 +900,8 @@ $transfer_lock = !empty($options['transferlock']);
                                     $pf_info = $pf['information'] ?? '';
                                     $pf_selected = (isset($cw['profile_id']) && $cw['profile_id'] == $pf_id) ? 'selected' : '';
                                 ?>
-                                <option value="<?php echo (int)$pf_id; ?>" data-information='<?php echo htmlspecialchars($pf_info); ?>' <?php echo $pf_selected; ?>>
-                                    <?php echo htmlspecialchars($pf_name . (!empty($pf['person_name']) ? ' (' . $pf['person_name'] . ')' : '')); ?>
+                                <option value="<?php echo (int)$pf_id; ?>" data-information='<?php echo htmlspecialchars($pf_info, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>' <?php echo $pf_selected; ?>>
+                                    <?php echo htmlspecialchars($pf_name . (!empty($pf['person_name']) ? ' (' . $pf['person_name'] . ')' : ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -911,64 +911,64 @@ $transfer_lock = !empty($options['transferlock']);
                         <div class="cdg-pdm-form-row" style="grid-template-columns:1fr 1fr;">
                             <div class="cdg-pdm-field">
                                 <label class="cdg-pdm-label">Tam Ad <span style="color:#ef4444;">*</span></label>
-                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Name]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-Name" value="<?php echo htmlspecialchars($cw['Name'] ?? ''); ?>" placeholder="Ad Soyad">
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][Name]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-Name" value="<?php echo htmlspecialchars($cw['Name'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Ad Soyad">
                             </div>
                             <div class="cdg-pdm-field">
                                 <label class="cdg-pdm-label">Sirket Adi</label>
-                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Company]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-Company" value="<?php echo htmlspecialchars($cw['Company'] ?? ''); ?>" placeholder="Opsiyonel">
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][Company]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-Company" value="<?php echo htmlspecialchars($cw['Company'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Opsiyonel">
                             </div>
                         </div>
 
                         <div class="cdg-pdm-field">
                             <label class="cdg-pdm-label">E-posta <span style="color:#ef4444;">*</span></label>
-                            <input type="email" name="info[<?php echo htmlspecialchars($ct_key); ?>][EMail]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-EMail" value="<?php echo htmlspecialchars($cw['EMail'] ?? ''); ?>" placeholder="ornek@example.com">
+                            <input type="email" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][EMail]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-EMail" value="<?php echo htmlspecialchars($cw['EMail'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="ornek@example.com">
                         </div>
 
                         <div class="cdg-pdm-form-row" style="grid-template-columns:120px 1fr 120px 1fr;">
                             <div class="cdg-pdm-field">
                                 <label class="cdg-pdm-label">Tel Kod</label>
-                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][PhoneCountryCode]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($cw['PhoneCountryCode'] ?? '+90'); ?>" placeholder="+90">
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][PhoneCountryCode]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($cw['PhoneCountryCode'] ?? '+90', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="+90">
                             </div>
                             <div class="cdg-pdm-field">
                                 <label class="cdg-pdm-label">Telefon <span style="color:#ef4444;">*</span></label>
-                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Phone]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-Phone" value="<?php echo htmlspecialchars($cw['Phone'] ?? ''); ?>" placeholder="555 123 4567">
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][Phone]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-Phone" value="<?php echo htmlspecialchars($cw['Phone'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="555 123 4567">
                             </div>
                             <div class="cdg-pdm-field">
                                 <label class="cdg-pdm-label">Faks Kod</label>
-                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][FaxCountryCode]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($cw['FaxCountryCode'] ?? ''); ?>">
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][FaxCountryCode]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($cw['FaxCountryCode'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                             </div>
                             <div class="cdg-pdm-field">
                                 <label class="cdg-pdm-label">Faks</label>
-                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Fax]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($cw['Fax'] ?? ''); ?>">
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][Fax]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($cw['Fax'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                             </div>
                         </div>
 
                         <div class="cdg-pdm-field">
                             <label class="cdg-pdm-label">Adres <span style="color:#ef4444;">*</span></label>
-                            <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Address]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-Address" value="<?php echo htmlspecialchars($cw['AddressLine1'] ?? ($cw['Address'] ?? '')); ?>" placeholder="Sokak, mahalle, no">
+                            <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][Address]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-Address" value="<?php echo htmlspecialchars($cw['AddressLine1'] ?? ($cw['Address'] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Sokak, mahalle, no">
                         </div>
 
                         <div class="cdg-pdm-form-row" style="grid-template-columns:1fr 1fr 1fr 120px;">
                             <div class="cdg-pdm-field">
                                 <label class="cdg-pdm-label">Sehir</label>
-                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][City]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-City" value="<?php echo htmlspecialchars($cw['City'] ?? ''); ?>">
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][City]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-City" value="<?php echo htmlspecialchars($cw['City'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                             </div>
                             <div class="cdg-pdm-field">
                                 <label class="cdg-pdm-label">Bolge</label>
-                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][State]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-State" value="<?php echo htmlspecialchars($cw['State'] ?? ''); ?>">
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][State]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-State" value="<?php echo htmlspecialchars($cw['State'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                             </div>
                             <div class="cdg-pdm-field">
                                 <label class="cdg-pdm-label">Ulke (Kod)</label>
-                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Country]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-Country" value="<?php echo htmlspecialchars($cw['Country'] ?? 'TR'); ?>" maxlength="3" placeholder="TR">
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][Country]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-Country" value="<?php echo htmlspecialchars($cw['Country'] ?? 'TR', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" maxlength="3" placeholder="TR">
                             </div>
                             <div class="cdg-pdm-field">
                                 <label class="cdg-pdm-label">Posta Kodu</label>
-                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][ZipCode]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-ZipCode" value="<?php echo htmlspecialchars($cw['ZipCode'] ?? ''); ?>">
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][ZipCode]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-ZipCode" value="<?php echo htmlspecialchars($cw['ZipCode'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                             </div>
                         </div>
 
                         <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#475569;cursor:pointer;margin-top:8px;">
-                            <input type="checkbox" name="apply_to_all[<?php echo htmlspecialchars($ct_key); ?>]" value="1">
+                            <input type="checkbox" name="apply_to_all[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>]" value="1">
                             <i class="bi bi-arrows-collapse"></i> Bu bilgileri diger tum kontak tiplerine de uygula
                         </label>
                     </div>
@@ -1050,7 +1050,7 @@ $transfer_lock = !empty($options['transferlock']);
             <div class="cdg-pdm-card-body">
                 <div class="cdg-pdm-alert cdg-pdm-alert-info">
                     <i class="bi bi-info-circle"></i>
-                    <div>Domain'inize gelen e-postaları (örn. <strong>info@<?php echo htmlspecialchars($d_name); ?></strong>) başka bir adrese yönlendirebilirsiniz.</div>
+                    <div>Domain'inize gelen e-postaları (örn. <strong>info@<?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>) başka bir adrese yönlendirebilirsiniz.</div>
                 </div>
                 <div style="text-align:center;padding:8px 0;">
                     <button type="button" class="cdg-pdm-btn cdg-pdm-btn-primary" onclick="cdgDomain.openEmailForwards()">
@@ -1214,8 +1214,8 @@ $transfer_lock = !empty($options['transferlock']);
                                     }
                                 ?>
                                 <tr id="cdg-tsv-row-<?php echo (int)($tsv['id'] ?? 0); ?>">
-                                    <td><?php echo htmlspecialchars($to_email); ?></td>
-                                    <td style="font-size:11px;color:#64748b;"><?php echo htmlspecialchars($cdate_fmt); ?></td>
+                                    <td><?php echo htmlspecialchars($to_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                                    <td style="font-size:11px;color:#64748b;"><?php echo htmlspecialchars($cdate_fmt, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                                     <td>
                                         <button type="button" class="cdg-dm-row-btn cdg-dm-row-btn-danger" onclick="cdgDomain.transferServiceCancel(<?php echo (int)($tsv['id'] ?? 0); ?>)" title="Talebi iptal et">
                                             <i class="bi bi-x-lg"></i>
@@ -1268,8 +1268,8 @@ $transfer_lock = !empty($options['transferlock']);
 // Domain operasyonları
 window.cdgDomain = {
     domainId: <?php echo (int)$d_id; ?>,
-    controllerUrl: '<?php echo htmlspecialchars($controller_url); ?>',
-    csrfRenewal: '<?php echo htmlspecialchars(cdg_csrf('domain_renewal')); ?>',
+    controllerUrl: '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
+    csrfRenewal: '<?php echo htmlspecialchars(cdg_csrf('domain_renewal'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
 
     renew: function(){
         if(!confirm('Domaininizi yenilemek için fatura oluşturulacak. Devam edilsin mi?')) return;
@@ -1313,7 +1313,7 @@ window.cdgDomain = {
         // Transfer kilidi domain modülüne özgü bir özelliktir; WiseCP core'da generic operation yoktur.
         // Mevcut durumu gösterir, değişiklik için kullanıcıyı destek talebine yönlendirir.
         if(!confirm('Transfer kilidi durumunu değiştirmek için destek ekibimize bilet açacağız. Devam edilsin mi?')) return;
-        var ticketsUrl = '<?php echo htmlspecialchars(cdg_link("create-ticket-request")); ?>';
+        var ticketsUrl = '<?php echo htmlspecialchars(cdg_link("create-ticket-request"), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
         var domainName = '<?php echo htmlspecialchars($d_name, ENT_QUOTES); ?>';
         var subjectParam = encodeURIComponent('Transfer kilidi değişiklik talebi: ' + domainName);
         if(ticketsUrl && ticketsUrl !== '#') {
@@ -1397,7 +1397,7 @@ window.cdgDomain = {
         // EPP/Auth code WiseCP core'da generic bir operation değil — modüle özgü
         // En iyi yaklaşım: Destek talebi oluşturmaya yönlendir
         if(!confirm('EPP / Auth Code talebi için destek ekibimize bir bilet açacağız. Devam edilsin mi?')) return;
-        var ticketsUrl = '<?php echo htmlspecialchars(cdg_link("create-ticket-request")); ?>';
+        var ticketsUrl = '<?php echo htmlspecialchars(cdg_link("create-ticket-request"), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
         var domainName = '<?php echo htmlspecialchars($d_name, ENT_QUOTES); ?>';
         var subjectParam = encodeURIComponent('EPP / Auth Code talebi: ' + domainName);
         // Ticket sayfasına yönlendir, başlığı önceden doldur

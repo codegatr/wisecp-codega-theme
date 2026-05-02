@@ -36,7 +36,7 @@ if(class_exists('Money') && method_exists('Money','getCurrencies')) {
         <h3><i class="bi bi-sliders"></i> Bildirim ve Tercihler</h3>
     </div>
 
-    <form id="ModifyPreferences" method="post" action="<?php echo htmlspecialchars($op_link); ?>" autocomplete="off">
+    <form id="ModifyPreferences" method="post" action="<?php echo htmlspecialchars($op_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" autocomplete="off">
         <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('account'); ?>
         <input type="hidden" name="operation" value="ModifyPreferences">
 
@@ -96,8 +96,8 @@ if(class_exists('Money') && method_exists('Money','getCurrencies')) {
                     $c_name = $curr['name'] ?? '';
                     $c_code = $curr['code'] ?? '';
                 ?>
-                <option value="<?php echo htmlspecialchars($c_id); ?>" <?php echo $c_id == $user_currency ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($c_name . ' (' . $c_code . ')'); ?>
+                <option value="<?php echo htmlspecialchars($c_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $c_id == $user_currency ? 'selected' : ''; ?>>
+                    <?php echo htmlspecialchars($c_name . ' (' . $c_code . ')', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </option>
                 <?php endforeach; ?>
             </select>
@@ -116,8 +116,8 @@ if(class_exists('Money') && method_exists('Money','getCurrencies')) {
                     $l_name = $lang['name'] ?? '';
                     $l_cname = $lang['cname'] ?? $l_name;
                 ?>
-                <option value="<?php echo htmlspecialchars($l_key); ?>" <?php echo $l_key == $user_lang ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($l_cname . ' (' . $l_name . ')'); ?>
+                <option value="<?php echo htmlspecialchars($l_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $l_key == $user_lang ? 'selected' : ''; ?>>
+                    <?php echo htmlspecialchars($l_cname . ' (' . $l_name . ')', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </option>
                 <?php endforeach; ?>
             </select>

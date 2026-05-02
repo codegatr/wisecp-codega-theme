@@ -110,7 +110,7 @@ if(!empty($udata['gsm'])) {
         </div>
         <?php endif; ?>
 
-        <form id="ModifyAccountInfo" method="post" action="<?php echo htmlspecialchars($op_link); ?>" autocomplete="off">
+        <form id="ModifyAccountInfo" method="post" action="<?php echo htmlspecialchars($op_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" autocomplete="off">
             <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('account'); ?>
             <input type="hidden" name="operation" value="ModifyAccountInfo">
 
@@ -130,13 +130,13 @@ if(!empty($udata['gsm'])) {
                 </div>
             </div>
             <?php else: ?>
-            <input type="hidden" name="kind" value="<?php echo htmlspecialchars($kind); ?>">
+            <input type="hidden" name="kind" value="<?php echo htmlspecialchars($kind, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
             <?php endif; ?>
 
             <!-- Ad Soyad / Tam Ad -->
             <div class="cdg-form-group">
                 <label class="cdg-form-label">Ad Soyad <span style="color:#ef4444;">*</span></label>
-                <input type="text" name="full_name" class="cdg-form-control" value="<?php echo htmlspecialchars($u('full_name')); ?>" <?php echo (!$editable['full_name'] && $u('full_name')) ? 'disabled' : ''; ?> required>
+                <input type="text" name="full_name" class="cdg-form-control" value="<?php echo htmlspecialchars($u('full_name'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo (!$editable['full_name'] && $u('full_name')) ? 'disabled' : ''; ?> required>
             </div>
 
             <!-- E-posta -->
@@ -151,12 +151,12 @@ if(!empty($udata['gsm'])) {
                     <span style="display:inline-block;margin-left:6px;color:#f59e0b;font-size:11px;font-weight:700;">
                         <i class="bi bi-exclamation-triangle-fill"></i> Onaylanmadi
                     </span>
-                    <button type="button" onclick="cdgVrfOpen('email', <?php echo json_encode($u('email')); ?>)" style="margin-left:8px;background:#1e40af;color:#fff;border:0;padding:3px 10px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;">
+                    <button type="button" onclick="cdgVrfOpen('email', <?php echo json_encode($u('email'), JSON_UNESCAPED_UNICODE); ?>)" style="margin-left:8px;background:#1e40af;color:#fff;border:0;padding:3px 10px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;">
                         <i class="bi bi-shield-check"></i> Dogrula
                     </button>
                     <?php endif; ?>
                 </label>
-                <input type="email" name="email" class="cdg-form-control" value="<?php echo htmlspecialchars($u('email')); ?>" <?php echo (!$editable['email'] && $u('email')) ? 'disabled' : ''; ?> required>
+                <input type="email" name="email" class="cdg-form-control" value="<?php echo htmlspecialchars($u('email'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo (!$editable['email'] && $u('email')) ? 'disabled' : ''; ?> required>
             </div>
 
             <!-- Cep Telefonu (gsm) -->
@@ -171,31 +171,31 @@ if(!empty($udata['gsm'])) {
                     <span style="display:inline-block;margin-left:6px;color:#f59e0b;font-size:11px;font-weight:700;">
                         <i class="bi bi-exclamation-triangle-fill"></i> Onaylanmadi
                     </span>
-                    <button type="button" onclick="cdgVrfOpen('gsm', <?php echo json_encode($gsm_full); ?>)" style="margin-left:8px;background:#1e40af;color:#fff;border:0;padding:3px 10px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;">
+                    <button type="button" onclick="cdgVrfOpen('gsm', <?php echo json_encode($gsm_full, JSON_UNESCAPED_UNICODE); ?>)" style="margin-left:8px;background:#1e40af;color:#fff;border:0;padding:3px 10px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;">
                         <i class="bi bi-shield-check"></i> Dogrula
                     </button>
                     <?php endif; ?>
                 </label>
-                <input type="text" id="cdg-info-gsm" class="cdg-form-control" value="<?php echo htmlspecialchars($gsm_full); ?>" placeholder="+90 555 123 45 67" <?php echo (!$editable['gsm'] && $gsm_full) ? 'disabled' : ''; ?>>
-                <input type="hidden" name="gsm" value="<?php echo htmlspecialchars($gsm_full); ?>">
+                <input type="text" id="cdg-info-gsm" class="cdg-form-control" value="<?php echo htmlspecialchars($gsm_full, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="+90 555 123 45 67" <?php echo (!$editable['gsm'] && $gsm_full) ? 'disabled' : ''; ?>>
+                <input type="hidden" name="gsm" value="<?php echo htmlspecialchars($gsm_full, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
             </div>
 
             <!-- Sabit Hat -->
             <div class="cdg-form-group">
                 <label class="cdg-form-label">Sabit Hat (Opsiyonel)</label>
-                <input type="text" name="landline_phone" class="cdg-form-control" value="<?php echo htmlspecialchars($u('landline_phone')); ?>" placeholder="(0312) 123 45 67" <?php echo (!$editable['landline_phone'] && $u('landline_phone')) ? 'disabled' : ''; ?>>
+                <input type="text" name="landline_phone" class="cdg-form-control" value="<?php echo htmlspecialchars($u('landline_phone'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="(0312) 123 45 67" <?php echo (!$editable['landline_phone'] && $u('landline_phone')) ? 'disabled' : ''; ?>>
             </div>
 
             <!-- Dogum Tarihi -->
             <div class="cdg-form-group">
                 <label class="cdg-form-label">Dogum Tarihi</label>
-                <input type="date" name="birthday" class="cdg-form-control" value="<?php echo htmlspecialchars($u('birthday')); ?>" <?php echo (!$editable['birthday'] && $u('birthday')) ? 'disabled' : ''; ?>>
+                <input type="date" name="birthday" class="cdg-form-control" value="<?php echo htmlspecialchars($u('birthday'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo (!$editable['birthday'] && $u('birthday')) ? 'disabled' : ''; ?>>
             </div>
 
             <!-- TC Kimlik No -->
             <div class="cdg-form-group cdg-info-individual" <?php echo $is_corporate ? 'style="display:none;"' : ''; ?>>
                 <label class="cdg-form-label">TC Kimlik No</label>
-                <input type="text" name="identity" class="cdg-form-control" value="<?php echo htmlspecialchars($u('identity')); ?>" maxlength="11" pattern="[0-9]{11}" placeholder="11 haneli TC kimlik no" <?php echo (!$editable['identity'] && $u('identity')) ? 'disabled' : ''; ?>>
+                <input type="text" name="identity" class="cdg-form-control" value="<?php echo htmlspecialchars($u('identity'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" maxlength="11" pattern="[0-9]{11}" placeholder="11 haneli TC kimlik no" <?php echo (!$editable['identity'] && $u('identity')) ? 'disabled' : ''; ?>>
             </div>
 
             <!-- KURUMSAL ALANLAR -->
@@ -206,17 +206,17 @@ if(!empty($udata['gsm'])) {
 
                 <div class="cdg-form-group">
                     <label class="cdg-form-label">Sirket Adi</label>
-                    <input type="text" name="company_name" class="cdg-form-control" value="<?php echo htmlspecialchars($u('company_name')); ?>">
+                    <input type="text" name="company_name" class="cdg-form-control" value="<?php echo htmlspecialchars($u('company_name'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                 </div>
 
                 <div class="cdg-form-row">
                     <div class="cdg-form-group">
                         <label class="cdg-form-label">Vergi Dairesi</label>
-                        <input type="text" name="company_tax_office" class="cdg-form-control" value="<?php echo htmlspecialchars($u('company_tax_office')); ?>">
+                        <input type="text" name="company_tax_office" class="cdg-form-control" value="<?php echo htmlspecialchars($u('company_tax_office'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                     </div>
                     <div class="cdg-form-group">
                         <label class="cdg-form-label">Vergi Numarasi</label>
-                        <input type="text" name="company_tax_number" class="cdg-form-control" value="<?php echo htmlspecialchars($u('company_tax_number')); ?>" maxlength="11">
+                        <input type="text" name="company_tax_number" class="cdg-form-control" value="<?php echo htmlspecialchars($u('company_tax_number'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" maxlength="11">
                     </div>
                 </div>
             </div>
@@ -237,11 +237,11 @@ if(!empty($udata['gsm'])) {
                         $c_name = is_array($c) ? ($c['name'] ?? $c_id) : (string)$c;
                         $sel = ($u('country_id') == $c_id) ? 'selected' : '';
                     ?>
-                    <option value="<?php echo htmlspecialchars($c_id); ?>" <?php echo $sel; ?>><?php echo htmlspecialchars($c_name); ?></option>
+                    <option value="<?php echo htmlspecialchars($c_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $sel; ?>><?php echo htmlspecialchars($c_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                     <?php endforeach; ?>
                 </select>
                 <?php else: ?>
-                <input type="text" name="country_id" class="cdg-form-control" value="<?php echo htmlspecialchars($u('country_id', '215')); ?>" placeholder="Ulke ID (varsayilan: Turkiye)">
+                <input type="text" name="country_id" class="cdg-form-control" value="<?php echo htmlspecialchars($u('country_id', '215'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Ulke ID (varsayilan: Turkiye)">
                 <?php endif; ?>
             </div>
 
@@ -249,22 +249,22 @@ if(!empty($udata['gsm'])) {
             <div class="cdg-form-row">
                 <div class="cdg-form-group">
                     <label class="cdg-form-label">Sehir</label>
-                    <input type="text" name="city" id="cdg-info-city" class="cdg-form-control" value="<?php echo htmlspecialchars($u('city')); ?>">
+                    <input type="text" name="city" id="cdg-info-city" class="cdg-form-control" value="<?php echo htmlspecialchars($u('city'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                 </div>
                 <div class="cdg-form-group">
                     <label class="cdg-form-label">Ilce</label>
-                    <input type="text" name="counti" id="cdg-info-counti" class="cdg-form-control" value="<?php echo htmlspecialchars($u('counti')); ?>">
+                    <input type="text" name="counti" id="cdg-info-counti" class="cdg-form-control" value="<?php echo htmlspecialchars($u('counti'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                 </div>
                 <div class="cdg-form-group">
                     <label class="cdg-form-label">Posta Kodu</label>
-                    <input type="text" name="zipcode" class="cdg-form-control" value="<?php echo htmlspecialchars($u('zipcode')); ?>">
+                    <input type="text" name="zipcode" class="cdg-form-control" value="<?php echo htmlspecialchars($u('zipcode'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                 </div>
             </div>
 
             <!-- Adres -->
             <div class="cdg-form-group">
                 <label class="cdg-form-label">Adres</label>
-                <textarea name="address" class="cdg-form-control" rows="3"><?php echo htmlspecialchars($u('address')); ?></textarea>
+                <textarea name="address" class="cdg-form-control" rows="3"><?php echo htmlspecialchars($u('address'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></textarea>
             </div>
 
             <!-- OZEL ALANLAR (cfields) -->
@@ -281,18 +281,18 @@ if(!empty($udata['gsm'])) {
                 if(!$f_id || !$f_title) continue;
             ?>
             <div class="cdg-form-group">
-                <label class="cdg-form-label"><?php echo htmlspecialchars($f_title); ?> <?php if($f_required): ?><span style="color:#ef4444;">*</span><?php endif; ?></label>
+                <label class="cdg-form-label"><?php echo htmlspecialchars($f_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php if($f_required): ?><span style="color:#ef4444;">*</span><?php endif; ?></label>
                 <?php if($f_type === 'textarea'): ?>
-                <textarea name="cfields[<?php echo $f_id; ?>]" class="cdg-form-control" rows="3" <?php echo $f_required ? 'required' : ''; ?>><?php echo htmlspecialchars($f_value); ?></textarea>
+                <textarea name="cfields[<?php echo $f_id; ?>]" class="cdg-form-control" rows="3" <?php echo $f_required ? 'required' : ''; ?>><?php echo htmlspecialchars($f_value, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></textarea>
                 <?php elseif($f_type === 'select' && !empty($field['options'])): ?>
                 <select name="cfields[<?php echo $f_id; ?>]" class="cdg-form-control" <?php echo $f_required ? 'required' : ''; ?>>
                     <option value="">Seciniz</option>
                     <?php foreach($field['options'] as $opt): ?>
-                    <option value="<?php echo htmlspecialchars($opt); ?>" <?php echo $opt == $f_value ? 'selected' : ''; ?>><?php echo htmlspecialchars($opt); ?></option>
+                    <option value="<?php echo htmlspecialchars($opt, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $opt == $f_value ? 'selected' : ''; ?>><?php echo htmlspecialchars($opt, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                     <?php endforeach; ?>
                 </select>
                 <?php else: ?>
-                <input type="text" name="cfields[<?php echo $f_id; ?>]" class="cdg-form-control" value="<?php echo htmlspecialchars($f_value); ?>" <?php echo $f_required ? 'required' : ''; ?>>
+                <input type="text" name="cfields[<?php echo $f_id; ?>]" class="cdg-form-control" value="<?php echo htmlspecialchars($f_value, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $f_required ? 'required' : ''; ?>>
                 <?php endif; ?>
             </div>
             <?php endforeach; ?>
@@ -345,7 +345,7 @@ if(!empty($udata['gsm'])) {
             Yeni sifreniz en az 6 karakter olmalidir. Guclu bir sifre icin buyuk-kucuk harf, rakam ve ozel karakter kullanin.
         </div>
 
-        <form id="ModifyPassword" method="post" action="<?php echo htmlspecialchars($op_link); ?>" autocomplete="off">
+        <form id="ModifyPassword" method="post" action="<?php echo htmlspecialchars($op_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" autocomplete="off">
             <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('account'); ?>
             <input type="hidden" name="operation" value="ModifyPassword">
 
@@ -398,22 +398,22 @@ if(!empty($udata['gsm'])) {
             Sifrenizi unuttugunuzda hesabinizi kurtarmak icin guvenlik sorusu kullanilir. Sadece sizin bildiginiz bir cevap secin.
         </div>
 
-        <form method="post" action="<?php echo htmlspecialchars($op_link); ?>" autocomplete="off">
+        <form method="post" action="<?php echo htmlspecialchars($op_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" autocomplete="off">
             <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('account'); ?>
             <input type="hidden" name="operation" value="ModifyAccountInfo">
-            <input type="hidden" name="kind" value="<?php echo htmlspecialchars($kind); ?>">
-            <input type="hidden" name="full_name" value="<?php echo htmlspecialchars($u('full_name')); ?>">
-            <input type="hidden" name="email" value="<?php echo htmlspecialchars($u('email')); ?>">
-            <input type="hidden" name="gsm" value="<?php echo htmlspecialchars($gsm_full); ?>">
-            <input type="hidden" name="country_id" value="<?php echo htmlspecialchars($u('country_id')); ?>">
-            <input type="hidden" name="city" value="<?php echo htmlspecialchars($u('city')); ?>">
-            <input type="hidden" name="counti" value="<?php echo htmlspecialchars($u('counti')); ?>">
-            <input type="hidden" name="zipcode" value="<?php echo htmlspecialchars($u('zipcode')); ?>">
-            <input type="hidden" name="address" value="<?php echo htmlspecialchars($u('address')); ?>">
+            <input type="hidden" name="kind" value="<?php echo htmlspecialchars($kind, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+            <input type="hidden" name="full_name" value="<?php echo htmlspecialchars($u('full_name'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+            <input type="hidden" name="email" value="<?php echo htmlspecialchars($u('email'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+            <input type="hidden" name="gsm" value="<?php echo htmlspecialchars($gsm_full, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+            <input type="hidden" name="country_id" value="<?php echo htmlspecialchars($u('country_id'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+            <input type="hidden" name="city" value="<?php echo htmlspecialchars($u('city'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+            <input type="hidden" name="counti" value="<?php echo htmlspecialchars($u('counti'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+            <input type="hidden" name="zipcode" value="<?php echo htmlspecialchars($u('zipcode'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+            <input type="hidden" name="address" value="<?php echo htmlspecialchars($u('address'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
 
             <div class="cdg-form-group">
                 <label class="cdg-form-label">Guvenlik Sorusu</label>
-                <input type="text" name="security_question" class="cdg-form-control" value="<?php echo htmlspecialchars($u('security_question')); ?>" placeholder="Ornek: Ilk evcil hayvanimin ismi nedir?">
+                <input type="text" name="security_question" class="cdg-form-control" value="<?php echo htmlspecialchars($u('security_question'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Ornek: Ilk evcil hayvanimin ismi nedir?">
             </div>
 
             <div class="cdg-form-group">

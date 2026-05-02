@@ -39,7 +39,7 @@ $tickets_link = isset($links['tickets']) ? $links['tickets']
                     <i class="bi bi-exclamation-triangle-fill" style="color:#dc2626;font-size:18px;flex-shrink:0;margin-top:1px;"></i>
                     <div style="font-size:13px;color:#7f1d1d;line-height:1.5;">
                         <strong>Hata Detayi:</strong><br>
-                        <?php echo htmlspecialchars($error_msg); ?>
+                        <?php echo htmlspecialchars($error_msg, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </div>
                 </div>
             </div>
@@ -59,15 +59,15 @@ $tickets_link = isset($links['tickets']) ? $links['tickets']
 
             <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
                 <?php if($invoice_link): ?>
-                <a href="<?php echo htmlspecialchars($invoice_link); ?>" class="cdg-btn cdg-btn-primary">
+                <a href="<?php echo htmlspecialchars($invoice_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-btn cdg-btn-primary">
                     <i class="bi bi-arrow-clockwise"></i> Tekrar Dene
                 </a>
                 <?php else: ?>
-                <a href="<?php echo htmlspecialchars($products_link); ?>" class="cdg-btn cdg-btn-primary">
+                <a href="<?php echo htmlspecialchars($products_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-btn cdg-btn-primary">
                     <i class="bi bi-box-seam"></i> Hizmetlerime Git
                 </a>
                 <?php endif; ?>
-                <a href="<?php echo htmlspecialchars($tickets_link); ?>" class="cdg-btn cdg-btn-outline">
+                <a href="<?php echo htmlspecialchars($tickets_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-btn cdg-btn-outline">
                     <i class="bi bi-life-preserver"></i> Destek Talep Et
                 </a>
             </div>

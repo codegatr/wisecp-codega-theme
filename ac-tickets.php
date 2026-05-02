@@ -124,12 +124,12 @@ $ui_lang_local = isset($ui_lang) ? $ui_lang : 'tr';
                         <td><span style="font-family:monospace;color:var(--cdg-muted);font-size:12px;">#<?php echo $tid; ?></span></td>
                         <td>
                             <?php if(isset($row['detail_link'])): ?>
-                                <a href="<?php echo $row['detail_link']; ?>" style="<?php echo $bold ? 'font-weight:600;' : ''; ?>color:var(--cdg-text);"><?php echo htmlspecialchars($title); ?></a>
+                                <a href="<?php echo $row['detail_link']; ?>" style="<?php echo $bold ? 'font-weight:600;' : ''; ?>color:var(--cdg-text);"><?php echo htmlspecialchars($title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
                             <?php else: ?>
-                                <span style="<?php echo $bold ? 'font-weight:600;' : ''; ?>"><?php echo htmlspecialchars($title); ?></span>
+                                <span style="<?php echo $bold ? 'font-weight:600;' : ''; ?>"><?php echo htmlspecialchars($title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                             <?php endif; ?>
                             <?php if(!empty($row['service'])): ?>
-                                <div style="font-size:12px;color:var(--cdg-muted);"><i class="bi bi-link-45deg"></i> <?php echo htmlspecialchars($row['service']); ?></div>
+                                <div style="font-size:12px;color:var(--cdg-muted);"><i class="bi bi-link-45deg"></i> <?php echo htmlspecialchars($row['service'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                             <?php endif; ?>
                         </td>
                         <td style="text-align:center;font-size:12px;"><?php echo $status_str; ?></td>

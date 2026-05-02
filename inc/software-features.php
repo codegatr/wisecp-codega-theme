@@ -45,9 +45,9 @@ $features = [
     <div class="cdg-sf-step">
         <div class="cdg-sf-num"><?php echo $i + 1; ?></div>
         <div class="cdg-sf-icon">
-            <i class="<?php echo htmlspecialchars($f['icon']); ?>"></i>
+            <i class="<?php echo htmlspecialchars($f['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
         </div>
-        <h4 class="cdg-sf-title"><?php echo htmlspecialchars($f['text']); ?></h4>
+        <h4 class="cdg-sf-title"><?php echo htmlspecialchars($f['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h4>
     </div>
     <?php if($i < count($features) - 1): ?>
     <div class="cdg-sf-arrow" aria-hidden="true">

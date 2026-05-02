@@ -84,23 +84,23 @@ if(!isset($ac_header_info_inc)) {
 </style>
 
 <div class="cdg-hi">
-    <div class="cdg-hi-avatar"><?php echo htmlspecialchars($avatar_letter); ?></div>
+    <div class="cdg-hi-avatar"><?php echo htmlspecialchars($avatar_letter, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
     <div class="cdg-hi-text">
         <div class="cdg-hi-greet">
-            Hoş geldin, <strong><?php echo htmlspecialchars($full_name ?: 'Müşteri'); ?></strong>!
+            Hoş geldin, <strong><?php echo htmlspecialchars($full_name ?: 'Müşteri', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>!
         </div>
         <div class="cdg-hi-meta">
             <?php if($last_date): ?>
-            <span><i class="bi bi-clock-history"></i> Son giriş: <?php echo htmlspecialchars($last_date); ?></span>
+            <span><i class="bi bi-clock-history"></i> Son giriş: <?php echo htmlspecialchars($last_date, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             <?php endif; ?>
             <?php if($last_ip): ?>
-            <span><i class="bi bi-geo-alt"></i> IP: <?php echo htmlspecialchars($last_ip); ?></span>
+            <span><i class="bi bi-geo-alt"></i> IP: <?php echo htmlspecialchars($last_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             <?php endif; ?>
         </div>
     </div>
 
     <?php if($is_reseller): ?>
-    <a href="<?php echo htmlspecialchars($reseller_url); ?>" class="cdg-hi-reseller" title="Aktif Bayi Hesabı">
+    <a href="<?php echo htmlspecialchars($reseller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-hi-reseller" title="Aktif Bayi Hesabı">
         <i class="bi bi-shop-window"></i> AKTİF BAYİ
     </a>
     <?php endif; ?>

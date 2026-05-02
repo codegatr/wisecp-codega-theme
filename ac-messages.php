@@ -236,18 +236,18 @@ function cdg_msglist_date($date) {
             $m_link    = $msg['detail_link'] ?? cdg_link('detail-message', [(int)$m_id]);
             $m_from    = $msg['from'] ?? $msg['sender'] ?? 'Sistem';
         ?>
-        <a href="<?php echo htmlspecialchars($m_link); ?>" class="cdg-msl-item <?php echo $m_unread ? 'unread' : ''; ?>">
+        <a href="<?php echo htmlspecialchars($m_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-msl-item <?php echo $m_unread ? 'unread' : ''; ?>">
             <div class="cdg-msl-icon">
                 <i class="bi bi-<?php echo $m_unread ? 'envelope' : 'envelope-open'; ?>"></i>
             </div>
             <div class="cdg-msl-body">
-                <div class="cdg-msl-subject"><?php echo htmlspecialchars($m_subject); ?></div>
+                <div class="cdg-msl-subject"><?php echo htmlspecialchars($m_subject, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                 <div class="cdg-msl-meta">
                     <i class="bi bi-person-circle"></i>
-                    <?php echo htmlspecialchars($m_from); ?>
+                    <?php echo htmlspecialchars($m_from, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </div>
             </div>
-            <div class="cdg-msl-date"><?php echo htmlspecialchars(cdg_msglist_date($m_date)); ?></div>
+            <div class="cdg-msl-date"><?php echo htmlspecialchars(cdg_msglist_date($m_date), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
             <div class="cdg-msl-action">
                 <i class="bi bi-chevron-right"></i>
             </div>

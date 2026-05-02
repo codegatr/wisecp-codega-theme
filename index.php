@@ -417,10 +417,10 @@ $faqs = [
         <div class="cdg-tld-grid">
             <?php foreach($popular_tlds as $tld): ?>
             <a href="<?php echo $domain_url; ?>" class="cdg-tld-card">
-                <?php if(!empty($tld['badge'])): ?><span class="cdg-tld-badge"><?php echo htmlspecialchars($tld['badge']); ?></span><?php endif; ?>
-                <div class="cdg-tld-ext"><?php echo htmlspecialchars($tld['ext']); ?></div>
-                <?php if(!empty($tld['old'])): ?><div class="cdg-tld-old"><?php echo htmlspecialchars($tld['old']); ?> <?php echo $tld['currency'] ?? '₺'; ?></div><?php endif; ?>
-                <div class="cdg-tld-price"><span class="cdg-tld-amt"><?php echo htmlspecialchars($tld['price']); ?></span><span class="cdg-tld-curr"><?php echo $tld['currency'] ?? '₺'; ?></span></div>
+                <?php if(!empty($tld['badge'])): ?><span class="cdg-tld-badge"><?php echo htmlspecialchars($tld['badge'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span><?php endif; ?>
+                <div class="cdg-tld-ext"><?php echo htmlspecialchars($tld['ext'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                <?php if(!empty($tld['old'])): ?><div class="cdg-tld-old"><?php echo htmlspecialchars($tld['old'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo $tld['currency'] ?? '₺'; ?></div><?php endif; ?>
+                <div class="cdg-tld-price"><span class="cdg-tld-amt"><?php echo htmlspecialchars($tld['price'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span><span class="cdg-tld-curr"><?php echo $tld['currency'] ?? '₺'; ?></span></div>
                 <div class="cdg-tld-period">/yıl</div>
                 <div class="cdg-tld-cta">Sorgula <i class="bi bi-arrow-right"></i></div>
             </a>
@@ -465,7 +465,7 @@ $faqs = [
             <?php foreach($pricing_categories as $i => $cat): ?>
             <button type="button" class="cdg-pricing-tab<?php echo $i === 0 ? ' active' : ''; ?>" data-tab="<?php echo $cat['id']; ?>" role="tab">
                 <i class="bi <?php echo $cat['icon']; ?>" style="color:<?php echo $cat['color']; ?>;"></i>
-                <span><?php echo htmlspecialchars($cat['name']); ?></span>
+                <span><?php echo htmlspecialchars($cat['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <small><?php echo count($cat['packages']); ?> paket</small>
             </button>
             <?php endforeach; ?>
@@ -473,16 +473,16 @@ $faqs = [
 
         <?php foreach($pricing_categories as $i => $cat): ?>
         <div class="cdg-pricing-pane<?php echo $i === 0 ? ' active' : ''; ?>" data-pane="<?php echo $cat['id']; ?>" role="tabpanel">
-            <div class="cdg-pricing-pane-desc"><?php echo htmlspecialchars($cat['desc']); ?></div>
+            <div class="cdg-pricing-pane-desc"><?php echo htmlspecialchars($cat['desc'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
             <div class="cdg-pricing-grid cdg-pricing-grid-<?php echo count($cat['packages']); ?>">
                 <?php foreach($cat['packages'] as $pkg): ?>
                 <div class="cdg-price-card<?php echo !empty($pkg['highlight']) ? ' cdg-price-card-highlight' : ''; ?>">
                     <?php if(!empty($pkg['highlight'])): ?><div class="cdg-price-ribbon">EN POPÜLER</div><?php endif; ?>
                     <div class="cdg-price-cat-tag" style="color:<?php echo $cat['color']; ?>;background:<?php echo $cat['color']; ?>15;">
-                        <i class="bi <?php echo $cat['icon']; ?>"></i> <?php echo htmlspecialchars($cat['name']); ?>
+                        <i class="bi <?php echo $cat['icon']; ?>"></i> <?php echo htmlspecialchars($cat['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </div>
-                    <h3 class="cdg-price-name"><?php echo htmlspecialchars($pkg['name']); ?></h3>
-                    <p class="cdg-price-subtitle"><?php echo htmlspecialchars($pkg['subtitle']); ?></p>
+                    <h3 class="cdg-price-name"><?php echo htmlspecialchars($pkg['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
+                    <p class="cdg-price-subtitle"><?php echo htmlspecialchars($pkg['subtitle'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
                     <div class="cdg-price-amount">
                         <div class="cdg-price-current">
                             <span class="cdg-price-curr"><?php echo $pkg['currency']; ?></span>
@@ -492,7 +492,7 @@ $faqs = [
                     </div>
                     <ul class="cdg-price-features">
                         <?php foreach($pkg['features'] as $feat): ?>
-                        <li><i class="bi bi-check-circle-fill"></i> <?php echo htmlspecialchars($feat); ?></li>
+                        <li><i class="bi bi-check-circle-fill"></i> <?php echo htmlspecialchars($feat, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></li>
                         <?php endforeach; ?>
                     </ul>
                     <a href="<?php echo $hosting_url; ?>" class="cdg-btn <?php echo !empty($pkg['highlight']) ? 'cdg-btn-primary cdg-btn-glow' : 'cdg-btn-outline'; ?> cdg-btn-block">
@@ -545,13 +545,13 @@ $faqs = [
                 <tbody>
                     <?php foreach($compare_features as $row): ?>
                     <tr>
-                        <td class="cdg-compare-feature"><?php echo htmlspecialchars($row['feature']); ?></td>
+                        <td class="cdg-compare-feature"><?php echo htmlspecialchars($row['feature'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                         <?php foreach(['starter', 'pro', 'business', 'enterprise'] as $col): ?>
                         <td<?php if($col === 'business') echo ' class="cdg-compare-popular-cell"'; ?>>
                             <?php
                             if($row[$col] === 'check') echo '<i class="bi bi-check-circle-fill" style="color:#10b981;font-size:18px;"></i>';
                             elseif($row[$col] === 'cross') echo '<i class="bi bi-x-circle" style="color:#cbd5e1;font-size:18px;"></i>';
-                            else echo '<span>' . htmlspecialchars($row[$col]) . '</span>';
+                            else echo '<span>' . htmlspecialchars($row[$col], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</span>';
                             ?>
                         </td>
                         <?php endforeach; ?>

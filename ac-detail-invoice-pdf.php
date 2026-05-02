@@ -107,7 +107,7 @@ if(!empty($invoice['discounts'])) {
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Fatura #<?php echo htmlspecialchars($inv_number); ?> - <?php echo htmlspecialchars($company_name); ?></title>
+    <title>Fatura #<?php echo htmlspecialchars($inv_number, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> - <?php echo htmlspecialchars($company_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
     <style>
@@ -362,24 +362,24 @@ if(!empty($invoice['discounts'])) {
 
 <div class="pdf-page">
 
-    <div class="pdf-watermark"><?php echo htmlspecialchars($status_lbl); ?></div>
+    <div class="pdf-watermark"><?php echo htmlspecialchars($status_lbl, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
 
     <!-- HEADER -->
     <div class="pdf-header">
         <div class="pdf-logo">
             <?php if($logo): ?>
-            <img src="<?php echo htmlspecialchars($logo); ?>" alt="<?php echo htmlspecialchars($company_name); ?>">
+            <img src="<?php echo htmlspecialchars($logo, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($company_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
             <?php else: ?>
-            <div class="pdf-logo-text"><?php echo htmlspecialchars($company_name); ?></div>
+            <div class="pdf-logo-text"><?php echo htmlspecialchars($company_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
             <?php endif; ?>
         </div>
         <div class="pdf-company-info">
-            <strong><?php echo htmlspecialchars($company_name); ?></strong><br>
-            <?php if($company_address): ?><?php echo nl2br(htmlspecialchars($company_address)); ?><br><?php endif; ?>
-            <?php if($company_phone): ?>Tel: <?php echo htmlspecialchars($company_phone); ?><br><?php endif; ?>
-            <?php if($company_email): ?>E-posta: <?php echo htmlspecialchars($company_email); ?><br><?php endif; ?>
-            <?php if($company_taxoffice): ?>VD: <?php echo htmlspecialchars($company_taxoffice); ?><?php endif; ?>
-            <?php if($company_taxnumber): ?> · No: <?php echo htmlspecialchars($company_taxnumber); ?><?php endif; ?>
+            <strong><?php echo htmlspecialchars($company_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong><br>
+            <?php if($company_address): ?><?php echo nl2br(htmlspecialchars($company_address, ENT_QUOTES | ENT_HTML5, 'UTF-8')); ?><br><?php endif; ?>
+            <?php if($company_phone): ?>Tel: <?php echo htmlspecialchars($company_phone, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><br><?php endif; ?>
+            <?php if($company_email): ?>E-posta: <?php echo htmlspecialchars($company_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><br><?php endif; ?>
+            <?php if($company_taxoffice): ?>VD: <?php echo htmlspecialchars($company_taxoffice, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php endif; ?>
+            <?php if($company_taxnumber): ?> · No: <?php echo htmlspecialchars($company_taxnumber, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php endif; ?>
         </div>
     </div>
 
@@ -387,31 +387,31 @@ if(!empty($invoice['discounts'])) {
     <div class="pdf-title-row">
         <div class="pdf-title">
             <h1>Fatura</h1>
-            <div class="subtitle">Belge No: #<?php echo htmlspecialchars($inv_number); ?></div>
+            <div class="subtitle">Belge No: #<?php echo htmlspecialchars($inv_number, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
         </div>
-        <div class="pdf-status-badge"><?php echo htmlspecialchars($status_lbl); ?></div>
+        <div class="pdf-status-badge"><?php echo htmlspecialchars($status_lbl, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
     </div>
 
     <!-- META BAR -->
     <div class="pdf-meta">
         <div class="pdf-meta-item">
             <div class="lbl">Düzenleme</div>
-            <div class="val"><?php echo htmlspecialchars(cdg_pdf_date($inv_cdate) ?: '-'); ?></div>
+            <div class="val"><?php echo htmlspecialchars(cdg_pdf_date($inv_cdate) ?: '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
         </div>
         <div class="pdf-meta-item">
             <div class="lbl">Son Ödeme</div>
-            <div class="val"><?php echo htmlspecialchars(cdg_pdf_date($inv_duedate) ?: '-'); ?></div>
+            <div class="val"><?php echo htmlspecialchars(cdg_pdf_date($inv_duedate) ?: '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
         </div>
         <?php if($inv_status === 'paid' && $inv_datepaid): ?>
         <div class="pdf-meta-item">
             <div class="lbl">Ödendi</div>
-            <div class="val"><?php echo htmlspecialchars(cdg_pdf_date($inv_datepaid)); ?></div>
+            <div class="val"><?php echo htmlspecialchars(cdg_pdf_date($inv_datepaid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
         </div>
         <?php endif; ?>
         <?php if($inv_pmethod): ?>
         <div class="pdf-meta-item">
             <div class="lbl">Ödeme Yöntemi</div>
-            <div class="val"><?php echo htmlspecialchars($inv_pmethod); ?></div>
+            <div class="val"><?php echo htmlspecialchars($inv_pmethod, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
         </div>
         <?php endif; ?>
     </div>
@@ -421,26 +421,26 @@ if(!empty($invoice['discounts'])) {
         <div class="pdf-info-block">
             <div class="pdf-info-label">Düzenleyen</div>
             <div class="pdf-info-content">
-                <strong><?php echo htmlspecialchars($company_name); ?></strong><br>
-                <?php if($company_address): ?><span class="muted"><?php echo nl2br(htmlspecialchars($company_address)); ?></span><br><?php endif; ?>
-                <?php if($company_taxoffice): ?>VD: <?php echo htmlspecialchars($company_taxoffice); ?><?php endif; ?>
-                <?php if($company_taxnumber): ?> · <?php echo htmlspecialchars($company_taxnumber); ?><?php endif; ?>
+                <strong><?php echo htmlspecialchars($company_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong><br>
+                <?php if($company_address): ?><span class="muted"><?php echo nl2br(htmlspecialchars($company_address, ENT_QUOTES | ENT_HTML5, 'UTF-8')); ?></span><br><?php endif; ?>
+                <?php if($company_taxoffice): ?>VD: <?php echo htmlspecialchars($company_taxoffice, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php endif; ?>
+                <?php if($company_taxnumber): ?> · <?php echo htmlspecialchars($company_taxnumber, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php endif; ?>
             </div>
         </div>
         <div class="pdf-info-block">
             <div class="pdf-info-label">Alıcı</div>
             <div class="pdf-info-content">
                 <?php if($u_kind === 'company' && $u_company): ?>
-                    <strong><?php echo htmlspecialchars($u_company); ?></strong><br>
-                    <?php if($u_name): ?><span class="muted"><?php echo htmlspecialchars($u_name); ?></span><br><?php endif; ?>
+                    <strong><?php echo htmlspecialchars($u_company, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong><br>
+                    <?php if($u_name): ?><span class="muted"><?php echo htmlspecialchars($u_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span><br><?php endif; ?>
                 <?php else: ?>
-                    <strong><?php echo htmlspecialchars($u_name ?: '-'); ?></strong><br>
+                    <strong><?php echo htmlspecialchars($u_name ?: '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong><br>
                 <?php endif; ?>
-                <?php if($u_address): ?><span class="muted"><?php echo htmlspecialchars($u_address); ?><?php if($u_city): ?>, <?php echo htmlspecialchars($u_city); ?><?php endif; ?></span><br><?php endif; ?>
-                <?php if($u_email): ?><?php echo htmlspecialchars($u_email); ?><br><?php endif; ?>
-                <?php if($u_phone): ?>Tel: <?php echo htmlspecialchars($u_phone); ?><br><?php endif; ?>
-                <?php if($u_kind === 'company' && $u_taxoffice): ?>VD: <?php echo htmlspecialchars($u_taxoffice); ?><?php endif; ?>
-                <?php if($u_taxnumber): ?> · <?php echo htmlspecialchars($u_taxnumber); ?><?php endif; ?>
+                <?php if($u_address): ?><span class="muted"><?php echo htmlspecialchars($u_address, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php if($u_city): ?>, <?php echo htmlspecialchars($u_city, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php endif; ?></span><br><?php endif; ?>
+                <?php if($u_email): ?><?php echo htmlspecialchars($u_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><br><?php endif; ?>
+                <?php if($u_phone): ?>Tel: <?php echo htmlspecialchars($u_phone, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><br><?php endif; ?>
+                <?php if($u_kind === 'company' && $u_taxoffice): ?>VD: <?php echo htmlspecialchars($u_taxoffice, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php endif; ?>
+                <?php if($u_taxnumber): ?> · <?php echo htmlspecialchars($u_taxnumber, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php endif; ?>
             </div>
         </div>
     </div>
@@ -466,12 +466,12 @@ if(!empty($invoice['discounts'])) {
                 ?>
                 <tr>
                     <td>
-                        <div class="pdf-item-name"><?php echo htmlspecialchars($iname); ?></div>
+                        <div class="pdf-item-name"><?php echo htmlspecialchars($iname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         <?php if($idesc): ?>
-                        <div class="pdf-item-desc"><?php echo nl2br(htmlspecialchars($idesc)); ?></div>
+                        <div class="pdf-item-desc"><?php echo nl2br(htmlspecialchars($idesc, ENT_QUOTES | ENT_HTML5, 'UTF-8')); ?></div>
                         <?php endif; ?>
                     </td>
-                    <td><?php echo htmlspecialchars(cdg_pdf_money($itotal, $icid)); ?> <?php echo htmlspecialchars($inv_currency); ?></td>
+                    <td><?php echo htmlspecialchars(cdg_pdf_money($itotal, $icid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                 </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -483,10 +483,10 @@ if(!empty($invoice['discounts'])) {
                 ?>
                 <tr class="discount-row">
                     <td>
-                        <div class="pdf-item-name">↓ <?php echo htmlspecialchars($dname); ?></div>
+                        <div class="pdf-item-name">↓ <?php echo htmlspecialchars($dname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         <div class="pdf-item-desc">İndirim uygulandı</div>
                     </td>
-                    <td>-<?php echo htmlspecialchars(cdg_pdf_money($damount)); ?> <?php echo htmlspecialchars($inv_currency); ?></td>
+                    <td>-<?php echo htmlspecialchars(cdg_pdf_money($damount), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                 </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -497,30 +497,30 @@ if(!empty($invoice['discounts'])) {
     <div class="pdf-totals">
         <div class="pdf-totals-row">
             <span>Ara Toplam</span>
-            <strong><?php echo htmlspecialchars(cdg_pdf_money($inv_subtotal)); ?> <?php echo htmlspecialchars($inv_currency); ?></strong>
+            <strong><?php echo htmlspecialchars(cdg_pdf_money($inv_subtotal), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
         </div>
         <?php if($total_discount > 0): ?>
         <div class="pdf-totals-row discount">
             <span>İndirim</span>
-            <strong>-<?php echo htmlspecialchars(cdg_pdf_money($total_discount)); ?> <?php echo htmlspecialchars($inv_currency); ?></strong>
+            <strong>-<?php echo htmlspecialchars(cdg_pdf_money($total_discount), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
         </div>
         <?php endif; ?>
         <?php if($inv_tax > 0): ?>
         <div class="pdf-totals-row">
             <span>KDV (%<?php echo (int)$inv_taxrate; ?>)</span>
-            <strong><?php echo htmlspecialchars(cdg_pdf_money($inv_tax)); ?> <?php echo htmlspecialchars($inv_currency); ?></strong>
+            <strong><?php echo htmlspecialchars(cdg_pdf_money($inv_tax), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
         </div>
         <?php endif; ?>
         <div class="pdf-totals-row final">
             <span>GENEL TOPLAM</span>
-            <strong><?php echo htmlspecialchars(cdg_pdf_money($inv_total)); ?> <?php echo htmlspecialchars($inv_currency); ?></strong>
+            <strong><?php echo htmlspecialchars(cdg_pdf_money($inv_total), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
         </div>
     </div>
 
     <!-- FOOTER -->
     <div class="pdf-footer">
         Bu fatura elektronik ortamda düzenlenmiştir.<br>
-        <?php echo htmlspecialchars($company_name); ?> · Belge No: <?php echo htmlspecialchars($inv_number); ?> · <?php echo date('d.m.Y H:i'); ?>
+        <?php echo htmlspecialchars($company_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> · Belge No: <?php echo htmlspecialchars($inv_number, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> · <?php echo date('d.m.Y H:i'); ?>
 
         <?php if($inv_status === 'paid'): ?>
         <br><span class="stamp">✓ ÖDENMİŞTİR</span>

@@ -210,12 +210,12 @@ if(!$has_available && !$has_active) return;
             ?>
             <div class="cdg-addon-active-item">
                 <div>
-                    <div class="cdg-addon-active-name"><?php echo htmlspecialchars($a_name); ?></div>
+                    <div class="cdg-addon-active-name"><?php echo htmlspecialchars($a_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                     <?php if($a_amount > 0): ?>
-                    <div class="cdg-addon-active-meta"><?php echo htmlspecialchars($a_amount_str); ?><?php echo $a_period ? ' / ' . htmlspecialchars($a_period) : ''; ?></div>
+                    <div class="cdg-addon-active-meta"><?php echo htmlspecialchars($a_amount_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php echo $a_period ? ' / ' . htmlspecialchars($a_period, ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; ?></div>
                     <?php endif; ?>
                 </div>
-                <span class="cdg-addon-active-status s-<?php echo htmlspecialchars($a_status); ?>"><?php echo $a_status_label; ?></span>
+                <span class="cdg-addon-active-status s-<?php echo htmlspecialchars($a_status, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo $a_status_label; ?></span>
             </div>
             <?php endforeach; ?>
         </div>
@@ -251,11 +251,11 @@ if(!$has_available && !$has_active) return;
                 <div class="cdg-addon-item<?php echo $addon_compulsory ? ' compulsory' : ''; ?>" style="position:relative;">
                     <h4 class="cdg-addon-item-name">
                         <i class="bi bi-stars" style="color:#ec4899;flex-shrink:0;margin-top:3px;"></i>
-                        <span><?php echo htmlspecialchars($addon_name); ?></span>
+                        <span><?php echo htmlspecialchars($addon_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </h4>
 
                     <?php if($addon_desc): ?>
-                    <p class="cdg-addon-item-desc"><?php echo htmlspecialchars(mb_strimwidth(strip_tags($addon_desc), 0, 110, '...')); ?></p>
+                    <p class="cdg-addon-item-desc"><?php echo htmlspecialchars(mb_strimwidth(strip_tags($addon_desc), 0, 110, '...'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
                     <?php else: ?>
                     <p class="cdg-addon-item-desc"></p>
                     <?php endif; ?>
@@ -283,7 +283,7 @@ if(!$has_available && !$has_active) return;
                                 $label = $opt_name . ' — ' . $opt_amount_str . ($opt_period && (($opt['period'] ?? 'none') !== 'none' || $opt_amount > 0) ? ' / ' . $opt_period : '');
                                 $selected_attr = ($addon_compulsory && $k === 0) ? ' selected' : '';
                             ?>
-                            <option value="<?php echo (int)$opt_id; ?>" data-amount="<?php echo (float)$opt_amount; ?>" data-cid="<?php echo htmlspecialchars($opt_cid); ?>"<?php echo $selected_attr; ?>><?php echo htmlspecialchars($label); ?></option>
+                            <option value="<?php echo (int)$opt_id; ?>" data-amount="<?php echo (float)$opt_amount; ?>" data-cid="<?php echo htmlspecialchars($opt_cid, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"<?php echo $selected_attr; ?>><?php echo htmlspecialchars($label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

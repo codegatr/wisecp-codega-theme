@@ -29,13 +29,13 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
 
 <section class="cdg-page-head">
     <div class="cdg-container">
-        <h1><i class="bi bi-<?php echo htmlspecialchars($pd_icon); ?>"></i> <?php echo htmlspecialchars($page_title); ?></h1>
+        <h1><i class="bi bi-<?php echo htmlspecialchars($pd_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i> <?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
         <div class="breadcrumb">
             <a href="<?php echo defined('APP_URI') ? APP_URI . '/' : '/'; ?>">Anasayfa</a>
             <span class="sep">/</span>
-            <a href="<?php echo htmlspecialchars($pd_list_link); ?>"><?php echo htmlspecialchars($pd_label); ?></a>
+            <a href="<?php echo htmlspecialchars($pd_list_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($pd_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
             <span class="sep">/</span>
-            <span><?php echo htmlspecialchars($page_title); ?></span>
+            <span><?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
         </div>
     </div>
 </section>
@@ -48,19 +48,19 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
 
                 <?php if($page_image): ?>
                 <div style="height:280px;overflow:hidden;background:linear-gradient(135deg,#1e40af,#3b82f6);">
-                    <img src="<?php echo htmlspecialchars($page_image); ?>" alt="<?php echo htmlspecialchars($page_title); ?>" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="<?php echo htmlspecialchars($page_image, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="width:100%;height:100%;object-fit:cover;">
                 </div>
                 <?php endif; ?>
 
                 <div style="padding:32px;">
                     <header style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #e2e8f0;">
                         <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin:0 0 12px;line-height:1.3;">
-                            <?php echo htmlspecialchars($page_title); ?>
+                            <?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                         </h2>
                         <?php if($page_date || $page_views): ?>
                         <div style="display:flex;gap:14px;font-size:12px;color:#64748b;flex-wrap:wrap;">
                             <?php if($page_date): ?>
-                            <span><i class="bi bi-calendar3"></i> <?php echo htmlspecialchars($page_date); ?></span>
+                            <span><i class="bi bi-calendar3"></i> <?php echo htmlspecialchars($page_date, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                             <?php endif; ?>
                             <?php if($page_views): ?>
                             <span><i class="bi bi-eye"></i> <?php echo (int)$page_views; ?> goruntulenme</span>
@@ -81,8 +81,8 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
                     </div>
 
                     <div style="margin-top:32px;padding-top:18px;border-top:1px solid #e2e8f0;display:flex;gap:8px;flex-wrap:wrap;">
-                        <a href="<?php echo htmlspecialchars($pd_list_link); ?>" class="cdg-btn cdg-btn-outline">
-                            <i class="bi bi-arrow-left"></i> Tum <?php echo htmlspecialchars($pd_label); ?>
+                        <a href="<?php echo htmlspecialchars($pd_list_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-btn cdg-btn-outline">
+                            <i class="bi bi-arrow-left"></i> Tum <?php echo htmlspecialchars($pd_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                         </a>
                         <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" class="cdg-btn cdg-btn-primary">
                             <i class="bi bi-chat-dots"></i> Iletisime Gec
@@ -95,7 +95,7 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
             <aside class="cdg-pd-sidebar" style="display:flex;flex-direction:column;gap:16px;">
                 <div class="cdg-card" style="padding:20px;">
                     <h4 style="font-size:14px;font-weight:800;color:#0f172a;margin:0 0 14px;display:flex;align-items:center;gap:6px;">
-                        <i class="bi bi-list-ul" style="color:#1e40af;"></i> Diger <?php echo htmlspecialchars($pd_label); ?>
+                        <i class="bi bi-list-ul" style="color:#1e40af;"></i> Diger <?php echo htmlspecialchars($pd_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </h4>
                     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
                         <?php foreach($pd_sidebar_items as $side):
@@ -104,9 +104,9 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
                             if(!$s_title) continue;
                         ?>
                         <li>
-                            <a href="<?php echo htmlspecialchars($s_link); ?>" style="display:flex;gap:8px;padding:8px 12px;text-decoration:none;color:#334155;font-size:13px;border-radius:6px;">
+                            <a href="<?php echo htmlspecialchars($s_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:flex;gap:8px;padding:8px 12px;text-decoration:none;color:#334155;font-size:13px;border-radius:6px;">
                                 <i class="bi bi-arrow-right-short" style="color:#1e40af;flex-shrink:0;font-size:16px;"></i>
-                                <span><?php echo htmlspecialchars($s_title); ?></span>
+                                <span><?php echo htmlspecialchars($s_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                             </a>
                         </li>
                         <?php endforeach; ?>

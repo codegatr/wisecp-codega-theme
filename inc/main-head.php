@@ -1,4 +1,18 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
+
+// === TÜRKÇE KARAKTER DESTEĞİ - UTF-8 ZORUNLU ===
+// htmlspecialchars(, ENT_QUOTES | ENT_HTML5, 'UTF-8'), htmlentities() ve diğer string fonksiyonları için default UTF-8
+@ini_set('default_charset', 'UTF-8');
+if(function_exists('mb_internal_encoding')) {
+    @mb_internal_encoding('UTF-8');
+}
+if(function_exists('mb_http_output')) {
+    @mb_http_output('UTF-8');
+}
+if(function_exists('mb_regex_encoding')) {
+    @mb_regex_encoding('UTF-8');
+}
+
 if(!isset($hoptions) || !is_array($hoptions)) $hoptions = [];
 if(!isset($meta) || !is_array($meta)) $meta = [];
 if(!isset($tadress)) $tadress = defined('THEMES_URL') && defined('THEMENAME') ? THEMES_URL . THEMENAME . '/' : '/templates/website/Codega/';

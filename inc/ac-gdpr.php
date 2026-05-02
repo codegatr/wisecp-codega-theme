@@ -144,13 +144,13 @@ if(class_exists('Validation') && method_exists('Validation', 'get_csrf_token')) 
                 <strong><?php echo $pending_label; ?> talebiniz işlemde</strong>
                 <small>
                     <?php if($pending_date): ?>
-                    Talep tarihi: <?php echo htmlspecialchars($pending_date); ?>
+                    Talep tarihi: <?php echo htmlspecialchars($pending_date, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     <?php endif; ?>
-                    · Durum: <strong><?php echo htmlspecialchars($pending_status); ?></strong>
+                    · Durum: <strong><?php echo htmlspecialchars($pending_status, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
                 </small>
                 <?php if($pending_note): ?>
                 <div style="margin-top:6px;font-size:12px;color:#78350f;background:#fff;padding:8px 10px;border-radius:6px;">
-                    <strong>Operatör Notu:</strong> <?php echo htmlspecialchars($pending_note); ?>
+                    <strong>Operatör Notu:</strong> <?php echo htmlspecialchars($pending_note, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </div>
                 <?php endif; ?>
                 <div class="actions">

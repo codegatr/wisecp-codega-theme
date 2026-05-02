@@ -202,7 +202,7 @@ $back_url = cdg_link('products-domain');
 <div class="cdg-wp">
 <div class="cdg-wp-wrap">
 
-    <a href="<?php echo htmlspecialchars($back_url); ?>" class="cdg-wp-back">
+    <a href="<?php echo htmlspecialchars($back_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-wp-back">
         <i class="bi bi-arrow-left"></i> Domainlerime Dön
     </a>
 
@@ -212,7 +212,7 @@ $back_url = cdg_link('products-domain');
             <h1>WHOIS Profillerim</h1>
             <p>Domain kayıtlarınızda kullanacağınız iletişim bilgilerini profil olarak yönetin.</p>
         </div>
-        <a href="<?php echo htmlspecialchars($create_url); ?>" class="cdg-wp-btn cdg-wp-btn-gold">
+        <a href="<?php echo htmlspecialchars($create_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-wp-btn cdg-wp-btn-gold">
             <i class="bi bi-plus-circle"></i> Yeni Profil
         </a>
     </section>
@@ -222,7 +222,7 @@ $back_url = cdg_link('products-domain');
         <i class="bi bi-person-vcard"></i>
         <h3>Henüz WHOIS Profiliniz Yok</h3>
         <p>Domainlerinizde tekrar tekrar bilgi girmemek için bir profil oluşturun.</p>
-        <a href="<?php echo htmlspecialchars($create_url); ?>" class="cdg-wp-btn cdg-wp-btn-gold">
+        <a href="<?php echo htmlspecialchars($create_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-wp-btn cdg-wp-btn-gold">
             <i class="bi bi-plus-circle"></i> İlk Profili Oluştur
         </a>
     </div>
@@ -240,21 +240,21 @@ $back_url = cdg_link('products-domain');
         <div class="cdg-wp-card" data-id="<?php echo (int)$p_id; ?>">
             <div class="cdg-wp-card-icon"><i class="bi bi-person-badge"></i></div>
             <div class="cdg-wp-card-body">
-                <div class="cdg-wp-card-name"><?php echo htmlspecialchars($p_name); ?></div>
+                <div class="cdg-wp-card-name"><?php echo htmlspecialchars($p_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                 <div class="cdg-wp-card-meta">
                     <?php if($p_pname): ?>
-                    <span><i class="bi bi-person"></i> <?php echo htmlspecialchars($p_pname); ?></span>
+                    <span><i class="bi bi-person"></i> <?php echo htmlspecialchars($p_pname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                     <?php if($p_email): ?>
-                    <span><i class="bi bi-envelope"></i> <?php echo htmlspecialchars($p_email); ?></span>
+                    <span><i class="bi bi-envelope"></i> <?php echo htmlspecialchars($p_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                     <?php if($p_phone): ?>
-                    <span><i class="bi bi-telephone"></i> <?php echo htmlspecialchars($p_phone); ?></span>
+                    <span><i class="bi bi-telephone"></i> <?php echo htmlspecialchars($p_phone, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="cdg-wp-card-action" style="display:flex;gap:6px;">
-                <a href="<?php echo htmlspecialchars($edit_url); ?>" class="cdg-wp-btn cdg-wp-btn-outline cdg-wp-btn-sm">
+                <a href="<?php echo htmlspecialchars($edit_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-wp-btn cdg-wp-btn-outline cdg-wp-btn-sm">
                     <i class="bi bi-pencil"></i> Düzenle
                 </a>
                 <button type="button" class="cdg-wp-btn cdg-wp-btn-danger cdg-wp-btn-sm" onclick="cdgWhoisProfileDelete(<?php echo (int)$p_id; ?>)">
@@ -274,7 +274,7 @@ function cdgWhoisProfileDelete(id) {
     if(!confirm('Bu WHOIS profilini silmek istediğinize emin misiniz? Bu profile bağlı domainler etkilenebilir.')) return;
     if(typeof MioAjax !== 'function') return;
     MioAjax({
-        url: '<?php echo htmlspecialchars($controller_url); ?>',
+        url: '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
         type: 'post',
         data: { operation: 'delete_whois_profile', id: id },
         result: function(r){

@@ -191,9 +191,9 @@ $action_url = $domain_check_post ?? '#';
                 Domain Sahibi Olun
                 <?php if($first_price_amount): ?>
                 <span class="price-badge">
-                    <?php if($first_price_symbol): ?><span class="symbol"><?php echo htmlspecialchars($first_price_symbol); ?></span><?php endif; ?>
-                    <?php echo htmlspecialchars($first_price_amount); ?>
-                    <?php if($first_tld_name): ?> / <?php echo htmlspecialchars($first_tld_name); ?><?php endif; ?>
+                    <?php if($first_price_symbol): ?><span class="symbol"><?php echo htmlspecialchars($first_price_symbol, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span><?php endif; ?>
+                    <?php echo htmlspecialchars($first_price_amount, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                    <?php if($first_tld_name): ?> / <?php echo htmlspecialchars($first_tld_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php endif; ?>
                     'den başlayan fiyatlarla
                 </span>
                 <?php endif; ?>
@@ -202,7 +202,7 @@ $action_url = $domain_check_post ?? '#';
         </div>
     </div>
 
-    <form id="checkForm" class="cdg-ddp-form" action="<?php echo htmlspecialchars($action_url); ?>" method="get">
+    <form id="checkForm" class="cdg-ddp-form" action="<?php echo htmlspecialchars($action_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" method="get">
         <input type="text" name="domain" placeholder="domain-adresinizi-yazin.com" autocomplete="off">
         <button type="submit" id="checkButton">
             <i class="bi bi-search"></i> Sorgula

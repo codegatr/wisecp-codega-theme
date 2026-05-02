@@ -96,7 +96,7 @@ $transactions = isset($list) ? $list : (isset($transactions) ? $transactions : [
         <h4 style="margin-bottom:12px;"><i class="bi bi-gear"></i> Otomatik Odeme Ayarlari</h4>
         <p style="font-size:13px;color:var(--cdg-muted);margin-bottom:14px;">Faturalariniz vade tarihinde bakiyenizden otomatik odensin.</p>
 
-        <form method="post" action="<?php echo isset($links['controller']) ? htmlspecialchars($links['controller']) : ''; ?>" id="cdg-balance-settings">
+        <form method="post" action="<?php echo isset($links['controller']) ? htmlspecialchars($links['controller'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; ?>" id="cdg-balance-settings">
             <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('account'); ?>
             <input type="hidden" name="operation" value="update_settings">
 
@@ -109,7 +109,7 @@ $transactions = isset($list) ? $list : (isset($transactions) ? $transactions : [
             <div class="cdg-form-group">
                 <label class="cdg-form-label" style="font-size:12px;">Minimum Bakiye Uyari Esigi</label>
                 <input type="number" min="0" step="0.01" name="balance_min" class="cdg-form-control"
-                    value="<?php echo htmlspecialchars(isset(User::$init->info['balance_min']) ? User::$init->info['balance_min'] : '0'); ?>"
+                    value="<?php echo htmlspecialchars(isset(User::$init->info['balance_min']) ? User::$init->info['balance_min'] : '0', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
                     placeholder="Ornek: 100">
                 <small style="font-size:11px;color:var(--cdg-muted);">Bakiyeniz bu degerin altina dustugunde uyari gelir.</small>
             </div>
@@ -157,11 +157,11 @@ $transactions = isset($list) ? $list : (isset($transactions) ? $transactions : [
                 ?>
                     <tr>
                         <td style="font-size:13px;"><?php echo $date_fmt; ?></td>
-                        <td><?php echo htmlspecialchars($desc); ?></td>
+                        <td><?php echo htmlspecialchars($desc, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                         <td style="text-align:right;font-weight:600;color:<?php echo $is_credit ? '#10b981' : '#ef4444'; ?>;">
                             <?php echo $is_credit ? '+' : '-'; ?> <?php echo $amount; ?>
                         </td>
-                        <td style="text-align:center;font-size:12px;"><?php echo isset($row['status']) ? htmlspecialchars($row['status']) : ''; ?></td>
+                        <td style="text-align:center;font-size:12px;"><?php echo isset($row['status']) ? htmlspecialchars($row['status'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; ?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
@@ -210,7 +210,7 @@ $user_curr = isset($currency) && $currency ? $currency : 'TRY';
     <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;">
         <div>
             <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px;">
-                Yuklenecek Tutar (<?php echo htmlspecialchars($user_curr); ?>)
+                Yuklenecek Tutar (<?php echo htmlspecialchars($user_curr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>)
                 <?php if($min_buy || $max_buy): ?>
                 <span style="font-weight:400;color:#94a3b8;">
                     <?php if($min_buy): ?>· Min: <?php echo $min_buy; ?><?php endif; ?>
@@ -247,7 +247,7 @@ $user_curr = isset($currency) && $currency ? $currency : 'TRY';
             return;
         }
         if(typeof MioAjax !== 'function') return;
-        if(!confirm(amt + ' <?php echo htmlspecialchars($user_curr); ?> bakiye yuklemek icin sepete eklenecek. Devam edilsin mi?')) return;
+        if(!confirm(amt + ' <?php echo htmlspecialchars($user_curr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> bakiye yuklemek icin sepete eklenecek. Devam edilsin mi?')) return;
 
         btn.disabled = true;
         var orig = btn.innerHTML;

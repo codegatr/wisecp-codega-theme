@@ -33,7 +33,7 @@ $controller_link = isset($links['controller']) ? $links['controller'] : '';
                 </p>
             </div>
 
-            <form action="<?php echo htmlspecialchars($controller_link); ?>" method="post" id="cdg-license-form" onsubmit="return false;">
+            <form action="<?php echo htmlspecialchars($controller_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" method="post" id="cdg-license-form" onsubmit="return false;">
                 <input type="hidden" name="operation" value="check">
                 <input type="hidden" name="hash" id="cdg-license-hash" value="">
 
@@ -51,7 +51,7 @@ $controller_link = isset($links['controller']) ? $links['controller'] : '';
                         <?php echo $captcha->getOutput(); ?>
                     </div>
                     <?php if($captcha->input): ?>
-                    <input type="text" name="<?php echo htmlspecialchars($captcha->input_name); ?>" class="cdg-form-control" placeholder="Resimdeki kodu girin" required>
+                    <input type="text" name="<?php echo htmlspecialchars($captcha->input_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-form-control" placeholder="Resimdeki kodu girin" required>
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>

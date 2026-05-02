@@ -18,7 +18,7 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
 <nav class="cdg-bc" aria-label="Sayfa yolu">
     <ol class="cdg-bc-list">
         <li class="cdg-bc-item">
-            <a href="<?php echo htmlspecialchars($home_url); ?>" class="cdg-bc-home">
+            <a href="<?php echo htmlspecialchars($home_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-bc-home">
                 <i class="bi bi-house-door"></i>
                 <span class="cdg-bc-home-text">Ana Sayfa</span>
             </a>
@@ -33,9 +33,9 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
         <li class="cdg-bc-sep" aria-hidden="true"><i class="bi bi-chevron-right"></i></li>
         <li class="cdg-bc-item<?php echo $is_last ? ' cdg-bc-current' : ''; ?>">
             <?php if($link && !$is_last): ?>
-            <a href="<?php echo htmlspecialchars($link); ?>"><?php echo htmlspecialchars($title); ?></a>
+            <a href="<?php echo htmlspecialchars($link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
             <?php else: ?>
-            <span aria-current="page"><?php echo htmlspecialchars($title); ?></span>
+            <span aria-current="page"><?php echo htmlspecialchars($title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             <?php endif; ?>
         </li>
         <?php endforeach; ?>

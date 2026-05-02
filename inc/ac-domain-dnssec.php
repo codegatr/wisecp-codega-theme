@@ -76,7 +76,7 @@ if(empty($algorithms)) {
                         <select id="DnsSecRecord_digest_type" class="cdg-dm-select">
                             <option value="">Seçin</option>
                             <?php foreach($digest_types as $k => $v): ?>
-                            <option value="<?php echo htmlspecialchars($k); ?>"><?php echo htmlspecialchars($v); ?></option>
+                            <option value="<?php echo htmlspecialchars($k, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -85,7 +85,7 @@ if(empty($algorithms)) {
                         <select id="DnsSecRecord_algorithm" class="cdg-dm-select">
                             <option value="">Seçin</option>
                             <?php foreach($algorithms as $k => $v): ?>
-                            <option value="<?php echo htmlspecialchars($k); ?>"><?php echo htmlspecialchars($v); ?></option>
+                            <option value="<?php echo htmlspecialchars($k, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

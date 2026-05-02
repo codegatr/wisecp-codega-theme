@@ -89,8 +89,8 @@ if(!$is_admin) {
         <div class="icon">🔐</div>
         <h1>Guncelleme Merkezi</h1>
         <p class="lead">Admin oturumunuz otomatik tespit edilemedi. Asagidaki guvenli URL'i kullanarak guncelleme sayfasina erisebilirsiniz:</p>
-        <div class="url-box"><?php echo htmlspecialchars($self_url); ?></div>
-        <a href="<?php echo htmlspecialchars($self_url); ?>" class="btn">
+        <div class="url-box"><?php echo htmlspecialchars($self_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+        <a href="<?php echo htmlspecialchars($self_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="btn">
             <span>Guncelleme Merkezine Git</span>
             <span>&rarr;</span>
         </a>
@@ -328,7 +328,7 @@ if($action === 'apply') {
         <h1>Codega Tema</h1>
         <p>WiseCP icin gelistirilen ozel tema</p>
         <span class="version-badge">
-            <i class="bi bi-tag"></i> Mevcut Surum: v<?php echo htmlspecialchars($current_version); ?>
+            <i class="bi bi-tag"></i> Mevcut Surum: v<?php echo htmlspecialchars($current_version, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
         </span>
     </div>
 
@@ -339,7 +339,7 @@ if($action === 'apply') {
         <div class="stat-grid">
             <div class="stat">
                 <div class="lbl">Mevcut Surum</div>
-                <div class="val">v<?php echo htmlspecialchars($current_version); ?></div>
+                <div class="val">v<?php echo htmlspecialchars($current_version, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
             </div>
             <div class="stat">
                 <div class="lbl">Son Surum</div>
@@ -361,7 +361,7 @@ if($action === 'apply') {
             <button id="apply-btn" class="btn btn-primary" onclick="applyUpdate()" disabled>
                 <i class="bi bi-cloud-arrow-down"></i> Guncellemeyi Uygula
             </button>
-            <a href="https://github.com/<?php echo htmlspecialchars($repo); ?>/releases" target="_blank" class="btn btn-outline">
+            <a href="https://github.com/<?php echo htmlspecialchars($repo, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>/releases" target="_blank" class="btn btn-outline">
                 <i class="bi bi-github"></i> GitHub Releases
             </a>
         </div>
@@ -374,8 +374,8 @@ if($action === 'apply') {
             Guncellemeden once mevcut dosyalar <code>.backups/</code> klasorune yedeklenir.
         </p>
         <ul class="change-list">
-            <li>GitHub Repo: <code><?php echo htmlspecialchars($repo); ?></code></li>
-            <li>Update URL: <code><?php echo htmlspecialchars($check_url); ?></code></li>
+            <li>GitHub Repo: <code><?php echo htmlspecialchars($repo, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></li>
+            <li>Update URL: <code><?php echo htmlspecialchars($check_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></li>
             <li>Yedekleme: Her guncellemeden once otomatik</li>
         </ul>
     </div>

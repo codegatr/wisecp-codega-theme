@@ -130,13 +130,13 @@ $canonical_link   = isset($canonical_link) ? $canonical_link : '';
             ?>
             <?php if($selected): ?>
             <span class="cdg-lcm-item active">
-                <?php if($flag): ?><img src="<?php echo htmlspecialchars($flag); ?>" alt="<?php echo htmlspecialchars($label); ?>"><?php endif; ?>
-                <span><?php echo htmlspecialchars($label); ?></span>
+                <?php if($flag): ?><img src="<?php echo htmlspecialchars($flag, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php endif; ?>
+                <span><?php echo htmlspecialchars($label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             </span>
             <?php else: ?>
-            <a href="<?php echo htmlspecialchars($link); ?>" class="cdg-lcm-item" rel="nofollow">
-                <?php if($flag): ?><img src="<?php echo htmlspecialchars($flag); ?>" alt="<?php echo htmlspecialchars($label); ?>"><?php endif; ?>
-                <span><?php echo htmlspecialchars($label); ?></span>
+            <a href="<?php echo htmlspecialchars($link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-lcm-item" rel="nofollow">
+                <?php if($flag): ?><img src="<?php echo htmlspecialchars($flag, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php endif; ?>
+                <span><?php echo htmlspecialchars($label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             </a>
             <?php endif; ?>
             <?php endforeach; ?>
@@ -185,13 +185,13 @@ $canonical_link   = isset($canonical_link) ? $canonical_link : '';
             ?>
             <?php if($selected): ?>
             <span class="cdg-lcm-item active">
-                <span class="symbol"><?php echo htmlspecialchars($symbol); ?></span>
-                <span><?php echo htmlspecialchars($name); ?></span>
+                <span class="symbol"><?php echo htmlspecialchars($symbol, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                <span><?php echo htmlspecialchars($name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             </span>
             <?php else: ?>
-            <a href="<?php echo htmlspecialchars($link); ?>" class="cdg-lcm-item" rel="nofollow">
-                <span class="symbol"><?php echo htmlspecialchars($symbol); ?></span>
-                <span><?php echo htmlspecialchars($name); ?></span>
+            <a href="<?php echo htmlspecialchars($link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-lcm-item" rel="nofollow">
+                <span class="symbol"><?php echo htmlspecialchars($symbol, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                <span><?php echo htmlspecialchars($name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             </a>
             <?php endif; ?>
             <?php endforeach; ?>

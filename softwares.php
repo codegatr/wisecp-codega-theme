@@ -310,22 +310,22 @@ $service_categories = [
                         <i class="bi <?php echo $p['icon']; ?>"></i>
                     </div>
                     <div>
-                        <h3><?php echo htmlspecialchars($p['name']); ?></h3>
-                        <div class="cdg-soft-tagline"><?php echo htmlspecialchars($p['tagline']); ?></div>
+                        <h3><?php echo htmlspecialchars($p['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
+                        <div class="cdg-soft-tagline"><?php echo htmlspecialchars($p['tagline'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                     </div>
                 </div>
 
-                <p class="cdg-soft-desc"><?php echo htmlspecialchars($p['desc']); ?></p>
+                <p class="cdg-soft-desc"><?php echo htmlspecialchars($p['desc'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
 
                 <ul class="cdg-soft-features">
                     <?php foreach($p['features'] as $f): ?>
-                    <li><i class="bi bi-check-circle-fill" style="color:<?php echo $p['color']; ?>;"></i> <?php echo htmlspecialchars($f); ?></li>
+                    <li><i class="bi bi-check-circle-fill" style="color:<?php echo $p['color']; ?>;"></i> <?php echo htmlspecialchars($f, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></li>
                     <?php endforeach; ?>
                 </ul>
 
                 <div class="cdg-soft-usecase">
                     <i class="bi bi-bullseye"></i>
-                    <span><strong>Hedef:</strong> <?php echo htmlspecialchars($p['use_cases']); ?></span>
+                    <span><strong>Hedef:</strong> <?php echo htmlspecialchars($p['use_cases'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 </div>
 
                 <div class="cdg-soft-actions">

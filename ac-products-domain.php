@@ -412,10 +412,10 @@ function cdg_domain_status_label($status) {
                 <p>Kayıtlı tüm alan adlarınızı yönetin, NS kayıtlarını güncelleyin, transfer ve yenileme işlemleri yapın.</p>
             </div>
             <div class="cdg-pd-hero-actions">
-                <a href="<?php echo htmlspecialchars($shop_url); ?>" class="cdg-pd-btn cdg-pd-btn-gold">
+                <a href="<?php echo htmlspecialchars($shop_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd-btn cdg-pd-btn-gold">
                     <i class="bi bi-plus-circle"></i> Yeni Domain Al
                 </a>
-                <a href="<?php echo htmlspecialchars($whois_url); ?>" class="cdg-pd-btn cdg-pd-btn-ghost">
+                <a href="<?php echo htmlspecialchars($whois_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd-btn cdg-pd-btn-ghost">
                     <i class="bi bi-person-vcard"></i> Whois Profilleri
                 </a>
             </div>
@@ -428,7 +428,7 @@ function cdg_domain_status_label($status) {
         <div class="cdg-pd-ns-head">
             <h3><i class="bi bi-hdd-network-fill"></i> Varsayılan İsim Sunucuları (NS Kayıtları)</h3>
         </div>
-        <form method="post" action="<?php echo htmlspecialchars($controller_url); ?>" id="ns-form" onsubmit="return false;">
+        <form method="post" action="<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" id="ns-form" onsubmit="return false;">
             <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('modify-default-nameserver'); ?>
             <input type="hidden" name="operation" value="modify_default_nameserver">
 
@@ -439,7 +439,7 @@ function cdg_domain_status_label($status) {
                 ?>
                 <input type="text"
                        name="<?php echo $ns_key; ?>"
-                       value="<?php echo htmlspecialchars($ns_val); ?>"
+                       value="<?php echo htmlspecialchars($ns_val, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
                        placeholder="ns<?php echo $i; ?>.codega.com.tr"
                        class="cdg-pd-ns-input"
                        autocomplete="off">
@@ -497,7 +497,7 @@ function cdg_domain_status_label($status) {
         <div class="cdg-pd-empty-icon"><i class="bi bi-globe"></i></div>
         <h3>Henüz domaininiz yok</h3>
         <p>Hayalinizdeki alan adını kaydederek dijital varlığınızı oluşturun.</p>
-        <a href="<?php echo htmlspecialchars($shop_url); ?>" class="cdg-pd-btn cdg-pd-btn-gold">
+        <a href="<?php echo htmlspecialchars($shop_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd-btn cdg-pd-btn-gold">
             <i class="bi bi-plus-circle"></i> İlk Domaininizi Alın
         </a>
     </div>
@@ -526,31 +526,31 @@ function cdg_domain_status_label($status) {
                 $period_text = $row_period . ' ' . $row_ptime;
             }
         ?>
-        <div class="cdg-pd-card" data-status="<?php echo htmlspecialchars(strtolower($row_status)); ?>">
+        <div class="cdg-pd-card" data-status="<?php echo htmlspecialchars(strtolower($row_status), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
             <div class="cdg-pd-card-icon">
                 <i class="bi bi-globe2"></i>
             </div>
             <div class="cdg-pd-card-body">
-                <div class="cdg-pd-card-name"><?php echo htmlspecialchars($row_name); ?></div>
+                <div class="cdg-pd-card-name"><?php echo htmlspecialchars($row_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                 <div class="cdg-pd-card-meta">
                     <?php if($row_due): ?>
-                    <span><i class="bi bi-calendar-check"></i> Bitiş: <?php echo htmlspecialchars($row_due); ?></span>
+                    <span><i class="bi bi-calendar-check"></i> Bitiş: <?php echo htmlspecialchars($row_due, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                     <?php if($period_text): ?>
-                    <span><i class="bi bi-clock"></i> <?php echo htmlspecialchars($period_text); ?></span>
+                    <span><i class="bi bi-clock"></i> <?php echo htmlspecialchars($period_text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                     <?php if($price_str): ?>
-                    <span><i class="bi bi-tag"></i> <?php echo htmlspecialchars($price_str); ?></span>
+                    <span><i class="bi bi-tag"></i> <?php echo htmlspecialchars($price_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="cdg-pd-card-status">
                 <span class="cdg-pd-badge <?php echo cdg_domain_status_class($row_status); ?>">
-                    <?php echo htmlspecialchars(cdg_domain_status_label($row_status)); ?>
+                    <?php echo htmlspecialchars(cdg_domain_status_label($row_status), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </span>
             </div>
             <div class="cdg-pd-card-action">
-                <a href="<?php echo htmlspecialchars($row_link); ?>" class="cdg-pd-btn cdg-pd-btn-outline cdg-pd-btn-sm">
+                <a href="<?php echo htmlspecialchars($row_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd-btn cdg-pd-btn-outline cdg-pd-btn-sm">
                     <i class="bi bi-gear"></i> Yönet
                 </a>
             </div>

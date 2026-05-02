@@ -373,7 +373,7 @@ $tickets_url = cdg_link('tickets');
 <div class="cdg-tk-wrap">
 
     <!-- BACK -->
-    <a href="<?php echo htmlspecialchars($tickets_url); ?>" class="cdg-tk-back">
+    <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-tk-back">
         <i class="bi bi-arrow-left"></i> Taleplerime Dön
     </a>
 
@@ -388,7 +388,7 @@ $tickets_url = cdg_link('tickets');
 
     <!-- FORM -->
     <div class="cdg-tk-card">
-        <form method="post" action="<?php echo htmlspecialchars($controller_url); ?>" enctype="multipart/form-data" id="cdg-tk-form">
+        <form method="post" action="<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" enctype="multipart/form-data" id="cdg-tk-form">
             <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('create-ticket'); ?>
             <input type="hidden" name="operation" value="create_ticket">
 
@@ -405,7 +405,7 @@ $tickets_url = cdg_link('tickets');
                                 $dep_val  = is_array($dep_data) ? ($dep_data['id'] ?? $dep_id) : $dep_id;
                                 $sel = (isset($department['id']) && $department['id'] == $dep_val) ? ' selected' : '';
                             ?>
-                                <option value="<?php echo htmlspecialchars($dep_val); ?>"<?php echo $sel; ?>><?php echo htmlspecialchars($dep_name); ?></option>
+                                <option value="<?php echo htmlspecialchars($dep_val, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"<?php echo $sel; ?>><?php echo htmlspecialchars($dep_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                             <?php endforeach; ?>
                         </select>
                         <div class="cdg-tk-help"><i class="bi bi-info-circle"></i> İlgili konuya göre departman seçin (Teknik, Satış, Faturalama vb.)</div>
@@ -420,7 +420,7 @@ $tickets_url = cdg_link('tickets');
                                 $group_items = (is_array($group) && isset($group['items'])) ? $group['items'] : (is_array($group) ? $group : []);
                             ?>
                                 <?php if($group_name): ?>
-                                <optgroup label="<?php echo htmlspecialchars($group_name); ?>">
+                                <optgroup label="<?php echo htmlspecialchars($group_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                                 <?php endif; ?>
                                 <?php foreach($group_items as $row):
                                     if(!is_array($row)) continue;
@@ -428,7 +428,7 @@ $tickets_url = cdg_link('tickets');
                                     $r_name = $row['name'] ?? 'Hizmet';
                                     $sel = (isset($service['id']) && $service['id'] == $r_id) ? ' selected' : '';
                                 ?>
-                                    <option value="<?php echo htmlspecialchars($r_id); ?>"<?php echo $sel; ?>><?php echo htmlspecialchars($r_name); ?></option>
+                                    <option value="<?php echo htmlspecialchars($r_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"<?php echo $sel; ?>><?php echo htmlspecialchars($r_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                                 <?php endforeach; ?>
                                 <?php if($group_name): ?>
                                 </optgroup>
@@ -486,20 +486,20 @@ $tickets_url = cdg_link('tickets');
                     ?>
                     <div class="cdg-tk-field">
                         <label class="cdg-tk-label">
-                            <?php echo htmlspecialchars($f_label); ?>
+                            <?php echo htmlspecialchars($f_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                             <?php if($f_req): ?><span class="req">*</span><?php endif; ?>
                         </label>
                         <?php if($f_type === 'textarea'): ?>
-                            <textarea name="custom_field[<?php echo htmlspecialchars($f_name); ?>]" class="cdg-tk-textarea" <?php echo $f_req ? 'required' : ''; ?> style="min-height:100px;"></textarea>
+                            <textarea name="custom_field[<?php echo htmlspecialchars($f_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>]" class="cdg-tk-textarea" <?php echo $f_req ? 'required' : ''; ?> style="min-height:100px;"></textarea>
                         <?php elseif($f_type === 'select' && is_array($f_options)): ?>
-                            <select name="custom_field[<?php echo htmlspecialchars($f_name); ?>]" class="cdg-tk-select" <?php echo $f_req ? 'required' : ''; ?>>
+                            <select name="custom_field[<?php echo htmlspecialchars($f_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>]" class="cdg-tk-select" <?php echo $f_req ? 'required' : ''; ?>>
                                 <option value="">— Seçin —</option>
                                 <?php foreach($f_options as $op_v => $op_l): ?>
-                                    <option value="<?php echo htmlspecialchars($op_v); ?>"><?php echo htmlspecialchars($op_l); ?></option>
+                                    <option value="<?php echo htmlspecialchars($op_v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($op_l, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         <?php else: ?>
-                            <input type="<?php echo htmlspecialchars($f_type); ?>" name="custom_field[<?php echo htmlspecialchars($f_name); ?>]" class="cdg-tk-input" <?php echo $f_req ? 'required' : ''; ?>>
+                            <input type="<?php echo htmlspecialchars($f_type, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" name="custom_field[<?php echo htmlspecialchars($f_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>]" class="cdg-tk-input" <?php echo $f_req ? 'required' : ''; ?>>
                         <?php endif; ?>
                     </div>
                     <?php endforeach; ?>
@@ -512,7 +512,7 @@ $tickets_url = cdg_link('tickets');
                         <input type="file" name="attachments[]" id="cdg-tk-file-input" multiple accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.txt,.zip,.gif,.xlsx,.xls">
                         <i class="bi bi-cloud-arrow-up"></i>
                         <div class="cdg-tk-file-text">Dosya seçmek için tıklayın veya sürükleyin</div>
-                        <div class="cdg-tk-file-hint">İzin verilen: <?php echo htmlspecialchars($atachment_extensions); ?></div>
+                        <div class="cdg-tk-file-hint">İzin verilen: <?php echo htmlspecialchars($atachment_extensions, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         <div class="cdg-tk-file-list" id="cdg-tk-file-list"></div>
                     </label>
                 </div>
@@ -529,7 +529,7 @@ $tickets_url = cdg_link('tickets');
 
             <div class="cdg-tk-card-body" style="padding-top:0;">
                 <div class="cdg-tk-actions">
-                    <a href="<?php echo htmlspecialchars($tickets_url); ?>" class="cdg-tk-btn cdg-tk-btn-cancel">
+                    <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-tk-btn cdg-tk-btn-cancel">
                         <i class="bi bi-x-lg"></i> İptal
                     </a>
                     <button type="submit" class="cdg-tk-btn cdg-tk-btn-send">

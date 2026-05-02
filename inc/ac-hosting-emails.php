@@ -244,7 +244,7 @@ $no_unlimited = in_array('no-unlimited-email-account', $supported ?? []);
                             <label>Domain</label>
                             <select id="cdg-hem-domain" class="cdg-hem-select">
                                 <?php foreach($mail_domains as $md): ?>
-                                <option value="<?php echo htmlspecialchars($md); ?>"><?php echo htmlspecialchars($md); ?></option>
+                                <option value="<?php echo htmlspecialchars($md, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($md, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -294,11 +294,11 @@ $no_unlimited = in_array('no-unlimited-email-account', $supported ?? []);
                     ?>
                     <div class="cdg-hem-list-item">
                         <div>
-                            <div class="cdg-hem-list-addr"><?php echo htmlspecialchars($addr); ?></div>
+                            <div class="cdg-hem-list-addr"><?php echo htmlspecialchars($addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                             <?php if($quota || $used): ?>
                             <div class="cdg-hem-list-quota">
-                                Kota: <?php echo htmlspecialchars($quota ?: '∞'); ?>
-                                <?php if($used): ?> · Kullanılan: <?php echo htmlspecialchars($used); ?><?php endif; ?>
+                                Kota: <?php echo htmlspecialchars($quota ?: '∞', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                                <?php if($used): ?> · Kullanılan: <?php echo htmlspecialchars($used, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php endif; ?>
                             </div>
                             <?php endif; ?>
                         </div>
@@ -333,7 +333,7 @@ $no_unlimited = in_array('no-unlimited-email-account', $supported ?? []);
                             <label>Domain</label>
                             <select id="cdg-hem-fwd-domain" class="cdg-hem-select">
                                 <?php foreach($mail_domains as $md): ?>
-                                <option value="<?php echo htmlspecialchars($md); ?>"><?php echo htmlspecialchars($md); ?></option>
+                                <option value="<?php echo htmlspecialchars($md, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($md, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -360,7 +360,7 @@ $no_unlimited = in_array('no-unlimited-email-account', $supported ?? []);
                     ?>
                     <div class="cdg-hem-list-item" style="grid-template-columns:1fr auto;">
                         <div>
-                            <div class="cdg-hem-list-addr"><?php echo htmlspecialchars($dest); ?> <i class="bi bi-arrow-right" style="color:#94a3b8;font-size:11px;"></i> <?php echo htmlspecialchars($forward); ?></div>
+                            <div class="cdg-hem-list-addr"><?php echo htmlspecialchars($dest, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <i class="bi bi-arrow-right" style="color:#94a3b8;font-size:11px;"></i> <?php echo htmlspecialchars($forward, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         </div>
                         <button type="button" class="cdg-hem-list-action danger" onclick="cdgHemDeleteForward('<?php echo htmlspecialchars($dest, ENT_QUOTES); ?>', '<?php echo htmlspecialchars($forward, ENT_QUOTES); ?>')" title="Sil">
                             <i class="bi bi-trash"></i>

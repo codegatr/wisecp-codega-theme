@@ -323,13 +323,13 @@ function cdg_pl_status_label($status) {
 
     <section class="cdg-pl-hero">
         <div class="cdg-pl-hero-row">
-            <div class="cdg-pl-hero-icon"><i class="bi bi-<?php echo htmlspecialchars($cdg_list_icon); ?>"></i></div>
+            <div class="cdg-pl-hero-icon"><i class="bi bi-<?php echo htmlspecialchars($cdg_list_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i></div>
             <div class="cdg-pl-hero-text">
-                <h1><?php echo htmlspecialchars($cdg_list_title); ?></h1>
-                <p><?php echo htmlspecialchars($cdg_list_subtitle); ?></p>
+                <h1><?php echo htmlspecialchars($cdg_list_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
+                <p><?php echo htmlspecialchars($cdg_list_subtitle, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                <a href="<?php echo htmlspecialchars($shop_url); ?>" class="cdg-pl-btn cdg-pl-btn-gold">
+                <a href="<?php echo htmlspecialchars($shop_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pl-btn cdg-pl-btn-gold">
                     <i class="bi bi-plus-circle"></i> Yeni Sipariş
                 </a>
             </div>
@@ -374,10 +374,10 @@ function cdg_pl_status_label($status) {
 
     <?php if(empty($products)): ?>
     <div class="cdg-pl-empty">
-        <div class="cdg-pl-empty-icon"><i class="bi bi-<?php echo htmlspecialchars($cdg_list_icon); ?>"></i></div>
-        <h3>Henüz <?php echo htmlspecialchars($cdg_list_title); ?> yok</h3>
+        <div class="cdg-pl-empty-icon"><i class="bi bi-<?php echo htmlspecialchars($cdg_list_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i></div>
+        <h3>Henüz <?php echo htmlspecialchars($cdg_list_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> yok</h3>
         <p>İhtiyaçlarınıza uygun pakete bakarak hemen sipariş verebilirsiniz.</p>
-        <a href="<?php echo htmlspecialchars($shop_url); ?>" class="cdg-pl-btn cdg-pl-btn-gold">
+        <a href="<?php echo htmlspecialchars($shop_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pl-btn cdg-pl-btn-gold">
             <i class="bi bi-plus-circle"></i> Hemen Sipariş Ver
         </a>
     </div>
@@ -408,30 +408,30 @@ function cdg_pl_status_label($status) {
 
             $blocked = isset($row_options['block_access']);
         ?>
-        <div class="cdg-pl-card" data-status="<?php echo htmlspecialchars($row_status); ?>">
-            <div class="cdg-pl-card-icon"><i class="bi bi-<?php echo htmlspecialchars($cdg_list_icon); ?>"></i></div>
+        <div class="cdg-pl-card" data-status="<?php echo htmlspecialchars($row_status, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+            <div class="cdg-pl-card-icon"><i class="bi bi-<?php echo htmlspecialchars($cdg_list_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i></div>
             <div class="cdg-pl-card-body">
-                <div class="cdg-pl-card-name"><?php echo htmlspecialchars($row_name); ?></div>
+                <div class="cdg-pl-card-name"><?php echo htmlspecialchars($row_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                 <?php if($row_extra): ?>
                 <div style="font-size:13px;color:var(--pl-primary);font-weight:600;margin-bottom:4px;">
-                    <i class="bi bi-link-45deg"></i> <?php echo htmlspecialchars($row_extra); ?>
+                    <i class="bi bi-link-45deg"></i> <?php echo htmlspecialchars($row_extra, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </div>
                 <?php endif; ?>
                 <div class="cdg-pl-card-meta">
                     <?php if($row_due): ?>
-                    <span><i class="bi bi-calendar-check"></i> Bitiş: <?php echo htmlspecialchars($row_due); ?></span>
+                    <span><i class="bi bi-calendar-check"></i> Bitiş: <?php echo htmlspecialchars($row_due, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                     <?php if($period_text): ?>
-                    <span><i class="bi bi-clock"></i> <?php echo htmlspecialchars($period_text); ?></span>
+                    <span><i class="bi bi-clock"></i> <?php echo htmlspecialchars($period_text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                     <?php if($price_str): ?>
-                    <span><i class="bi bi-tag"></i> <?php echo htmlspecialchars($price_str); ?></span>
+                    <span><i class="bi bi-tag"></i> <?php echo htmlspecialchars($price_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="cdg-pl-card-status">
                 <span class="cdg-pl-badge <?php echo cdg_pl_status_class($row_status); ?>">
-                    <?php echo htmlspecialchars(cdg_pl_status_label($row_status)); ?>
+                    <?php echo htmlspecialchars(cdg_pl_status_label($row_status), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </span>
             </div>
             <div class="cdg-pl-card-action">
@@ -440,7 +440,7 @@ function cdg_pl_status_label($status) {
                     <i class="bi bi-gear"></i> Yönet
                 </span>
                 <?php else: ?>
-                <a href="<?php echo htmlspecialchars($row_link); ?>" class="cdg-pl-btn cdg-pl-btn-outline cdg-pl-btn-sm">
+                <a href="<?php echo htmlspecialchars($row_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pl-btn cdg-pl-btn-outline cdg-pl-btn-sm">
                     <i class="bi bi-gear"></i> Yönet
                 </a>
                 <?php endif; ?>

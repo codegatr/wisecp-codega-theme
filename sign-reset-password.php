@@ -33,14 +33,14 @@
                 <p class="text-muted" style="font-size:13px;">Hesabiniza giris yapmak icin yeni bir sifre olusturun.</p>
             </div>
 
-            <form action="<?php echo isset($controller_link) ? htmlspecialchars($controller_link) : ''; ?>" method="post" id="Reset_Password_Form">
+            <form action="<?php echo isset($controller_link) ? htmlspecialchars($controller_link, ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; ?>" method="post" id="Reset_Password_Form">
                 <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('sign'); ?>
 
                 <?php if(isset($by_name) && $by_name === 'mobile' && isset($security_question) && $security_question): ?>
                 <div class="cdg-form-group">
                     <label class="cdg-form-label"><i class="bi bi-question-circle"></i> Guvenlik Sorusu</label>
                     <div style="font-size:13px;color:#475569;background:#f8fafc;padding:10px 12px;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:8px;">
-                        <?php echo htmlspecialchars($security_question); ?>
+                        <?php echo htmlspecialchars($security_question, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </div>
                     <input type="text" name="security_question_answer" class="cdg-form-control" placeholder="Cevabiniz" required>
                 </div>
@@ -145,7 +145,7 @@
                 <p class="text-muted" style="font-size:13px;">E-posta adresinizi girin, size bir sifirlama baglantisi gonderelim.</p>
             </div>
 
-            <form action="<?php echo isset($forget_password_link) ? htmlspecialchars($forget_password_link) : ''; ?>" method="post" id="ForgotPassword_Form">
+            <form action="<?php echo isset($forget_password_link) ? htmlspecialchars($forget_password_link, ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; ?>" method="post" id="ForgotPassword_Form">
                 <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('sign'); ?>
 
                 <div class="cdg-form-group">

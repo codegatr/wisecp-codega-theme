@@ -16,7 +16,7 @@ $module_content = $module_content ?? '';
     <div class="cdg-addon-page-wrap">
         <?php if($header_title): ?>
         <header class="cdg-addon-page-header">
-            <h1><?php echo htmlspecialchars($header_title); ?></h1>
+            <h1><?php echo htmlspecialchars($header_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
         </header>
         <?php endif; ?>
 

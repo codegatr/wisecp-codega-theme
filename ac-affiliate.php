@@ -418,12 +418,12 @@ function cdg_aff_date($d) {
                 <p>Tanıttığınız her müşteri için komisyon kazanın. Tracking linkinizi paylaşın, kazançlarınızı çekin.</p>
             </div>
             <?php if(!$aff_disabled && $withdrawal_url): ?>
-            <a href="<?php echo htmlspecialchars($withdrawal_url); ?>" class="cdg-aff-btn cdg-aff-btn-gold">
+            <a href="<?php echo htmlspecialchars($withdrawal_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-aff-btn cdg-aff-btn-gold">
                 <i class="bi bi-cash-stack"></i> Para Çek
             </a>
             <?php endif; ?>
             <?php if($rates_cond_url): ?>
-            <a href="<?php echo htmlspecialchars($rates_cond_url); ?>" class="cdg-aff-btn cdg-aff-btn-outline">
+            <a href="<?php echo htmlspecialchars($rates_cond_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-aff-btn cdg-aff-btn-outline">
                 <i class="bi bi-info-circle"></i> Koşullar
             </a>
             <?php endif; ?>
@@ -435,7 +435,7 @@ function cdg_aff_date($d) {
         <i class="bi bi-exclamation-triangle-fill"></i>
         <strong>Tavsiye Programınız Pasif Durumda</strong>
         <?php if($aff_disabled_note): ?>
-        <span><?php echo htmlspecialchars($aff_disabled_note); ?></span>
+        <span><?php echo htmlspecialchars($aff_disabled_note, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
         <?php else: ?>
         <span>Programa katılmak için lütfen destek ekibimizle iletişime geçin.</span>
         <?php endif; ?>
@@ -447,14 +447,14 @@ function cdg_aff_date($d) {
             <div class="cdg-aff-stat-icon"><i class="bi bi-wallet2"></i></div>
             <div class="cdg-aff-stat-info">
                 <div class="cdg-aff-stat-label">Mevcut Bakiye</div>
-                <div class="cdg-aff-stat-value"><?php echo htmlspecialchars(cdg_aff_money($aff_balance)); ?> <small><?php echo htmlspecialchars($aff_currency); ?></small></div>
+                <div class="cdg-aff-stat-value"><?php echo htmlspecialchars(cdg_aff_money($aff_balance), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <small><?php echo htmlspecialchars($aff_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></small></div>
             </div>
         </div>
         <div class="cdg-aff-stat-card cdg-aff-stat-card-withdrawn">
             <div class="cdg-aff-stat-icon"><i class="bi bi-cash-stack"></i></div>
             <div class="cdg-aff-stat-info">
                 <div class="cdg-aff-stat-label">Toplam Çekilen</div>
-                <div class="cdg-aff-stat-value"><?php echo htmlspecialchars(cdg_aff_money($total_withdrawn)); ?> <small><?php echo htmlspecialchars($aff_currency); ?></small></div>
+                <div class="cdg-aff-stat-value"><?php echo htmlspecialchars(cdg_aff_money($total_withdrawn), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <small><?php echo htmlspecialchars($aff_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></small></div>
             </div>
         </div>
         <div class="cdg-aff-stat-card cdg-aff-stat-card-rate">
@@ -478,7 +478,7 @@ function cdg_aff_date($d) {
         <div class="cdg-aff-tracking-icon"><i class="bi bi-link-45deg"></i></div>
         <div class="cdg-aff-tracking-info">
             <div class="cdg-aff-tracking-label">Tavsiye / Tracking Linkiniz</div>
-            <div class="cdg-aff-tracking-url" id="cdg-tracking-url"><?php echo htmlspecialchars($tracking_url); ?></div>
+            <div class="cdg-aff-tracking-url" id="cdg-tracking-url"><?php echo htmlspecialchars($tracking_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
         </div>
         <button type="button" class="cdg-aff-btn cdg-aff-btn-success" onclick="cdgAffCopyTracking()">
             <i class="bi bi-clipboard"></i> <span id="cdg-copy-text">Kopyala</span>
@@ -524,12 +524,12 @@ function cdg_aff_date($d) {
                         $r_complete = !empty($row['completed_time']);
                     ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($row['order_name'] ?? '-'); ?></td>
-                        <td><?php echo htmlspecialchars($row['full_name'] ?? '-'); ?></td>
-                        <td><?php echo htmlspecialchars(cdg_aff_money($row['amount'] ?? 0)); ?></td>
-                        <td>%<?php echo htmlspecialchars($row['rate'] ?? '-'); ?></td>
-                        <td><strong style="color:#10b981;"><?php echo htmlspecialchars(cdg_aff_money($row['commission'] ?? 0)); ?></strong></td>
-                        <td><?php echo htmlspecialchars(cdg_aff_date($row['ctime'] ?? '')); ?></td>
+                        <td><?php echo htmlspecialchars($row['order_name'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars($row['full_name'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars(cdg_aff_money($row['amount'] ?? 0), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                        <td>%<?php echo htmlspecialchars($row['rate'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                        <td><strong style="color:#10b981;"><?php echo htmlspecialchars(cdg_aff_money($row['commission'] ?? 0), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong></td>
+                        <td><?php echo htmlspecialchars(cdg_aff_date($row['ctime'] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                         <td>
                             <?php if($r_complete): ?>
                             <span class="cdg-aff-badge cdg-aff-badge-success">Tamamlandı</span>
@@ -552,7 +552,7 @@ function cdg_aff_date($d) {
             <div class="cdg-aff-card-head">
                 <h3><i class="bi bi-cash-coin"></i> Para Çekim Geçmişi</h3>
                 <?php if(!$aff_disabled && $withdrawal_url): ?>
-                <a href="<?php echo htmlspecialchars($withdrawal_url); ?>" class="cdg-aff-btn cdg-aff-btn-success cdg-aff-btn-sm">
+                <a href="<?php echo htmlspecialchars($withdrawal_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-aff-btn cdg-aff-btn-success cdg-aff-btn-sm">
                     <i class="bi bi-plus"></i> Yeni Çekim
                 </a>
                 <?php endif; ?>
@@ -581,11 +581,11 @@ function cdg_aff_date($d) {
                         $w_complete = !empty($row['completed_time']);
                     ?>
                     <tr>
-                        <td><strong><?php echo htmlspecialchars(cdg_aff_money($row['amount'] ?? 0)); ?></strong></td>
-                        <td><?php echo htmlspecialchars($row['gateway'] ?? '-'); ?></td>
-                        <td style="font-size:12px;color:var(--aff-muted);"><?php echo htmlspecialchars($row['gateway_info'] ?? '-'); ?></td>
-                        <td><?php echo htmlspecialchars(cdg_aff_date($row['ctime'] ?? '')); ?></td>
-                        <td><?php echo $w_complete ? htmlspecialchars(cdg_aff_date($row['completed_time'])) : '-'; ?></td>
+                        <td><strong><?php echo htmlspecialchars(cdg_aff_money($row['amount'] ?? 0), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong></td>
+                        <td><?php echo htmlspecialchars($row['gateway'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                        <td style="font-size:12px;color:var(--aff-muted);"><?php echo htmlspecialchars($row['gateway_info'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars(cdg_aff_date($row['ctime'] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                        <td><?php echo $w_complete ? htmlspecialchars(cdg_aff_date($row['completed_time']), ENT_QUOTES | ENT_HTML5, 'UTF-8') : '-'; ?></td>
                         <td>
                             <?php if($w_complete): ?>
                             <span class="cdg-aff-badge cdg-aff-badge-success">Ödendi</span>
@@ -627,7 +627,7 @@ function cdg_aff_date($d) {
                         if(!is_array($row)) continue;
                     ?>
                     <tr>
-                        <td><?php echo htmlspecialchars(cdg_aff_date($row['ctime'] ?? '')); ?></td>
+                        <td><?php echo htmlspecialchars(cdg_aff_date($row['ctime'] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                         <td><strong><?php echo (int)($row['hits'] ?? 0); ?></strong></td>
                     </tr>
                     <?php endforeach; ?>
@@ -660,11 +660,11 @@ function cdg_aff_date($d) {
                     ?>
                     <div style="border:1px solid var(--aff-border);border-radius:10px;padding:14px;text-align:center;">
                         <?php if($b_url): ?>
-                        <img src="<?php echo htmlspecialchars($b_url); ?>" alt="banner" style="max-width:100%;height:auto;border-radius:6px;margin-bottom:8px;">
+                        <img src="<?php echo htmlspecialchars($b_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" alt="banner" style="max-width:100%;height:auto;border-radius:6px;margin-bottom:8px;">
                         <?php endif; ?>
-                        <div style="font-size:12px;color:var(--aff-muted);margin-bottom:8px;"><?php echo htmlspecialchars($b_size); ?></div>
+                        <div style="font-size:12px;color:var(--aff-muted);margin-bottom:8px;"><?php echo htmlspecialchars($b_size, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         <?php if($b_html): ?>
-                        <textarea readonly style="width:100%;font-family:monospace;font-size:11px;padding:6px;border:1px solid var(--aff-border);border-radius:6px;resize:vertical;min-height:60px;" onclick="this.select();"><?php echo htmlspecialchars($b_html); ?></textarea>
+                        <textarea readonly style="width:100%;font-family:monospace;font-size:11px;padding:6px;border:1px solid var(--aff-border);border-radius:6px;resize:vertical;min-height:60px;" onclick="this.select();"><?php echo htmlspecialchars($b_html, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></textarea>
                         <?php endif; ?>
                     </div>
                     <?php endforeach; ?>

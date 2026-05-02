@@ -178,9 +178,9 @@ $button_icons = [
                 <?php echo ucfirst($product_type); ?> Hizmeti
                 <?php if($status_html): ?> &middot; <?php echo $status_html; ?><?php endif; ?>
             </div>
-            <h1><?php echo htmlspecialchars($title ?: '-'); ?></h1>
+            <h1><?php echo htmlspecialchars($title ?: '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
             <?php if($package_name): ?>
-                <p class="package"><?php echo htmlspecialchars($package_name); ?></p>
+                <p class="package"><?php echo htmlspecialchars($package_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
             <?php endif; ?>
         </div>
 
@@ -211,7 +211,7 @@ $button_icons = [
     ?>
         <a href="<?php echo $url; ?>" class="cdg-quickbtn" <?php echo strpos($url,'http')===0 ? 'target="_blank" rel="noopener"' : ''; ?>>
             <i class="bi <?php echo $icon; ?>"></i>
-            <span><?php echo htmlspecialchars($name); ?></span>
+            <span><?php echo htmlspecialchars($name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
         </a>
     <?php endforeach; ?>
 </div>
@@ -259,16 +259,16 @@ $button_icons = [
         <div class="cdg-card-head"><h3><i class="bi bi-hdd-rack"></i> Baglanti Bilgileri</h3></div>
         <table class="cdg-info-table">
             <?php if($panel_type): ?>
-                <tr><td>Panel</td><td><strong><?php echo htmlspecialchars($panel_type); ?></strong></td></tr>
+                <tr><td>Panel</td><td><strong><?php echo htmlspecialchars($panel_type, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong></td></tr>
             <?php endif; ?>
             <?php if($server_hostname): ?>
-                <tr><td>Hostname</td><td><code><?php echo htmlspecialchars($server_hostname); ?></code></td></tr>
+                <tr><td>Hostname</td><td><code><?php echo htmlspecialchars($server_hostname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></td></tr>
             <?php endif; ?>
             <?php if($server_ip): ?>
-                <tr><td>IP Adresi</td><td><code><?php echo htmlspecialchars($server_ip); ?></code></td></tr>
+                <tr><td>IP Adresi</td><td><code><?php echo htmlspecialchars($server_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></td></tr>
             <?php endif; ?>
             <?php if($server_user): ?>
-                <tr><td>Kullanici Adi</td><td><code><?php echo htmlspecialchars($server_user); ?></code></td></tr>
+                <tr><td>Kullanici Adi</td><td><code><?php echo htmlspecialchars($server_user, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></td></tr>
             <?php endif; ?>
         </table>
     </div>
@@ -286,7 +286,7 @@ $button_icons = [
         ?>
             <div class="cdg-ns-card">
                 <div class="lbl"><?php echo strtoupper($key); ?></div>
-                <code><?php echo htmlspecialchars($ns); ?></code>
+                <code><?php echo htmlspecialchars($ns, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
             </div>
         <?php endforeach; ?>
     </div>

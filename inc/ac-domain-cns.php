@@ -21,7 +21,7 @@ $d_name = $proanse['name'] ?? ($options['domain'] ?? 'domain.com');
         <div class="cdg-dm-body">
             <div class="cdg-dm-info">
                 <i class="bi bi-info-circle-fill"></i>
-                <div>Child Nameserver (özel NS), domain kayıt firmasında kayıtlı kendi nameserver'larınızdır. Örnek: <code style="background:rgba(30,64,175,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">ns1.<?php echo htmlspecialchars($d_name); ?></code> ve bu hostname'in IP adresi.</div>
+                <div>Child Nameserver (özel NS), domain kayıt firmasında kayıtlı kendi nameserver'larınızdır. Örnek: <code style="background:rgba(30,64,175,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">ns1.<?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code> ve bu hostname'in IP adresi.</div>
             </div>
 
             <!-- Yeni CNS Ekleme -->
@@ -32,7 +32,7 @@ $d_name = $proanse['name'] ?? ($options['domain'] ?? 'domain.com');
                 <div style="display:grid;grid-template-columns:1.5fr 1fr 60px;gap:8px;align-items:end;">
                     <div class="cdg-dm-field">
                         <label class="cdg-dm-field-label">Nameserver Hostname</label>
-                        <input type="text" id="CNS_ns" class="cdg-dm-input" placeholder="ns1.<?php echo htmlspecialchars($d_name); ?>">
+                        <input type="text" id="CNS_ns" class="cdg-dm-input" placeholder="ns1.<?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                     </div>
                     <div class="cdg-dm-field">
                         <label class="cdg-dm-field-label">IP Adresi</label>

@@ -29,13 +29,13 @@ if(empty($info_docs)) return; // Belge gerektirmeyen domainler için modal yok
             <div class="cdg-dm-info">
                 <i class="bi bi-info-circle-fill"></i>
                 <div>
-                    <strong><?php echo htmlspecialchars($d_name); ?></strong> domaini için kayıt firmasının istediği belgeleri buradan yükleyebilirsiniz.
+                    <strong><?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong> domaini için kayıt firmasının istediği belgeleri buradan yükleyebilirsiniz.
                     Belgeleriniz onaylandıktan sonra domain aktif olur.
                 </div>
             </div>
 
             <!-- Belge Ekleme -->
-            <form id="addDomainDoc" enctype="multipart/form-data" action="<?php echo htmlspecialchars($controller_url); ?>" method="post" class="cdg-dm-form">
+            <form id="addDomainDoc" enctype="multipart/form-data" action="<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" method="post" class="cdg-dm-form">
                 <input type="hidden" name="operation" value="add_domain_doc">
                 <input type="hidden" name="id" value="<?php echo (int)($proanse['id'] ?? 0); ?>">
 
@@ -50,7 +50,7 @@ if(empty($info_docs)) return; // Belge gerektirmeyen domainler için modal yok
                             $type = $d['type'] ?? 'text';
                             $name = $d['name'] ?? 'Belge';
                         ?>
-                        <option data-type="<?php echo htmlspecialchars($type); ?>" value="<?php echo htmlspecialchars($d_id); ?>"><?php echo htmlspecialchars($name); ?></option>
+                        <option data-type="<?php echo htmlspecialchars($type, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" value="<?php echo htmlspecialchars($d_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -66,12 +66,12 @@ if(empty($info_docs)) return; // Belge gerektirmeyen domainler için modal yok
                     if(($d['type'] ?? '') !== 'select') continue;
                     $options_arr = $d['options'] ?? [];
                 ?>
-                <div class="cdg-dm-field cdg-doc-input cdg-doc-select-wrap" id="cdg-doc-select-<?php echo htmlspecialchars($d_k); ?>" style="display:none;margin-bottom:12px;">
+                <div class="cdg-dm-field cdg-doc-input cdg-doc-select-wrap" id="cdg-doc-select-<?php echo htmlspecialchars($d_k, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:none;margin-bottom:12px;">
                     <label class="cdg-dm-field-label">Seçim</label>
                     <select name="select" class="cdg-dm-select" disabled>
                         <option value="-1">Lütfen seçin</option>
                         <?php foreach($options_arr as $op_k => $op): ?>
-                        <option value="<?php echo htmlspecialchars($op_k); ?>"><?php echo htmlspecialchars($op); ?></option>
+                        <option value="<?php echo htmlspecialchars($op_k, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($op, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>

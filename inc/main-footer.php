@@ -108,13 +108,13 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
                 <h4>İletişim</h4>
                 <ul>
                     <?php if($phone): ?>
-                        <li><i class="bi bi-telephone"></i> <a href="tel:<?php echo preg_replace('/[^0-9+]/','',$phone); ?>"><?php echo htmlspecialchars($phone); ?></a></li>
+                        <li><i class="bi bi-telephone"></i> <a href="tel:<?php echo preg_replace('/[^0-9+]/','',$phone); ?>"><?php echo htmlspecialchars($phone, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a></li>
                     <?php endif; ?>
                     <?php if($mail): ?>
-                        <li><i class="bi bi-envelope"></i> <a href="mailto:<?php echo $mail; ?>"><?php echo htmlspecialchars($mail); ?></a></li>
+                        <li><i class="bi bi-envelope"></i> <a href="mailto:<?php echo $mail; ?>"><?php echo htmlspecialchars($mail, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a></li>
                     <?php endif; ?>
                     <?php if($addr): ?>
-                        <li><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($addr); ?></li>
+                        <li><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></li>
                     <?php endif; ?>
                 </ul>
             </div>

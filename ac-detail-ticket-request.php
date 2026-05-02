@@ -456,7 +456,7 @@ function cdg_t_date($date) {
 <div class="cdg-td-wrap">
 
     <!-- BACK -->
-    <a href="<?php echo htmlspecialchars($tickets_url); ?>" class="cdg-td-back">
+    <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-td-back">
         <i class="bi bi-arrow-left"></i> Taleplerime Dön
     </a>
 
@@ -465,12 +465,12 @@ function cdg_t_date($date) {
         <div class="cdg-td-hero-row">
             <div class="cdg-td-hero-icon"><i class="bi bi-headset"></i></div>
             <div class="cdg-td-hero-text">
-                <div class="cdg-td-hero-num">TALEP #<?php echo htmlspecialchars($t_id); ?></div>
-                <h1><?php echo htmlspecialchars($t_title); ?></h1>
+                <div class="cdg-td-hero-num">TALEP #<?php echo htmlspecialchars($t_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                <h1><?php echo htmlspecialchars($t_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
             </div>
             <div class="cdg-td-hero-status">
-                <i class="bi bi-<?php echo htmlspecialchars($st_meta['icon']); ?>"></i>
-                <?php echo htmlspecialchars($st_meta['lbl']); ?>
+                <i class="bi bi-<?php echo htmlspecialchars($st_meta['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
+                <?php echo htmlspecialchars($st_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
             </div>
         </div>
     </section>
@@ -481,28 +481,28 @@ function cdg_t_date($date) {
             <span class="cdg-td-meta-label">Departman</span>
             <span class="cdg-td-meta-value">
                 <i class="bi bi-people-fill" style="color:var(--td-primary);"></i>
-                <?php echo htmlspecialchars(is_array($department) ? ($department['name'] ?? 'Genel') : 'Genel'); ?>
+                <?php echo htmlspecialchars(is_array($department) ? ($department['name'] ?? 'Genel') : 'Genel', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
             </span>
         </div>
         <div class="cdg-td-meta-item">
             <span class="cdg-td-meta-label">Öncelik</span>
             <span class="cdg-td-meta-value">
-                <i class="bi bi-<?php echo htmlspecialchars($pri_meta['icon']); ?>" style="color:<?php echo $pri_meta['color']; ?>;"></i>
-                <?php echo htmlspecialchars($pri_meta['lbl']); ?>
+                <i class="bi bi-<?php echo htmlspecialchars($pri_meta['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="color:<?php echo $pri_meta['color']; ?>;"></i>
+                <?php echo htmlspecialchars($pri_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
             </span>
         </div>
         <div class="cdg-td-meta-item">
             <span class="cdg-td-meta-label">Son Yanıt</span>
             <span class="cdg-td-meta-value" id="get_lastreply">
                 <i class="bi bi-clock-history" style="color:var(--td-muted);"></i>
-                <?php echo $t_lastreply ? htmlspecialchars(cdg_t_date($t_lastreply)) : '-'; ?>
+                <?php echo $t_lastreply ? htmlspecialchars(cdg_t_date($t_lastreply), ENT_QUOTES | ENT_HTML5, 'UTF-8') : '-'; ?>
             </span>
         </div>
         <div class="cdg-td-meta-item">
             <span class="cdg-td-meta-label">Talep No</span>
             <span class="cdg-td-meta-value">
                 <i class="bi bi-hash" style="color:var(--td-muted);"></i>
-                #<?php echo htmlspecialchars($t_id); ?>
+                #<?php echo htmlspecialchars($t_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
             </span>
         </div>
     </div>
@@ -519,10 +519,10 @@ function cdg_t_date($date) {
                         <span class="cdg-td-msg-role"><i class="bi bi-person-circle"></i> Müşteri</span>
                     </div>
                 </div>
-                <span class="cdg-td-msg-time"><?php echo htmlspecialchars(cdg_t_date($ticket['cdate'] ?? $t_lastreply)); ?></span>
+                <span class="cdg-td-msg-time"><?php echo htmlspecialchars(cdg_t_date($ticket['cdate'] ?? $t_lastreply), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             </div>
             <div class="cdg-td-msg-body">
-                <?php echo nl2br(htmlspecialchars($ticket['message'] ?? 'Talep mesajı bulunamadı.')); ?>
+                <?php echo nl2br(htmlspecialchars($ticket['message'] ?? 'Talep mesajı bulunamadı.', ENT_QUOTES | ENT_HTML5, 'UTF-8')); ?>
             </div>
         </div>
         <?php else: ?>
@@ -536,14 +536,14 @@ function cdg_t_date($date) {
                 $r_id      = $reply['id'] ?? '';
 
                 $msg_class = $r_isstaff ? 'from-staff' : 'from-customer';
-                $avatar_letter = strtoupper(mb_substr($r_name, 0, 1, 'UTF-8'));
+                $avatar_letter = mb_strtoupper(mb_substr($r_name, 0, 1, 'UTF-8'), 'UTF-8');
             ?>
-            <div class="cdg-td-msg <?php echo $msg_class; ?>" <?php if($r_id): ?>data-reply-id="<?php echo htmlspecialchars($r_id); ?>"<?php endif; ?>>
+            <div class="cdg-td-msg <?php echo $msg_class; ?>" <?php if($r_id): ?>data-reply-id="<?php echo htmlspecialchars($r_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"<?php endif; ?>>
                 <div class="cdg-td-msg-head">
                     <div class="cdg-td-msg-author">
-                        <div class="cdg-td-msg-avatar"><?php echo htmlspecialchars($avatar_letter); ?></div>
+                        <div class="cdg-td-msg-avatar"><?php echo htmlspecialchars($avatar_letter, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         <div class="cdg-td-msg-info">
-                            <span class="cdg-td-msg-name"><?php echo htmlspecialchars($r_name); ?></span>
+                            <span class="cdg-td-msg-name"><?php echo htmlspecialchars($r_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                             <span class="cdg-td-msg-role">
                                 <?php if($r_isstaff): ?>
                                 <i class="bi bi-shield-check" style="color:var(--td-primary);"></i> Destek Ekibi
@@ -553,10 +553,10 @@ function cdg_t_date($date) {
                             </span>
                         </div>
                     </div>
-                    <span class="cdg-td-msg-time"><?php echo htmlspecialchars(cdg_t_date($r_date)); ?></span>
+                    <span class="cdg-td-msg-time"><?php echo htmlspecialchars(cdg_t_date($r_date), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 </div>
                 <div class="cdg-td-msg-body">
-                    <?php echo nl2br(htmlspecialchars($r_message)); ?>
+                    <?php echo nl2br(htmlspecialchars($r_message, ENT_QUOTES | ENT_HTML5, 'UTF-8')); ?>
 
                     <?php if(!empty($r_attachments)): ?>
                     <div style="margin-top:12px;">
@@ -564,8 +564,8 @@ function cdg_t_date($date) {
                             $att_url  = is_array($att) ? ($att['url'] ?? $att['link'] ?? '#') : $att;
                             $att_name = is_array($att) ? ($att['name'] ?? basename($att_url)) : basename($att);
                         ?>
-                        <a href="<?php echo htmlspecialchars($att_url); ?>" target="_blank" rel="noopener" class="cdg-td-msg-attach">
-                            <i class="bi bi-paperclip"></i> <?php echo htmlspecialchars($att_name); ?>
+                        <a href="<?php echo htmlspecialchars($att_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-td-msg-attach">
+                            <i class="bi bi-paperclip"></i> <?php echo htmlspecialchars($att_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                         </a>
                         <?php endforeach; ?>
                     </div>
@@ -590,10 +590,10 @@ function cdg_t_date($date) {
         <div class="cdg-td-reply-head">
             <h3><i class="bi bi-reply-fill"></i> Yanıt Yazın</h3>
         </div>
-        <form id="cdg-td-reply-form" method="post" action="<?php echo htmlspecialchars($controller_url); ?>" enctype="multipart/form-data" onsubmit="return false;">
+        <form id="cdg-td-reply-form" method="post" action="<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" enctype="multipart/form-data" onsubmit="return false;">
             <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('reply-ticket'); ?>
             <input type="hidden" name="operation" value="reply">
-            <input type="hidden" name="ticket_id" value="<?php echo htmlspecialchars($t_id); ?>">
+            <input type="hidden" name="ticket_id" value="<?php echo htmlspecialchars($t_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
 
             <div class="cdg-td-reply-body">
                 <textarea
@@ -738,7 +738,7 @@ window.cdgTdShowFiles = function(input) {
     function cdgTicketStatus(newStatus) {
         if(typeof MioAjax === 'function') {
             MioAjax({
-                url: '<?php echo htmlspecialchars($controller_url); ?>',
+                url: '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
                 type: 'post',
                 data: {
                     operation: 'change-status',

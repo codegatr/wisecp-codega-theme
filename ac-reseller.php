@@ -336,7 +336,7 @@ function cdg_res_money($a, $cid = 0) {
             <div class="cdg-res-stat-icon"><i class="bi bi-percent"></i></div>
             <div class="cdg-res-stat-info">
                 <div class="cdg-res-stat-label">Toplam Tasarruf</div>
-                <div class="cdg-res-stat-value"><?php echo htmlspecialchars(cdg_res_money($stat_discounts)); ?> <small style="font-size:13px;font-weight:600;"><?php echo htmlspecialchars($stat_currency); ?></small></div>
+                <div class="cdg-res-stat-value"><?php echo htmlspecialchars(cdg_res_money($stat_discounts), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <small style="font-size:13px;font-weight:600;"><?php echo htmlspecialchars($stat_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></small></div>
             </div>
         </div>
         <div class="cdg-res-stat-card cdg-res-stat-card-2">
@@ -351,7 +351,7 @@ function cdg_res_money($a, $cid = 0) {
             <div class="cdg-res-stat-icon"><i class="bi bi-coin"></i></div>
             <div class="cdg-res-stat-info">
                 <div class="cdg-res-stat-label">Bayi Kontörü</div>
-                <div class="cdg-res-stat-value"><?php echo htmlspecialchars(cdg_res_money($info['credits'])); ?></div>
+                <div class="cdg-res-stat-value"><?php echo htmlspecialchars(cdg_res_money($info['credits']), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
             </div>
         </div>
         <?php endif; ?>
@@ -387,7 +387,7 @@ function cdg_res_money($a, $cid = 0) {
             <div class="cdg-res-group">
                 <div class="cdg-res-group-title">
                     <i class="bi bi-collection"></i>
-                    <?php echo htmlspecialchars($g_name); ?>
+                    <?php echo htmlspecialchars($g_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </div>
 
                 <div style="overflow-x:auto;">
@@ -411,10 +411,10 @@ function cdg_res_money($a, $cid = 0) {
                             $r_new = $r_amount - $r_discount;
                         ?>
                         <tr>
-                            <td><strong><?php echo htmlspecialchars($r_name); ?></strong></td>
-                            <td><span class="cdg-res-price-old"><?php echo htmlspecialchars(cdg_res_money($r_amount, $r_cid)); ?></span></td>
+                            <td><strong><?php echo htmlspecialchars($r_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong></td>
+                            <td><span class="cdg-res-price-old"><?php echo htmlspecialchars(cdg_res_money($r_amount, $r_cid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></td>
                             <td><span class="cdg-res-rate-badge">-%<?php echo (float)$r_rate; ?></span></td>
-                            <td><span class="cdg-res-price-new"><?php echo htmlspecialchars(cdg_res_money($r_new, $r_cid)); ?></span></td>
+                            <td><span class="cdg-res-price-new"><?php echo htmlspecialchars(cdg_res_money($r_new, $r_cid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -462,10 +462,10 @@ function cdg_res_money($a, $cid = 0) {
                     if(!is_array($d)) continue;
                 ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($d['name'] ?? '-'); ?></td>
-                    <td><?php echo htmlspecialchars(cdg_res_money($d['amount'] ?? 0)); ?></td>
-                    <td style="color:var(--r-success);font-weight:700;">-<?php echo htmlspecialchars(cdg_res_money($d['amountd'] ?? 0)); ?></td>
-                    <td style="color:var(--r-muted);font-size:12px;"><?php echo htmlspecialchars(date('d.m.Y', strtotime($d['ctime'] ?? 'now'))); ?></td>
+                    <td><?php echo htmlspecialchars($d['name'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars(cdg_res_money($d['amount'] ?? 0), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                    <td style="color:var(--r-success);font-weight:700;">-<?php echo htmlspecialchars(cdg_res_money($d['amountd'] ?? 0), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                    <td style="color:var(--r-muted);font-size:12px;"><?php echo htmlspecialchars(date('d.m.Y', strtotime($d['ctime'] ?? 'now')), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

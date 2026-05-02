@@ -40,7 +40,7 @@ if(!$is_active) return; // Aktif değilse hiç gösterme
                 <li>
                     <span class="cdg-pd2-info-label">Lisans Domaini</span>
                     <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#1e40af;">
-                        <?php echo htmlspecialchars($current_domain_str); ?>
+                        <?php echo htmlspecialchars($current_domain_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </span>
                 </li>
                 <?php endif; ?>
@@ -51,7 +51,7 @@ if(!$is_active) return; // Aktif değilse hiç gösterme
                     <span class="cdg-pd2-info-value">
                         <span style="display:inline-flex;align-items:center;gap:6px;">
                             <code id="cdg-sw-license-code" style="background:#f1f5f9;padding:4px 10px;border-radius:6px;font-size:12px;color:#be185d;font-weight:600;letter-spacing:0.5px;">
-                                <?php echo htmlspecialchars($license_code); ?>
+                                <?php echo htmlspecialchars($license_code, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                             </code>
                             <button type="button" onclick="cdgSwCopy('cdg-sw-license-code', this)" class="cdg-pd2-btn cdg-pd2-btn-outline" style="padding:4px 8px;font-size:11px;" title="Kopyala">
                                 <i class="bi bi-clipboard"></i>
@@ -65,7 +65,7 @@ if(!$is_active) return; // Aktif değilse hiç gösterme
                 <li>
                     <span class="cdg-pd2-info-label">Lisans IP</span>
                     <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:600;">
-                        <?php echo htmlspecialchars($license_ip); ?>
+                        <?php echo htmlspecialchars($license_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </span>
                 </li>
                 <?php endif; ?>
@@ -85,9 +85,9 @@ if(!$is_active) return; // Aktif değilse hiç gösterme
                         if(!$p_label || !$p_value) continue;
                 ?>
                 <li>
-                    <span class="cdg-pd2-info-label"><?php echo htmlspecialchars($p_label); ?></span>
+                    <span class="cdg-pd2-info-label"><?php echo htmlspecialchars($p_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:600;">
-                        <?php echo htmlspecialchars($p_value); ?>
+                        <?php echo htmlspecialchars($p_value, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </span>
                 </li>
                 <?php endforeach; endif; ?>
@@ -251,7 +251,7 @@ window.cdgSwCopy = function(elemId, btn) {
         <?php if($current_domain_str): ?>
         <div class="cdg-sw-current">
             <strong>Mevcut Domain</strong>
-            <code><?php echo htmlspecialchars($current_domain_str); ?></code>
+            <code><?php echo htmlspecialchars($current_domain_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
         </div>
         <?php endif; ?>
 

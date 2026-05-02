@@ -452,7 +452,7 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
                 <div class="cdg-sms-info-grid">
                     <div class="cdg-sms-info-tile">
                         <div class="cdg-sms-info-tile-lbl">Paket</div>
-                        <div class="cdg-sms-info-tile-val" style="font-size:14px;"><?php echo htmlspecialchars($d_name); ?></div>
+                        <div class="cdg-sms-info-tile-val" style="font-size:14px;"><?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                     </div>
                     <div class="cdg-sms-info-tile">
                         <div class="cdg-sms-info-tile-lbl">Toplam Kredi</div>
@@ -479,8 +479,8 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
                 <?php if(!empty($last)): ?>
                 <div style="margin-top:18px;padding:14px 18px;background:#dbeafe;border:1px solid #93c5fd;border-radius:10px;color:#1e3a8a;font-size:13px;">
                     <strong><i class="bi bi-clock-history"></i> Son Gönderim:</strong>
-                    <?php echo htmlspecialchars($last['part'] ?? '-'); ?> -
-                    <?php echo htmlspecialchars($last['end'] ?? ''); ?>
+                    <?php echo htmlspecialchars($last['part'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> -
+                    <?php echo htmlspecialchars($last['end'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </div>
                 <?php endif; ?>
             </div>
@@ -503,7 +503,7 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
                                 if(!is_array($origin)) continue;
                                 if(strtolower($origin['status'] ?? '') !== 'approved' && strtolower($origin['status'] ?? '') !== 'active') continue;
                             ?>
-                            <option value="<?php echo htmlspecialchars($origin['id'] ?? ''); ?>"><?php echo htmlspecialchars($origin['name'] ?? ''); ?></option>
+                            <option value="<?php echo htmlspecialchars($origin['id'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($origin['name'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -520,8 +520,8 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
                             <?php foreach($groups as $group):
                                 if(!is_array($group)) continue;
                             ?>
-                            <option value="<?php echo htmlspecialchars($group['id'] ?? ''); ?>">
-                                <?php echo htmlspecialchars($group['name'] ?? ''); ?>
+                            <option value="<?php echo htmlspecialchars($group['id'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+                                <?php echo htmlspecialchars($group['name'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                                 <?php if(isset($group['numbers'])): ?>(<?php echo count((array)$group['numbers']); ?> kişi)<?php endif; ?>
                             </option>
                             <?php endforeach; ?>
@@ -578,7 +578,7 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
                         $prereg = !empty($origin['prereg']);
                     ?>
                     <tr>
-                        <td><strong><?php echo htmlspecialchars($origin['name'] ?? '-'); ?></strong></td>
+                        <td><strong><?php echo htmlspecialchars($origin['name'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong></td>
                         <td>
                             <?php if($st === 'approved' || $st === 'active'): ?>
                             <span class="cdg-sms-badge cdg-sms-badge-success">Aktif</span>
@@ -628,7 +628,7 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
                         $g_count = isset($group['numbers']) ? count((array)$group['numbers']) : 0;
                     ?>
                     <tr>
-                        <td><strong><?php echo htmlspecialchars($group['name'] ?? '-'); ?></strong></td>
+                        <td><strong><?php echo htmlspecialchars($group['name'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong></td>
                         <td><?php echo $g_count; ?></td>
                         <td>
                             <button type="button" class="cdg-sms-btn cdg-sms-btn-outline" style="padding:6px 12px;font-size:12px;" onclick="cdgSmsEditGroup(<?php echo (int)($group['id'] ?? 0); ?>)">
@@ -673,10 +673,10 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
                         $r_status = strtolower($report['status'] ?? 'sent');
                     ?>
                     <tr>
-                        <td><?php echo htmlspecialchars(date('d.m.Y H:i', strtotime($report['ctime'] ?? 'now'))); ?></td>
-                        <td><?php echo htmlspecialchars($report['origin'] ?? '-'); ?></td>
-                        <td style="max-width:300px;font-size:12px;color:var(--s-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><?php echo htmlspecialchars($report['message'] ?? ''); ?></td>
-                        <td><?php echo htmlspecialchars($report['count'] ?? '-'); ?></td>
+                        <td><?php echo htmlspecialchars(date('d.m.Y H:i', strtotime($report['ctime'] ?? 'now')), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars($report['origin'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                        <td style="max-width:300px;font-size:12px;color:var(--s-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><?php echo htmlspecialchars($report['message'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars($report['count'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                         <td>
                             <?php if($r_status === 'delivered' || $r_status === 'sent'): ?>
                             <span class="cdg-sms-badge cdg-sms-badge-success">Gönderildi</span>
@@ -754,7 +754,7 @@ function cdgSmsSend() {
     if(typeof MioAjax !== 'function') return;
 
     MioAjax({
-        url: '<?php echo htmlspecialchars($controller_url); ?>',
+        url: '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
         type: 'post',
         data: {
             operation: 'send_sms',

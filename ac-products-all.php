@@ -71,7 +71,7 @@ elseif(isset($orders) && is_array($orders)) $items = $orders;
 
 <div class="cdg-card">
     <div class="cdg-card-head">
-        <h3><i class="bi bi-grid"></i> <?php echo htmlspecialchars($page_title); ?></h3>
+        <h3><i class="bi bi-grid"></i> <?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
         <div style="display:flex;gap:8px;">
             <a href="<?php echo cdg_link('ac-ps-products-t', ['hosting']); ?>" class="cdg-chip"><i class="bi bi-hdd-network"></i> Hosting</a>
             <a href="<?php echo cdg_link('ac-ps-products-t', ['domain']); ?>" class="cdg-chip"><i class="bi bi-globe2"></i> Domain</a>
@@ -135,9 +135,9 @@ elseif(isset($orders) && is_array($orders)) $items = $orders;
                     <tr>
                         <td><span style="font-family:monospace;color:var(--cdg-muted);font-size:12px;">#<?php echo $oid; ?></span></td>
                         <td>
-                            <div style="font-weight:600;"><?php echo htmlspecialchars($name); ?></div>
+                            <div style="font-weight:600;"><?php echo htmlspecialchars($name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                             <?php if($sub_info): ?>
-                                <div style="font-size:12px;color:var(--cdg-muted);"><?php echo htmlspecialchars($sub_info); ?></div>
+                                <div style="font-size:12px;color:var(--cdg-muted);"><?php echo htmlspecialchars($sub_info, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                             <?php endif; ?>
                         </td>
                         <td style="text-align:right;font-weight:600;">

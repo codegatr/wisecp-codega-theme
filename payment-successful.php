@@ -40,22 +40,22 @@ $invoices_link = isset($links['invoices']) ? $links['invoices']
             <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:16px 20px;margin-bottom:20px;text-align:left;">
                 <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#15803d;margin-bottom:6px;">
                     <span>Fatura No:</span>
-                    <strong>#<?php echo htmlspecialchars($invoice_data['number'] ?? $invoice_data['id'] ?? ''); ?></strong>
+                    <strong>#<?php echo htmlspecialchars($invoice_data['number'] ?? $invoice_data['id'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
                 </div>
                 <?php if($amount_str): ?>
                 <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#15803d;">
                     <span>Tutar:</span>
-                    <strong style="font-size:16px;"><?php echo htmlspecialchars($amount_str); ?></strong>
+                    <strong style="font-size:16px;"><?php echo htmlspecialchars($amount_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
                 </div>
                 <?php endif; ?>
             </div>
             <?php endif; ?>
 
             <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-                <a href="<?php echo htmlspecialchars($products_link); ?>" class="cdg-btn cdg-btn-success">
+                <a href="<?php echo htmlspecialchars($products_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-btn cdg-btn-success">
                     <i class="bi bi-box-seam"></i> Hizmetlerime Git
                 </a>
-                <a href="<?php echo htmlspecialchars($invoices_link); ?>" class="cdg-btn cdg-btn-outline">
+                <a href="<?php echo htmlspecialchars($invoices_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-btn cdg-btn-outline">
                     <i class="bi bi-receipt"></i> Faturalarim
                 </a>
             </div>

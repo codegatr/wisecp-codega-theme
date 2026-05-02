@@ -26,7 +26,7 @@ $d_name = $proanse['name'] ?? ($options['domain'] ?? 'domain.com');
                 <i class="bi bi-info-circle-fill"></i>
                 <div>
                     Domain'inize gelen e-postaları başka bir hesaba yönlendirebilirsiniz.
-                    Örnek: <code style="background:rgba(30,64,175,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">info@<?php echo htmlspecialchars($d_name); ?></code> → <code style="background:rgba(30,64,175,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">size@gmail.com</code>
+                    Örnek: <code style="background:rgba(30,64,175,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">info@<?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code> → <code style="background:rgba(30,64,175,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">size@gmail.com</code>
                 </div>
             </div>
 
@@ -40,7 +40,7 @@ $d_name = $proanse['name'] ?? ($options['domain'] ?? 'domain.com');
                         <label class="cdg-dm-field-label">Prefix (kaynak)</label>
                         <div style="display:flex;align-items:center;background:#fff;border:1.5px solid #e2e8f0;border-radius:8px;overflow:hidden;">
                             <input type="text" id="EmailForward_prefix" class="cdg-dm-input" style="border:0;border-radius:0;flex:1;" placeholder="info">
-                            <span style="padding:0 10px;color:#94a3b8;font-size:13px;font-weight:600;white-space:nowrap;">@<?php echo htmlspecialchars($d_name); ?></span>
+                            <span style="padding:0 10px;color:#94a3b8;font-size:13px;font-weight:600;white-space:nowrap;">@<?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                         </div>
                     </div>
                     <div style="display:flex;align-items:end;padding-bottom:10px;color:#94a3b8;">

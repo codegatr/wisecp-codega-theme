@@ -308,7 +308,7 @@ function cdg_blk_date($d) {
 <div class="cdg-blk">
 <div class="cdg-blk-wrap">
 
-    <a href="<?php echo htmlspecialchars($invoices_url); ?>" class="cdg-blk-back">
+    <a href="<?php echo htmlspecialchars($invoices_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-blk-back">
         <i class="bi bi-arrow-left"></i> Faturalara Dön
     </a>
 
@@ -325,7 +325,7 @@ function cdg_blk_date($d) {
         <i class="bi bi-check-circle"></i>
         <h3>Ödenmemiş Faturanız Yok</h3>
         <p>Tüm faturalarınız ödenmiş durumda. Tebrikler!</p>
-        <a href="<?php echo htmlspecialchars($invoices_url); ?>" class="cdg-blk-btn cdg-blk-btn-primary" style="display:inline-flex;width:auto;padding:11px 20px;font-size:13px;">
+        <a href="<?php echo htmlspecialchars($invoices_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-blk-btn cdg-blk-btn-primary" style="display:inline-flex;width:auto;padding:11px 20px;font-size:13px;">
             <i class="bi bi-receipt"></i> Faturalarımı Görüntüle
         </a>
     </div>
@@ -361,19 +361,19 @@ function cdg_blk_date($d) {
                     <div class="cdg-blk-invoice-row">
                         <input type="checkbox" class="cdg-blk-checkbox selected-invoices" value="<?php echo (int)$i_id; ?>" data-amount="<?php echo (float)$i_total; ?>" checked>
                         <div class="cdg-blk-invoice-info">
-                            <div class="cdg-blk-invoice-num">Fatura #<?php echo htmlspecialchars($invoice['number'] ?? $i_id); ?></div>
+                            <div class="cdg-blk-invoice-num">Fatura #<?php echo htmlspecialchars($invoice['number'] ?? $i_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                             <div class="cdg-blk-invoice-meta">
                                 <?php if($i_due): ?>
-                                <span><i class="bi bi-calendar"></i> Son ödeme: <?php echo htmlspecialchars(cdg_blk_date($i_due)); ?></span>
+                                <span><i class="bi bi-calendar"></i> Son ödeme: <?php echo htmlspecialchars(cdg_blk_date($i_due), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                                 <?php endif; ?>
                                 <?php if($u_name): ?>
-                                <span><i class="bi bi-person"></i> <?php echo htmlspecialchars($u_name); ?></span>
+                                <span><i class="bi bi-person"></i> <?php echo htmlspecialchars($u_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                                 <?php endif; ?>
                             </div>
                         </div>
                         <div class="cdg-blk-invoice-amount">
-                            <?php echo htmlspecialchars(cdg_blk_money($i_total)); ?>
-                            <small style="font-size:11px;font-weight:600;display:block;color:var(--b-muted);"><?php echo htmlspecialchars($i_currency); ?></small>
+                            <?php echo htmlspecialchars(cdg_blk_money($i_total), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                            <small style="font-size:11px;font-weight:600;display:block;color:var(--b-muted);"><?php echo htmlspecialchars($i_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></small>
                         </div>
                     </div>
                     <?php endforeach; ?>
@@ -400,11 +400,11 @@ function cdg_blk_date($d) {
                                 $checked = ($pm_method === $selected_pmethod) ? 'checked' : '';
                             ?>
                             <label class="cdg-blk-pm-option <?php echo $checked ? 'selected' : ''; ?>">
-                                <input type="radio" name="pmethod" value="<?php echo htmlspecialchars($pm_method); ?>" <?php echo $checked; ?>>
+                                <input type="radio" name="pmethod" value="<?php echo htmlspecialchars($pm_method, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $checked; ?>>
                                 <div>
-                                    <div class="cdg-blk-pm-option-name"><?php echo htmlspecialchars($pm_name); ?></div>
+                                    <div class="cdg-blk-pm-option-name"><?php echo htmlspecialchars($pm_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                                     <?php if($pm_desc): ?>
-                                    <div class="cdg-blk-pm-option-desc"><?php echo htmlspecialchars($pm_desc); ?></div>
+                                    <div class="cdg-blk-pm-option-desc"><?php echo htmlspecialchars($pm_desc, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                                     <?php endif; ?>
                                 </div>
                             </label>
@@ -435,9 +435,9 @@ function cdg_blk_date($d) {
                         <strong id="cdg-blk-total">0,00</strong>
                     </div>
 
-                    <form id="payment_screen_redirect" method="post" action="<?php echo htmlspecialchars($controller_url); ?>" style="margin-top:18px;">
+                    <form id="payment_screen_redirect" method="post" action="<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="margin-top:18px;">
                         <input type="hidden" name="operation" value="payment-screen">
-                        <input type="hidden" name="pmethod" value="<?php echo htmlspecialchars($selected_pmethod); ?>">
+                        <input type="hidden" name="pmethod" value="<?php echo htmlspecialchars($selected_pmethod, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                         <input type="hidden" name="invoices" value="">
                         <button type="button" id="continue_button" class="cdg-blk-btn cdg-blk-btn-primary">
                             <i class="bi bi-credit-card-2-back-fill"></i> Ödeme Sayfasına Geç

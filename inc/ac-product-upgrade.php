@@ -192,15 +192,15 @@ if(!$has_upgrade) return;
             if(empty($up_options)) continue;
         ?>
         <div class="cdg-upg-card" data-upg-id="<?php echo $up_id; ?>">
-            <h4 class="cdg-upg-card-name"><?php echo htmlspecialchars($up_name); ?></h4>
+            <h4 class="cdg-upg-card-name"><?php echo htmlspecialchars($up_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h4>
             <?php if($up_desc): ?>
-            <p class="cdg-upg-card-desc"><?php echo htmlspecialchars(mb_strimwidth(strip_tags($up_desc), 0, 100, '...')); ?></p>
+            <p class="cdg-upg-card-desc"><?php echo htmlspecialchars(mb_strimwidth(strip_tags($up_desc), 0, 100, '...'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
             <?php endif; ?>
 
             <?php if(!empty($up_features) && is_array($up_features)): ?>
             <ul class="cdg-upg-card-features">
                 <?php foreach(array_slice($up_features, 0, 5) as $feat): ?>
-                <li><i class="bi bi-check-circle-fill"></i> <span><?php echo htmlspecialchars(is_array($feat) ? ($feat['name'] ?? '') : $feat); ?></span></li>
+                <li><i class="bi bi-check-circle-fill"></i> <span><?php echo htmlspecialchars(is_array($feat) ? ($feat['name'] ?? '') : $feat, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                 <?php endforeach; ?>
             </ul>
             <?php endif; ?>
@@ -226,7 +226,7 @@ if(!$has_upgrade) return;
                     }
                     $label = $opt_name . ' — ' . $opt_payable . ($period_label ? ' / ' . $period_label : '');
                 ?>
-                <option value="<?php echo (int)$opt_id; ?>" data-payable="<?php echo htmlspecialchars($opt_payable, ENT_QUOTES); ?>"><?php echo htmlspecialchars($label); ?></option>
+                <option value="<?php echo (int)$opt_id; ?>" data-payable="<?php echo htmlspecialchars($opt_payable, ENT_QUOTES); ?>"><?php echo htmlspecialchars($label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                 <?php endforeach; ?>
             </select>
 

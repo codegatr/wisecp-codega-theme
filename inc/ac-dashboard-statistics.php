@@ -134,7 +134,7 @@ $url_create_ticket = $links['create-ticket-request'] ?? '#';
 
 <div class="cdg-ds">
 
-    <a href="<?php echo htmlspecialchars($url_services); ?>" class="cdg-ds-card cdg-ds-card-services">
+    <a href="<?php echo htmlspecialchars($url_services, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-ds-card cdg-ds-card-services">
         <div class="cdg-ds-icon"><i class="bi bi-rocket-takeoff-fill"></i></div>
         <div class="cdg-ds-num"><?php echo $st1; ?></div>
         <div class="cdg-ds-label">Aktif Hizmetlerim</div>
@@ -142,7 +142,7 @@ $url_create_ticket = $links['create-ticket-request'] ?? '#';
     </a>
 
     <?php if($show_domain): ?>
-    <a href="<?php echo htmlspecialchars($url_domains); ?>" class="cdg-ds-card cdg-ds-card-domains">
+    <a href="<?php echo htmlspecialchars($url_domains, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-ds-card cdg-ds-card-domains">
         <div class="cdg-ds-icon"><i class="bi bi-globe2"></i></div>
         <div class="cdg-ds-num"><?php echo $st2; ?></div>
         <div class="cdg-ds-label">Domainlerim</div>
@@ -151,7 +151,7 @@ $url_create_ticket = $links['create-ticket-request'] ?? '#';
     <?php endif; ?>
 
     <?php if($visibility_invoice): ?>
-    <a href="<?php echo htmlspecialchars($url_invoices); ?>" class="cdg-ds-card cdg-ds-card-invoices">
+    <a href="<?php echo htmlspecialchars($url_invoices, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-ds-card cdg-ds-card-invoices">
         <div class="cdg-ds-icon"><i class="bi bi-receipt"></i></div>
         <div class="cdg-ds-num"><?php echo $st3; ?></div>
         <div class="cdg-ds-label">Bekleyen Faturalar</div>
@@ -162,16 +162,16 @@ $url_create_ticket = $links['create-ticket-request'] ?? '#';
     <?php if($visibility_ticket): ?>
     <div class="cdg-ds-card cdg-ds-card-tickets" style="cursor:default;">
         <div class="cdg-ds-icon"><i class="bi bi-headset"></i></div>
-        <a href="<?php echo htmlspecialchars($url_tickets); ?>" style="text-decoration:none;color:inherit;display:block;">
+        <a href="<?php echo htmlspecialchars($url_tickets, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="text-decoration:none;color:inherit;display:block;">
             <div class="cdg-ds-num"><?php echo $st4; ?></div>
             <div class="cdg-ds-label">Destek Taleplerim</div>
         </a>
         <?php if($can_create_ticket): ?>
-        <a href="<?php echo htmlspecialchars($url_create_ticket); ?>" class="cdg-ds-action">
+        <a href="<?php echo htmlspecialchars($url_create_ticket, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-ds-action">
             <i class="bi bi-plus-circle"></i> Yeni Talep Aç
         </a>
         <?php else: ?>
-        <a href="<?php echo htmlspecialchars($url_tickets); ?>" class="cdg-ds-action">
+        <a href="<?php echo htmlspecialchars($url_tickets, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-ds-action">
             <i class="bi bi-arrow-right"></i> Taleplerimi Gör
         </a>
         <?php endif; ?>

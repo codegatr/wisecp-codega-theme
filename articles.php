@@ -10,14 +10,14 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
 
 <section class="cdg-page-head">
     <div class="cdg-container">
-        <h1><?php echo htmlspecialchars($page_title); ?></h1>
+        <h1><?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
         <div class="breadcrumb">
             <a href="<?php echo defined('APP_URI') ? APP_URI . '/' : '/'; ?>">Anasayfa</a>
             <span class="sep">/</span>
             <?php if($articles_category): ?>
                 <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('articles') : '/articles'); ?>">Makaleler</a>
                 <span class="sep">/</span>
-                <span><?php echo htmlspecialchars($page_title); ?></span>
+                <span><?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             <?php else: ?>
                 <span>Makaleler</span>
             <?php endif; ?>
@@ -42,9 +42,9 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
                         $a_date = $row['cdate'] ?? ($row['date'] ?? '');
                     ?>
                     <article class="cdg-article-card cdg-card" style="overflow:hidden;display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.2s;">
-                        <a href="<?php echo htmlspecialchars($a_route); ?>" style="display:block;height:180px;overflow:hidden;background:linear-gradient(135deg,#1e40af,#3b82f6);position:relative;">
+                        <a href="<?php echo htmlspecialchars($a_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:block;height:180px;overflow:hidden;background:linear-gradient(135deg,#1e40af,#3b82f6);position:relative;">
                             <?php if($a_image): ?>
-                            <img src="<?php echo htmlspecialchars($a_image); ?>" alt="<?php echo htmlspecialchars($a_title); ?>" style="width:100%;height:100%;object-fit:cover;">
+                            <img src="<?php echo htmlspecialchars($a_image, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($a_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="width:100%;height:100%;object-fit:cover;">
                             <?php else: ?>
                             <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;font-size:48px;opacity:0.3;">
                                 <i class="bi bi-file-earmark-richtext"></i>
@@ -53,27 +53,27 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
                         </a>
                         <div style="padding:18px;flex:1;display:flex;flex-direction:column;">
                             <?php if($a_cat_name): ?>
-                            <a href="<?php echo htmlspecialchars($a_cat_route); ?>" style="display:inline-block;margin-bottom:8px;font-size:11px;font-weight:700;color:#1e40af;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;">
-                                <i class="bi bi-folder"></i> <?php echo htmlspecialchars($a_cat_name); ?>
+                            <a href="<?php echo htmlspecialchars($a_cat_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:inline-block;margin-bottom:8px;font-size:11px;font-weight:700;color:#1e40af;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;">
+                                <i class="bi bi-folder"></i> <?php echo htmlspecialchars($a_cat_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                             </a>
                             <?php endif; ?>
                             <h3 style="font-size:16px;font-weight:800;color:#0f172a;margin:0 0 8px;line-height:1.4;">
-                                <a href="<?php echo htmlspecialchars($a_route); ?>" style="color:inherit;text-decoration:none;">
-                                    <?php echo htmlspecialchars($a_title); ?>
+                                <a href="<?php echo htmlspecialchars($a_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="color:inherit;text-decoration:none;">
+                                    <?php echo htmlspecialchars($a_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                                 </a>
                             </h3>
                             <?php if($a_content): ?>
-                            <p style="font-size:13px;color:#64748b;margin:0 0 14px;line-height:1.5;flex:1;"><?php echo htmlspecialchars(mb_strimwidth(strip_tags($a_content), 0, 130, '...')); ?></p>
+                            <p style="font-size:13px;color:#64748b;margin:0 0 14px;line-height:1.5;flex:1;"><?php echo htmlspecialchars(mb_strimwidth(strip_tags($a_content), 0, 130, '...'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
                             <?php endif; ?>
                             <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:10px;border-top:1px solid #f1f5f9;">
                                 <?php if($a_date): ?>
                                 <span style="font-size:11px;color:#94a3b8;">
-                                    <i class="bi bi-calendar3"></i> <?php echo htmlspecialchars($a_date); ?>
+                                    <i class="bi bi-calendar3"></i> <?php echo htmlspecialchars($a_date, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                                 </span>
                                 <?php else: ?>
                                 <span></span>
                                 <?php endif; ?>
-                                <a href="<?php echo htmlspecialchars($a_route); ?>" style="font-size:12px;font-weight:700;color:#1e40af;text-decoration:none;">
+                                <a href="<?php echo htmlspecialchars($a_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="font-size:12px;font-weight:700;color:#1e40af;text-decoration:none;">
                                     Devamini oku <i class="bi bi-arrow-right"></i>
                                 </a>
                             </div>
@@ -136,8 +136,8 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
                             $is_active = $articles_category && isset($articles_category['id']) && isset($cat['id']) && $articles_category['id'] == $cat['id'];
                         ?>
                         <li>
-                            <a href="<?php echo htmlspecialchars($c_route); ?>" style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;text-decoration:none;color:<?php echo $is_active ? '#1e40af' : '#334155'; ?>;background:<?php echo $is_active ? '#eff6ff' : 'transparent'; ?>;font-size:13px;font-weight:<?php echo $is_active ? '700' : '500'; ?>;border-radius:6px;">
-                                <span><?php echo htmlspecialchars($c_title); ?></span>
+                            <a href="<?php echo htmlspecialchars($c_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;text-decoration:none;color:<?php echo $is_active ? '#1e40af' : '#334155'; ?>;background:<?php echo $is_active ? '#eff6ff' : 'transparent'; ?>;font-size:13px;font-weight:<?php echo $is_active ? '700' : '500'; ?>;border-radius:6px;">
+                                <span><?php echo htmlspecialchars($c_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                                 <?php if($c_count): ?>
                                 <span style="font-size:11px;color:#94a3b8;background:<?php echo $is_active ? '#dbeafe' : '#f1f5f9'; ?>;padding:2px 8px;border-radius:99px;">
                                     <?php echo (int)$c_count; ?>

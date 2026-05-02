@@ -122,7 +122,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
             <p>Hosting, domain, yazılım çözümlerimiz veya destek hakkinda her konuda bize ulasabilirsiniz. Ortalama yanıt süremiz <strong>5 dakikadan az</strong>.</p>
             <div class="cdg-page-hero-cta">
                 <a href="https://wa.me/<?php echo $company_wa; ?>" target="_blank" rel="noopener" class="cdg-btn cdg-btn-success cdg-btn-lg cdg-btn-glow"><i class="bi bi-whatsapp"></i> WhatsApp Destek</a>
-                <a href="tel:<?php echo str_replace(' ', '', $company_phone); ?>" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-telephone-fill"></i> <?php echo htmlspecialchars($company_phone); ?></a>
+                <a href="tel:<?php echo str_replace(' ', '', $company_phone); ?>" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-telephone-fill"></i> <?php echo htmlspecialchars($company_phone, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
             </div>
         </div>
     </div>
@@ -143,14 +143,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
                 <div class="cdg-channel-icon" style="background:linear-gradient(135deg,#1e40af,#3b82f6);"><i class="bi bi-telephone-fill"></i></div>
                 <h3>Telefon</h3>
                 <p>Hemen aramak için tıkla.</p>
-                <div class="cdg-channel-meta"><?php echo htmlspecialchars($company_hours); ?></div>
+                <div class="cdg-channel-meta"><?php echo htmlspecialchars($company_hours, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                 <div class="cdg-channel-cta">Ara <i class="bi bi-arrow-right"></i></div>
             </a>
             <a href="mailto:<?php echo $company_email; ?>" class="cdg-channel-card">
                 <div class="cdg-channel-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);"><i class="bi bi-envelope-fill"></i></div>
                 <h3>E-posta</h3>
                 <p>Detaylı sorular ve dokumanlar için.</p>
-                <div class="cdg-channel-meta"><?php echo htmlspecialchars($company_email); ?></div>
+                <div class="cdg-channel-meta"><?php echo htmlspecialchars($company_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                 <div class="cdg-channel-cta">E-posta At <i class="bi bi-arrow-right"></i></div>
             </a>
             <a href="<?php echo cdg_link('contact'); ?>#cdg-form" class="cdg-channel-card">
@@ -176,7 +176,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
                 <?php if($form_msg): ?>
                 <div class="cdg-form-alert <?php echo $form_success ? 'success' : 'error'; ?>">
                     <i class="bi bi-<?php echo $form_success ? 'check-circle-fill' : 'exclamation-triangle-fill'; ?>"></i>
-                    <span><?php echo htmlspecialchars($form_msg); ?></span>
+                    <span><?php echo htmlspecialchars($form_msg, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 </div>
                 <?php endif; ?>
 
@@ -231,19 +231,19 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
                     <div class="cdg-info-list">
                         <div class="cdg-info-row">
                             <i class="bi bi-geo-alt-fill"></i>
-                            <div><strong>Adres</strong><span><?php echo htmlspecialchars($company_address); ?></span></div>
+                            <div><strong>Adres</strong><span><?php echo htmlspecialchars($company_address, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></div>
                         </div>
                         <div class="cdg-info-row">
                             <i class="bi bi-telephone-fill"></i>
-                            <div><strong>Telefon</strong><a href="tel:<?php echo str_replace(' ', '', $company_phone); ?>"><?php echo htmlspecialchars($company_phone); ?></a></div>
+                            <div><strong>Telefon</strong><a href="tel:<?php echo str_replace(' ', '', $company_phone); ?>"><?php echo htmlspecialchars($company_phone, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a></div>
                         </div>
                         <div class="cdg-info-row">
                             <i class="bi bi-envelope-fill"></i>
-                            <div><strong>E-posta</strong><a href="mailto:<?php echo $company_email; ?>"><?php echo htmlspecialchars($company_email); ?></a></div>
+                            <div><strong>E-posta</strong><a href="mailto:<?php echo $company_email; ?>"><?php echo htmlspecialchars($company_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a></div>
                         </div>
                         <div class="cdg-info-row">
                             <i class="bi bi-clock-fill"></i>
-                            <div><strong>Çalışma Saatleri</strong><span><?php echo htmlspecialchars($company_hours); ?></span></div>
+                            <div><strong>Çalışma Saatleri</strong><span><?php echo htmlspecialchars($company_hours, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></div>
                         </div>
                     </div>
                 </div>

@@ -20,13 +20,13 @@ if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) {
 
 <section class="cdg-page-head">
     <div class="cdg-container">
-        <h1><?php echo htmlspecialchars($page_title); ?></h1>
+        <h1><?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
         <div class="breadcrumb">
             <a href="<?php echo defined('APP_URI') ? APP_URI . '/' : '/'; ?>">Anasayfa</a>
             <span class="sep">/</span>
             <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('knowledgebase') : '/knowledgebase'); ?>">Bilgi Bankasi</a>
             <span class="sep">/</span>
-            <span><?php echo htmlspecialchars($page_title); ?></span>
+            <span><?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
         </div>
     </div>
 </section>
@@ -38,13 +38,13 @@ if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) {
             <article class="cdg-kb-article cdg-card" style="padding:32px;font-family:'Plus Jakarta Sans',sans-serif;">
                 <header style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #e2e8f0;">
                     <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin:0 0 12px;line-height:1.3;">
-                        <?php echo htmlspecialchars($page_title); ?>
+                        <?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </h2>
                     <div style="display:flex;gap:14px;font-size:12px;color:#64748b;flex-wrap:wrap;">
                         <span><i class="bi bi-eye"></i> <?php echo (int)$visit_count; ?> goruntulenme</span>
                         <span><i class="bi bi-hand-thumbs-up"></i> <?php echo (int)$useful_count; ?> faydali</span>
                         <?php if($kb_category && !empty($kb_category['title'])): ?>
-                        <span><i class="bi bi-folder"></i> <a href="<?php echo htmlspecialchars($kb_category['route'] ?? '#'); ?>" style="color:#1e40af;text-decoration:none;"><?php echo htmlspecialchars($kb_category['title']); ?></a></span>
+                        <span><i class="bi bi-folder"></i> <a href="<?php echo htmlspecialchars($kb_category['route'] ?? '#', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="color:#1e40af;text-decoration:none;"><?php echo htmlspecialchars($kb_category['title'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a></span>
                         <?php endif; ?>
                     </div>
                 </header>
@@ -60,7 +60,7 @@ if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) {
                     </div>
                     <h4 style="font-size:16px;font-weight:800;color:#0f172a;margin:0 0 6px;">Bu makale sorununuzu cozemedi mi?</h4>
                     <p style="font-size:13px;color:#475569;margin:0 0 14px;">Destek ekibimiz size yardimci olmak icin hazir.</p>
-                    <a href="<?php echo htmlspecialchars($kb_tickets_link); ?>" class="cdg-btn cdg-btn-primary">
+                    <a href="<?php echo htmlspecialchars($kb_tickets_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-btn cdg-btn-primary">
                         <i class="bi bi-life-preserver"></i> Destek Talebi Olustur
                     </a>
                 </div>
@@ -107,9 +107,9 @@ if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) {
                             if(!$s_title) continue;
                         ?>
                         <li>
-                            <a href="<?php echo htmlspecialchars($s_route); ?>" style="display:flex;gap:8px;padding:8px 10px;text-decoration:none;color:#334155;font-size:13px;border-radius:6px;">
+                            <a href="<?php echo htmlspecialchars($s_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:flex;gap:8px;padding:8px 10px;text-decoration:none;color:#334155;font-size:13px;border-radius:6px;">
                                 <i class="bi bi-arrow-right-short" style="color:#1e40af;flex-shrink:0;font-size:16px;"></i>
-                                <span><?php echo htmlspecialchars($s_title); ?></span>
+                                <span><?php echo htmlspecialchars($s_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                             </a>
                         </li>
                         <?php endforeach; ?>
@@ -121,7 +121,7 @@ if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) {
                     <i class="bi bi-headset" style="font-size:28px;"></i>
                     <h4 style="font-size:14px;font-weight:800;margin:8px 0 6px;">Yardim Lazim mi?</h4>
                     <p style="font-size:12px;opacity:0.9;margin:0 0 12px;">7/24 destek ekibimiz yardimci olmaktan mutluluk duyar.</p>
-                    <a href="<?php echo htmlspecialchars($kb_tickets_link); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;color:#1e40af;text-decoration:none;border-radius:6px;font-size:12px;font-weight:700;">
+                    <a href="<?php echo htmlspecialchars($kb_tickets_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;color:#1e40af;text-decoration:none;border-radius:6px;font-size:12px;font-weight:700;">
                         <i class="bi bi-chat-dots"></i> Bize Yazin
                     </a>
                 </div>

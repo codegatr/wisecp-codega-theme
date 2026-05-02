@@ -164,7 +164,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
         </h4>
         <p style="font-size:12px;color:#166534;margin:0 0 12px;">Faturalarinizda bu adres bilgileri kullanilir.</p>
 
-        <form method="post" action="<?php echo htmlspecialchars($ac_op_link); ?>" id="cdgAddrDefaultForm">
+        <form method="post" action="<?php echo htmlspecialchars($ac_op_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" id="cdgAddrDefaultForm">
             <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('account'); ?>
             <input type="hidden" name="operation" value="updateDefaultAddress">
 
@@ -177,7 +177,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
                         $is_def = !empty($addr['detouse']);
                     ?>
                     <option value="<?php echo (int)$a_id; ?>" <?php echo $is_def ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($a_name . ($a_line ? ' - ' . mb_strimwidth($a_line, 0, 50, '...') : '')); ?>
+                        <?php echo htmlspecialchars($a_name . ($a_line ? ' - ' . mb_strimwidth($a_line, 0, 50, '...') : ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </option>
                     <?php endforeach; ?>
                 </select>
@@ -209,7 +209,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
         <div class="cdg-addr-card<?php echo $a_default ? ' is-default' : ''; ?>" data-addr-id="<?php echo (int)$a_id; ?>"
              data-addr-payload='<?php echo htmlspecialchars(json_encode($addr, JSON_UNESCAPED_UNICODE), ENT_QUOTES); ?>'>
             <div class="cdg-addr-card-name">
-                <?php echo htmlspecialchars($a_name); ?>
+                <?php echo htmlspecialchars($a_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 <span class="cdg-addr-card-kind <?php echo $a_kind === 'corporate' ? 'corporate' : ''; ?>">
                     <?php echo $a_kind === 'corporate' ? 'Kurumsal' : 'Bireysel'; ?>
                 </span>
@@ -217,20 +217,20 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
 
             <?php if($a_kind === 'corporate' && $a_company): ?>
             <div style="font-size:11px;color:#92400e;font-weight:600;margin-bottom:4px;">
-                <i class="bi bi-building"></i> <?php echo htmlspecialchars($a_company); ?>
+                <i class="bi bi-building"></i> <?php echo htmlspecialchars($a_company, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
             </div>
             <?php elseif($a_full_name): ?>
             <div style="font-size:11px;color:#475569;margin-bottom:4px;">
-                <i class="bi bi-person"></i> <?php echo htmlspecialchars($a_full_name); ?>
+                <i class="bi bi-person"></i> <?php echo htmlspecialchars($a_full_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
             </div>
             <?php endif; ?>
 
-            <div class="cdg-addr-card-line"><?php echo htmlspecialchars($a_line); ?></div>
+            <div class="cdg-addr-card-line"><?php echo htmlspecialchars($a_line, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
 
             <?php if($a_email || $a_phone): ?>
             <div style="font-size:11px;color:#94a3b8;margin-bottom:10px;display:flex;flex-direction:column;gap:2px;">
-                <?php if($a_email): ?><span><i class="bi bi-envelope"></i> <?php echo htmlspecialchars($a_email); ?></span><?php endif; ?>
-                <?php if($a_phone): ?><span><i class="bi bi-phone"></i> <?php echo htmlspecialchars($a_phone); ?></span><?php endif; ?>
+                <?php if($a_email): ?><span><i class="bi bi-envelope"></i> <?php echo htmlspecialchars($a_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span><?php endif; ?>
+                <?php if($a_phone): ?><span><i class="bi bi-phone"></i> <?php echo htmlspecialchars($a_phone, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span><?php endif; ?>
             </div>
             <?php endif; ?>
 
@@ -269,7 +269,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
             </button>
         </div>
         <div class="cdg-addr-modal-body">
-            <form id="cdgAddrForm" method="post" action="<?php echo htmlspecialchars($ac_op_link); ?>" autocomplete="off">
+            <form id="cdgAddrForm" method="post" action="<?php echo htmlspecialchars($ac_op_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" autocomplete="off">
                 <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('account'); ?>
                 <input type="hidden" name="operation" value="addNewAddress" id="cdg-addr-operation">
                 <input type="hidden" name="id" value="0" id="cdg-addr-id">
@@ -342,7 +342,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
                             $c_id = is_array($c) ? ($c['id'] ?? '') : (string)$c;
                             $c_name = is_array($c) ? ($c['name'] ?? $c_id) : (string)$c;
                         ?>
-                        <option value="<?php echo htmlspecialchars($c_id); ?>"><?php echo htmlspecialchars($c_name); ?></option>
+                        <option value="<?php echo htmlspecialchars($c_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($c_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                         <?php endforeach; ?>
                     </select>
                     <?php else: ?>

@@ -177,7 +177,7 @@ $messages_url = cdg_link('messages');
 <div class="cdg-msg">
 <div class="cdg-msg-wrap">
 
-    <a href="<?php echo htmlspecialchars($messages_url); ?>" class="cdg-msg-back">
+    <a href="<?php echo htmlspecialchars($messages_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-msg-back">
         <i class="bi bi-arrow-left"></i> Mesajlara Dön
     </a>
 
@@ -186,16 +186,16 @@ $messages_url = cdg_link('messages');
             <span class="cdg-msg-eyebrow">
                 <i class="bi bi-envelope-open"></i> Bildirim
             </span>
-            <h1><?php echo htmlspecialchars($msg_subject); ?></h1>
+            <h1><?php echo htmlspecialchars($msg_subject, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
             <div class="cdg-msg-meta">
                 <?php if($msg_date): ?>
-                <span><i class="bi bi-calendar-event"></i> <?php echo htmlspecialchars(cdg_msg_date($msg_date)); ?></span>
+                <span><i class="bi bi-calendar-event"></i> <?php echo htmlspecialchars(cdg_msg_date($msg_date), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <?php endif; ?>
                 <?php if($msg_from): ?>
-                <span><i class="bi bi-person-circle"></i> <?php echo htmlspecialchars($msg_from); ?></span>
+                <span><i class="bi bi-person-circle"></i> <?php echo htmlspecialchars($msg_from, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <?php endif; ?>
                 <?php if($msg_addresses): ?>
-                <span><i class="bi bi-at"></i> <?php echo htmlspecialchars($msg_addresses); ?></span>
+                <span><i class="bi bi-at"></i> <?php echo htmlspecialchars($msg_addresses, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <?php endif; ?>
             </div>
         </header>

@@ -30,7 +30,7 @@ foreach($replies as $reply):
     if(class_exists('Validation') && method_exists('Validation','isHTML')) {
         if(!Validation::isHTML($message)) $message = nl2br($message);
     } else {
-        $message = nl2br(htmlspecialchars($message));
+        $message = nl2br(htmlspecialchars($message, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
     }
     if(class_exists('Filter') && method_exists('Filter','link_convert')) {
         $message = Filter::link_convert($message, true);
@@ -49,19 +49,19 @@ foreach($replies as $reply):
     $role_label   = $is_admin ? 'Destek Ekibi' : 'Müşteri';
     $role_icon    = $is_admin ? 'shield-check' : 'person-circle';
 ?>
-<div class="cdg-td-msg <?php echo $msg_class; ?><?php echo $is_new ? ' new-reply' : ''; ?>" <?php if($r_id): ?>data-reply-id="<?php echo htmlspecialchars($r_id); ?>"<?php endif; ?>>
+<div class="cdg-td-msg <?php echo $msg_class; ?><?php echo $is_new ? ' new-reply' : ''; ?>" <?php if($r_id): ?>data-reply-id="<?php echo htmlspecialchars($r_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"<?php endif; ?>>
     <div class="cdg-td-msg-head">
         <div class="cdg-td-msg-author">
-            <div class="cdg-td-msg-avatar"><?php echo htmlspecialchars($avatar); ?></div>
+            <div class="cdg-td-msg-avatar"><?php echo htmlspecialchars($avatar, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
             <div class="cdg-td-msg-info">
-                <span class="cdg-td-msg-name"><?php echo htmlspecialchars($r_name); ?></span>
+                <span class="cdg-td-msg-name"><?php echo htmlspecialchars($r_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <span class="cdg-td-msg-role">
                     <i class="bi bi-<?php echo $role_icon; ?>"<?php echo $is_admin ? ' style="color:var(--td-primary);"' : ''; ?>></i>
-                    <?php echo htmlspecialchars($role_label); ?>
+                    <?php echo htmlspecialchars($role_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </span>
             </div>
         </div>
-        <span class="cdg-td-msg-time"><?php echo htmlspecialchars(cdg_atr_date($r_date)); ?></span>
+        <span class="cdg-td-msg-time"><?php echo htmlspecialchars(cdg_atr_date($r_date), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
     </div>
     <div class="cdg-td-msg-body">
         <?php echo $message; ?>
@@ -81,8 +81,8 @@ foreach($replies as $reply):
                     $att_url  = $att['link'] ?? $att['url'] ?? '#';
                     $att_name = $att['file_name'] ?? $att['name'] ?? 'dosya';
                 ?>
-                <a href="<?php echo htmlspecialchars($att_url); ?>" target="_blank" rel="noopener" class="cdg-td-msg-attach">
-                    <i class="bi bi-paperclip"></i> <?php echo htmlspecialchars($att_name); ?>
+                <a href="<?php echo htmlspecialchars($att_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-td-msg-attach">
+                    <i class="bi bi-paperclip"></i> <?php echo htmlspecialchars($att_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </a>
                 <?php endforeach; ?>
             <?php else: ?>

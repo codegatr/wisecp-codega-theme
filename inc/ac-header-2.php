@@ -75,7 +75,7 @@ if(!$user_name) $user_name = 'Musteri';
 ?>
 <div class="cdg-ac-topbar">
     <div>
-        <h1><?php echo isset($page_title) ? $page_title : 'Hos geldiniz, ' . htmlspecialchars($user_name); ?></h1>
+        <h1><?php echo isset($page_title) ? $page_title : 'Hos geldiniz, ' . htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:10px;">
@@ -86,7 +86,7 @@ if(!$user_name) $user_name = 'Musteri';
             <i class="bi bi-plus-lg"></i> Yeni Siparis
         </a>
         <div style="width:38px;height:38px;border-radius:50%;background:var(--cdg-gradient);color:white;display:grid;place-items:center;font-weight:700;font-size:14px;">
-            <?php echo strtoupper(mb_substr($user_name, 0, 1)); ?>
+            <?php echo mb_strtoupper(mb_substr($user_name, 0, 1, 'UTF-8'), 'UTF-8'); ?>
         </div>
     </div>
 </div>

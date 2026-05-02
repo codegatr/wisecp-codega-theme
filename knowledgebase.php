@@ -218,8 +218,8 @@ foreach($kb_categories as $cat) $total_questions += count($cat['questions']);
                     <i class="bi <?php echo $cat['icon']; ?>"></i>
                 </div>
                 <div class="cdg-kb-cat-body">
-                    <h3><?php echo htmlspecialchars($cat['name']); ?></h3>
-                    <p><?php echo htmlspecialchars($cat['desc']); ?></p>
+                    <h3><?php echo htmlspecialchars($cat['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
+                    <p><?php echo htmlspecialchars($cat['desc'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
                     <div class="cdg-kb-cat-count"><?php echo count($cat['questions']); ?> soru</div>
                 </div>
             </a>
@@ -238,15 +238,15 @@ foreach($kb_categories as $cat) $total_questions += count($cat['questions']);
                     <i class="bi <?php echo $cat['icon']; ?>"></i>
                 </div>
                 <div>
-                    <h2><?php echo htmlspecialchars($cat['name']); ?></h2>
-                    <p><?php echo htmlspecialchars($cat['desc']); ?></p>
+                    <h2><?php echo htmlspecialchars($cat['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h2>
+                    <p><?php echo htmlspecialchars($cat['desc'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
                 </div>
             </div>
             <div class="cdg-kb-questions">
                 <?php foreach($cat['questions'] as $i => $q): ?>
-                <details class="cdg-faq-item cdg-kb-faq" data-q="<?php echo htmlspecialchars(strtolower($q['q'])); ?>" data-a="<?php echo htmlspecialchars(strtolower(strip_tags($q['a']))); ?>"<?php if($i===0) echo ' open'; ?>>
+                <details class="cdg-faq-item cdg-kb-faq" data-q="<?php echo htmlspecialchars(mb_strtolower($q['q'], 'UTF-8')); ?>" data-a="<?php echo htmlspecialchars(mb_strtolower(strip_tags($q['a']), 'UTF-8')); ?>"<?php if($i===0) echo ' open'; ?>>
                     <summary>
-                        <span><?php echo htmlspecialchars($q['q']); ?></span>
+                        <span><?php echo htmlspecialchars($q['q'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                         <i class="bi bi-plus-lg"></i>
                     </summary>
                     <div class="cdg-faq-answer"><?php echo $q['a']; /* HTML tags allowed */ ?></div>

@@ -160,7 +160,7 @@ $render_products = function($cat = [], $list = []) use ($currency_symbols) {
         <div class="cdg-price-card<?php echo $popular ? ' cdg-price-card-highlight' : ''; ?>">
             <?php if($popular): ?><div class="cdg-price-ribbon">EN POPÜLER</div><?php endif; ?>
 
-            <h3 class="cdg-price-name"><?php echo htmlspecialchars($product["title"]); ?></h3>
+            <h3 class="cdg-price-name"><?php echo htmlspecialchars($product["title"], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
             <p class="cdg-price-subtitle">Başlangıç fiyatı</p>
 
             <div class="cdg-price-amount">
@@ -168,16 +168,16 @@ $render_products = function($cat = [], $list = []) use ($currency_symbols) {
                     <?php if($amount_symbol): ?><span class="cdg-price-curr"><?php echo $amount_symbol; ?></span><?php endif; ?>
                     <span class="cdg-price-num"><?php echo $product_amount; ?></span>
                 </div>
-                <span class="cdg-price-period">/<?php echo htmlspecialchars($product_period); ?></span>
+                <span class="cdg-price-period">/<?php echo htmlspecialchars($product_period, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             </div>
 
             <?php if(count($prices) > 1): ?>
-            <select class="cdg-price-period-select" data-buy-link="<?php echo htmlspecialchars($product["buy_link"]); ?>" onchange="cdgUpdatePeriod(this)">
+            <select class="cdg-price-period-select" data-buy-link="<?php echo htmlspecialchars($product["buy_link"], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" onchange="cdgUpdatePeriod(this)">
                 <?php foreach($prices as $price_option):
                     $formatted_price = Money::formatter_symbol($price_option["amount"], $price_option["cid"], !$product["override_usrcurrency"]);
                     $formatted_period = View::period($price_option["time"], $price_option["period"]);
                 ?>
-                <option value="<?php echo htmlspecialchars($price_option["id"] ?? ''); ?>" data-price="<?php echo htmlspecialchars($formatted_price); ?>">
+                <option value="<?php echo htmlspecialchars($price_option["id"] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" data-price="<?php echo htmlspecialchars($formatted_price, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                     <?php echo $formatted_period . " — " . $formatted_price; ?>
                 </option>
                 <?php endforeach; ?>
@@ -192,8 +192,8 @@ $render_products = function($cat = [], $list = []) use ($currency_symbols) {
                     <?php foreach($features as $feature => $value): ?>
                     <li><i class="bi bi-check-circle-fill"></i>
                         <?php
-                        if(is_numeric($feature)) echo htmlspecialchars($value);
-                        else echo '<strong>' . htmlspecialchars($feature) . ':</strong> ' . htmlspecialchars($value);
+                        if(is_numeric($feature)) echo htmlspecialchars($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                        else echo '<strong>' . htmlspecialchars($feature, ENT_QUOTES | ENT_HTML5, 'UTF-8') . ':</strong> ' . htmlspecialchars($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                         ?>
                     </li>
                     <?php endforeach; ?>
@@ -206,7 +206,7 @@ $render_products = function($cat = [], $list = []) use ($currency_symbols) {
                     $lines = preg_split('/\r\n|\r|\n/', strip_tags($product["features"]));
                     foreach($lines as $line) {
                         $line = trim($line);
-                        if($line) echo '<li><i class="bi bi-check-circle-fill"></i> ' . htmlspecialchars($line) . '</li>';
+                        if($line) echo '<li><i class="bi bi-check-circle-fill"></i> ' . htmlspecialchars($line, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</li>';
                     }
                     ?>
                 </ul>
@@ -214,7 +214,7 @@ $render_products = function($cat = [], $list = []) use ($currency_symbols) {
                 }
             ?>
 
-            <a href="<?php echo htmlspecialchars($product["buy_link"]); ?>" class="cdg-btn <?php echo $popular ? 'cdg-btn-primary cdg-btn-glow' : 'cdg-btn-outline'; ?> cdg-btn-block cdg-product-buy-btn">
+            <a href="<?php echo htmlspecialchars($product["buy_link"], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-btn <?php echo $popular ? 'cdg-btn-primary cdg-btn-glow' : 'cdg-btn-outline'; ?> cdg-btn-block cdg-product-buy-btn">
                 <i class="bi bi-cart-plus"></i> Hemen Sipariş Et
             </a>
         </div>
@@ -238,14 +238,14 @@ $render_products = function($cat = [], $list = []) use ($currency_symbols) {
             <div class="cdg-eyebrow cdg-eyebrow-glow"><i class="bi bi-hdd-network-fill"></i> Hosting Paketleri</div>
             <h1>
                 <?php if(isset($showCategory['title']) && $showCategory['title']): ?>
-                    <?php echo htmlspecialchars($showCategory['title']); ?>
+                    <?php echo htmlspecialchars($showCategory['title'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 <?php else: ?>
                     NVMe SSD <span class="cdg-text-gradient-light">hosting paketleri</span>
                 <?php endif; ?>
             </h1>
             <p>
                 <?php if(isset($showCategory['sub_title']) && $showCategory['sub_title']): ?>
-                    <?php echo htmlspecialchars(strip_tags($showCategory['sub_title'])); ?>
+                    <?php echo htmlspecialchars(strip_tags($showCategory['sub_title']), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 <?php else: ?>
                     LiteSpeed Enterprise, %99.99 uptime, 7/24 destek. <strong>Tüm paketlerde ücretsiz SSL.</strong>
                 <?php endif; ?>
@@ -276,13 +276,13 @@ $render_products = function($cat = [], $list = []) use ($currency_symbols) {
         <div class="cdg-section-head">
             <h2>
                 <?php if(isset($showCategory['title']) && $showCategory['title']): ?>
-                    <?php echo htmlspecialchars($showCategory['title']); ?>
+                    <?php echo htmlspecialchars($showCategory['title'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 <?php else: ?>
                     Hosting Paketleri
                 <?php endif; ?>
             </h2>
             <?php if(isset($showCategory['sub_title']) && $showCategory['sub_title']): ?>
-            <p><?php echo htmlspecialchars(strip_tags($showCategory['sub_title'])); ?></p>
+            <p><?php echo htmlspecialchars(strip_tags($showCategory['sub_title']), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
             <?php endif; ?>
         </div>
 
@@ -342,15 +342,15 @@ $render_products = function($cat = [], $list = []) use ($currency_symbols) {
                                 $tab_route = $category_products[$cat["id"]] ? $category_tab_route($cat["route"]) : $category_route($cat["route"]);
                             }
                         ?>
-                        <a href="<?php echo htmlspecialchars($tab_route); ?>" class="cdg-pricing-tab<?php echo $is_selected ? ' active' : ''; ?>">
+                        <a href="<?php echo htmlspecialchars($tab_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pricing-tab<?php echo $is_selected ? ' active' : ''; ?>">
                             <?php if(!empty($cat["options"]["icon"])): ?>
-                                <i class="<?php echo htmlspecialchars($cat["options"]["icon"]); ?>"></i>
+                                <i class="<?php echo htmlspecialchars($cat["options"]["icon"], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
                             <?php elseif(!empty($cat["icon"])): ?>
                                 <i class="bi bi-collection" style="color:#1e40af;"></i>
                             <?php else: ?>
                                 <i class="bi bi-folder" style="color:#1e40af;"></i>
                             <?php endif; ?>
-                            <span><?php echo htmlspecialchars($cat["title"]); ?></span>
+                            <span><?php echo htmlspecialchars($cat["title"], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                             <small><?php echo count($category_products[$cat["id"]] ?? []); ?> paket</small>
                         </a>
                         <?php endforeach; ?>
@@ -373,7 +373,7 @@ $render_products = function($cat = [], $list = []) use ($currency_symbols) {
                                     if($sub_list) {
                                         ?>
                                         <div class="cdg-section-head" style="margin-top:48px;">
-                                            <h3 style="font-size:22px;font-weight:800;color:#0f172a;"><?php echo htmlspecialchars($sub_cat["title"]); ?></h3>
+                                            <h3 style="font-size:22px;font-weight:800;color:#0f172a;"><?php echo htmlspecialchars($sub_cat["title"], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
                                         </div>
                                         <?php
                                         $render_products($sub_cat, $sub_list);

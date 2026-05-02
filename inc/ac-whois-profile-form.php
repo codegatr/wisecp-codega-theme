@@ -257,14 +257,14 @@ function cdg_whois_csrf($action) {
 <div class="cdg-wpf">
 <div class="cdg-wpf-wrap">
 
-    <a href="<?php echo htmlspecialchars($back_url); ?>" class="cdg-wpf-back">
+    <a href="<?php echo htmlspecialchars($back_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-wpf-back">
         <i class="bi bi-arrow-left"></i> Profillere Dön
     </a>
 
     <section class="cdg-wpf-hero">
         <div class="cdg-wpf-hero-icon"><i class="bi bi-<?php echo $is_edit ? 'pencil-square' : 'plus-circle'; ?>"></i></div>
         <div>
-            <h1><?php echo htmlspecialchars($page_title); ?></h1>
+            <h1><?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
             <p>Domainlerinizde kullanacağınız iletişim bilgilerini girin.</p>
         </div>
     </section>
@@ -273,9 +273,9 @@ function cdg_whois_csrf($action) {
         <div class="cdg-wpf-card-head">
             <h3><i class="bi bi-person-vcard"></i> WHOIS Bilgileri</h3>
         </div>
-        <form method="post" action="<?php echo htmlspecialchars($controller_url); ?>" id="cdg-wpf-form">
+        <form method="post" action="<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" id="cdg-wpf-form">
             <?php echo cdg_whois_csrf($operation); ?>
-            <input type="hidden" name="operation" value="<?php echo htmlspecialchars($operation); ?>">
+            <input type="hidden" name="operation" value="<?php echo htmlspecialchars($operation, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
             <?php if($is_edit): ?>
             <input type="hidden" name="id" value="<?php echo (int)$profile_id; ?>">
             <?php endif; ?>
@@ -286,7 +286,7 @@ function cdg_whois_csrf($action) {
                 <div class="cdg-wpf-field">
                     <label class="cdg-wpf-label">Profil Adı <span class="req">*</span></label>
                     <input type="text" name="profile_name" class="cdg-wpf-input" required
-                           value="<?php echo htmlspecialchars($profile_name); ?>"
+                           value="<?php echo htmlspecialchars($profile_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
                            placeholder="Örn: Şirket Profili / Kişisel">
                 </div>
 
@@ -298,32 +298,32 @@ function cdg_whois_csrf($action) {
                         <div>
                             <label class="cdg-wpf-label">Ad Soyad <span class="req">*</span></label>
                             <input type="text" name="Name" class="cdg-wpf-input" required
-                                   value="<?php echo htmlspecialchars($information['Name'] ?? ''); ?>">
+                                   value="<?php echo htmlspecialchars($information['Name'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                         </div>
                         <div>
                             <label class="cdg-wpf-label">Firma Adı</label>
                             <input type="text" name="Company" class="cdg-wpf-input"
-                                   value="<?php echo htmlspecialchars($information['Company'] ?? ''); ?>">
+                                   value="<?php echo htmlspecialchars($information['Company'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                         </div>
                     </div>
 
                     <div class="cdg-wpf-field">
                         <label class="cdg-wpf-label">E-Posta <span class="req">*</span></label>
                         <input type="email" name="EMail" class="cdg-wpf-input" required
-                               value="<?php echo htmlspecialchars($information['EMail'] ?? ''); ?>">
+                               value="<?php echo htmlspecialchars($information['EMail'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                     </div>
 
                     <div class="cdg-wpf-row">
                         <div>
                             <label class="cdg-wpf-label">Telefon Ülke Kodu <span class="req">*</span></label>
                             <input type="text" name="PhoneCountryCode" class="cdg-wpf-input" required
-                                   value="<?php echo htmlspecialchars($information['PhoneCountryCode'] ?? '+90'); ?>"
+                                   value="<?php echo htmlspecialchars($information['PhoneCountryCode'] ?? '+90', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
                                    placeholder="+90">
                         </div>
                         <div>
                             <label class="cdg-wpf-label">Telefon <span class="req">*</span></label>
                             <input type="text" name="Phone" class="cdg-wpf-input" required
-                                   value="<?php echo htmlspecialchars($information['Phone'] ?? ''); ?>"
+                                   value="<?php echo htmlspecialchars($information['Phone'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
                                    placeholder="5XX XXX XX XX">
                         </div>
                     </div>
@@ -332,12 +332,12 @@ function cdg_whois_csrf($action) {
                         <div>
                             <label class="cdg-wpf-label">Faks Ülke Kodu</label>
                             <input type="text" name="FaxCountryCode" class="cdg-wpf-input"
-                                   value="<?php echo htmlspecialchars($information['FaxCountryCode'] ?? ''); ?>">
+                                   value="<?php echo htmlspecialchars($information['FaxCountryCode'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                         </div>
                         <div>
                             <label class="cdg-wpf-label">Faks</label>
                             <input type="text" name="Fax" class="cdg-wpf-input"
-                                   value="<?php echo htmlspecialchars($information['Fax'] ?? ''); ?>">
+                                   value="<?php echo htmlspecialchars($information['Fax'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                         </div>
                     </div>
                 </div>
@@ -349,31 +349,31 @@ function cdg_whois_csrf($action) {
                     <div class="cdg-wpf-field">
                         <label class="cdg-wpf-label">Adres <span class="req">*</span></label>
                         <input type="text" name="Address" class="cdg-wpf-input" required
-                               value="<?php echo htmlspecialchars($information['Address'] ?? ''); ?>">
+                               value="<?php echo htmlspecialchars($information['Address'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                     </div>
 
                     <div class="cdg-wpf-row-3">
                         <div>
                             <label class="cdg-wpf-label">Şehir <span class="req">*</span></label>
                             <input type="text" name="City" class="cdg-wpf-input" required
-                                   value="<?php echo htmlspecialchars($information['City'] ?? ''); ?>">
+                                   value="<?php echo htmlspecialchars($information['City'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                         </div>
                         <div>
                             <label class="cdg-wpf-label">İl/Eyalet</label>
                             <input type="text" name="State" class="cdg-wpf-input"
-                                   value="<?php echo htmlspecialchars($information['State'] ?? ''); ?>">
+                                   value="<?php echo htmlspecialchars($information['State'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                         </div>
                         <div>
                             <label class="cdg-wpf-label">Posta Kodu</label>
                             <input type="text" name="ZipCode" class="cdg-wpf-input"
-                                   value="<?php echo htmlspecialchars($information['ZipCode'] ?? ''); ?>">
+                                   value="<?php echo htmlspecialchars($information['ZipCode'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                         </div>
                     </div>
 
                     <div class="cdg-wpf-field">
                         <label class="cdg-wpf-label">Ülke Kodu (2 harf) <span class="req">*</span></label>
                         <input type="text" name="Country" class="cdg-wpf-input" required maxlength="2"
-                               value="<?php echo htmlspecialchars($information['Country'] ?? 'TR'); ?>"
+                               value="<?php echo htmlspecialchars($information['Country'] ?? 'TR', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
                                placeholder="TR" style="text-transform:uppercase;">
                     </div>
                 </div>
@@ -390,11 +390,11 @@ function cdg_whois_csrf($action) {
 
             <div class="cdg-wpf-card-body" style="padding-top:0;">
                 <div class="cdg-wpf-actions">
-                    <a href="<?php echo htmlspecialchars($back_url); ?>" class="cdg-wpf-btn cdg-wpf-btn-cancel">
+                    <a href="<?php echo htmlspecialchars($back_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-wpf-btn cdg-wpf-btn-cancel">
                         <i class="bi bi-x-lg"></i> İptal
                     </a>
                     <button type="submit" class="cdg-wpf-btn cdg-wpf-btn-primary">
-                        <i class="bi bi-save"></i> <?php echo htmlspecialchars($btn_label); ?>
+                        <i class="bi bi-save"></i> <?php echo htmlspecialchars($btn_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </button>
                 </div>
             </div>

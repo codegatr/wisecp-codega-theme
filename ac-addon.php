@@ -67,7 +67,7 @@ $module_content = $module_content ?? '';
 
     <section class="cdg-addon-hero">
         <div class="cdg-addon-hero-icon"><i class="bi bi-star-fill"></i></div>
-        <h1><?php echo htmlspecialchars($header_title); ?></h1>
+        <h1><?php echo htmlspecialchars($header_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
     </section>
 
     <div class="cdg-addon-content">

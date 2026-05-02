@@ -511,17 +511,17 @@ $discounted_total = $inv_subtotal - $total_discount;
 
     <!-- TOP BAR -->
     <div class="cdg-inv-topbar">
-        <a href="<?php echo htmlspecialchars($invoices_url); ?>" class="cdg-inv-back">
+        <a href="<?php echo htmlspecialchars($invoices_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-inv-back">
             <i class="bi bi-arrow-left"></i> Faturalarıma Dön
         </a>
         <div class="cdg-inv-actions">
             <?php if($pdf_link): ?>
-            <a href="<?php echo htmlspecialchars($pdf_link); ?>" target="_blank" rel="noopener" class="cdg-inv-btn cdg-inv-btn-pdf">
+            <a href="<?php echo htmlspecialchars($pdf_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-inv-btn cdg-inv-btn-pdf">
                 <i class="bi bi-file-earmark-pdf"></i> PDF İndir
             </a>
             <?php endif; ?>
             <?php if(!empty($inv_taxed_file)): ?>
-            <a href="<?php echo htmlspecialchars($inv_taxed_file); ?>" target="_blank" rel="noopener" class="cdg-inv-btn cdg-inv-btn-pdf">
+            <a href="<?php echo htmlspecialchars($inv_taxed_file, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-inv-btn cdg-inv-btn-pdf">
                 <i class="bi bi-receipt"></i> e-Fatura
             </a>
             <?php endif; ?>
@@ -532,26 +532,26 @@ $discounted_total = $inv_subtotal - $total_discount;
     <section class="cdg-inv-hero">
         <div>
             <div class="cdg-inv-badge">
-                <i class="bi bi-<?php echo htmlspecialchars($status_meta['icon']); ?>"></i>
-                <?php echo htmlspecialchars($status_meta['lbl']); ?>
+                <i class="bi bi-<?php echo htmlspecialchars($status_meta['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
+                <?php echo htmlspecialchars($status_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
             </div>
             <div class="cdg-inv-hero-num">FATURA</div>
-            <h1>#<?php echo htmlspecialchars($inv_number); ?></h1>
+            <h1>#<?php echo htmlspecialchars($inv_number, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
             <div class="cdg-inv-hero-meta">
                 <?php if($inv_cdate): ?>
-                <span><i class="bi bi-calendar-event"></i> Düzenleme: <?php echo htmlspecialchars(cdg_inv_date($inv_cdate)); ?></span>
+                <span><i class="bi bi-calendar-event"></i> Düzenleme: <?php echo htmlspecialchars(cdg_inv_date($inv_cdate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <?php endif; ?>
                 <?php if($inv_duedate): ?>
-                <span><i class="bi bi-calendar-check"></i> Son Ödeme: <?php echo htmlspecialchars(cdg_inv_date($inv_duedate)); ?></span>
+                <span><i class="bi bi-calendar-check"></i> Son Ödeme: <?php echo htmlspecialchars(cdg_inv_date($inv_duedate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <?php endif; ?>
                 <?php if($inv_status === 'paid' && $inv_datepaid): ?>
-                <span><i class="bi bi-check2-circle"></i> Ödendi: <?php echo htmlspecialchars(cdg_inv_date($inv_datepaid)); ?></span>
+                <span><i class="bi bi-check2-circle"></i> Ödendi: <?php echo htmlspecialchars(cdg_inv_date($inv_datepaid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <?php endif; ?>
             </div>
         </div>
         <div class="cdg-inv-hero-amount">
             <div class="cdg-inv-hero-amount-label">Toplam</div>
-            <div class="cdg-inv-hero-amount-value"><?php echo htmlspecialchars(cdg_inv_money($inv_total)); ?> <?php echo htmlspecialchars($inv_currency); ?></div>
+            <div class="cdg-inv-hero-amount-value"><?php echo htmlspecialchars(cdg_inv_money($inv_total), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
         </div>
     </section>
 
@@ -562,10 +562,10 @@ $discounted_total = $inv_subtotal - $total_discount;
         <div>
             <h4>Bu fatura ödenmiştir</h4>
             <p>
-                Ödeme tarihi: <?php echo htmlspecialchars(cdg_inv_date($inv_datepaid)); ?> · Yöntem: <?php echo htmlspecialchars($inv_pmethod ?: 'Bilinmiyor'); ?>
+                Ödeme tarihi: <?php echo htmlspecialchars(cdg_inv_date($inv_datepaid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> · Yöntem: <?php echo htmlspecialchars($inv_pmethod ?: 'Bilinmiyor', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 <?php if($inv_commission > 0): ?>
-                · Komisyon: <strong><?php echo htmlspecialchars(cdg_inv_money($inv_commission, $inv_currency)); ?></strong>
-                <?php if($inv_commission_rate): ?>(<?php echo htmlspecialchars($inv_commission_rate); ?>%)<?php endif; ?>
+                · Komisyon: <strong><?php echo htmlspecialchars(cdg_inv_money($inv_commission, $inv_currency), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
+                <?php if($inv_commission_rate): ?>(<?php echo htmlspecialchars($inv_commission_rate, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>%)<?php endif; ?>
                 <?php endif; ?>
             </p>
         </div>
@@ -576,9 +576,9 @@ $discounted_total = $inv_subtotal - $total_discount;
         <div>
             <h4>Bu fatura iade edilmiştir</h4>
             <p>
-                İade tarihi: <?php echo htmlspecialchars(cdg_inv_date($inv_refunddate)); ?>
+                İade tarihi: <?php echo htmlspecialchars(cdg_inv_date($inv_refunddate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 <?php if($inv_datepaid && substr($inv_datepaid, 0, 4) !== '1881'): ?>
-                · Önceden ödendi: <?php echo htmlspecialchars(cdg_inv_date($inv_datepaid)); ?>
+                · Önceden ödendi: <?php echo htmlspecialchars(cdg_inv_date($inv_datepaid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 <?php endif; ?>
             </p>
         </div>
@@ -597,29 +597,29 @@ $discounted_total = $inv_subtotal - $total_discount;
                 <ul class="cdg-inv-info">
                     <?php if($u_kind === 'corporate' || $u_kind === 'company'): ?>
                         <?php if($u_company): ?>
-                        <li><span class="cdg-inv-info-label">Firma</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_company); ?></span></li>
+                        <li><span class="cdg-inv-info-label">Firma</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_company, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($u_taxoffice): ?>
-                        <li><span class="cdg-inv-info-label">Vergi Dairesi</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_taxoffice); ?></span></li>
+                        <li><span class="cdg-inv-info-label">Vergi Dairesi</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_taxoffice, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($u_taxnumber): ?>
-                        <li><span class="cdg-inv-info-label">Vergi No</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_taxnumber); ?></span></li>
+                        <li><span class="cdg-inv-info-label">Vergi No</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_taxnumber, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                     <?php endif; ?>
 
                     <?php if($u_name): ?>
-                    <li><span class="cdg-inv-info-label">Ad Soyad</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_name); ?></span></li>
+                    <li><span class="cdg-inv-info-label">Ad Soyad</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                     <?php endif; ?>
 
                     <?php if(($u_kind === 'individual') && $u_identity): ?>
-                    <li><span class="cdg-inv-info-label">TC Kimlik</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_identity); ?></span></li>
+                    <li><span class="cdg-inv-info-label">TC Kimlik</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_identity, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                     <?php endif; ?>
 
                     <?php if($u_email): ?>
-                    <li><span class="cdg-inv-info-label">E-Posta</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_email); ?></span></li>
+                    <li><span class="cdg-inv-info-label">E-Posta</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                     <?php endif; ?>
                     <?php if($u_phone): ?>
-                    <li><span class="cdg-inv-info-label">Telefon</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_phone); ?></span></li>
+                    <li><span class="cdg-inv-info-label">Telefon</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_phone, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                     <?php endif; ?>
                     <?php if($u_address):
                         $addr_parts = [$u_address];
@@ -629,7 +629,7 @@ $discounted_total = $inv_subtotal - $total_discount;
                         if($u_country) $addr_parts[] = $u_country;
                         $full_addr = implode(', ', array_filter($addr_parts));
                     ?>
-                    <li><span class="cdg-inv-info-label">Adres</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($full_addr); ?></span></li>
+                    <li><span class="cdg-inv-info-label">Adres</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($full_addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                     <?php endif; ?>
                 </ul>
             </div>
@@ -642,19 +642,19 @@ $discounted_total = $inv_subtotal - $total_discount;
             </div>
             <div class="cdg-inv-card-body">
                 <ul class="cdg-inv-info">
-                    <li><span class="cdg-inv-info-label">Fatura No</span><span class="cdg-inv-info-value">#<?php echo htmlspecialchars($inv_number); ?></span></li>
-                    <li><span class="cdg-inv-info-label">Durum</span><span class="cdg-inv-info-value"><span class="cdg-inv-badge <?php echo $status_meta['cls']; ?>" style="margin:0;"><?php echo htmlspecialchars($status_meta['lbl']); ?></span></span></li>
+                    <li><span class="cdg-inv-info-label">Fatura No</span><span class="cdg-inv-info-value">#<?php echo htmlspecialchars($inv_number, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
+                    <li><span class="cdg-inv-info-label">Durum</span><span class="cdg-inv-info-value"><span class="cdg-inv-badge <?php echo $status_meta['cls']; ?>" style="margin:0;"><?php echo htmlspecialchars($status_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></span></li>
                     <?php if($inv_cdate): ?>
-                    <li><span class="cdg-inv-info-label">Düzenleme Tarihi</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars(cdg_inv_date($inv_cdate)); ?></span></li>
+                    <li><span class="cdg-inv-info-label">Düzenleme Tarihi</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars(cdg_inv_date($inv_cdate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                     <?php endif; ?>
                     <?php if($inv_duedate): ?>
-                    <li><span class="cdg-inv-info-label">Son Ödeme</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars(cdg_inv_date($inv_duedate)); ?></span></li>
+                    <li><span class="cdg-inv-info-label">Son Ödeme</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars(cdg_inv_date($inv_duedate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                     <?php endif; ?>
                     <?php if($inv_pmethod): ?>
-                    <li><span class="cdg-inv-info-label">Ödeme Yöntemi</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($inv_pmethod); ?></span></li>
+                    <li><span class="cdg-inv-info-label">Ödeme Yöntemi</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($inv_pmethod, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                     <?php endif; ?>
                     <?php if($inv_legal): ?>
-                    <li><span class="cdg-inv-info-label">e-Fatura No</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($inv_legal); ?></span></li>
+                    <li><span class="cdg-inv-info-label">e-Fatura No</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($inv_legal, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                     <?php endif; ?>
                 </ul>
             </div>
@@ -688,12 +688,12 @@ $discounted_total = $inv_subtotal - $total_discount;
                     ?>
                     <tr>
                         <td>
-                            <div class="cdg-inv-item-name"><?php echo htmlspecialchars($iname); ?></div>
+                            <div class="cdg-inv-item-name"><?php echo htmlspecialchars($iname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                             <?php if($idesc): ?>
-                            <div class="cdg-inv-item-desc"><?php echo nl2br(htmlspecialchars($idesc)); ?></div>
+                            <div class="cdg-inv-item-desc"><?php echo nl2br(htmlspecialchars($idesc, ENT_QUOTES | ENT_HTML5, 'UTF-8')); ?></div>
                             <?php endif; ?>
                         </td>
-                        <td><?php echo htmlspecialchars(cdg_inv_money($itotal, $icid)); ?></td>
+                        <td><?php echo htmlspecialchars(cdg_inv_money($itotal, $icid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                     </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -706,10 +706,10 @@ $discounted_total = $inv_subtotal - $total_discount;
                     ?>
                     <tr class="cdg-inv-discount">
                         <td>
-                            <div class="cdg-inv-item-name"><i class="bi bi-tag-fill"></i> <?php echo htmlspecialchars($dname); ?></div>
+                            <div class="cdg-inv-item-name"><i class="bi bi-tag-fill"></i> <?php echo htmlspecialchars($dname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                             <div class="cdg-inv-item-desc">İndirim uygulandı</div>
                         </td>
-                        <td>-<?php echo htmlspecialchars(cdg_inv_money($damount)); ?></td>
+                        <td>-<?php echo htmlspecialchars(cdg_inv_money($damount), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                     </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -720,23 +720,23 @@ $discounted_total = $inv_subtotal - $total_discount;
         <div class="cdg-inv-totals">
             <div class="cdg-inv-total-row">
                 <span>Ara Toplam</span>
-                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_subtotal)); ?> <?php echo htmlspecialchars($inv_currency); ?></strong>
+                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_subtotal), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
             </div>
             <?php if($total_discount > 0): ?>
             <div class="cdg-inv-total-row" style="color:#92400e;">
                 <span>İndirim</span>
-                <strong>-<?php echo htmlspecialchars(cdg_inv_money($total_discount)); ?> <?php echo htmlspecialchars($inv_currency); ?></strong>
+                <strong>-<?php echo htmlspecialchars(cdg_inv_money($total_discount), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
             </div>
             <?php endif; ?>
             <?php if($inv_tax > 0): ?>
             <div class="cdg-inv-total-row">
                 <span>KDV (<?php echo (int)$inv_taxrate; ?>%)</span>
-                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_tax)); ?> <?php echo htmlspecialchars($inv_currency); ?></strong>
+                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_tax), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
             </div>
             <?php endif; ?>
             <div class="cdg-inv-total-row cdg-inv-total-final">
                 <span>GENEL TOPLAM</span>
-                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_total)); ?> <?php echo htmlspecialchars($inv_currency); ?></strong>
+                <strong><?php echo htmlspecialchars(cdg_inv_money($inv_total), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
             </div>
         </div>
     </div>
@@ -816,7 +816,7 @@ $discounted_total = $inv_subtotal - $total_discount;
         <div class="cdg-inv-card-body">
 
             <?php if(!empty($methods)): ?>
-            <form method="post" action="<?php echo htmlspecialchars($form_action); ?>" id="cdg-pay-form">
+            <form method="post" action="<?php echo htmlspecialchars($form_action, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" id="cdg-pay-form">
                 <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('pay-invoice'); ?>
 
                 <div class="cdg-inv-pay-methods">
@@ -825,16 +825,16 @@ $discounted_total = $inv_subtotal - $total_discount;
                         $m_icon = (is_array($m_data) && isset($m_data['icon'])) ? $m_data['icon'] : 'bank2';
                     ?>
                     <label class="cdg-inv-pm <?php echo $first ? 'selected' : ''; ?>">
-                        <input type="radio" name="pmethod" value="<?php echo htmlspecialchars($m_id); ?>" <?php echo $first ? 'checked' : ''; ?>>
-                        <i class="bi bi-<?php echo htmlspecialchars($m_icon); ?>"></i>
-                        <div class="cdg-inv-pm-label"><?php echo htmlspecialchars($m_name); ?></div>
+                        <input type="radio" name="pmethod" value="<?php echo htmlspecialchars($m_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $first ? 'checked' : ''; ?>>
+                        <i class="bi bi-<?php echo htmlspecialchars($m_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
+                        <div class="cdg-inv-pm-label"><?php echo htmlspecialchars($m_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                     </label>
                     <?php $first = false; endforeach; ?>
                 </div>
 
                 <div style="display:flex;justify-content:flex-end;margin-top:20px;">
                     <button type="submit" class="cdg-inv-btn cdg-inv-btn-pay">
-                        <i class="bi bi-shield-lock-fill"></i> Güvenli Öde · <?php echo htmlspecialchars(cdg_inv_money($inv_total)); ?> <?php echo htmlspecialchars($inv_currency); ?>
+                        <i class="bi bi-shield-lock-fill"></i> Güvenli Öde · <?php echo htmlspecialchars(cdg_inv_money($inv_total), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <?php echo htmlspecialchars($inv_currency, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </button>
                 </div>
             </form>

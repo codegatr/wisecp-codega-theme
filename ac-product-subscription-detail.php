@@ -69,7 +69,7 @@ $module_name = $subscription['module'] ?? 'Modül';
         </div>
         <div class="cdg-sub-detail-text">
             <strong>Otomatik Ödeme Aktif</strong>
-            <small>Bu hizmetiniz <strong><?php echo htmlspecialchars($module_name); ?></strong> ile yenileme tarihinde otomatik tahsil edilir.</small>
+            <small>Bu hizmetiniz <strong><?php echo htmlspecialchars($module_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong> ile yenileme tarihinde otomatik tahsil edilir.</small>
         </div>
         <a href="javascript:void(0);" class="cdg-sub-detail-btn" id="cancel_subscription_btn" onclick="cancel_subscription(this);">
             <i class="bi bi-x-circle"></i> Aboneliği İptal Et

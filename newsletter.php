@@ -42,12 +42,12 @@ $nl_message = isset($message) ? $message : '';
             </div>
             <?php endif; ?>
 
-            <form action="<?php echo htmlspecialchars($nl_action); ?>" method="post" id="newsletter_email">
+            <form action="<?php echo htmlspecialchars($nl_action, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" method="post" id="newsletter_email">
                 <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('newsletter'); ?>
 
                 <div class="cdg-form-group">
                     <label class="cdg-form-label">E-posta Adresi</label>
-                    <input type="email" name="email" class="cdg-form-control" placeholder="ornek@email.com" value="<?php echo htmlspecialchars($nl_email); ?>" required>
+                    <input type="email" name="email" class="cdg-form-control" placeholder="ornek@email.com" value="<?php echo htmlspecialchars($nl_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" required>
                 </div>
 
                 <?php if(isset($captcha) && $captcha): ?>
@@ -57,7 +57,7 @@ $nl_message = isset($message) ? $message : '';
                         <?php echo $captcha->getOutput(); ?>
                     </div>
                     <?php if($captcha->input): ?>
-                    <input type="text" name="<?php echo htmlspecialchars($captcha->input_name); ?>" class="cdg-form-control" placeholder="Resimdeki kodu girin" required>
+                    <input type="text" name="<?php echo htmlspecialchars($captcha->input_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-form-control" placeholder="Resimdeki kodu girin" required>
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>

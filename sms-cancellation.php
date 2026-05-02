@@ -47,12 +47,12 @@ $sc_message = isset($message) ? $message : '';
             </div>
             <?php endif; ?>
 
-            <form action="<?php echo htmlspecialchars($sc_action); ?>" method="post">
+            <form action="<?php echo htmlspecialchars($sc_action, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" method="post">
                 <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('sms_cancellation'); ?>
 
                 <div class="cdg-form-group">
                     <label class="cdg-form-label">Telefon Numarasi</label>
-                    <input type="tel" name="phone" class="cdg-form-control" placeholder="05XX XXX XX XX" value="<?php echo htmlspecialchars($sc_phone); ?>" required>
+                    <input type="tel" name="phone" class="cdg-form-control" placeholder="05XX XXX XX XX" value="<?php echo htmlspecialchars($sc_phone, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" required>
                 </div>
 
                 <?php if(isset($captcha) && $captcha): ?>
@@ -62,7 +62,7 @@ $sc_message = isset($message) ? $message : '';
                         <?php echo $captcha->getOutput(); ?>
                     </div>
                     <?php if($captcha->input): ?>
-                    <input type="text" name="<?php echo htmlspecialchars($captcha->input_name); ?>" class="cdg-form-control" placeholder="Resimdeki kodu girin" required>
+                    <input type="text" name="<?php echo htmlspecialchars($captcha->input_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-form-control" placeholder="Resimdeki kodu girin" required>
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>

@@ -297,7 +297,7 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
                         <?php if(empty($active_origins)): ?>
                         <option value="">Aktif gönderici adınız yok</option>
                         <?php else: foreach($active_origins as $o): ?>
-                        <option value="<?php echo (int)($o['id'] ?? 0); ?>"><?php echo htmlspecialchars($o['name'] ?? ''); ?></option>
+                        <option value="<?php echo (int)($o['id'] ?? 0); ?>"><?php echo htmlspecialchars($o['name'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                         <?php endforeach; endif; ?>
                     </select>
                 </div>
@@ -321,7 +321,7 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
                     ?>
                     <label class="cdg-sms-checkbox-item">
                         <input type="checkbox" class="cdg-sms-group-cb" value="<?php echo $g_id; ?>" data-count="<?php echo $g_count; ?>">
-                        <span><?php echo htmlspecialchars($g_name); ?> (<?php echo $g_count; ?>)</span>
+                        <span><?php echo htmlspecialchars($g_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> (<?php echo $g_count; ?>)</span>
                     </label>
                     <?php endforeach; ?>
                 </div>
@@ -338,7 +338,7 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
 
             <div class="cdg-sms-field">
                 <label class="cdg-sms-label">Mesaj Metni</label>
-                <textarea id="cdg-sms-message" class="cdg-sms-textarea" rows="5" placeholder="Mesaj içeriği..." onkeyup="cdgSmsCount()"><?php echo htmlspecialchars($cancel_link_text); ?></textarea>
+                <textarea id="cdg-sms-message" class="cdg-sms-textarea" rows="5" placeholder="Mesaj içeriği..." onkeyup="cdgSmsCount()"><?php echo htmlspecialchars($cancel_link_text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></textarea>
             </div>
 
             <?php if(!empty($dimensions)): ?>
@@ -416,9 +416,9 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
                     $st_color = ['active' => '#10b981', 'pending' => '#f59e0b', 'rejected' => '#ef4444'][$st] ?? '#64748b';
                 ?>
                 <tr id="cdg-sms-origin-row-<?php echo $o_id; ?>">
-                    <td><strong><?php echo htmlspecialchars($o['name'] ?? ''); ?></strong></td>
+                    <td><strong><?php echo htmlspecialchars($o['name'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong></td>
                     <td><span style="font-size:11px;font-weight:700;color:<?php echo $st_color; ?>;"><?php echo $st_label; ?></span></td>
-                    <td style="font-size:11px;color:#64748b;"><?php echo htmlspecialchars($o['cdate'] ?? ''); ?></td>
+                    <td style="font-size:11px;color:#64748b;"><?php echo htmlspecialchars($o['cdate'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                     <td>
                         <button type="button" class="cdg-sms-group-action danger" onclick="cdgSmsDeleteOrigin(<?php echo $o_id; ?>)" title="Sil">
                             <i class="bi bi-trash"></i>
@@ -455,7 +455,7 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
                 ?>
                 <div class="cdg-sms-group-item" id="cdg-sms-group-<?php echo $g_id; ?>" data-numbers="<?php echo htmlspecialchars(implode("\n", $g_numbers), ENT_QUOTES); ?>">
                     <div>
-                        <div class="cdg-sms-group-name"><?php echo htmlspecialchars($g_name); ?></div>
+                        <div class="cdg-sms-group-name"><?php echo htmlspecialchars($g_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         <div class="cdg-sms-group-count"><?php echo count($g_numbers); ?> numara</div>
                     </div>
                     <div class="cdg-sms-group-actions">
@@ -515,7 +515,7 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
                     } elseif(!empty($black_list)) {
                         $bl_text = is_array($black_list) ? implode("\n", $black_list) : $black_list;
                     }
-                    echo htmlspecialchars($bl_text);
+                    echo htmlspecialchars($bl_text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                 ?></textarea>
             </div>
             <button type="button" class="cdg-sms-btn cdg-sms-btn-danger" onclick="cdgSmsUpdateBlackList(this)">
@@ -551,8 +551,8 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
                     }
                 ?>
                 <tr>
-                    <td style="font-size:11px;color:#64748b;"><?php echo htmlspecialchars($r_date); ?></td>
-                    <td><?php echo htmlspecialchars(mb_strimwidth(strip_tags($r_msg), 0, 60, '...')); ?></td>
+                    <td style="font-size:11px;color:#64748b;"><?php echo htmlspecialchars($r_date, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars(mb_strimwidth(strip_tags($r_msg), 0, 60, '...'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                     <td><strong><?php echo (int)$r_count; ?></strong></td>
                     <td><strong><?php echo (int)$r_credit; ?></strong> SMS</td>
                     <td>
@@ -620,8 +620,8 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
                     }
                 ?>
                 <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:18px;text-align:center;transition:all 0.2s;cursor:pointer;" onclick="cdgSmsBuyCredit(<?php echo $i_id; ?>)" onmouseenter="this.style.borderColor='#06b6d4';this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(6,182,212,0.15)';" onmouseleave="this.style.borderColor='#e2e8f0';this.style.transform='';this.style.boxShadow='';">
-                    <div style="font-size:13px;font-weight:700;color:#475569;margin-bottom:6px;"><?php echo htmlspecialchars($i_title); ?></div>
-                    <div style="font-size:24px;font-weight:800;color:#06b6d4;margin-bottom:10px;"><?php echo htmlspecialchars($price_str); ?></div>
+                    <div style="font-size:13px;font-weight:700;color:#475569;margin-bottom:6px;"><?php echo htmlspecialchars($i_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                    <div style="font-size:24px;font-weight:800;color:#06b6d4;margin-bottom:10px;"><?php echo htmlspecialchars($price_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                     <button type="button" class="cdg-sms-btn cdg-sms-btn-primary" style="width:100%;justify-content:center;">
                         <i class="bi bi-cart-plus"></i> Satın Al
                     </button>

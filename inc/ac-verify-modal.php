@@ -34,7 +34,7 @@ if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) {
             </p>
 
             <form id="cdg-vrf-form" onsubmit="return false;">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" id="cdg-vrf-csrf">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" id="cdg-vrf-csrf">
                 <input type="hidden" name="operation" value="verifyEmail" id="cdg-vrf-operation">
                 <input type="hidden" name="send" value="0" id="cdg-vrf-send">
 

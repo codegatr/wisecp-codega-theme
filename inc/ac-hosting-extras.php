@@ -137,10 +137,10 @@ if(!$can_change_pw && !$has_buttons && !$can_manage_email) return; // Hiçbir ö
     <div class="cdg-host-card">
         <div class="cdg-host-card-head">
             <div class="icon"><i class="bi bi-box-arrow-in-right"></i></div>
-            <h3><?php echo htmlspecialchars($panel_name); ?> Erişim</h3>
+            <h3><?php echo htmlspecialchars($panel_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> Erişim</h3>
         </div>
         <?php if($panel_logo): ?>
-        <img src="<?php echo htmlspecialchars($panel_logo); ?>" alt="<?php echo htmlspecialchars($panel_name); ?>" class="cdg-host-panel-logo">
+        <img src="<?php echo htmlspecialchars($panel_logo, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($panel_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-host-panel-logo">
         <?php endif; ?>
         <p style="font-size:13px;color:#64748b;margin:0 0 14px;">
             Kontrol panelinize tek tıkla, şifre girmeden giriş yapabilirsiniz.
@@ -151,8 +151,8 @@ if(!$can_change_pw && !$has_buttons && !$can_manage_email) return; // Hiçbir ö
                 $name = $b_value['name'] ?? $b_type;
                 $icon = ($b_type === 'cpanel') ? 'bi-server' : (($b_type === 'webmail') ? 'bi-envelope' : 'bi-box-arrow-up-right');
             ?>
-            <a target="_blank" rel="noopener" href="<?php echo htmlspecialchars($url); ?>" class="cdg-host-btn">
-                <i class="bi <?php echo $icon; ?>"></i> <?php echo htmlspecialchars($name); ?>
+            <a target="_blank" rel="noopener" href="<?php echo htmlspecialchars($url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-host-btn">
+                <i class="bi <?php echo $icon; ?>"></i> <?php echo htmlspecialchars($name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
             </a>
             <?php endforeach; ?>
         </div>
@@ -164,7 +164,7 @@ if(!$can_change_pw && !$has_buttons && !$can_manage_email) return; // Hiçbir ö
     <div class="cdg-host-card">
         <div class="cdg-host-card-head">
             <div class="icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);"><i class="bi bi-key-fill"></i></div>
-            <h3><?php echo htmlspecialchars($panel_name); ?> Şifre Değiştir</h3>
+            <h3><?php echo htmlspecialchars($panel_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> Şifre Değiştir</h3>
         </div>
         <p style="font-size:13px;color:#64748b;margin:0 0 14px;">
             Yeni şifrenizi belirleyin. Güçlü şifre en az 10 karakter, harf, sayı ve özel karakter içermelidir.

@@ -283,7 +283,7 @@ $ttl_options = [
                         <select id="DnsRecord_ttl" class="cdg-dm-select">
                             <option value="">Auto</option>
                             <?php foreach($ttl_options as $sec => $label): ?>
-                            <option value="<?php echo $sec; ?>"><?php echo htmlspecialchars($label); ?></option>
+                            <option value="<?php echo $sec; ?>"><?php echo htmlspecialchars($label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

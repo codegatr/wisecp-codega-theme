@@ -96,7 +96,7 @@ if(class_exists('User') && isset(User::$init->info)) {
         $user_balance = number_format((float)$bal_amount, 2, ',', '.') . ' ₺';
     }
 
-    $user_initial = strtoupper(mb_substr($full, 0, 1, 'UTF-8'));
+    $user_initial = mb_strtoupper(mb_substr($full, 0, 1, 'UTF-8'), 'UTF-8');
 }
 
 // === İstatistikler (WiseCP runtime'dan al, yoksa say) ===
@@ -513,20 +513,20 @@ $contact_url  = cdg_link('contact');
     <!-- HERO -->
     <section class="cdg-d-hero">
         <div class="cdg-d-hero-row">
-            <div class="cdg-d-avatar"><?php echo htmlspecialchars($user_initial); ?></div>
+            <div class="cdg-d-avatar"><?php echo htmlspecialchars($user_initial, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
             <div class="cdg-d-greet">
                 <span class="cdg-d-greet-eyebrow">
                     <span class="dot"></span>
                     <span><?php echo $count_active_products > 0 ? 'Aktif Üye' : 'Hoş Geldiniz'; ?></span>
                 </span>
-                <h1><?php echo $greeting; ?>, <?php echo htmlspecialchars($user_name); ?>!</h1>
+                <h1><?php echo $greeting; ?>, <?php echo htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>!</h1>
                 <p>Hizmetlerinizi ve faturalarınızı tek panelden yönetin.</p>
             </div>
             <div class="cdg-d-hero-actions">
-                <a href="<?php echo htmlspecialchars($shop_url); ?>" class="cdg-d-btn cdg-d-btn-gold">
+                <a href="<?php echo htmlspecialchars($shop_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-btn cdg-d-btn-gold">
                     <i class="bi bi-bag-plus-fill"></i> Yeni Hizmet Al
                 </a>
-                <a href="<?php echo htmlspecialchars($tickets_url); ?>" class="cdg-d-btn cdg-d-btn-ghost">
+                <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-btn cdg-d-btn-ghost">
                     <i class="bi bi-headset"></i> Destek Al
                 </a>
             </div>
@@ -542,7 +542,7 @@ $contact_url  = cdg_link('contact');
             <div class="cdg-d-stat-body">
                 <div class="cdg-d-stat-label">Aktif Hizmet</div>
                 <div class="cdg-d-stat-value"><?php echo (int)$count_active_products; ?></div>
-                <a href="<?php echo htmlspecialchars($products_url); ?>" class="cdg-d-stat-link">Tümünü Gör →</a>
+                <a href="<?php echo htmlspecialchars($products_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-stat-link">Tümünü Gör →</a>
             </div>
         </div>
 
@@ -553,7 +553,7 @@ $contact_url  = cdg_link('contact');
             <div class="cdg-d-stat-body">
                 <div class="cdg-d-stat-label">Bekleyen Fatura</div>
                 <div class="cdg-d-stat-value"><?php echo (int)$count_unpaid_invoices; ?></div>
-                <a href="<?php echo htmlspecialchars($invoices_url); ?>" class="cdg-d-stat-link">Faturalarım →</a>
+                <a href="<?php echo htmlspecialchars($invoices_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-stat-link">Faturalarım →</a>
             </div>
         </div>
 
@@ -564,7 +564,7 @@ $contact_url  = cdg_link('contact');
             <div class="cdg-d-stat-body">
                 <div class="cdg-d-stat-label">Açık Talep</div>
                 <div class="cdg-d-stat-value"><?php echo (int)$count_open_tickets; ?></div>
-                <a href="<?php echo htmlspecialchars($tickets_url); ?>" class="cdg-d-stat-link">Destek Talepleri →</a>
+                <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-stat-link">Destek Talepleri →</a>
             </div>
         </div>
 
@@ -574,35 +574,35 @@ $contact_url  = cdg_link('contact');
             </div>
             <div class="cdg-d-stat-body">
                 <div class="cdg-d-stat-label">Bakiyem</div>
-                <div class="cdg-d-stat-value" style="font-size:20px;"><?php echo htmlspecialchars($user_balance); ?></div>
-                <a href="<?php echo htmlspecialchars($balance_url); ?>" class="cdg-d-stat-link">Yükleme Yap →</a>
+                <div class="cdg-d-stat-value" style="font-size:20px;"><?php echo htmlspecialchars($user_balance, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                <a href="<?php echo htmlspecialchars($balance_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-stat-link">Yükleme Yap →</a>
             </div>
         </div>
     </section>
 
     <!-- QUICK ACTIONS -->
     <section class="cdg-d-quick">
-        <a href="<?php echo htmlspecialchars($products_url); ?>" class="cdg-d-quick-item">
+        <a href="<?php echo htmlspecialchars($products_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
             <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#10b981,#34d399);"><i class="bi bi-hdd-stack"></i></div>
             <span class="cdg-d-quick-label">Hizmetlerim</span>
         </a>
-        <a href="<?php echo htmlspecialchars($domains_url); ?>" class="cdg-d-quick-item">
+        <a href="<?php echo htmlspecialchars($domains_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
             <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#1e40af,#3b82f6);"><i class="bi bi-globe2"></i></div>
             <span class="cdg-d-quick-label">Domainlerim</span>
         </a>
-        <a href="<?php echo htmlspecialchars($invoices_url); ?>" class="cdg-d-quick-item">
+        <a href="<?php echo htmlspecialchars($invoices_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
             <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);"><i class="bi bi-receipt-cutoff"></i></div>
             <span class="cdg-d-quick-label">Faturalar</span>
         </a>
-        <a href="<?php echo htmlspecialchars($tickets_url); ?>" class="cdg-d-quick-item">
+        <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
             <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);"><i class="bi bi-chat-dots"></i></div>
             <span class="cdg-d-quick-label">Destek</span>
         </a>
-        <a href="<?php echo htmlspecialchars($balance_url); ?>" class="cdg-d-quick-item">
+        <a href="<?php echo htmlspecialchars($balance_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
             <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#06b6d4,#22d3ee);"><i class="bi bi-wallet"></i></div>
             <span class="cdg-d-quick-label">Bakiye</span>
         </a>
-        <a href="<?php echo htmlspecialchars($shop_url); ?>" class="cdg-d-quick-item">
+        <a href="<?php echo htmlspecialchars($shop_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
             <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#ef4444,#f87171);"><i class="bi bi-bag-plus"></i></div>
             <span class="cdg-d-quick-label">Yeni Sipariş</span>
         </a>
@@ -615,7 +615,7 @@ $contact_url  = cdg_link('contact');
         <div class="cdg-d-card">
             <div class="cdg-d-card-head">
                 <h3 class="cdg-d-card-title"><i class="bi bi-hdd-network-fill"></i> Aktif Hizmetlerim</h3>
-                <a href="<?php echo htmlspecialchars($products_url); ?>" class="cdg-d-card-link">Tümünü Gör →</a>
+                <a href="<?php echo htmlspecialchars($products_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-card-link">Tümünü Gör →</a>
             </div>
             <div class="cdg-d-card-body">
                 <?php
@@ -650,12 +650,12 @@ $contact_url  = cdg_link('contact');
                     ?>
                     <li>
                         <div>
-                            <a href="<?php echo htmlspecialchars($detail_link); ?>" class="cdg-d-list-name"><?php echo htmlspecialchars($order_name); ?></a>
+                            <a href="<?php echo htmlspecialchars($detail_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-list-name"><?php echo htmlspecialchars($order_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
                             <?php if(!empty($order['duedate'])): ?>
-                            <div class="cdg-d-list-meta">Bitiş: <?php echo htmlspecialchars($order['duedate']); ?></div>
+                            <div class="cdg-d-list-meta">Bitiş: <?php echo htmlspecialchars($order['duedate'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                             <?php endif; ?>
                         </div>
-                        <span class="cdg-d-badge <?php echo $badge_class; ?>"><?php echo htmlspecialchars($status_text); ?></span>
+                        <span class="cdg-d-badge <?php echo $badge_class; ?>"><?php echo htmlspecialchars($status_text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </li>
                     <?php endforeach; ?>
                 </ul>
@@ -663,7 +663,7 @@ $contact_url  = cdg_link('contact');
                 <div class="cdg-d-empty">
                     <i class="bi bi-inbox"></i>
                     <p>Henüz aktif hizmetiniz yok.</p>
-                    <a href="<?php echo htmlspecialchars($shop_url); ?>" class="cdg-d-btn cdg-d-btn-gold" style="margin-top:14px;color:#1e3a8a;">
+                    <a href="<?php echo htmlspecialchars($shop_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-btn cdg-d-btn-gold" style="margin-top:14px;color:#1e3a8a;">
                         <i class="bi bi-bag-plus"></i> İlk Hizmetinizi Alın
                     </a>
                 </div>
@@ -675,7 +675,7 @@ $contact_url  = cdg_link('contact');
         <div class="cdg-d-card">
             <div class="cdg-d-card-head">
                 <h3 class="cdg-d-card-title"><i class="bi bi-chat-dots-fill"></i> Son Talepler</h3>
-                <a href="<?php echo htmlspecialchars($tickets_url); ?>" class="cdg-d-card-link">Tümü →</a>
+                <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-card-link">Tümü →</a>
             </div>
             <div class="cdg-d-card-body">
                 <?php
@@ -700,9 +700,9 @@ $contact_url  = cdg_link('contact');
                     ?>
                     <li>
                         <div>
-                            <a href="<?php echo htmlspecialchars($tdetail); ?>" class="cdg-d-list-name"><?php echo htmlspecialchars($ticket_subject); ?></a>
+                            <a href="<?php echo htmlspecialchars($tdetail, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-list-name"><?php echo htmlspecialchars($ticket_subject, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
                         </div>
-                        <span class="cdg-d-badge <?php echo $tbadge; ?>"><?php echo htmlspecialchars($tstatus_text); ?></span>
+                        <span class="cdg-d-badge <?php echo $tbadge; ?>"><?php echo htmlspecialchars($tstatus_text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </li>
                     <?php endforeach; ?>
                 </ul>
@@ -734,8 +734,8 @@ $contact_url  = cdg_link('contact');
                 ?>
                 <li>
                     <div>
-                        <a href="<?php echo htmlspecialchars($n_link); ?>" class="cdg-d-list-name"><?php echo htmlspecialchars($n_title); ?></a>
-                        <?php if($n_date): ?><div class="cdg-d-list-meta"><?php echo htmlspecialchars($n_date); ?></div><?php endif; ?>
+                        <a href="<?php echo htmlspecialchars($n_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-list-name"><?php echo htmlspecialchars($n_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
+                        <?php if($n_date): ?><div class="cdg-d-list-meta"><?php echo htmlspecialchars($n_date, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div><?php endif; ?>
                     </div>
                 </li>
                 <?php endforeach; ?>

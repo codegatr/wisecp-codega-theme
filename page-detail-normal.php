@@ -14,11 +14,11 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
 
 <section class="cdg-page-head">
     <div class="cdg-container">
-        <h1><?php echo htmlspecialchars($page_title); ?></h1>
+        <h1><?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
         <div class="breadcrumb">
             <a href="<?php echo defined('APP_URI') ? APP_URI . '/' : '/'; ?>">Anasayfa</a>
             <span class="sep">/</span>
-            <span><?php echo htmlspecialchars($page_title); ?></span>
+            <span><?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
         </div>
     </div>
 </section>
@@ -53,9 +53,9 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
                             if(!$s_title) continue;
                         ?>
                         <li>
-                            <a href="<?php echo htmlspecialchars($s_link); ?>" style="display:flex;gap:8px;padding:8px 12px;text-decoration:none;color:#334155;font-size:13px;border-radius:6px;transition:background 0.15s;" onmouseover="this.style.background='#f8fafc';this.style.color='#1e40af';" onmouseout="this.style.background='';this.style.color='#334155';">
+                            <a href="<?php echo htmlspecialchars($s_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:flex;gap:8px;padding:8px 12px;text-decoration:none;color:#334155;font-size:13px;border-radius:6px;transition:background 0.15s;" onmouseover="this.style.background='#f8fafc';this.style.color='#1e40af';" onmouseout="this.style.background='';this.style.color='#334155';">
                                 <i class="bi bi-arrow-right-short" style="color:#1e40af;flex-shrink:0;font-size:16px;"></i>
-                                <span><?php echo htmlspecialchars($s_title); ?></span>
+                                <span><?php echo htmlspecialchars($s_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                             </a>
                         </li>
                         <?php endforeach; ?>

@@ -145,7 +145,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                 <div class="cdg-domain-search-input<?php echo (isset($captcha) && $captcha) ? ' cdg-domain-search-with-captcha' : ''; ?>">
                     <div class="cdg-domain-search-input-main">
                         <i class="bi bi-search"></i>
-                        <input type="text" id="domainInput" value="<?php echo isset($_GET['domain']) ? htmlspecialchars(trim($_GET['domain'])) : ''; ?>" placeholder="alanadi.com" autocomplete="off" required onkeydown="if(event.keyCode==13){event.preventDefault();submitnow(document.getElementById('submitnow'));}">
+                        <input type="text" id="domainInput" value="<?php echo isset($_GET['domain']) ? htmlspecialchars(trim($_GET['domain']), ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; ?>" placeholder="alanadi.com" autocomplete="off" required onkeydown="if(event.keyCode==13){event.preventDefault();submitnow(document.getElementById('submitnow'));}">
                     </div>
                     <?php if(isset($captcha) && $captcha): ?>
                     <div class="cdg-domain-search-captcha">
@@ -187,7 +187,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                         $price_amount = Money::formatter_symbol($tld['reg_price']['amount'], $tld['reg_price']['cid'], !$override_usrcurrency);
                     }
                 ?>
-                <span class="cdg-domain-chip">.<?php echo htmlspecialchars($tld['name']); ?> <strong><?php echo $price_amount; ?></strong></span>
+                <span class="cdg-domain-chip">.<?php echo htmlspecialchars($tld['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <strong><?php echo $price_amount; ?></strong></span>
                 <?php endforeach; ?>
             </div>
             <?php endif; ?>
@@ -256,7 +256,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
             ?>
             <div class="cdg-tld-card-pro<?php echo $is_promo ? ' promo' : ''; ?>">
                 <?php if($is_promo): ?><div class="cdg-tld-promo-badge"><i class="bi bi-tag-fill"></i> Kampanya</div><?php endif; ?>
-                <div class="cdg-tld-card-ext">.<?php echo htmlspecialchars($tld['name']); ?></div>
+                <div class="cdg-tld-card-ext">.<?php echo htmlspecialchars($tld['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                 <?php if(!empty($tld['paperwork'])): ?>
                 <div class="cdg-tld-paperwork" title="Bu uzantı için belge gereklidir">
                     <i class="bi bi-file-earmark-text"></i> Belge gerekli
@@ -336,7 +336,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                         ?>
                         <tr<?php echo $is_promo ? ' style="background:#fef9c3;"' : ''; ?>>
                             <td>
-                                <strong style="color:<?php echo $is_promo ? '#10b981' : '#1e40af'; ?>;font-size:15px;">.<?php echo htmlspecialchars($row['name']); ?></strong>
+                                <strong style="color:<?php echo $is_promo ? '#10b981' : '#1e40af'; ?>;font-size:15px;">.<?php echo htmlspecialchars($row['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
                                 <?php if(!empty($row['paperwork'])): ?>
                                 <i class="bi bi-file-earmark-text" style="color:#94a3b8;margin-left:6px;font-size:12px;" title="Belge gerekli"></i>
                                 <?php endif; ?>
@@ -355,7 +355,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                             <td><?php echo $ren; ?></td>
                             <td><?php echo $tra; ?></td>
                             <td>
-                                <button type="button" onclick="document.getElementById('domainInput').value='alanadi.<?php echo htmlspecialchars($row['name']); ?>';document.getElementById('domainInput').focus();window.scrollTo({top:0,behavior:'smooth'});" class="cdg-btn cdg-btn-outline cdg-btn-sm">
+                                <button type="button" onclick="document.getElementById('domainInput').value='alanadi.<?php echo htmlspecialchars($row['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';document.getElementById('domainInput').focus();window.scrollTo({top:0,behavior:'smooth'});" class="cdg-btn cdg-btn-outline cdg-btn-sm">
                                     <i class="bi bi-search"></i> Sorgula
                                 </button>
                             </td>
@@ -398,8 +398,8 @@ situations['available'] = '<?php echo function_exists("__") ? __("website/domain
 situations['unavailable'] = '<?php echo function_exists("__") ? __("website/domain/situations-unavailable") : "Alındı"; ?>';
 
 var contact_button = '<a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">İletişim</a>';
-var epp_code_support = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($epp_code_support) : json_encode($epp_code_support); ?>;
-var tlds = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($tlds) : json_encode($tlds); ?>;
+var epp_code_support = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($epp_code_support) : json_encode($epp_code_support, JSON_UNESCAPED_UNICODE); ?>;
+var tlds = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($tlds) : json_encode($tlds, JSON_UNESCAPED_UNICODE); ?>;
 var disabled_style = "background:none; color:#333; cursor:no-drop; opacity:0.3;";
 
 // Transfer toggle + URL ?domain= auto-submit

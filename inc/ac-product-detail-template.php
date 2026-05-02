@@ -445,34 +445,34 @@ foreach($options as $opt_k => $opt_v) {
 <div class="cdg-pd2">
 <div class="cdg-pd2-wrap">
 
-    <a href="<?php echo htmlspecialchars($back_url); ?>" class="cdg-pd2-back">
+    <a href="<?php echo htmlspecialchars($back_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd2-back">
         <i class="bi bi-arrow-left"></i> Listeye Dön
     </a>
 
     <section class="cdg-pd2-hero">
         <div class="cdg-pd2-hero-row">
-            <div class="cdg-pd2-hero-icon"><i class="bi bi-<?php echo htmlspecialchars($cdg_pd_icon); ?>"></i></div>
+            <div class="cdg-pd2-hero-icon"><i class="bi bi-<?php echo htmlspecialchars($cdg_pd_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i></div>
             <div class="cdg-pd2-hero-text">
-                <div class="cdg-pd2-hero-eyebrow"><?php echo htmlspecialchars(strtoupper($cdg_pd_title)); ?></div>
-                <h1><?php echo htmlspecialchars($d_name); ?></h1>
+                <div class="cdg-pd2-hero-eyebrow"><?php echo htmlspecialchars(mb_strtoupper($cdg_pd_title, 'UTF-8')); ?></div>
+                <h1><?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
                 <div class="cdg-pd2-hero-meta">
                     <?php if($d_domain): ?>
-                    <span><i class="bi bi-globe"></i> <?php echo htmlspecialchars($d_domain); ?></span>
+                    <span><i class="bi bi-globe"></i> <?php echo htmlspecialchars($d_domain, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                     <?php if($d_hostname && $d_hostname !== $d_domain): ?>
-                    <span><i class="bi bi-server"></i> <?php echo htmlspecialchars($d_hostname); ?></span>
+                    <span><i class="bi bi-server"></i> <?php echo htmlspecialchars($d_hostname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                     <?php if($d_ip): ?>
-                    <span><i class="bi bi-hdd-network"></i> <?php echo htmlspecialchars($d_ip); ?></span>
+                    <span><i class="bi bi-hdd-network"></i> <?php echo htmlspecialchars($d_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                     <?php if($d_duedate): ?>
-                    <span><i class="bi bi-calendar-check"></i> Bitiş: <?php echo htmlspecialchars(cdg_pd_date($d_duedate)); ?></span>
+                    <span><i class="bi bi-calendar-check"></i> Bitiş: <?php echo htmlspecialchars(cdg_pd_date($d_duedate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="cdg-pd2-hero-status">
-                <i class="bi bi-<?php echo htmlspecialchars($st_meta['icon']); ?>"></i>
-                <?php echo htmlspecialchars($st_meta['lbl']); ?>
+                <i class="bi bi-<?php echo htmlspecialchars($st_meta['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
+                <?php echo htmlspecialchars($st_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
             </div>
         </div>
     </section>
@@ -502,19 +502,19 @@ foreach($options as $opt_k => $opt_v) {
                 </div>
                 <div class="cdg-pd2-card-body">
                     <ul class="cdg-pd2-info">
-                        <li><span class="cdg-pd2-info-label">Paket</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_name); ?></span></li>
-                        <li><span class="cdg-pd2-info-label">Durum</span><span class="cdg-pd2-info-value"><span class="cdg-pd2-badge <?php echo $st_meta['cls']; ?>"><?php echo htmlspecialchars($st_meta['lbl']); ?></span></span></li>
+                        <li><span class="cdg-pd2-info-label">Paket</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
+                        <li><span class="cdg-pd2-info-label">Durum</span><span class="cdg-pd2-info-value"><span class="cdg-pd2-badge <?php echo $st_meta['cls']; ?>"><?php echo htmlspecialchars($st_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></span></li>
                         <?php if($d_cdate): ?>
-                        <li><span class="cdg-pd2-info-label">Sipariş Tarihi</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_date($d_cdate)); ?></span></li>
+                        <li><span class="cdg-pd2-info-label">Sipariş Tarihi</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_date($d_cdate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($d_duedate): ?>
-                        <li><span class="cdg-pd2-info-label">Bitiş Tarihi</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_date($d_duedate)); ?></span></li>
+                        <li><span class="cdg-pd2-info-label">Bitiş Tarihi</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_date($d_duedate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($d_period && $d_ptime): ?>
-                        <li><span class="cdg-pd2-info-label">Periyot</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_period . ' ' . $d_ptime); ?></span></li>
+                        <li><span class="cdg-pd2-info-label">Periyot</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_period . ' ' . $d_ptime, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($d_amount): ?>
-                        <li><span class="cdg-pd2-info-label">Ücret</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_money($d_amount, $d_amount_cid)); ?></span></li>
+                        <li><span class="cdg-pd2-info-label">Ücret</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_money($d_amount, $d_amount_cid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                     </ul>
                 </div>
@@ -527,26 +527,26 @@ foreach($options as $opt_k => $opt_v) {
                 <div class="cdg-pd2-card-body">
                     <ul class="cdg-pd2-info">
                         <?php if($d_domain): ?>
-                        <li><span class="cdg-pd2-info-label">Domain</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_domain); ?></span></li>
+                        <li><span class="cdg-pd2-info-label">Domain</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_domain, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($d_hostname && $d_hostname !== $d_domain): ?>
-                        <li><span class="cdg-pd2-info-label">Hostname</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_hostname); ?></span></li>
+                        <li><span class="cdg-pd2-info-label">Hostname</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_hostname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($d_ip): ?>
-                        <li><span class="cdg-pd2-info-label">IP Adresi</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_ip); ?></span></li>
+                        <li><span class="cdg-pd2-info-label">IP Adresi</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($d_username): ?>
-                        <li><span class="cdg-pd2-info-label">Kullanıcı Adı</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_username); ?></span></li>
+                        <li><span class="cdg-pd2-info-label">Kullanıcı Adı</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_username, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php foreach($extra_options as $k => $v): ?>
-                        <li><span class="cdg-pd2-info-label"><?php echo htmlspecialchars(ucfirst(str_replace('_',' ',$k))); ?></span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($v); ?></span></li>
+                        <li><span class="cdg-pd2-info-label"><?php echo htmlspecialchars(ucfirst(str_replace('_',' ',$k)), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endforeach; ?>
                     </ul>
 
                     <?php if(!empty($options['cp_url']) || !empty($options['panel_url'])):
                         $cp_url = $options['cp_url'] ?? $options['panel_url']; ?>
                     <div style="margin-top:14px;">
-                        <a href="<?php echo htmlspecialchars($cp_url); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-primary" style="width:100%;justify-content:center;">
+                        <a href="<?php echo htmlspecialchars($cp_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-primary" style="width:100%;justify-content:center;">
                             <i class="bi bi-box-arrow-up-right"></i> Kontrol Paneline Git
                         </a>
                     </div>
@@ -609,7 +609,7 @@ foreach($options as $opt_k => $opt_v) {
                             <?php echo $info['label']; ?>
                         </div>
                         <div style="font-size:18px;font-weight:800;color:#0f172a;">
-                            <?php echo htmlspecialchars($display); ?>
+                            <?php echo htmlspecialchars($display, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                             <?php if(!$is_unlimited): ?>
                             <span style="font-size:11px;font-weight:600;color:#64748b;"><?php echo $info['unit']; ?></span>
                             <?php endif; ?>
@@ -622,7 +622,7 @@ foreach($options as $opt_k => $opt_v) {
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;color:#ef4444;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">
                             <i class="bi bi-cpu-fill"></i> CPU
                         </div>
-                        <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo htmlspecialchars($cpu_limit); ?></div>
+                        <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo htmlspecialchars($cpu_limit, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                     </div>
                     <?php endif; ?>
 
@@ -631,7 +631,7 @@ foreach($options as $opt_k => $opt_v) {
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;color:#8b5cf6;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">
                             <i class="bi bi-memory"></i> RAM
                         </div>
-                        <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo htmlspecialchars($ram_limit); ?></div>
+                        <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo htmlspecialchars($ram_limit, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                     </div>
                     <?php endif; ?>
 
@@ -661,7 +661,7 @@ foreach($options as $opt_k => $opt_v) {
                     ?>
                     <li style="font-family:'Courier New',monospace;">
                         <span class="cdg-pd2-info-label">NS<?php echo ($idx + 1); ?></span>
-                        <span class="cdg-pd2-info-value" style="font-weight:700;color:#1e40af;letter-spacing:0.3px;"><?php echo htmlspecialchars($ns); ?></span>
+                        <span class="cdg-pd2-info-value" style="font-weight:700;color:#1e40af;letter-spacing:0.3px;"><?php echo htmlspecialchars($ns, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </li>
                     <?php endforeach; ?>
                 </ul>
@@ -681,7 +681,7 @@ foreach($options as $opt_k => $opt_v) {
                         <span class="cdg-pd2-info-label">Kontrol Paneli</span>
                         <span class="cdg-pd2-info-value">
                             <span style="display:inline-block;padding:3px 10px;background:#eff6ff;color:#1e40af;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;">
-                                <?php echo htmlspecialchars($panel_type); ?>
+                                <?php echo htmlspecialchars($panel_type, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                             </span>
                         </span>
                     </li>
@@ -689,7 +689,7 @@ foreach($options as $opt_k => $opt_v) {
                     <?php if(!empty($ftp_info['host'])): ?>
                     <li>
                         <span class="cdg-pd2-info-label">FTP Sunucu</span>
-                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:600;"><?php echo htmlspecialchars($ftp_info['host']); ?></span>
+                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:600;"><?php echo htmlspecialchars($ftp_info['host'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </li>
                     <?php endif; ?>
                     <?php if(!empty($ftp_info['port'])): ?>
@@ -701,13 +701,13 @@ foreach($options as $opt_k => $opt_v) {
                     <?php if(!empty($ftp_info['username'])): ?>
                     <li>
                         <span class="cdg-pd2-info-label">FTP Kullanici</span>
-                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:600;"><?php echo htmlspecialchars($ftp_info['username']); ?></span>
+                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:600;"><?php echo htmlspecialchars($ftp_info['username'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </li>
                     <?php endif; ?>
                     <?php if(!empty($creation_info['date'])): ?>
                     <li>
                         <span class="cdg-pd2-info-label">Olusturulma</span>
-                        <span class="cdg-pd2-info-value"><?php echo htmlspecialchars($creation_info['date']); ?></span>
+                        <span class="cdg-pd2-info-value"><?php echo htmlspecialchars($creation_info['date'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </li>
                     <?php endif; ?>
                 </ul>
@@ -740,13 +740,13 @@ foreach($options as $opt_k => $opt_v) {
                 ?>
                 <div class="cdg-pd2-addon-card">
                     <div>
-                        <div class="cdg-pd2-addon-name"><?php echo htmlspecialchars($a_name); ?></div>
+                        <div class="cdg-pd2-addon-name"><?php echo htmlspecialchars($a_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         <?php if(!empty($addon['description'])): ?>
-                        <div style="font-size:12px;color:var(--p-muted);margin-top:2px;"><?php echo htmlspecialchars($addon['description']); ?></div>
+                        <div style="font-size:12px;color:var(--p-muted);margin-top:2px;"><?php echo htmlspecialchars($addon['description'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         <?php endif; ?>
                     </div>
                     <div style="display:flex;align-items:center;gap:14px;">
-                        <span class="cdg-pd2-addon-price"><?php echo htmlspecialchars(cdg_pd_money($a_amount, $a_cid)); ?></span>
+                        <span class="cdg-pd2-addon-price"><?php echo htmlspecialchars(cdg_pd_money($a_amount, $a_cid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                         <button type="button" class="cdg-pd2-btn cdg-pd2-btn-success cdg-pd2-btn-sm" onclick="cdgPd2.addAddon(<?php echo (int)$a_id; ?>)">
                             <i class="bi bi-cart-plus"></i> Ekle
                         </button>
@@ -780,10 +780,10 @@ foreach($options as $opt_k => $opt_v) {
                 ?>
                 <div class="cdg-pd2-addon-card">
                     <div>
-                        <div class="cdg-pd2-addon-name"><?php echo htmlspecialchars($u_name); ?></div>
+                        <div class="cdg-pd2-addon-name"><?php echo htmlspecialchars($u_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                     </div>
                     <div style="display:flex;align-items:center;gap:14px;">
-                        <span class="cdg-pd2-addon-price"><?php echo htmlspecialchars(cdg_pd_money($u_amount, $u_cid)); ?></span>
+                        <span class="cdg-pd2-addon-price"><?php echo htmlspecialchars(cdg_pd_money($u_amount, $u_cid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                         <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary cdg-pd2-btn-sm" onclick="cdgPd2.upgrade(<?php echo (int)$u_id; ?>)">
                             <i class="bi bi-arrow-up"></i> Yükselt
                         </button>
@@ -840,11 +840,11 @@ foreach($options as $opt_k => $opt_v) {
                     <i class="bi bi-exclamation-triangle-fill"></i>
                     <div>
                         <strong>Bekleyen yenileme faturanız var.</strong><br>
-                        Fatura no: #<?php echo htmlspecialchars($invoice['number'] ?? $invoice['id']); ?>
+                        Fatura no: #<?php echo htmlspecialchars($invoice['number'] ?? $invoice['id'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </div>
                 </div>
                 <?php if(!empty($invoice['detail_link'])): ?>
-                <a href="<?php echo htmlspecialchars($invoice['detail_link']); ?>" class="cdg-pd2-btn cdg-pd2-btn-success" style="width:100%;justify-content:center;">
+                <a href="<?php echo htmlspecialchars($invoice['detail_link'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd2-btn cdg-pd2-btn-success" style="width:100%;justify-content:center;">
                     <i class="bi bi-credit-card"></i> Faturayı Görüntüle / Öde
                 </a>
                 <?php endif; ?>
@@ -889,7 +889,7 @@ foreach($options as $opt_k => $opt_v) {
                                     if($proanse['period'] == $r_period && $proanse['period_time'] == $r_time) $is_current = true;
                                 }
                             ?>
-                            <option value="<?php echo htmlspecialchars($k); ?>"><?php echo htmlspecialchars($period_label); ?> — <?php echo htmlspecialchars($amount_str); ?><?php echo $is_current ? ' (mevcut)' : ''; ?></option>
+                            <option value="<?php echo htmlspecialchars($k, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($period_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> — <?php echo htmlspecialchars($amount_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php echo $is_current ? ' (mevcut)' : ''; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary" onclick="cdgPd2OrderRenewal(this)">
@@ -978,7 +978,7 @@ foreach($options as $opt_k => $opt_v) {
 
 window.cdgPd2 = {
     productId: <?php echo (int)$d_id; ?>,
-    controllerUrl: '<?php echo htmlspecialchars($controller_url); ?>',
+    controllerUrl: '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
 
     renew: function(){
         if(!confirm('Yenileme faturası oluşturulacak. Devam edilsin mi?')) return;

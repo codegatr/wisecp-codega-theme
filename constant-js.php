@@ -52,9 +52,9 @@ var ckplcy_cookie_popup_html = '';
 
 <!-- WiseCP Core Plugins -->
 <?php if($baddress): ?>
-<script src="<?php echo htmlspecialchars($baddress); ?>assets/plugins/iziModal/js/iziModal.min.js?v=<?php echo htmlspecialchars($license_ver); ?>"></script>
-<script src="<?php echo htmlspecialchars($baddress); ?>assets/plugins/sweetalert2/dist/promise.min.js"></script>
-<script src="<?php echo htmlspecialchars($baddress); ?>assets/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
-<script src="<?php echo htmlspecialchars($baddress); ?>assets/javascript/jquery.form.min.js"></script>
-<script src="<?php echo htmlspecialchars($baddress); ?>assets/javascript/webmio.js?v=<?php echo htmlspecialchars($license_ver); ?>"></script>
+<script src="<?php echo htmlspecialchars($baddress, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>assets/plugins/iziModal/js/iziModal.min.js?v=<?php echo htmlspecialchars($license_ver, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></script>
+<script src="<?php echo htmlspecialchars($baddress, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>assets/plugins/sweetalert2/dist/promise.min.js"></script>
+<script src="<?php echo htmlspecialchars($baddress, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>assets/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="<?php echo htmlspecialchars($baddress, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>assets/javascript/jquery.form.min.js"></script>
+<script src="<?php echo htmlspecialchars($baddress, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>assets/javascript/webmio.js?v=<?php echo htmlspecialchars($license_ver, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></script>
 <?php endif; ?>

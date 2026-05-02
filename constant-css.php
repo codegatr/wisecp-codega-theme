@@ -18,9 +18,9 @@ if(class_exists('License') && method_exists('License','get_version')) {
 
 <!-- WiseCP Core Stiller -->
 <?php if($baddress): ?>
-<link rel="stylesheet" href="<?php echo htmlspecialchars($baddress); ?>assets/style/theme.css?v=<?php echo htmlspecialchars($license_ver); ?>">
-<link rel="stylesheet" href="<?php echo htmlspecialchars($baddress); ?>assets/plugins/iziModal/css/iziModal.min.css?v=<?php echo htmlspecialchars($license_ver); ?>">
-<link rel="stylesheet" href="<?php echo htmlspecialchars($baddress); ?>assets/plugins/sweetalert2/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="<?php echo htmlspecialchars($baddress, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>assets/style/theme.css?v=<?php echo htmlspecialchars($license_ver, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+<link rel="stylesheet" href="<?php echo htmlspecialchars($baddress, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>assets/plugins/iziModal/css/iziModal.min.css?v=<?php echo htmlspecialchars($license_ver, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+<link rel="stylesheet" href="<?php echo htmlspecialchars($baddress, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>assets/plugins/sweetalert2/dist/sweetalert2.min.css">
 <?php endif; ?>
 
 <!-- Plus Jakarta Sans (Codega tema fontu) -->

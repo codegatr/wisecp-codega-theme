@@ -238,13 +238,13 @@ if(class_exists('Validation') && method_exists('Validation', 'get_csrf_token')) 
                 <span class="cdg-credit-card-default-badge"><i class="bi bi-check-circle-fill"></i> VARSAYILAN</span>
                 <?php endif; ?>
 
-                <div class="cdg-credit-card-brand"><?php echo htmlspecialchars($brand); ?></div>
-                <div class="cdg-credit-card-number"><?php echo htmlspecialchars($card_no); ?></div>
+                <div class="cdg-credit-card-brand"><?php echo htmlspecialchars($brand, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                <div class="cdg-credit-card-number"><?php echo htmlspecialchars($card_no, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
 
                 <div class="cdg-credit-card-bottom">
                     <div class="holder">
                         <small>KART SAHİBİ</small>
-                        <?php echo htmlspecialchars($holder ?: '—'); ?>
+                        <?php echo htmlspecialchars($holder ?: '—', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </div>
                     <?php if($month && $year): ?>
                     <div class="expiry">

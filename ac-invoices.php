@@ -126,7 +126,7 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
                     }
                 ?>
                     <tr>
-                        <td><span style="font-family:monospace;font-size:13px;">#<?php echo htmlspecialchars($num); ?></span></td>
+                        <td><span style="font-family:monospace;font-size:13px;">#<?php echo htmlspecialchars($num, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></td>
                         <td style="text-align:center;font-size:13px;"><?php echo $ctime_fmt; ?></td>
                         <td style="text-align:center;font-size:13px;"><?php echo $duedate_fmt ?: '-'; ?></td>
                         <td style="text-align:right;font-weight:600;"><?php echo $amount; ?></td>

@@ -15,7 +15,7 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
 <nav class="cdg-pbc" aria-label="Panel sayfa yolu">
     <ol class="cdg-pbc-list">
         <li class="cdg-pbc-item">
-            <a href="<?php echo htmlspecialchars($dashboard_url); ?>" class="cdg-pbc-home">
+            <a href="<?php echo htmlspecialchars($dashboard_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pbc-home">
                 <i class="bi bi-grid-fill"></i>
                 <span class="cdg-pbc-home-text">Panel</span>
             </a>
@@ -30,9 +30,9 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
         <li class="cdg-pbc-sep" aria-hidden="true"><i class="bi bi-chevron-right"></i></li>
         <li class="cdg-pbc-item<?php echo $is_last ? ' cdg-pbc-current' : ''; ?>">
             <?php if($link && !$is_last): ?>
-            <a href="<?php echo htmlspecialchars($link); ?>"><?php echo htmlspecialchars($title); ?></a>
+            <a href="<?php echo htmlspecialchars($link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
             <?php else: ?>
-            <span aria-current="page"><?php echo htmlspecialchars($title); ?></span>
+            <span aria-current="page"><?php echo htmlspecialchars($title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             <?php endif; ?>
         </li>
         <?php endforeach; ?>
