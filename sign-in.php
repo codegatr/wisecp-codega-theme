@@ -140,37 +140,149 @@ if(class_exists('Config') && Config::get("options/crtacwshop")) $sign_up = false
     <div class="cdg-container">
         <div class="cdg-auth-grid">
 
-            <!-- SOL: KRALIYET PROMO -->
-            <div class="cdg-auth-promo">
-                <div class="cdg-auth-shapes">
-                    <div class="cdg-auth-shape cdg-auth-shape-1"></div>
-                    <div class="cdg-auth-shape cdg-auth-shape-2"></div>
-                    <div class="cdg-auth-shape cdg-auth-shape-3"></div>
+            <!-- SOL: PREMIUM SHOWCASE -->
+            <div class="cdg-auth-promo cdg-auth-promo-v2">
+                <!-- Animated background -->
+                <div class="cdg-auth-aurora">
+                    <div class="cdg-aurora-blob cdg-aurora-blob-1"></div>
+                    <div class="cdg-aurora-blob cdg-aurora-blob-2"></div>
+                    <div class="cdg-aurora-blob cdg-aurora-blob-3"></div>
                 </div>
-                <div class="cdg-auth-promo-badge">
-                    <i class="bi bi-shield-fill-check"></i>
-                    <span>Güvenli Giriş</span>
+
+                <!-- Brand mark -->
+                <div class="cdg-auth-brand">
+                    <div class="cdg-auth-brand-logo">
+                        <span>C</span>
+                    </div>
+                    <div class="cdg-auth-brand-text">
+                        <strong>CODEGA</strong>
+                        <small>Profesyonel Hizmet Platformu</small>
+                    </div>
                 </div>
-                <h1>Hizmetlerinizi <span class="cdg-text-gradient-light">tek panelden</span> yönetin</h1>
-                <p class="cdg-auth-lead">Hosting, domain, fatura ve destek — hepsi parmaklarınızın ucunda. SSL korumalı, iki adımlı doğrulamalı güvenli giriş.</p>
-                <ul class="cdg-auth-features">
-                    <li><i class="bi bi-check-circle-fill"></i> Hizmetlerinizin tam kontrolü</li>
-                    <li><i class="bi bi-check-circle-fill"></i> İki adımlı doğrulama desteği</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Anlık fatura ve hizmet bilgisi</li>
-                    <li><i class="bi bi-check-circle-fill"></i> 7/24 öncelikli destek</li>
-                </ul>
-                <?php if(isset($sign_up) && $sign_up): ?>
-                <div class="cdg-auth-promo-cta">
-                    <p>Henüz hesabınız yok mu?</p>
-                    <a href="<?php echo $register_link; ?>" class="cdg-btn cdg-btn-white">
-                        <i class="bi bi-person-plus-fill"></i> Yeni Hesap Oluştur
-                    </a>
+
+                <!-- Hero metni -->
+                <div class="cdg-auth-hero-text">
+                    <div class="cdg-auth-pill">
+                        <span class="cdg-auth-pill-dot"></span>
+                        <span>Sistemler Aktif · Yanıt Süresi 28ms</span>
+                    </div>
+                    <h1>Tüm hizmetleriniz<br><span class="cdg-text-gradient-light">tek panelden</span> elinizde</h1>
+                    <p class="cdg-auth-lead">Hosting, domain, fatura ve destek — profesyonel kontrol paneli ile dakikalar içinde yönetin.</p>
                 </div>
-                <?php endif; ?>
-                <div class="cdg-auth-trust-badges">
-                    <span><i class="bi bi-shield-fill-check"></i> SSL Korumalı</span>
-                    <span><i class="bi bi-file-earmark-lock-fill"></i> KVKK Uyumlu</span>
-                    <span><i class="bi bi-award-fill"></i> ISO 27001</span>
+
+                <!-- Mini Dashboard Preview -->
+                <div class="cdg-auth-preview">
+                    <div class="cdg-auth-preview-head">
+                        <div class="cdg-auth-preview-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="cdg-auth-preview-url"><i class="bi bi-shield-lock-fill"></i> ca.codega.com.tr</div>
+                    </div>
+                    <div class="cdg-auth-preview-body">
+                        <!-- Stat row -->
+                        <div class="cdg-auth-preview-stats">
+                            <div class="cdg-auth-preview-stat">
+                                <div class="cdg-auth-preview-stat-icon" style="background:linear-gradient(135deg,#10b981,#34d399);">
+                                    <i class="bi bi-hdd-network-fill"></i>
+                                </div>
+                                <div>
+                                    <div class="num">12</div>
+                                    <div class="lbl">Aktif Hizmet</div>
+                                </div>
+                            </div>
+                            <div class="cdg-auth-preview-stat">
+                                <div class="cdg-auth-preview-stat-icon" style="background:linear-gradient(135deg,#facc15,#f59e0b);">
+                                    <i class="bi bi-receipt"></i>
+                                </div>
+                                <div>
+                                    <div class="num">2</div>
+                                    <div class="lbl">Fatura</div>
+                                </div>
+                            </div>
+                            <div class="cdg-auth-preview-stat">
+                                <div class="cdg-auth-preview-stat-icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);">
+                                    <i class="bi bi-chat-dots-fill"></i>
+                                </div>
+                                <div>
+                                    <div class="num">1</div>
+                                    <div class="lbl">Talep</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity bar (animated) -->
+                        <div class="cdg-auth-preview-activity">
+                            <div class="cdg-auth-preview-activity-head">
+                                <span><i class="bi bi-activity"></i> Sunucu Aktivitesi</span>
+                                <span class="cdg-auth-preview-live"><span class="dot"></span> CANLI</span>
+                            </div>
+                            <div class="cdg-auth-preview-bars">
+                                <span style="height:35%"></span>
+                                <span style="height:55%"></span>
+                                <span style="height:42%"></span>
+                                <span style="height:78%"></span>
+                                <span style="height:62%"></span>
+                                <span style="height:88%"></span>
+                                <span style="height:45%"></span>
+                                <span style="height:72%"></span>
+                                <span style="height:58%"></span>
+                                <span style="height:80%"></span>
+                                <span style="height:65%"></span>
+                                <span style="height:90%"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hızlı Erişim Grid -->
+                <div class="cdg-auth-quick-grid">
+                    <div class="cdg-auth-quick-item">
+                        <div class="cdg-auth-quick-icon" style="color:#22d3ee;"><i class="bi bi-hdd-network-fill"></i></div>
+                        <span>Hosting</span>
+                    </div>
+                    <div class="cdg-auth-quick-item">
+                        <div class="cdg-auth-quick-icon" style="color:#fde047;"><i class="bi bi-globe2"></i></div>
+                        <span>Domain</span>
+                    </div>
+                    <div class="cdg-auth-quick-item">
+                        <div class="cdg-auth-quick-icon" style="color:#a78bfa;"><i class="bi bi-receipt"></i></div>
+                        <span>Fatura</span>
+                    </div>
+                    <div class="cdg-auth-quick-item">
+                        <div class="cdg-auth-quick-icon" style="color:#34d399;"><i class="bi bi-headset"></i></div>
+                        <span>Destek</span>
+                    </div>
+                </div>
+
+                <!-- Trust + CTA -->
+                <div class="cdg-auth-bottom">
+                    <?php if(isset($sign_up) && $sign_up): ?>
+                    <div class="cdg-auth-cta-card">
+                        <div>
+                            <small>Henüz hesabınız yok mu?</small>
+                            <strong>30 saniyede üye olun</strong>
+                        </div>
+                        <a href="<?php echo $register_link; ?>" class="cdg-auth-cta-btn">
+                            <i class="bi bi-person-plus-fill"></i>
+                            <span>Hesap Oluştur</span>
+                        </a>
+                    </div>
+                    <?php endif; ?>
+
+                    <div class="cdg-auth-trust-row">
+                        <div class="cdg-auth-trust-item">
+                            <i class="bi bi-shield-fill-check"></i>
+                            <span>SSL Korumalı</span>
+                        </div>
+                        <div class="cdg-auth-trust-item">
+                            <i class="bi bi-file-earmark-lock-fill"></i>
+                            <span>KVKK Uyumlu</span>
+                        </div>
+                        <div class="cdg-auth-trust-item">
+                            <i class="bi bi-award-fill"></i>
+                            <span>ISO 27001</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

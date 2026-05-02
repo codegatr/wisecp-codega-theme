@@ -1,21 +1,23 @@
 {
-    "version": "2.8.7",
+    "version": "2.8.8",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.8.7-codega",
-    "tag": "v2.8.7-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.8.8-codega",
+    "tag": "v2.8.8-codega",
     "changelog": [
-        "v2.8.7 - DOMAIN AJAX SORGU NETWISE BIRE BIR",
-        "FIX: 'Sunucudan bos yanit geldi' hatasi - form yapisi yanlisti",
-        "FORM: Validation::get_csrf_token('domain-check') (CSRF::input degil)",
-        "FORM: <input name='operation' value='check'> eklendi",
-        "FORM: <input name='type' value='domain'> + tcode hidden",
-        "FORM: action=$links['controller'] (Netwise birebir)",
-        "FORM: Captcha desteği eklendi (admin etkinlestirmisse)",
-        "JS: 3 katmanli AJAX (MioAjax -> jQuery.ajax -> fetch)",
-        "JS: WiseCP response yapisi parse: solve.data[i].sld + .tld + .reg_price[0].price",
-        "JS: 4 durum (available/unavailable/premium/unknown) + ikon + renk",
-        "JS: 'İlk Tercih' rozeti ilk sonuca",
-        "DIAGNOSTIC: ?_diag=1 ile $links + $captcha + Validation kontrol"
+        "v2.8.8 - GIRIS-YAP / HESAP-OLUSTUR PREMIUM SHOWCASE",
+        "SIGN-IN: Brand mark + 'Sistemler aktif 28ms' canli durum rozeti",
+        "SIGN-IN: Mini dashboard preview (3 stat card + canli sunucu aktivitesi animasyonu)",
+        "SIGN-IN: 4 hizli erisim ikonu (Hosting/Domain/Fatura/Destek)",
+        "SIGN-IN: Premium CTA kart (Hesap Olustur altin gradient buton)",
+        "SIGN-UP: Brand mark + '30 saniyede uyelik' rozeti",
+        "SIGN-UP: 4 buyuk avantaj karti (Aktivasyon, Iade, Altyapi, Destek)",
+        "SIGN-UP: Premium CTA kart (Giris Yap altin gradient buton)",
+        "TASARIM: Aurora animated background blobs (mavi/altin/mor)",
+        "TASARIM: Glassmorphism (backdrop-filter blur 16px)",
+        "TASARIM: Animasyonlu sunucu aktivitesi cubuk grafigi",
+        "TASARIM: Pulse dot canli gosterge (sistemler aktif)",
+        "TRUST: SSL/KVKK/ISO 27001 ust cizgili trust row",
+        "WiseCP form mekanizmasi KORUNDU (CSRF, MioAjax, 2FA modal)"
     ]
 }

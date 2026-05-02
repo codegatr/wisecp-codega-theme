@@ -63,34 +63,102 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
     <div class="cdg-container">
         <div class="cdg-auth-grid">
 
-            <div class="cdg-auth-promo">
-                <div class="cdg-auth-shapes">
-                    <div class="cdg-auth-shape cdg-auth-shape-1"></div>
-                    <div class="cdg-auth-shape cdg-auth-shape-2"></div>
-                    <div class="cdg-auth-shape cdg-auth-shape-3"></div>
+            <div class="cdg-auth-promo cdg-auth-promo-v2">
+                <!-- Animated background -->
+                <div class="cdg-auth-aurora">
+                    <div class="cdg-aurora-blob cdg-aurora-blob-1"></div>
+                    <div class="cdg-aurora-blob cdg-aurora-blob-2"></div>
+                    <div class="cdg-aurora-blob cdg-aurora-blob-3"></div>
                 </div>
-                <div class="cdg-auth-promo-badge">
-                    <i class="bi bi-rocket-takeoff-fill"></i>
-                    <span>Yolculuğunuz Başlıyor</span>
+
+                <!-- Brand mark -->
+                <div class="cdg-auth-brand">
+                    <div class="cdg-auth-brand-logo">
+                        <span>C</span>
+                    </div>
+                    <div class="cdg-auth-brand-text">
+                        <strong>CODEGA</strong>
+                        <small>Profesyonel Hizmet Platformu</small>
+                    </div>
                 </div>
-                <h1>Profesyonel <span class="cdg-text-gradient-light">hosting deneyimi</span> sizi bekliyor</h1>
-                <p class="cdg-auth-lead">Hesap oluşturarak hosting paketlerine, indirim kuponlarına ve öncelikli desteğe anlık erişim kazanın. Üyelik dakikalar içinde.</p>
-                <ul class="cdg-auth-features">
-                    <li><i class="bi bi-check-circle-fill"></i> Ücretsiz domain kontrol aracı</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Profesyonel destek ekibi</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Yedekli sunucu altyapısı</li>
-                    <li><i class="bi bi-check-circle-fill"></i> 30 gün para iade garantisi</li>
-                </ul>
-                <div class="cdg-auth-promo-cta">
-                    <p>Zaten hesabınız var mı?</p>
-                    <a href="<?php echo $login_link; ?>" class="cdg-btn cdg-btn-white">
-                        <i class="bi bi-box-arrow-in-right"></i> Giriş Yap
-                    </a>
+
+                <!-- Hero metni -->
+                <div class="cdg-auth-hero-text">
+                    <div class="cdg-auth-pill">
+                        <span class="cdg-auth-pill-dot"></span>
+                        <span>30 saniyede üyelik · 30 gün para iade garantisi</span>
+                    </div>
+                    <h1>Profesyonel <span class="cdg-text-gradient-light">hosting deneyimi</span> sizi bekliyor</h1>
+                    <p class="cdg-auth-lead">Hesap oluşturarak hosting paketlerine, ücretsiz domain araçlarına ve öncelikli desteğe anında erişim kazanın.</p>
                 </div>
-                <div class="cdg-auth-trust-badges">
-                    <span><i class="bi bi-shield-fill-check"></i> SSL Korumalı</span>
-                    <span><i class="bi bi-file-earmark-lock-fill"></i> KVKK Uyumlu</span>
-                    <span><i class="bi bi-award-fill"></i> ISO 27001</span>
+
+                <!-- Avantajlar (büyük ikonlar) -->
+                <div class="cdg-auth-benefits">
+                    <div class="cdg-auth-benefit">
+                        <div class="cdg-auth-benefit-icon" style="background:linear-gradient(135deg,#10b981,#34d399);">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                        </div>
+                        <div>
+                            <strong>Anında Aktivasyon</strong>
+                            <small>Üyelik sonrası dakikalar içinde hizmetler aktif olur.</small>
+                        </div>
+                    </div>
+                    <div class="cdg-auth-benefit">
+                        <div class="cdg-auth-benefit-icon" style="background:linear-gradient(135deg,#facc15,#f59e0b);">
+                            <i class="bi bi-piggy-bank-fill"></i>
+                        </div>
+                        <div>
+                            <strong>30 Gün İade Garantisi</strong>
+                            <small>Memnun kalmazsanız koşulsuz tam iade imkanı.</small>
+                        </div>
+                    </div>
+                    <div class="cdg-auth-benefit">
+                        <div class="cdg-auth-benefit-icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);">
+                            <i class="bi bi-shield-fill-check"></i>
+                        </div>
+                        <div>
+                            <strong>Yedekli Altyapı</strong>
+                            <small>Tier-3 veri merkezi, %99.99 uptime SLA garantisi.</small>
+                        </div>
+                    </div>
+                    <div class="cdg-auth-benefit">
+                        <div class="cdg-auth-benefit-icon" style="background:linear-gradient(135deg,#06b6d4,#22d3ee);">
+                            <i class="bi bi-headset"></i>
+                        </div>
+                        <div>
+                            <strong>7/24 Öncelikli Destek</strong>
+                            <small>WhatsApp, telefon ve panel — her zaman ulaşılabilir.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trust + CTA -->
+                <div class="cdg-auth-bottom">
+                    <div class="cdg-auth-cta-card">
+                        <div>
+                            <small>Zaten hesabınız var mı?</small>
+                            <strong>Anında giriş yapın</strong>
+                        </div>
+                        <a href="<?php echo $login_link; ?>" class="cdg-auth-cta-btn">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Giriş Yap</span>
+                        </a>
+                    </div>
+
+                    <div class="cdg-auth-trust-row">
+                        <div class="cdg-auth-trust-item">
+                            <i class="bi bi-shield-fill-check"></i>
+                            <span>SSL Korumalı</span>
+                        </div>
+                        <div class="cdg-auth-trust-item">
+                            <i class="bi bi-file-earmark-lock-fill"></i>
+                            <span>KVKK Uyumlu</span>
+                        </div>
+                        <div class="cdg-auth-trust-item">
+                            <i class="bi bi-award-fill"></i>
+                            <span>ISO 27001</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
