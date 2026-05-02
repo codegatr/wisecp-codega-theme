@@ -308,65 +308,25 @@ $faqs = [
                 <p class="cdg-hero-lead">CODEGA ile siteleriniz <strong>9 kat daha hızlı</strong>, <strong>%99.99 uptime</strong>. AI tabanlı optimizasyon, NVMe SSD, LiteSpeed Enterprise ve 7/24 uzman desteği.</p>
 
                 <?php if($mod_domain): ?>
-                <form action="<?php echo $domain_url; ?>" method="get" class="cdg-hero-domain cdg-hero-domain-glow">
+                <form action="<?php echo $domain_url; ?>" method="get" class="cdg-hero-domain cdg-hero-domain-glow<?php echo (isset($captcha) && $captcha) ? ' cdg-hero-domain-with-captcha' : ''; ?>">
                     <div class="cdg-hero-domain-input">
                         <i class="bi bi-search"></i>
                         <input type="text" name="domain" placeholder="alanadi.com" required autocomplete="off">
                     </div>
+
+                    <?php if(isset($captcha) && $captcha): ?>
+                    <div class="cdg-hero-domain-captcha">
+                        <div class="cdg-hero-captcha-img-inline"><?php echo $captcha->getOutput(); ?></div>
+                        <?php if($captcha->input): ?>
+                        <input type="text" name="<?php echo $captcha->input_name; ?>" placeholder="Güvenlik Kodu" required autocomplete="off" maxlength="10">
+                        <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
+
                     <button type="submit" class="cdg-btn cdg-btn-primary cdg-btn-glow">
                         <i class="bi bi-globe2"></i> <span>Domain Sorgula</span>
                     </button>
                 </form>
-
-                <!-- Anasayfa captcha (varsa WiseCP otomatik enjekte eder) -->
-                <?php if(isset($captcha) && $captcha): ?>
-                <div class="cdg-hero-captcha">
-                    <div class="cdg-hero-captcha-label">
-                        <i class="bi bi-shield-fill-check"></i>
-                        <span>Robot değilim</span>
-                    </div>
-                    <div class="cdg-hero-captcha-row">
-                        <div class="cdg-hero-captcha-image"><?php echo $captcha->getOutput(); ?></div>
-                        <?php if($captcha->input): ?>
-                        <input type="text" id="hero_captcha_input" placeholder="Yandaki kodu yazın" class="cdg-hero-captcha-input" autocomplete="off">
-                        <input type="hidden" name="<?php echo $captcha->input_name; ?>" id="hero_captcha_hidden" form="hero_captcha_form_anchor">
-                        <?php endif; ?>
-                    </div>
-                </div>
-                <script>
-                (function(){
-                    var ci = document.getElementById('hero_captcha_input');
-                    var ch = document.getElementById('hero_captcha_hidden');
-                    var form = document.querySelector('.cdg-hero-domain');
-                    if(!ci || !ch || !form) return;
-
-                    // Kodu form'a hidden olarak ekle
-                    var hiddenInForm = document.createElement('input');
-                    hiddenInForm.type = 'hidden';
-                    hiddenInForm.name = ci.previousElementSibling ? ci.previousElementSibling.name : 'captcha';
-                    // input_name'i hidden'dan al
-                    hiddenInForm.name = ch.name;
-                    form.appendChild(hiddenInForm);
-
-                    // Input degistikce hidden'a yaz
-                    ci.addEventListener('input', function(){
-                        hiddenInForm.value = ci.value;
-                    });
-
-                    // Submit kontrolu
-                    form.addEventListener('submit', function(e){
-                        if(!ci.value || ci.value.trim().length < 1) {
-                            e.preventDefault();
-                            ci.focus();
-                            ci.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.40)';
-                            setTimeout(function(){ ci.style.boxShadow = ''; }, 1500);
-                            return false;
-                        }
-                        hiddenInForm.value = ci.value;
-                    });
-                })();
-                </script>
-                <?php endif; ?>
                 <?php if(!empty($popular_tlds)): ?>
                 <div class="cdg-hero-popular-tlds">
                     <span class="muted">Popüler:</span>

@@ -4140,70 +4140,141 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     .cdg-domain-captcha-input{width:100%;}
 }
 
-/* ==================== v2.9.2 - Hero Captcha (Anasayfa) ==================== */
-.cdg-hero-captcha{
-    margin-top:14px;
-    padding:14px 18px;
-    background:rgba(255,255,255,0.10);
-    border:1px solid rgba(255,255,255,0.20);
-    border-radius:14px;
-    backdrop-filter:blur(10px);
-    max-width:560px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.10);
-}
+/* ==================== v2.9.3 - Hero Form Inline Captcha ==================== */
 
-.cdg-hero-captcha-label{
-    display:flex;align-items:center;gap:8px;
-    color:rgba(255,255,255,0.92);
-    font-size:12px;font-weight:700;
-    text-transform:uppercase;letter-spacing:0.5px;
-    margin-bottom:10px;
-}
-.cdg-hero-captcha-label i{color:#fde047;font-size:14px;}
-
-.cdg-hero-captcha-row{
-    display:flex;gap:10px;align-items:center;
-}
-
-.cdg-hero-captcha-image{
-    flex-shrink:0;
+/* Form yapısı: input + captcha + button (tek satır) */
+.cdg-hero-domain-with-captcha{
+    display:flex;
+    align-items:center;
+    gap:8px;
     background:#fff;
+    border-radius:14px;
+    padding:6px;
+    box-shadow:0 12px 40px rgba(0,0,0,0.12);
+    max-width:780px;
+    flex-wrap:nowrap;
+}
+
+.cdg-hero-domain-with-captcha .cdg-hero-domain-input{
+    flex:1 1 auto;
+    min-width:200px;
+    background:transparent;
+    box-shadow:none;
+    padding:0;
+    border-radius:0;
+    border-right:1px solid #e2e8f0;
+    margin:0;
+}
+
+.cdg-hero-domain-with-captcha .cdg-hero-domain-input input{
+    border:0;
+    background:transparent;
+    box-shadow:none;
+    padding:14px 16px;
+    width:100%;
+    font-size:16px;
+}
+
+/* Captcha bloğu (input ile button arası) */
+.cdg-hero-domain-captcha{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-shrink:0;
+    border-right:1px solid #e2e8f0;
+    padding-right:8px;
+}
+
+.cdg-hero-captcha-img-inline{
+    flex-shrink:0;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
     border-radius:8px;
     padding:4px 8px;
-    height:42px;
+    height:38px;
     display:flex;align-items:center;justify-content:center;
-    min-width:130px;
-    overflow:hidden;
+    min-width:90px;
 }
-.cdg-hero-captcha-image img,
-.cdg-hero-captcha-image > div,
-.cdg-hero-captcha-image canvas{
-    max-height:34px;
+.cdg-hero-captcha-img-inline img,
+.cdg-hero-captcha-img-inline > div,
+.cdg-hero-captcha-img-inline canvas{
+    max-height:30px;
     max-width:100%;
 }
 
-.cdg-hero-captcha-input{
-    flex:1;
-    padding:11px 14px;
-    border:0;
+.cdg-hero-domain-captcha input{
+    width:130px;
+    padding:11px 12px;
+    border:1px solid #e2e8f0;
     border-radius:8px;
     background:#fff;
     color:#0f172a;
     font-size:14px;
     font-family:inherit;
     font-weight:600;
-    transition:box-shadow 0.2s;
+    letter-spacing:0.5px;
 }
-.cdg-hero-captcha-input:focus{
+.cdg-hero-domain-captcha input:focus{
     outline:none;
-    box-shadow:0 0 0 3px rgba(252,211,77,0.40);
+    border-color:#1e40af;
+    box-shadow:0 0 0 3px rgba(30,64,175,0.10);
 }
-.cdg-hero-captcha-input::placeholder{
+.cdg-hero-domain-captcha input::placeholder{
     color:#94a3b8;
+    font-weight:500;
+    text-transform:none;
+    letter-spacing:0;
 }
 
-@media (max-width:520px){
-    .cdg-hero-captcha-row{flex-direction:column;}
-    .cdg-hero-captcha-image{width:100%;}
-    .cdg-hero-captcha-input{width:100%;}
+.cdg-hero-domain-with-captcha button{
+    flex-shrink:0;
+    padding:13px 24px;
+    border-radius:10px;
+    font-size:14px;
+    white-space:nowrap;
+}
+
+/* Mobil */
+@media (max-width:900px){
+    .cdg-hero-domain-with-captcha{
+        flex-wrap:wrap;
+    }
+    .cdg-hero-domain-with-captcha .cdg-hero-domain-input{
+        flex:1 1 100%;
+        border-right:0;
+        border-bottom:1px solid #e2e8f0;
+    }
+    .cdg-hero-domain-with-captcha .cdg-hero-domain-input input{
+        padding:14px 14px;
+    }
+    .cdg-hero-domain-captcha{
+        flex:1;
+        border-right:1px solid #e2e8f0;
+    }
+    .cdg-hero-domain-captcha input{
+        flex:1;
+        width:auto;
+        min-width:80px;
+    }
+}
+
+@media (max-width:560px){
+    .cdg-hero-domain-with-captcha{
+        flex-direction:column;
+        gap:6px;
+        padding:8px;
+    }
+    .cdg-hero-domain-with-captcha .cdg-hero-domain-input,
+    .cdg-hero-domain-captcha,
+    .cdg-hero-domain-with-captcha button{
+        width:100%;
+        flex:1 1 100%;
+        border:0;
+    }
+    .cdg-hero-domain-captcha{
+        padding-right:0;
+        border-top:1px solid #e2e8f0;
+        border-bottom:1px solid #e2e8f0;
+        padding:8px 0;
+    }
 }

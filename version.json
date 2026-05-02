@@ -1,17 +1,15 @@
 {
-    "version": "2.9.2",
+    "version": "2.9.3",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.2-codega",
-    "tag": "v2.9.2-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.3-codega",
+    "tag": "v2.9.3-codega",
     "changelog": [
-        "v2.9.2 - Anasayfa hero formuna captcha eklendi",
-        "INDEX: $captcha global'i varsa form altinda captcha kutusu render ediliyor",
-        "INDEX: Glassmorphism kart - 'Robot degilim' baslikli",
-        "INDEX: Form submit'te captcha bos ise input'a kirmizi shadow + focus",
-        "INDEX: Captcha kodu hidden input olarak GET parametresine ekleniyor",
-        "DOMAIN: URL'den captcha kodunu okuyup captcha input'a yazma",
-        "DOMAIN: Eger captcha doluysa otomatik sorgula, degilse focus al",
-        "Akis: Anasayfa kod gir + domain yaz -> /alan-adi'ye otomatik tek seferde gonderim"
+        "v2.9.3 - Anasayfa captcha INLINE - butonun soluna alindi",
+        "Tek satirda: [Domain Input] | [Captcha resim + input] | [Sorgula butonu]",
+        "Captcha kutusu kaldirildi - artik form ile entegre",
+        "Mobilde 900px alti: input alta + captcha+buton yan yana",
+        "Mobilde 560px alti: dikey yigin (input/captcha/buton ayri)",
+        "Dikey ayraclar: e2e8f0 ince cizgiler"
     ]
 }
