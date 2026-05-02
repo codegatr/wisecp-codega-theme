@@ -12,16 +12,53 @@ $hoptions = ["datatables"];
 // === Yardımcı: link ===
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
+        global $links;
+        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
+            return $links[$slug];
+        }
+        static $aliases = [
+            'create-ticket-request'   => 'ac-ps-create-ticket-request',
+            'tickets'                 => 'ac-ps-tickets',
+            'my-tickets'              => 'ac-ps-tickets',
+            'messages'                => 'ac-ps-messages',
+            'detail-message'          => 'ac-ps-detail-message',
+            'invoices'                => 'ac-ps-invoices',
+            'detail-invoice'          => 'ac-ps-detail-invoice',
+            'detail-invoice-pdf'      => 'ac-ps-detail-invoice',
+            'balance'                 => 'ac-ps-balance',
+            'balance-page'            => 'ac-ps-balance',
+            'info'                    => 'ac-ps-info',
+            'ac-info'                 => 'ac-ps-info',
+            'products'                => 'ac-ps-products',
+            'all-orders'              => 'ac-ps-products',
+            'products-t'              => 'ac-ps-products-t',
+            'product'                 => 'ac-ps-product',
+            'sms'                     => 'ac-ps-sms',
+            'domains'                 => 'ac-products-domain',
+            'products-domain'         => 'ac-products-domain',
+            'whois-profiles'          => 'ac-products-domain-whois-profiles',
+            'products-domain-whois-profiles' => 'ac-products-domain-whois-profiles',
+            'create-whois-profile'    => 'ac-products-domain-create-whois-profile',
+            'products-domain-create-whois-profile' => 'ac-products-domain-create-whois-profile',
+            'login'                   => 'sign-in',
+            'register'                => 'sign-up',
+            'logout'                  => 'sign-out',
+            'account'                 => 'my-account',
+            'homepage'                => '',
+            'home'                    => '',
+        ];
+        $real_slug = isset($aliases[$slug]) ? $aliases[$slug] : $slug;
         if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Controllers::$init, 'CRLink')) {
-            $url = Controllers::$init->CRLink($slug, $params);
-            if($url && (strpos($url, '/(0)') !== false || preg_match('#/0/?$#', $url))) {
-                $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
-                return $base . '/' . $slug . ($params ? '/' . implode('/', $params) : '');
-            }
-            return $url;
+            try {
+                $url = Controllers::$init->CRLink($real_slug, $params);
+                if($url && strpos($url, '/(0)') === false && !preg_match('#/0/?$#', $url)) {
+                    return $url;
+                }
+            } catch(\Throwable $e) {}
         }
         $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
-        return $base . '/' . $slug . ($params ? '/' . implode('/', $params) : '');
+        if(!$real_slug) return $base ?: '/';
+        return $base . '/' . $real_slug . ($params ? '/' . implode('/', $params) : '');
     }
 }
 
