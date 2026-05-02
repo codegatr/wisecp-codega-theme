@@ -16,8 +16,9 @@ $panel_logo = $panel_logo ?? '';
 $controller_url = $links['controller'] ?? '';
 $can_change_pw = ($is_active && in_array('change-password', $supported));
 $has_buttons   = ($is_active && !empty($buttons));
+$can_manage_email = ($is_active && in_array('manage-email-account', $supported));
 
-if(!$can_change_pw && !$has_buttons) return; // Hiçbir özellik yoksa kart bile gösterme
+if(!$can_change_pw && !$has_buttons && !$can_manage_email) return; // Hiçbir özellik yoksa kart bile gösterme
 ?>
 
 <style>
@@ -194,6 +195,22 @@ if(!$can_change_pw && !$has_buttons) return; // Hiçbir özellik yoksa kart bile
                 <i class="bi bi-check2-circle"></i> Şifreyi Değiştir
             </button>
         </form>
+    </div>
+    <?php endif; ?>
+
+    <?php if($can_manage_email): ?>
+    <!-- Email Hesapları Kartı -->
+    <div class="cdg-host-card">
+        <div class="cdg-host-card-head">
+            <div class="icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa);"><i class="bi bi-envelope-at"></i></div>
+            <h3>E-Posta Hesapları</h3>
+        </div>
+        <p style="font-size:13px;color:#64748b;margin:0 0 14px;">
+            Hosting paketinize bağlı e-posta hesaplarını yönetin. Yeni hesap oluşturun, şifre değiştirin veya yönlendirme tanımlayın.
+        </p>
+        <button type="button" class="cdg-host-btn" style="background:linear-gradient(135deg,#3b82f6,#60a5fa);box-shadow:0 4px 10px rgba(59,130,246,0.22);" onclick="cdgHemOpen()">
+            <i class="bi bi-gear"></i> E-Posta Hesaplarını Yönet
+        </button>
     </div>
     <?php endif; ?>
 
