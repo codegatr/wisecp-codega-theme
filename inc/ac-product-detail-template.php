@@ -919,6 +919,96 @@ foreach($options as $opt_k => $opt_v) {
 
     <!-- TAB: CANCEL -->
     <div class="cdg-pd2-pane" id="cdg-pd2-pane-cancel">
+        <?php
+        // Mevcut iptal talebi var mı? WiseCP runtime: $p_cancellation
+        $p_cancel = isset($p_cancellation) && $p_cancellation ? $p_cancellation : null;
+        $p_cancel_data = [];
+        if($p_cancel && isset($p_cancel['data'])) {
+            if(is_string($p_cancel['data'])) {
+                if(class_exists('Utility') && method_exists('Utility','jdecode')) {
+                    try { $p_cancel_data = Utility::jdecode($p_cancel['data'], true); } catch(\Throwable $e) {}
+                }
+                if(empty($p_cancel_data)) {
+                    $tmp = json_decode($p_cancel['data'], true);
+                    if(is_array($tmp)) $p_cancel_data = $tmp;
+                }
+            } elseif(is_array($p_cancel['data'])) {
+                $p_cancel_data = $p_cancel['data'];
+            }
+        }
+
+        if($p_cancel):
+            $cancel_status = $p_cancel['status'] ?? 'pending';
+            $cancel_status_meta = [
+                'pending'  => ['cls' => 'cdg-pd2-badge-warning', 'lbl' => 'Beklemede',  'icon' => 'hourglass-split', 'color' => '#f59e0b'],
+                'approved' => ['cls' => 'cdg-pd2-badge-danger',  'lbl' => 'Onaylandi',  'icon' => 'check-circle-fill', 'color' => '#ef4444'],
+                'rejected' => ['cls' => 'cdg-pd2-badge-success', 'lbl' => 'Reddedildi', 'icon' => 'x-circle-fill', 'color' => '#10b981'],
+            ];
+            $csm = $cancel_status_meta[$cancel_status] ?? $cancel_status_meta['pending'];
+            $cancel_reason = $p_cancel_data['reason'] ?? '';
+            $cancel_urgency = $p_cancel_data['urgency'] ?? 'now';
+            $cancel_date = $p_cancel['cdate'] ?? '';
+            $admin_note = $p_cancel['operator_note'] ?? '';
+        ?>
+        <!-- MEVCUT IPTAL TALEBI -->
+        <div class="cdg-pd2-card">
+            <div class="cdg-pd2-card-head" style="background:linear-gradient(135deg, <?php echo $csm['color']; ?>15, transparent);">
+                <h3><i class="bi bi-<?php echo $csm['icon']; ?>" style="color:<?php echo $csm['color']; ?>;"></i> Iptal Talebi Mevcut</h3>
+                <span class="cdg-pd2-badge <?php echo $csm['cls']; ?>"><?php echo htmlspecialchars($csm['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <ul class="cdg-pd2-info">
+                    <?php if($cancel_reason): ?>
+                    <li>
+                        <span class="cdg-pd2-info-label">Iptal Sebebi</span>
+                        <span class="cdg-pd2-info-value" style="font-style:italic;color:#475569;">"<?php echo htmlspecialchars($cancel_reason, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"</span>
+                    </li>
+                    <?php endif; ?>
+                    <?php if($cancel_urgency): ?>
+                    <li>
+                        <span class="cdg-pd2-info-label">Iptal Turu</span>
+                        <span class="cdg-pd2-info-value">
+                            <?php echo $cancel_urgency === 'now' ? 'Hemen Iptal' : 'Periyot Sonunda Iptal'; ?>
+                        </span>
+                    </li>
+                    <?php endif; ?>
+                    <?php if($cancel_date): ?>
+                    <li>
+                        <span class="cdg-pd2-info-label">Talep Tarihi</span>
+                        <span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_date($cancel_date), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                    </li>
+                    <?php endif; ?>
+                </ul>
+
+                <?php if($admin_note): ?>
+                <div class="cdg-pd2-alert cdg-pd2-alert-info" style="margin-top:14px;">
+                    <i class="bi bi-chat-square-text"></i>
+                    <div>
+                        <strong>Yonetici Notu:</strong><br>
+                        <?php echo nl2br(htmlspecialchars($admin_note, ENT_QUOTES | ENT_HTML5, 'UTF-8')); ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <?php if($cancel_status !== 'approved'): ?>
+                <div style="margin-top:18px;display:flex;justify-content:center;">
+                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-success" onclick="cdgPd2.removeCancellation()">
+                        <i class="bi bi-arrow-counterclockwise"></i> Iptal Talebini Geri Cek
+                    </button>
+                </div>
+                <?php else: ?>
+                <div class="cdg-pd2-alert cdg-pd2-alert-danger" style="margin-top:14px;">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <div>
+                        <strong>Talep onaylandı.</strong> Bu hizmet kısa sürede sonlandırılacaktır.
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <?php else: ?>
+        <!-- YENI IPTAL FORMU -->
         <div class="cdg-pd2-card">
             <div class="cdg-pd2-card-head">
                 <h3><i class="bi bi-ban"></i> İptal Talebi</h3>
@@ -935,8 +1025,8 @@ foreach($options as $opt_k => $opt_v) {
                 <div class="cdg-pd2-field">
                     <label class="cdg-pd2-label">İptal Türü</label>
                     <select id="cdg-pd2-cancel-type" class="cdg-pd2-input">
-                        <option value="immediately">Hemen İptal Et</option>
-                        <option value="end-of-period">Periyot Sonunda İptal Et</option>
+                        <option value="now">Hemen İptal Et</option>
+                        <option value="period-ending">Periyot Sonunda İptal Et</option>
                     </select>
                 </div>
                 <div class="cdg-pd2-field">
@@ -951,6 +1041,7 @@ foreach($options as $opt_k => $opt_v) {
                 </div>
             </div>
         </div>
+        <?php endif; ?>
     </div>
 
 </div>
@@ -1045,16 +1136,35 @@ window.cdgPd2 = {
 
     cancel: function(){
         if(!confirm('Hizmet iptal talebinizi göndermek istediğinize emin misiniz? Bu işlem geri alınamaz.')) return;
-        var type = document.getElementById('cdg-pd2-cancel-type').value;
+        var urgency = document.getElementById('cdg-pd2-cancel-type').value;
         var reason = document.getElementById('cdg-pd2-cancel-reason').value;
         if(typeof MioAjax !== 'function') return;
         MioAjax({
             url: this.controllerUrl,
             type: 'post',
-            data: { operation: 'canceled_product', id: this.productId, type: type, reason: reason },
+            data: { operation: 'canceled_product', id: this.productId, urgency: urgency, reason: reason },
             result: function(r){
                 if(r && r.status === 'successful') {
                     if(typeof alert_success === 'function') alert_success(r.message || 'İptal talebiniz alındı', {timer: 2500});
+                    setTimeout(function(){ location.reload(); }, 2000);
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+
+    // Mevcut iptal talebini geri cek
+    removeCancellation: function(){
+        if(!confirm('Iptal talebinizi geri cekmek istediginize emin misiniz? Hizmetiniz aktif kalacaktir.')) return;
+        if(typeof MioAjax !== 'function') return;
+        MioAjax({
+            url: this.controllerUrl,
+            type: 'post',
+            data: { operation: 'remove_cancelled_product', id: this.productId },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Iptal talebi geri cekildi', {timer: 2500});
                     setTimeout(function(){ location.reload(); }, 2000);
                 } else if(r && r.message && typeof alert_error === 'function') {
                     alert_error(r.message, {timer: 3000});
