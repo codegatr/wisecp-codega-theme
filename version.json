@@ -1,19 +1,22 @@
 {
-    "version": "3.0.1",
+    "version": "3.1.0",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.0.1-codega",
-    "tag": "v3.0.1-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.1.0-codega",
+    "tag": "v3.1.0-codega",
     "changelog": [
-        "v3.0.1 - URL UYUMLU + GENEL TOPARLAMA",
-        "FIX /kategori/(0) URL: cdg_link() artik akilli fallback yapiyor",
-        "  WiseCP CRLink hatali sonuc dondururse (URL'de /(0) varsa)",
-        "  manuel slug URL'sine fallback yapar",
-        "  4 dosyada guncellendi: header-1, header-2, footer, index",
-        "FIX knowledgebase.php: Yasakli rakip yazilim isimleri kaldirildi",
-        "  (Wolvox, Mikro, Logo, NetCAD - sirketin kurali)",
-        "QA: 123 PHP dosya syntax temiz",
-        "QA: Hicbir Turkce karakter URL/href icinde yok",
-        "QA: APP_URI bazli URL uretimi (ASCII guvenli)"
+        "v3.1.0 - MUSTERI PANELI TOPARLAMA - 1/27 ac-products-domain.php",
+        "DOMAINLERIM SAYFASI sifirdan yazildi (597 satir, inline CSS)",
+        "BOLUMLER:",
+        "  1. Hero: Domainlerim baslik + Yeni Domain Al + Whois Profilleri butonlari",
+        "  2. Varsayilan NS Kayitlari karti (4x NS input + AJAX kaydet)",
+        "  3. Tab filtre: Tumu/Aktif/Islemde/Onay/Askida/Iptal sayaclari",
+        "  4. Domain card grid: ikon + ad + bitis tarihi + periyod + fiyat + status badge + Yonet",
+        "  5. Empty state: hic domain yoksa CTA",
+        "WiseCP runtime: $products, $filter_counts, $situations, $links, $default_nameserver",
+        "AJAX: modify_default_nameserver operation (NS guncelleme MioAjax)",
+        "JS: Tab filtre client-side calisma + bos sonuc mesaji",
+        "Defansif: tum variable'lar isset() kontrollu",
+        "RESPONSIVE: 768px alti card stack, hero compact"
     ]
 }
