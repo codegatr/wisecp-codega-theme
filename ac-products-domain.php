@@ -442,10 +442,10 @@ function cdg_domain_status_label($status) {
             <div class="cdg-pd-ns-grid">
                 <?php for($i = 1; $i <= 4; $i++):
                     $ns_key = 'ns' . $i;
-                    $ns_val = isset($default_nameserver[$ns_key]) ? $default_nameserver[$ns_key] : '';
+                    $ns_val = isset($default_nameserver[$ns_key]) ? $default_nameserver[$ns_key] : (isset($default_nameserver[$i-1]) ? $default_nameserver[$i-1] : '');
                 ?>
                 <input type="text"
-                       name="<?php echo $ns_key; ?>"
+                       name="values[]"
                        value="<?php echo htmlspecialchars($ns_val, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
                        placeholder="ns<?php echo $i; ?>.codega.com.tr"
                        class="cdg-pd-ns-input"

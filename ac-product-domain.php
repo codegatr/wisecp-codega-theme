@@ -154,7 +154,10 @@ if(empty(array_filter($current_ns))) {
 }
 
 // Whois privacy
-$whois_privacy_active = !empty($options['whois_privacy']);
+// Whois privacy - WiseCP runtime: $wprivacy primary, $options['whois_privacy'] fallback
+$whois_privacy_active = isset($wprivacy) ? !empty($wprivacy) : !empty($options['whois_privacy']);
+$whois_privacy_price = $wprivacy_price ?? '';
+$whois_privacy_endtime = $wprivacy_endtime ?? '';
 // Transfer lock
 $transfer_lock = !empty($options['transferlock']);
 ?>
@@ -700,10 +703,31 @@ $transfer_lock = !empty($options['transferlock']);
                         <i class="bi bi-info-circle"></i>
                         <div>Yenileme zamanı geldiğinde otomatik fatura oluşturulur. İsterseniz şimdi de yenileyebilirsiniz.</div>
                     </div>
+
+                    <?php
+                    // WiseCP runtime: $renewal_list = [year => formatted_price] (yenileme donemleri)
+                    $renewal_periods = isset($renewal_list) && is_array($renewal_list) ? $renewal_list : [];
+                    ?>
+
+                    <?php if(!empty($renewal_periods)): ?>
+                    <!-- Yenileme Donemi Secici -->
+                    <div class="cdg-pdm-field" style="margin-bottom:10px;">
+                        <label class="cdg-pdm-label">Yenileme Donemi</label>
+                        <select id="cdg-pdm-renewal-period" class="cdg-pdm-select">
+                            <?php foreach($renewal_periods as $year => $price): ?>
+                            <option value="<?php echo (int)$year; ?>"><?php echo (int)$year; ?> Yıl - <?php echo htmlspecialchars($price, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <button type="button" class="cdg-pdm-btn cdg-pdm-btn-success" style="width:100%;justify-content:center;margin-bottom:8px;" onclick="cdgDomain.renewWithPeriod()">
+                        <i class="bi bi-arrow-clockwise"></i> Secilen Donemde Yenile
+                    </button>
+                    <?php else: ?>
                     <button type="button" class="cdg-pdm-btn cdg-pdm-btn-success" style="width:100%;justify-content:center;margin-bottom:8px;" onclick="cdgDomain.renew()">
                         <i class="bi bi-arrow-clockwise"></i> Şimdi Yenile
                     </button>
                     <?php endif; ?>
+                    <?php endif; // dış: $invoice && !empty($invoice['id']) ?>
 
                     <button type="button" class="cdg-pdm-btn cdg-pdm-btn-outline" style="width:100%;justify-content:center;" onclick="cdgDomain.toggleAutoPay(this)">
                         <i class="bi bi-credit-card-2-back"></i>
@@ -1086,12 +1110,31 @@ $transfer_lock = !empty($options['transferlock']);
             <div class="cdg-pdm-card">
                 <div class="cdg-pdm-card-head">
                     <h3><i class="bi bi-eye-slash"></i> WHOIS Gizliliği</h3>
+                    <?php if($whois_privacy_active): ?>
+                    <span class="cdg-pdm-badge cdg-pdm-badge-success"><i class="bi bi-check-circle"></i> Aktif</span>
+                    <?php endif; ?>
                 </div>
                 <div class="cdg-pdm-card-body">
                     <div class="cdg-pdm-alert cdg-pdm-alert-info">
                         <i class="bi bi-info-circle"></i>
                         <div>WHOIS gizliliği aktifken kişisel bilgileriniz kamuya açık WHOIS sorgularında gösterilmez.</div>
                     </div>
+
+                    <?php if($whois_privacy_price): ?>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+                        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                            <div style="font-size:11px;color:#64748b;text-transform:uppercase;font-weight:600;">Yıllık Ücret</div>
+                            <div style="font-size:16px;font-weight:800;color:#1e40af;margin-top:4px;"><?php echo htmlspecialchars($whois_privacy_price, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                        </div>
+                        <?php if($whois_privacy_endtime): ?>
+                        <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px;text-align:center;">
+                            <div style="font-size:11px;color:#15803d;text-transform:uppercase;font-weight:600;">Bitiş Tarihi</div>
+                            <div style="font-size:14px;font-weight:700;color:#15803d;margin-top:4px;"><?php echo htmlspecialchars($whois_privacy_endtime, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
+
                     <div style="text-align:center;padding:14px;">
                         <div class="cdg-pdm-toggle <?php echo $whois_privacy_active ? 'active' : ''; ?>" id="cdg-whoispriv-toggle" onclick="cdgDomain.toggleWhoisPrivacy(this)">
                             <div class="cdg-pdm-toggle-switch"></div>
@@ -1290,6 +1333,27 @@ window.cdgDomain = {
         } else {
             alert('AJAX motoru yüklenemedi - sayfayı yenileyin');
         }
+    },
+
+    renewWithPeriod: function(){
+        var sel = document.getElementById('cdg-pdm-renewal-period');
+        var period = sel ? sel.value : '';
+        if(!period) { alert('Lutfen yenileme donemi secin'); return; }
+        if(!confirm(period + ' yıl yenileme için fatura oluşturulacak. Devam edilsin mi?')) return;
+        if(typeof MioAjax !== 'function') { alert('AJAX motoru yüklenemedi'); return; }
+        MioAjax({
+            url: this.controllerUrl,
+            type: 'post',
+            data: { operation: 'domain_renewal', id: this.domainId, period: period },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Yenileme faturası oluşturuldu', {timer: 2000});
+                    setTimeout(function(){ if(r.redirect) location.href = r.redirect; else location.reload(); }, 1500);
+                } else if(r && r.message) {
+                    if(typeof alert_error === 'function') alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
     },
 
     toggleAutoPay: function(el){
