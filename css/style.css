@@ -2199,3 +2199,65 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     .cdg-cert-item{min-width:calc(50% - 10px);}
     .cdg-floating-wa{width:52px;height:52px;font-size:26px;bottom:16px;right:16px;}
 }
+
+/* ==================== PRICING TAB SİSTEMİ ==================== */
+
+.cdg-pricing-tabbed{background:#fff;}
+
+.cdg-pricing-tabs{
+    display:flex;gap:8px;margin:48px auto 32px;max-width:900px;
+    background:#f8fafc;padding:8px;border-radius:14px;border:1px solid #e2e8f0;
+    flex-wrap:wrap;
+}
+.cdg-pricing-tab{
+    flex:1;min-width:200px;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    padding:14px 18px;border:0;border-radius:10px;
+    background:transparent;color:#64748b;
+    font-family:inherit;font-weight:600;font-size:14px;
+    cursor:pointer;transition:all 0.2s;
+}
+.cdg-pricing-tab i{font-size:22px;}
+.cdg-pricing-tab span{font-weight:700;color:#0f172a;}
+.cdg-pricing-tab small{font-size:11px;color:#94a3b8;font-weight:500;}
+.cdg-pricing-tab:hover{background:#fff;}
+.cdg-pricing-tab.active{
+    background:#fff;
+    box-shadow:0 4px 14px rgba(30,64,175,0.10);
+    border:1px solid rgba(30,64,175,0.10);
+}
+.cdg-pricing-tab.active span{color:#1e40af;}
+
+.cdg-pricing-pane{display:none;animation:cdgFadeIn 0.3s ease;}
+.cdg-pricing-pane.active{display:block;}
+@keyframes cdgFadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.cdg-pricing-pane-desc{
+    text-align:center;color:#64748b;font-size:14px;
+    margin-bottom:32px;max-width:600px;margin-left:auto;margin-right:auto;
+}
+
+/* Grid kolonu paket sayısına göre değişsin */
+.cdg-pricing-grid-3{grid-template-columns:repeat(3,1fr)!important;max-width:980px;margin:0 auto;}
+.cdg-pricing-grid-4{grid-template-columns:repeat(4,1fr)!important;}
+
+/* Kategori tag'i (her kart üstünde küçük etiket) */
+.cdg-price-cat-tag{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:5px 12px;border-radius:99px;
+    font-size:11px;font-weight:700;text-transform:uppercase;
+    letter-spacing:0.5px;margin-bottom:14px;
+}
+.cdg-price-cat-tag i{font-size:13px;}
+
+/* RESPONSIVE */
+@media (max-width:1100px){
+    .cdg-pricing-grid-4{grid-template-columns:repeat(2,1fr)!important;}
+    .cdg-pricing-grid-3{grid-template-columns:repeat(2,1fr)!important;}
+}
+@media (max-width:768px){
+    .cdg-pricing-tabs{flex-direction:column;gap:4px;}
+    .cdg-pricing-tab{flex-direction:row;justify-content:flex-start;text-align:left;width:100%;}
+    .cdg-pricing-tab small{margin-left:auto;}
+    .cdg-pricing-grid-4,.cdg-pricing-grid-3{grid-template-columns:1fr!important;}
+}

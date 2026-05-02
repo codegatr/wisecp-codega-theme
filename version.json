@@ -1,24 +1,18 @@
 {
-    "version": "2.3.0",
+    "version": "2.4.0",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "file_url_alt": "https://cdn.jsdelivr.net/gh/codegatr/wisecp-codega-theme@main/Codega-v2.3.0.zip",
-    "file_url_release": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.3.0-codega/Codega-v2.3.0.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.3.0-codega",
-    "tag": "v2.3.0-codega",
+    "file_url_alt": "https://cdn.jsdelivr.net/gh/codegatr/wisecp-codega-theme@main/Codega-v2.4.0.zip",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.4.0-codega",
+    "tag": "v2.4.0-codega",
     "changelog": [
-        "v2.3.0 - PREMIUM ANASAYFA: 16 bolumlu profesyonel landing page",
-        "Hero PRO: 3D orb + 2 spinning ring + 4 floating card + uptime stat",
-        "Performans gostergeleri: 28ms / %99.99 / 9x / 5dk (4 metrik)",
-        "WordPress hosting ozel bolum: PageSpeed mockup + 4 ozellik",
-        "Sektorel cozumler: 6 kart (E-ticaret, WP, Kurumsal, Egitim, Haber, Yazilimci)",
-        "Sunucu paketleri: 3 detayli kart (CPU/RAM/Disk/Bandwidth spec)",
-        "Veri merkezleri: TR/DE/NL 3 lokasyon",
-        "Avantajlar: 4 sutun 8 ozellik",
-        "Stats: icon + sari rakam (4 metrik)",
-        "Musteri yorumlari: 3 testimonial + 5 yildiz rating",
-        "FAQ accordion: 6 soru",
-        "Sertifikalar bandi: ISO 27001, ETBIS, KVKK, SSL, 2017+",
-        "Floating WhatsApp butonu (sag alt, pulse animasyon)"
+        "v2.4.0 - GERCEK PAKETLER + 3 SEKMELİ PRICING",
+        "WiseCP global'inden gercek hosting paketleri otomatik cekiliyor",
+        "Fallback: Yunus'un panelindeki paketler (Linux 1-4, Profesyonel 1-3, Bayi S/M/L)",
+        "Pricing tab sistemi: Ekonomik / Profesyonel / Bayi sekmeleri",
+        "Sunucu bolumu kaldirildi (sadece hosting + domain)",
+        "Her paket altinda kategori tag (yesil/mavi/mor)",
+        "13 bolum: Hero, Performans, TLD, Pricing-Tabs, WP, Sektor, Avantaj, DC, Stats, Yorumlar, FAQ, Sertifika, Destek, Son CTA",
+        "Floating WhatsApp butonu"
     ]
 }
