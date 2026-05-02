@@ -1,24 +1,19 @@
 {
-    "version": "3.0.0",
+    "version": "3.0.1",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.0.0-codega",
-    "tag": "v3.0.0-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.0.1-codega",
+    "tag": "v3.0.1-codega",
     "changelog": [
-        "v3.0.0 - HESABIM SAYFASI SIFIRDAN YAZILDI",
-        "ac-dashboard.php komple bastan yazildi (709 satir)",
-        "INLINE CSS (self-contained) - dis style.css'e BAGIMLI DEGIL",
-        "Bu sayede dis CSS'te ne degisirse degissin dashboard duzgun",
-        "WiseCP runtime variables dogru kullaniliyor:",
-        "  - $orders, $tickets, $news, $links, $acsidebar_links, User::init->info",
-        "BOLUMLER:",
-        "  1. Hero: avatar + selamlama + 2 CTA (Yeni Hizmet/Destek)",
-        "  2. 4 stat card: Aktif Hizmet/Bekleyen Fatura/Acik Talep/Bakiye",
-        "  3. 6 hizli erisim: Hizmetlerim/Domain/Fatura/Destek/Bakiye/Yeni",
-        "  4. 2 sutunlu: Aktif Hizmetler listesi + Son Talepler",
-        "  5. Duyurular ($news varsa)",
-        "  6. Destek promo (WhatsApp + telefon)",
-        "RESPONSIVE: 992px alti 2-col stat, 540px alti tek col",
-        "DEFANSIF: Tum WiseCP variable'lari isset() ile kontrol ediliyor"
+        "v3.0.1 - URL UYUMLU + GENEL TOPARLAMA",
+        "FIX /kategori/(0) URL: cdg_link() artik akilli fallback yapiyor",
+        "  WiseCP CRLink hatali sonuc dondururse (URL'de /(0) varsa)",
+        "  manuel slug URL'sine fallback yapar",
+        "  4 dosyada guncellendi: header-1, header-2, footer, index",
+        "FIX knowledgebase.php: Yasakli rakip yazilim isimleri kaldirildi",
+        "  (Wolvox, Mikro, Logo, NetCAD - sirketin kurali)",
+        "QA: 123 PHP dosya syntax temiz",
+        "QA: Hicbir Turkce karakter URL/href icinde yok",
+        "QA: APP_URI bazli URL uretimi (ASCII guvenli)"
     ]
 }

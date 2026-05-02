@@ -12,10 +12,22 @@ $year = date('Y');
 
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
-        if(class_exists('Controllers') && isset(Controllers::$init)) {
-            return Controllers::$init->CRLink($slug, $params);
+        // 1) WiseCP Controllers::CRLink (Türkçe slug + ID resolution)
+        if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Controllers::$init, 'CRLink')) {
+            $url = Controllers::$init->CRLink($slug, $params);
+
+            // Hatalı (0) sonucunu yakala - WiseCP "hosting" gibi string'i ID'ye çeviremezse 0 döner
+            // Bu durumda manuel slug URL'sine fallback yap
+            if($url && (strpos($url, '/(0)') !== false || preg_match('#/0/?$#', $url) || preg_match('#/0\?#', $url))) {
+                // Manuel: WiseCP base URL + slug + params
+                $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
+                return $base . '/' . $slug . ($params ? '/' . implode('/', $params) : '');
+            }
+            return $url;
         }
-        return '/' . $slug . ($params ? '/' . implode('/', $params) : '');
+        // 2) Fallback: manuel URL
+        $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
+        return $base . '/' . $slug . ($params ? '/' . implode('/', $params) : '');
     }
 }
 
