@@ -36,11 +36,9 @@ if(class_exists('Config') && method_exists('Config', 'get') && Config::get("them
 
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
-        // 1) Runtime $links[] kontrolü (WiseCP en güvenilir kaynak)
+        // NOT: $links global'i bazen yanlis URL doner ($links['products']=/products-hosting gibi)
+        // Bu yuzden once alias+CRLink, $links sadece bilinmeyen slug'lar icin son fallback
         global $links;
-        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
-            return $links[$slug];
-        }
 
         // 2) Kısa-isim -> WiseCP gerçek route alias map
         static $aliases = [
@@ -89,6 +87,10 @@ if(!function_exists('cdg_link')) {
         }
 
         // 4) Son çare: APP_URI base + slug
+        // Son care: $links bakilirsa kullan (sadece bilinmeyen slug'lar icin)
+        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
+            return $links[$slug];
+        }
         $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
         if(!$real_slug) return $base ?: '/';
         return $base . '/' . $real_slug . ($params ? '/' . implode('/', $params) : '');
@@ -124,12 +126,305 @@ $tld_count = isset($tldList) && is_array($tldList) ? count($tldList) : 0;
 $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : [];
 ?>
 
+<style>
+/* CODEGA - DOMAIN SORGULAMA HERO - Modern premium tasarim */
+.cdg-domain-hero {
+    position: relative;
+    background: linear-gradient(135deg, #0a1f44 0%, #1e3a8a 35%, #1e40af 70%, #2563eb 100%);
+    padding: 90px 0 110px;
+    overflow: hidden;
+    color: #fff;
+}
+.cdg-domain-hero-bg {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+.cdg-mesh-gradient {
+    position: absolute;
+    top: -50%; left: -10%;
+    width: 70%; height: 200%;
+    background: radial-gradient(circle, rgba(96,165,250,0.35) 0%, transparent 60%);
+    filter: blur(60px);
+    animation: cdgFloat1 14s ease-in-out infinite;
+}
+.cdg-mesh-gradient::after {
+    content: '';
+    position: absolute;
+    top: 30%; right: -50%;
+    width: 60%; height: 80%;
+    background: radial-gradient(circle, rgba(56,189,248,0.30) 0%, transparent 60%);
+    filter: blur(80px);
+    animation: cdgFloat2 18s ease-in-out infinite;
+}
+@keyframes cdgFloat1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(8%, 6%); } }
+@keyframes cdgFloat2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-8%, -6%); } }
+.cdg-domain-hero-particles {
+    position: absolute; inset: 0;
+}
+.cdg-domain-hero-particles span {
+    position: absolute;
+    display: block;
+    width: 6px; height: 6px;
+    background: rgba(255,255,255,0.50);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(96,165,250,0.80);
+    animation: cdgParticle 12s linear infinite;
+}
+.cdg-domain-hero-particles span:nth-child(1) { left: 8%; top: 20%; animation-delay: 0s; }
+.cdg-domain-hero-particles span:nth-child(2) { left: 18%; top: 70%; animation-delay: -2s; }
+.cdg-domain-hero-particles span:nth-child(3) { left: 35%; top: 30%; animation-delay: -4s; width: 4px; height: 4px; }
+.cdg-domain-hero-particles span:nth-child(4) { left: 55%; top: 80%; animation-delay: -6s; }
+.cdg-domain-hero-particles span:nth-child(5) { left: 70%; top: 25%; animation-delay: -8s; width: 8px; height: 8px; }
+.cdg-domain-hero-particles span:nth-child(6) { left: 85%; top: 65%; animation-delay: -10s; }
+.cdg-domain-hero-particles span:nth-child(7) { left: 92%; top: 35%; animation-delay: -3s; width: 5px; height: 5px; }
+@keyframes cdgParticle {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+    50% { transform: translateY(-30px) scale(1.4); opacity: 1; }
+}
+
+.cdg-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+.cdg-domain-hero-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.cdg-domain-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 22px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #422006;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 24px rgba(251,191,36,0.40), 0 0 0 1px rgba(255,255,255,0.20) inset;
+    animation: cdgBadgeFloat 3s ease-in-out infinite;
+}
+@keyframes cdgBadgeFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.cdg-domain-hero h1 {
+    font-size: clamp(34px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 18px;
+    color: #fff;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.20);
+    letter-spacing: -0.02em;
+}
+.cdg-text-gradient-light {
+    background: linear-gradient(135deg, #fbbf24 0%, #fde047 50%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+.cdg-domain-lead {
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    margin: 0 auto 36px;
+    max-width: 620px;
+}
+
+/* DOMAIN INPUT WRAP */
+.cdg-domain-search-wrap {
+    margin: 0 auto;
+    max-width: 760px;
+}
+.cdg-domain-search-input {
+    display: flex;
+    align-items: stretch;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.30), 0 0 0 1px rgba(255,255,255,0.10) inset;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.cdg-domain-search-input:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.40);
+}
+.cdg-domain-search-input-main {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    gap: 12px;
+}
+.cdg-domain-search-input-main > i {
+    color: #1e40af;
+    font-size: 22px;
+}
+.cdg-domain-search-input-main input {
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 18px 4px;
+    font-size: 17px;
+    color: #0f172a;
+    background: transparent;
+    font-weight: 600;
+}
+.cdg-domain-search-input-main input::placeholder {
+    color: #94a3b8;
+    font-weight: 500;
+}
+.cdg-domain-search-captcha {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    border-left: 1px solid #e2e8f0;
+}
+.cdg-domain-captcha-img {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 4px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+}
+.cdg-domain-captcha-img img {
+    height: 30px !important;
+    border-radius: 3px;
+}
+.cdg-domain-search-captcha input {
+    width: 110px;
+    padding: 11px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #fff;
+}
+.cdg-domain-search-captcha input:focus {
+    border-color: #1e40af;
+    box-shadow: 0 0 0 3px rgba(30,64,175,0.15);
+}
+.cdg-btn-glow {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 32px;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 0;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.cdg-btn-glow::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #1e40af, #1e3a8a);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.cdg-btn-glow:hover::before { opacity: 1; }
+.cdg-btn-glow > * { position: relative; z-index: 1; }
+.cdg-btn-glow i { font-size: 18px; }
+
+.cdg-domain-transfer-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    color: rgba(255,255,255,0.90);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.cdg-domain-transfer-toggle input[type=checkbox] {
+    width: 18px; height: 18px;
+    cursor: pointer;
+    accent-color: #fbbf24;
+}
+.cdg-domain-epp {
+    width: 100%;
+    padding: 14px 18px;
+    border: 0;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.20);
+}
+.cdg-domain-epp::placeholder { color: rgba(255,255,255,0.60); }
+.cdg-domain-epp:focus {
+    background: rgba(255,255,255,0.20);
+    border-color: rgba(251,191,36,0.50);
+}
+
+/* FEATURED TLDs (öne çıkan uzantılar bar) */
+.cdg-domain-featured {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+}
+.cdg-domain-featured-label {
+    color: rgba(255,255,255,0.70);
+    font-size: 13px;
+    font-weight: 600;
+}
+.cdg-domain-featured-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.20);
+    border-radius: 100px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+.cdg-domain-featured-pill:hover {
+    background: rgba(255,255,255,0.22);
+    border-color: rgba(251,191,36,0.50);
+    transform: translateY(-2px);
+}
+.cdg-domain-featured-pill .tld-name { color: #fde047; }
+.cdg-domain-featured-pill .tld-price { color: #fbbf24; font-weight: 800; }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .cdg-domain-hero { padding: 60px 0 80px; }
+    .cdg-domain-search-input { flex-direction: column; }
+    .cdg-domain-search-input-main { padding: 14px 18px; }
+    .cdg-domain-search-captcha { padding: 12px 18px; border-left: 0; border-top: 1px solid #e2e8f0; justify-content: center; }
+    .cdg-btn-glow { padding: 16px; justify-content: center; }
+}
+</style>
+
 <!-- HERO + DOMAIN SORGU -->
 <section class="cdg-domain-hero">
     <div class="cdg-domain-hero-bg">
         <div class="cdg-mesh-gradient"></div>
-        <div class="cdg-hero-grid-pattern"></div>
-        <div class="cdg-auth-particles">
+        <div class="cdg-domain-hero-particles">
             <span></span><span></span><span></span><span></span><span></span>
             <span></span><span></span>
         </div>
@@ -179,15 +474,18 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
             </form>
 
             <?php if(!empty($featured_tlds)): ?>
-            <div class="cdg-domain-quick">
-                <span class="muted">Öne çıkan:</span>
+            <div class="cdg-domain-featured">
+                <span class="cdg-domain-featured-label">Öne çıkan:</span>
                 <?php foreach(array_slice($featured_tlds, 0, 5) as $tld):
                     $price_amount = '';
                     if(isset($tld['reg_price']['amount']) && isset($tld['reg_price']['cid'])) {
                         $price_amount = Money::formatter_symbol($tld['reg_price']['amount'], $tld['reg_price']['cid'], !$override_usrcurrency);
                     }
                 ?>
-                <span class="cdg-domain-chip">.<?php echo htmlspecialchars($tld['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <strong><?php echo $price_amount; ?></strong></span>
+                <span class="cdg-domain-featured-pill">
+                    <span class="tld-name">.<?php echo htmlspecialchars($tld['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                    <span class="tld-price"><?php echo $price_amount; ?></span>
+                </span>
                 <?php endforeach; ?>
             </div>
             <?php endif; ?>

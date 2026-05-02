@@ -3,11 +3,9 @@ $hoptions = ["datatables"];
 
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
-        // 1) Runtime $links[] kontrolü (WiseCP en güvenilir kaynak)
+        // NOT: $links global'i bazen yanlis URL doner ($links['products']=/products-hosting gibi)
+        // Bu yuzden once alias+CRLink, $links sadece bilinmeyen slug'lar icin son fallback
         global $links;
-        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
-            return $links[$slug];
-        }
 
         // 2) Kısa-isim -> WiseCP gerçek route alias map
         static $aliases = [
@@ -56,6 +54,10 @@ if(!function_exists('cdg_link')) {
         }
 
         // 4) Son çare: APP_URI base + slug
+        // Son care: $links bakilirsa kullan (sadece bilinmeyen slug'lar icin)
+        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
+            return $links[$slug];
+        }
         $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
         if(!$real_slug) return $base ?: '/';
         return $base . '/' . $real_slug . ($params ? '/' . implode('/', $params) : '');
@@ -131,7 +133,17 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
                     } elseif(isset($situations) && isset($row['status']) && isset($situations[$row['status']])) {
                         $status_html = $situations[$row['status']];
                     } else {
-                        $status_html = '<span class="cdg-badge cdg-badge-' . (isset($row['status']) && $row['status']=='paid' ? 'success' : 'warning') . '">' . (isset($row['status']) ? $row['status'] : '-') . '</span>';
+                        // Turkce label fallback
+                        $st = isset($row['status']) ? $row['status'] : '';
+                        $st_labels = [
+                            'paid'      => ['cls' => 'success', 'lbl' => 'Ödendi'],
+                            'unpaid'    => ['cls' => 'warning', 'lbl' => 'Ödenmemiş'],
+                            'waiting'   => ['cls' => 'info',    'lbl' => 'Onay Bekliyor'],
+                            'refund'    => ['cls' => 'danger',  'lbl' => 'İade Edildi'],
+                            'cancelled' => ['cls' => 'muted',   'lbl' => 'İptal Edildi'],
+                        ];
+                        $st_info = $st_labels[$st] ?? ['cls' => 'warning', 'lbl' => $st ?: '-'];
+                        $status_html = '<span class="cdg-badge cdg-badge-' . $st_info['cls'] . '">' . htmlspecialchars($st_info['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</span>';
                     }
                 ?>
                     <tr>

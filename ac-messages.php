@@ -11,10 +11,8 @@ $hoptions = ["datatables"];
 
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
+        // NOT: $links global'i bazen yanlis URL doner ($links['products']=/products-hosting gibi)
         global $links;
-        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
-            return $links[$slug];
-        }
         static $aliases = [
             'create-ticket-request'   => 'ac-ps-create-ticket-request',
             'tickets'                 => 'ac-ps-tickets',
@@ -54,6 +52,10 @@ if(!function_exists('cdg_link')) {
                     return $url;
                 }
             } catch(\Throwable $e) {}
+        }
+        // Son care: $links bakilirsa kullan
+        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
+            return $links[$slug];
         }
         $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
         if(!$real_slug) return $base ?: '/';
@@ -293,10 +295,24 @@ function cdg_msglist_date($date) {
         <?php foreach($messages as $msg):
             if(!is_array($msg)) continue;
             $m_id      = $msg['id'] ?? 0;
-            $m_subject = $msg['subject'] ?? $msg['title'] ?? 'Mesaj';
+            $m_subject_raw = $msg['subject'] ?? $msg['title'] ?? 'Mesaj';
+            // Subject WiseCP'den HTML iceriyor (strong/a/href), strip_tags ile temizle
+            $m_subject = trim(strip_tags($m_subject_raw));
+            // HTML entitilerini decode et (&amp; -> & vb.)
+            $m_subject = html_entity_decode($m_subject, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            if(!$m_subject) $m_subject = 'Mesaj';
+
             $m_date    = $msg['date'] ?? $msg['cdate'] ?? '';
             $m_unread  = !empty($msg['unread']) || (isset($msg['status']) && $msg['status'] === 'unread');
-            $m_link    = $msg['detail_link'] ?? cdg_link('detail-message', [(int)$m_id]);
+
+            // Detay linki: 1) msg['detail_link'] 2) subject icindeki <a href=...> parse 3) cdg_link
+            $m_link = $msg['detail_link'] ?? '';
+            if(!$m_link && is_string($m_subject_raw) && preg_match('/href=["\']([^"\']+)["\']/', $m_subject_raw, $href_m)) {
+                $m_link = $href_m[1];
+            }
+            if(!$m_link) {
+                $m_link = cdg_link('detail-message', [(int)$m_id]);
+            }
             $m_from    = $msg['from'] ?? $msg['sender'] ?? 'Sistem';
         ?>
         <a href="<?php echo htmlspecialchars($m_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-msl-item <?php echo $m_unread ? 'unread' : ''; ?>">

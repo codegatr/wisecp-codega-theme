@@ -2,11 +2,9 @@
 
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
-        // 1) Runtime $links[] kontrolü (WiseCP en güvenilir kaynak)
+        // NOT: $links global'i bazen yanlis URL doner ($links['products']=/products-hosting gibi)
+        // Bu yuzden once alias+CRLink, $links sadece bilinmeyen slug'lar icin son fallback
         global $links;
-        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
-            return $links[$slug];
-        }
 
         // 2) Kısa-isim -> WiseCP gerçek route alias map
         static $aliases = [
@@ -55,6 +53,10 @@ if(!function_exists('cdg_link')) {
         }
 
         // 4) Son çare: APP_URI base + slug
+        // Son care: $links bakilirsa kullan (sadece bilinmeyen slug'lar icin)
+        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
+            return $links[$slug];
+        }
         $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
         if(!$real_slug) return $base ?: '/';
         return $base . '/' . $real_slug . ($params ? '/' . implode('/', $params) : '');

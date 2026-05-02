@@ -10,11 +10,9 @@ $hoptions = ["datatables"];
 // === Yardımcı: Link üretici ===
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
-        // 1) Runtime $links[] kontrolü (WiseCP en güvenilir kaynak)
+        // NOT: $links global'i bazen yanlis URL doner ($links['products']=/products-hosting gibi)
+        // Bu yuzden once alias+CRLink, $links sadece bilinmeyen slug'lar icin son fallback
         global $links;
-        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
-            return $links[$slug];
-        }
 
         // 2) Kısa-isim -> WiseCP gerçek route alias map
         static $aliases = [
@@ -63,6 +61,10 @@ if(!function_exists('cdg_link')) {
         }
 
         // 4) Son çare: APP_URI base + slug
+        // Son care: $links bakilirsa kullan (sadece bilinmeyen slug'lar icin)
+        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
+            return $links[$slug];
+        }
         $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
         if(!$real_slug) return $base ?: '/';
         return $base . '/' . $real_slug . ($params ? '/' . implode('/', $params) : '');
@@ -170,13 +172,13 @@ elseif($hour >= 12 && $hour < 18)  $greeting = 'İyi günler';
 else                               $greeting = 'İyi akşamlar';
 
 // === Linkler ===
-// Quick action linkleri - $acsidebar_links bazi WiseCP versiyonlarinda yanlis URL doner
-// (orn: 'products' icin /products-hosting). Bu yuzden direkt cdg_link kullan.
-$products_url = cdg_link('all-orders');  // Tum Urunler sayfasi (ac-ps-products)
-$invoices_url = cdg_link('invoices');
-$tickets_url  = cdg_link('tickets');
-$balance_url  = cdg_link('balance');
-$domains_url  = cdg_link('domains');
+// Quick action linkleri - sidebar ile birebir ayni slug'lar (alias map bypass)
+// $links['all-orders'] WiseCP runtime'da bazen yanlis URL doner (/products-hosting)
+$products_url = cdg_link('ac-ps-products');     // Tum Urunler (sidebar ile ayni)
+$invoices_url = cdg_link('ac-ps-invoices');
+$tickets_url  = cdg_link('ac-ps-tickets');
+$balance_url  = cdg_link('ac-ps-balance');
+$domains_url  = cdg_link('ac-products-domain');
 $shop_url     = cdg_link('products', ['hosting']);
 $contact_url  = cdg_link('contact');
 ?>

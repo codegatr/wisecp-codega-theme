@@ -21,10 +21,8 @@ $hoptions = ["datatables"];
 
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
+        // NOT: $links global'i bazen yanlis URL doner ($links['products']=/products-hosting gibi)
         global $links;
-        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
-            return $links[$slug];
-        }
         static $aliases = [
             'create-ticket-request'   => 'ac-ps-create-ticket-request',
             'tickets'                 => 'ac-ps-tickets',
@@ -64,6 +62,10 @@ if(!function_exists('cdg_link')) {
                     return $url;
                 }
             } catch(\Throwable $e) {}
+        }
+        // Son care: $links bakilirsa kullan
+        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
+            return $links[$slug];
         }
         $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
         if(!$real_slug) return $base ?: '/';

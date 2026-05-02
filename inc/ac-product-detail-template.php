@@ -21,10 +21,8 @@ $hoptions = ["datatables"];
 
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
+        // NOT: $links global'i bazen yanlis URL doner ($links['products']=/products-hosting gibi)
         global $links;
-        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
-            return $links[$slug];
-        }
         static $aliases = [
             'create-ticket-request'   => 'ac-ps-create-ticket-request',
             'tickets'                 => 'ac-ps-tickets',
@@ -64,6 +62,10 @@ if(!function_exists('cdg_link')) {
                     return $url;
                 }
             } catch(\Throwable $e) {}
+        }
+        // Son care: $links bakilirsa kullan
+        if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
+            return $links[$slug];
         }
         $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
         if(!$real_slug) return $base ?: '/';
@@ -510,8 +512,19 @@ foreach($options as $opt_k => $opt_v) {
                         <?php if($d_duedate): ?>
                         <li><span class="cdg-pd2-info-label">Bitiş Tarihi</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_date($d_duedate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
-                        <?php if($d_period && $d_ptime): ?>
-                        <li><span class="cdg-pd2-info-label">Periyot</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_period . ' ' . $d_ptime, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
+                        <?php if($d_period && $d_ptime):
+                            // year/month/day -> Yil/Ay/Gun
+                            $period_unit_map = [
+                                'year' => 'Yıl', 'years' => 'Yıl', 'y' => 'Yıl',
+                                'month' => 'Ay', 'months' => 'Ay', 'm' => 'Ay',
+                                'week' => 'Hafta', 'weeks' => 'Hafta', 'w' => 'Hafta',
+                                'day' => 'Gün', 'days' => 'Gün', 'd' => 'Gün',
+                                'hour' => 'Saat', 'hours' => 'Saat', 'h' => 'Saat',
+                            ];
+                            $unit_tr = $period_unit_map[strtolower((string)$d_ptime)] ?? $d_ptime;
+                            $period_display = (int)$d_period . ' ' . $unit_tr;
+                        ?>
+                        <li><span class="cdg-pd2-info-label">Periyot</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($period_display, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($d_amount): ?>
                         <li><span class="cdg-pd2-info-label">Ücret</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_money($d_amount, $d_amount_cid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
@@ -538,8 +551,48 @@ foreach($options as $opt_k => $opt_v) {
                         <?php if($d_username): ?>
                         <li><span class="cdg-pd2-info-label">Kullanıcı Adı</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_username, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
-                        <?php foreach($extra_options as $k => $v): ?>
-                        <li><span class="cdg-pd2-info-label"><?php echo htmlspecialchars(ucfirst(str_replace('_',' ',$k)), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
+                        <?php
+                        // Extra option key'leri Turkce label'a cevir
+                        $option_label_map = [
+                            'group_name'         => 'Hosting Grubu',
+                            'local_group_name'   => 'Yerel Grup',
+                            'category_name'      => 'Hosting Kategorisi',
+                            'local_category_name'=> 'Yerel Kategori',
+                            'panel_type'         => 'Kontrol Paneli',
+                            'panel_url'          => 'Panel Adresi',
+                            'cp_url'             => 'Panel Adresi',
+                            'disk_limit'         => 'Disk Alanı (MB)',
+                            'bandwidth_limit'    => 'Aylık Trafik (MB)',
+                            'email_limit'        => 'E-posta Hesabı',
+                            'database_limit'     => 'Veritabanı',
+                            'ftp_limit'          => 'FTP Hesabı',
+                            'park_limit'         => 'Park Domain',
+                            'addons_limit'       => 'Eklenti Domain',
+                            'subdomain_limit'    => 'Alt Alan Adı',
+                            'username'           => 'Kullanıcı Adı',
+                            'password'           => 'Şifre',
+                            'hostname'           => 'Sunucu Adı',
+                            'ip'                 => 'IP Adresi',
+                            'domain'             => 'Alan Adı',
+                            'ns1'                => 'Birincil Ad Sunucusu',
+                            'ns2'                => 'İkincil Ad Sunucusu',
+                            'os'                 => 'İşletim Sistemi',
+                            'cpu'                => 'İşlemci',
+                            'ram'                => 'Bellek (RAM)',
+                            'storage'            => 'Disk',
+                            'bandwidth'          => 'Bant Genişliği',
+                            'location'           => 'Konum',
+                            'datacenter'         => 'Veri Merkezi',
+                        ];
+                        foreach($extra_options as $k => $v):
+                            $key_label = $option_label_map[$k] ?? ucfirst(str_replace('_', ' ', $k));
+                            // 'unlimited' / 'sinirsiz' degerini Turkcele
+                            $val_display = $v;
+                            if(is_string($v) && in_array(strtolower(trim($v)), ['unlimited', 'sinirsiz'])) {
+                                $val_display = 'Sınırsız';
+                            }
+                        ?>
+                        <li><span class="cdg-pd2-info-label"><?php echo htmlspecialchars($key_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars((string)$val_display, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endforeach; ?>
                     </ul>
 
@@ -646,20 +699,20 @@ foreach($options as $opt_k => $opt_v) {
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
                     <?php
                     $quotas = [
-                        'disk_limit'      => ['label' => 'Disk', 'icon' => 'hdd-fill', 'unit' => 'MB', 'color' => '#3b82f6'],
-                        'bandwidth_limit' => ['label' => 'Bandwidth', 'icon' => 'arrow-down-up', 'unit' => 'MB', 'color' => '#7c3aed'],
-                        'email_limit'     => ['label' => 'E-posta Hesabi', 'icon' => 'envelope-fill', 'unit' => 'adet', 'color' => '#f59e0b'],
-                        'database_limit'  => ['label' => 'Veritabani', 'icon' => 'database-fill', 'unit' => 'adet', 'color' => '#10b981'],
+                        'disk_limit'      => ['label' => 'Disk Alanı', 'icon' => 'hdd-fill', 'unit' => 'MB', 'color' => '#3b82f6'],
+                        'bandwidth_limit' => ['label' => 'Aylık Trafik', 'icon' => 'arrow-down-up', 'unit' => 'MB', 'color' => '#7c3aed'],
+                        'email_limit'     => ['label' => 'E-posta Hesabı', 'icon' => 'envelope-fill', 'unit' => 'adet', 'color' => '#f59e0b'],
+                        'database_limit'  => ['label' => 'Veritabanı', 'icon' => 'database-fill', 'unit' => 'adet', 'color' => '#10b981'],
                         'addons_limit'    => ['label' => 'Eklenti Domain', 'icon' => 'plus-square-fill', 'unit' => 'adet', 'color' => '#06b6d4'],
-                        'subdomain_limit' => ['label' => 'Subdomain', 'icon' => 'diagram-3-fill', 'unit' => 'adet', 'color' => '#ec4899'],
-                        'ftp_limit'       => ['label' => 'FTP Hesabi', 'icon' => 'cloud-arrow-up-fill', 'unit' => 'adet', 'color' => '#64748b'],
+                        'subdomain_limit' => ['label' => 'Alt Alan Adı', 'icon' => 'diagram-3-fill', 'unit' => 'adet', 'color' => '#ec4899'],
+                        'ftp_limit'       => ['label' => 'FTP Hesabı', 'icon' => 'cloud-arrow-up-fill', 'unit' => 'adet', 'color' => '#64748b'],
                         'park_limit'      => ['label' => 'Park Domain', 'icon' => 'p-square-fill', 'unit' => 'adet', 'color' => '#8b5cf6'],
                     ];
                     foreach($quotas as $key => $info):
                         $val = $$key;
                         if($val === null) continue;
-                        $is_unlimited = ($val === 0 || $val === '0' || strtolower((string)$val) === 'unlimited' || strtolower((string)$val) === 'sinirsiz');
-                        $display = $is_unlimited ? 'Sinirsiz' : (is_numeric($val) ? number_format((int)$val, 0, ',', '.') : $val);
+                        $is_unlimited = ($val === 0 || $val === '0' || strtolower((string)$val) === 'unlimited' || strtolower((string)$val) === 'sinirsiz' || strtolower((string)$val) === 'sınırsız');
+                        $display = $is_unlimited ? 'Sınırsız' : (is_numeric($val) ? number_format((int)$val, 0, ',', '.') : $val);
                     ?>
                     <div style="background:linear-gradient(135deg,<?php echo $info['color']; ?>15,<?php echo $info['color']; ?>05);border:1px solid <?php echo $info['color']; ?>30;border-radius:10px;padding:14px;">
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;color:<?php echo $info['color']; ?>;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">
