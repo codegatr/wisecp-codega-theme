@@ -691,8 +691,57 @@ foreach($options as $opt_k => $opt_v) {
                     <i class="bi bi-info-circle"></i>
                     <div>Hizmetinizin bitiş tarihi yaklaştığında otomatik fatura oluşturulur. İsterseniz şimdi de yenileyebilirsiniz.</div>
                 </div>
+
+                <?php
+                // Yenileme dönemi seçici (order_renewal) - WiseCP runtime: $product['price'] array
+                $renewal_prices = [];
+                if(isset($product) && is_array($product) && isset($product['price']) && is_array($product['price'])) {
+                    $renewal_prices = $product['price'];
+                }
+                if(!empty($renewal_prices)):
+                ?>
+                <div style="margin-bottom:14px;">
+                    <label style="display:block;font-size:12px;font-weight:700;color:#475569;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px;">
+                        <i class="bi bi-calendar3"></i> Yenileme Dönemi Seç
+                    </label>
+                    <div style="display:grid;grid-template-columns:1fr auto;gap:8px;">
+                        <select id="cdg-pd2-renewal-period" class="cdg-pdm-select" style="font-size:13px;">
+                            <option value="">Yenileme dönemi seçin...</option>
+                            <?php foreach($renewal_prices as $k => $v):
+                                $r_time = $v['time'] ?? 1;
+                                $r_period = $v['period'] ?? 'm';
+                                $r_amount = $v['amount'] ?? 0;
+                                $r_cid = $v['cid'] ?? 'TRY';
+                                $period_label = '';
+                                if(class_exists('View') && method_exists('View','period')) {
+                                    try { $period_label = View::period($r_time, $r_period); } catch(\Throwable $e) {}
+                                }
+                                $amount_str = '';
+                                if(class_exists('Money') && method_exists('Money','formatter_symbol')) {
+                                    try { $amount_str = Money::formatter_symbol($r_amount, $r_cid, true); } catch(\Throwable $e) { $amount_str = $r_amount . ' ' . $r_cid; }
+                                } else {
+                                    $amount_str = $r_amount . ' ' . $r_cid;
+                                }
+                                $is_current = false;
+                                if(isset($proanse['period']) && isset($proanse['period_time'])) {
+                                    if($proanse['period'] == $r_period && $proanse['period_time'] == $r_time) $is_current = true;
+                                }
+                            ?>
+                            <option value="<?php echo htmlspecialchars($k); ?>"><?php echo htmlspecialchars($period_label); ?> — <?php echo htmlspecialchars($amount_str); ?><?php echo $is_current ? ' (mevcut)' : ''; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary" onclick="cdgPd2OrderRenewal(this)">
+                            <i class="bi bi-cart-plus"></i> Sepete Ekle
+                        </button>
+                    </div>
+                    <div style="font-size:11px;color:#64748b;margin-top:6px;">
+                        <i class="bi bi-info-circle"></i> Mevcut süre yerine yeni bir dönem seçerek devam edebilirsiniz. Seçim sonrası ödeme sayfasına yönlendirileceksiniz.
+                    </div>
+                </div>
+                <?php endif; ?>
+
                 <button type="button" class="cdg-pd2-btn cdg-pd2-btn-success" style="width:100%;justify-content:center;" onclick="cdgPd2.renew()">
-                    <i class="bi bi-arrow-clockwise"></i> Şimdi Yenile
+                    <i class="bi bi-arrow-clockwise"></i> Mevcut Dönemle Yenile
                 </button>
                 <?php endif; ?>
 
@@ -862,6 +911,42 @@ window.cdgPd2 = {
         if(!confirm('Paket yükseltme için fatura oluşturulacak. Devam edilsin mi?')) return;
         if(typeof alert_info === 'function') alert_info('İşleniyor...', {timer: 2000});
     }
+};
+
+// Yenileme dönemi seçimi (order_renewal) - global function
+window.cdgPd2OrderRenewal = function(btn) {
+    var sel = document.getElementById('cdg-pd2-renewal-period');
+    if(!sel || !sel.value) {
+        if(typeof alert_error === 'function') alert_error('Lütfen yenileme dönemi seçin', {timer: 3000});
+        return;
+    }
+    if(typeof MioAjax !== 'function') return;
+
+    var label = sel.options[sel.selectedIndex].text;
+    if(!confirm('"' + label + '" yenileme talebi sepete eklenecek. Devam edilsin mi?')) return;
+
+    var orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> İşleniyor...';
+
+    MioAjax({
+        url: cdgPd2.controllerUrl, type: 'post',
+        data: { operation: 'order_renewal', id: cdgPd2.productId, period: sel.value },
+        result: function(r) {
+            btn.disabled = false; btn.innerHTML = orig;
+            if(r && r.status === 'successful') {
+                if(r.redirect) {
+                    if(typeof alert_success === 'function') alert_success('Ödeme sayfasına yönlendiriliyorsunuz...', {timer: 1500});
+                    setTimeout(function(){ window.location.href = r.redirect; }, 1200);
+                } else {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Yenileme talebi oluşturuldu', {timer: 2000});
+                    setTimeout(function(){ window.location.reload(); }, 1500);
+                }
+            } else if(r && r.message && typeof alert_error === 'function') {
+                alert_error(r.message, {timer: 4000});
+            }
+        }
+    });
 };
 </script>
 

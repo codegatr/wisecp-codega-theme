@@ -1,21 +1,19 @@
 {
-    "version": "3.3.7",
+    "version": "3.3.8",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.3.7-codega",
-    "tag": "v3.3.7-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.3.8-codega",
+    "tag": "v3.3.8-codega",
     "changelog": [
-        "v3.3.7 - Header Bildirim Sistemi (read_all_notifications)",
-        "GUNCELLEME: inc/ac-header-1.php (header-type=1, default)",
-        "  Topbar'a bell ikonu butonu eklendi (sepet ikonu yaninda)",
-        "  Kirmizi badge bubble (okunmamis sayisi, 99+ icin truncate)",
-        "  Mavi gradient header'li dropdown (380px width)",
-        "  Bildirim items: icon + text + tarih (linkli)",
-        "  Unread item'lar mavi background ile vurgulanir",
-        "  'Tumunu Okundu Isaretle' butonu (footer)",
-        "  Outside click ile kapatma",
-        "  Bos durum gosterimi (bell-slash icon)",
-        "  WiseCP runtime: User::getNotifications() ile bubble_count + items",
-        "Operations: read_all_notifications"
+        "v3.3.8 - Yenileme Donemi Secimi (order_renewal)",
+        "GUNCELLEME: inc/ac-product-detail-template.php Yenileme tab'i",
+        "  Yenileme donemi dropdown'u (View::period + Money::formatter_symbol)",
+        "  Mevcut donem '(mevcut)' olarak isaretlenir",
+        "  Sepete Ekle butonu ile order_renewal AJAX",
+        "  redirect ile odeme sayfasina yonlendirme",
+        "  Eski 'Simdi Yenile' butonu 'Mevcut Donemle Yenile' olarak yeniden adlandirildi",
+        "  cdgPd2OrderRenewal global JS function (window namespace)",
+        "Operation: order_renewal (period parameter)",
+        "WiseCP runtime: $product['price'] array (period+amount kombinasyonlari)"
     ]
 }
