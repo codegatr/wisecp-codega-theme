@@ -1,16 +1,22 @@
-<?php defined('CORE_FOLDER') OR exit('You can not get in here!'); ?>
-<section class="cdg-page-head">
-    <div class="cdg-container">
-        <h1>combo-offer</h1>
-    </div>
-</section>
-<section class="cdg-section">
-    <div class="cdg-container">
-        <div class="cdg-empty">
-            <div class="icon"><i class="bi bi-file-text"></i></div>
-            <h3>Yakinda</h3>
-            <p>Bu sayfa hazirlanmaktadir.</p>
-            <a href="<?php echo (class_exists('Controllers') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" class="cdg-btn cdg-btn-primary mt-3">Bilgi Al</a>
-        </div>
-    </div>
-</section>
+<?php defined('CORE_FOLDER') OR exit('You can not get in here!');
+
+$svc_title = 'Avantajli Paketler';
+$svc_subtitle = 'Domain + Hosting + SSL paket teklifleri ile tasarruf edin';
+$svc_icon = 'gift-fill';
+$svc_color = '#ec4899';
+$svc_gradient = 'linear-gradient(135deg,#db2777,#ec4899)';
+$svc_breadcrumb = 'Avantajli Paketler';
+$svc_features = [
+    ['icon' => 'piggy-bank-fill', 'title' => 'Buyuk Tasarruf', 'desc' => 'Tekil hizmetlere kiyasla %40\'a varan indirimli paketler.'],
+    ['icon' => 'lightning-charge-fill', 'title' => 'Tek Tikla Kurulum', 'desc' => 'Domain, hosting, SSL hepsi birlikte aktive olur.'],
+    ['icon' => 'gem', 'title' => 'Premium Ozellikler', 'desc' => 'Paketlerde otomatik yedekleme, CDN ve premium destek dahildir.'],
+    ['icon' => 'shield-check', 'title' => '30 Gun Iade', 'desc' => 'Memnun kalmazsaniz 30 gun icinde tam iade garantisi.'],
+];
+$svc_description = '
+<h3 style="color:#0f172a;font-size:18px;font-weight:800;margin:0 0 12px;">Tek Bir Pakette Her Sey</h3>
+<p>Domain, hosting, SSL sertifikasi, e-posta ve daha fazlasini ayri ayri satin almak yerine bizim hazirladigimiz avantajli paketleri tercih edin. Hem zamanidan hem de butcenizden tasarruf edin.</p>
+<p>Yeni baslayanlar icin "Starter" paketi, kucuk isletmeler icin "Business", e-ticaret siteleri icin "E-Commerce" paketi gibi farkli ihtiyaclara uygun cozumler sunuyoruz. Her pakette ucretsiz domain (.com, .net, .org), unlimited SSL ve 7/24 Turkce teknik destek dahildir.</p>
+';
+$svc_cta_text = 'Paketleri Incele';
+
+include __DIR__ . '/../inc/service-page-template.php';
