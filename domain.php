@@ -92,7 +92,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
             <div class="cdg-domain-search-wrap">
                 <div class="cdg-domain-search-input">
                     <i class="bi bi-search"></i>
-                    <input type="text" id="domainInput" placeholder="alanadi.com" autocomplete="off" required onkeydown="if(event.keyCode==13){event.preventDefault();submitnow(document.getElementById('submitnow'));}">
+                    <input type="text" id="domainInput" value="<?php echo isset($_GET['domain']) ? htmlspecialchars(trim($_GET['domain'])) : ''; ?>" placeholder="alanadi.com" autocomplete="off" required onkeydown="if(event.keyCode==13){event.preventDefault();submitnow(document.getElementById('submitnow'));}">
                     <a href="javascript:void(0);" id="submitnow" class="cdg-btn cdg-btn-primary cdg-btn-glow" onclick="submitnow(this);">
                         <i class="bi bi-search"></i> <span>Sorgula</span>
                     </a>
@@ -340,7 +340,7 @@ var epp_code_support = <?php echo class_exists("Utility") && method_exists("Util
 var tlds = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($tlds) : json_encode($tlds); ?>;
 var disabled_style = "background:none; color:#333; cursor:no-drop; opacity:0.3;";
 
-// Transfer toggle
+// Transfer toggle + URL ?domain= auto-submit
 document.addEventListener('DOMContentLoaded', function(){
     var transferCb = document.getElementById('transferCheckbox');
     var transferBox = document.getElementById('transfercode');
@@ -350,6 +350,19 @@ document.addEventListener('DOMContentLoaded', function(){
             var eppI = document.getElementById('eppCode');
             if(this.checked && eppI) eppI.focus();
         });
+    }
+
+    // Anasayfadan ?domain= ile geldiyse otomatik sorgula
+    var urlParams = new URLSearchParams(window.location.search);
+    var gDomain = urlParams.get('domain');
+    if(gDomain) {
+        var input = document.getElementById('domainInput');
+        if(input && input.value && input.value.length > 0) {
+            // Kısa delay - sayfa tam yüklensin
+            setTimeout(function(){
+                submitnow(document.getElementById('submitnow'));
+            }, 400);
+        }
     }
 });
 

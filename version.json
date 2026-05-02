@@ -1,13 +1,13 @@
 {
-    "version": "2.8.9",
+    "version": "2.9.0",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.8.9-codega",
-    "tag": "v2.8.9-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.0-codega",
+    "tag": "v2.9.0-codega",
     "changelog": [
-        "v2.8.9 - Domain sorgulamasinda captcha kaldirildi",
-        "Domain sorgu formundan captcha-contents bolumu silindi",
-        "Kullanici alanadi.com yazip dogrudan Sorgula butonuna tiklayabilir",
-        "WiseCP backend captcha gondermese bile tema tarafi render etmiyor"
+        "v2.9.0 - Anasayfa -> Domain GET parametresi aktarimi duzeltildi",
+        "PHP: domain.php artik $_GET['domain'] parametresini input value'ya yaziyor",
+        "JS: Sayfa yuklendiginde input'ta deger varsa otomatik sorgu baslatiliyor",
+        "Akis: Anasayfa formu -> /alan-adi?domain=X -> input doldur -> auto-submit"
     ]
 }
