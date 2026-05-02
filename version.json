@@ -1,12 +1,18 @@
 {
-    "version": "2.1.4",
+    "version": "2.1.5",
     "release_date": "2026-05-02",
-    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.4/Codega-v2.1.4.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.4",
+    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.5/Codega-v2.1.5.zip",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.5",
     "changelog": [
-        "v2.1.4 - update.php yetkilendirme akilliligi",
-        "Cok katmanli admin tespit: session anahtarlari + WiseCP Admin class",
-        "Erisim yoksa: 403 yerine SELF-SERVICE URL gosterimi (tek tikla giris)",
-        "Yer imine eklenebilir guvenli URL (secret key dahil)"
+        "v2.1.5 - Modern Public Landing Page (anasayfa)",
+        "Hero: gradient mavi orb + 4 floating glassmorphism kart (NVMe SSD, Imunify360, Yedekleme, LiteSpeed)",
+        "Domain arama formu: TLD chip'leri + dinamik fiyat",
+        "Hizmetler grid: 6 servis kart (Hosting, Sunucu, Domain, SSL, SMS, Ozel Cozumler) - WiseCP modul aktivasyonuna gore",
+        "Neden Biz: 6 ozellik (Yildirim hizinda, Guvenlik, Destek, Uptime, Tasima, Iade)",
+        "Hosting Paketleri: 3 fiyat karti (Baslangic, Profesyonel populer, Kurumsal)",
+        "Stats banner: gradient mavi 4 sayisal vurgu (10K+, 99.9%, 7/24, 15+)",
+        "CTA: koyu zemin gradient kart - Hosting Sec / Bize Ulasin",
+        "Mobile responsive 992px ve 640px breakpoint",
+        "WiseCP global'leri: pg_activation, first_tld_price, cfeedbacks"
     ]
 }
