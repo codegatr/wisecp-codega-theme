@@ -77,9 +77,13 @@ $user_initial = 'M';
 
 if(class_exists('User') && isset(User::$init->info)) {
     $info = User::$init->info;
-    $first = isset($info['name']) ? trim($info['name']) : '';
-    $last  = isset($info['surname']) ? trim($info['surname']) : '';
-    $full  = trim($first . ' ' . $last);
+    // WiseCP runtime: full_name (tam ad) primary, name+surname fallback
+    $full = isset($info['full_name']) ? trim($info['full_name']) : '';
+    if(!$full) {
+        $first = isset($info['name']) ? trim($info['name']) : '';
+        $last  = isset($info['surname']) ? trim($info['surname']) : '';
+        $full  = trim($first . ' ' . $last);
+    }
     if(!$full) $full = isset($info['username']) ? $info['username'] : 'Müşteri';
     $user_name = $full;
     $user_email = $info['email'] ?? '';

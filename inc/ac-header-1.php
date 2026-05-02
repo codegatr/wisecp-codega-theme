@@ -68,7 +68,7 @@ $user_name = '';
 if(class_exists('User') && method_exists('User', 'logged_in') && User::logged_in()) {
     if(isset(User::$init->info)) {
         $info = User::$init->info;
-        $user_name = trim((isset($info['name']) ? $info['name'] : '') . ' ' . (isset($info['surname']) ? $info['surname'] : ''));
+        $user_name = isset($info['full_name']) && $info['full_name'] ? trim($info['full_name']) : trim((isset($info['name']) ? $info['name'] : '') . ' ' . (isset($info['surname']) ? $info['surname'] : ''));
     }
 }
 if(!$user_name) $user_name = 'Musteri';

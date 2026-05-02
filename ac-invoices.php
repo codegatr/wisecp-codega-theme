@@ -90,15 +90,19 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
                 </thead>
                 <tbody>
                 <?php foreach($items as $row):
-                    $iid = isset($row['id']) ? $row['id'] : (isset($row['num']) ? $row['num'] : '-');
-                    $num = isset($row['num']) ? $row['num'] : $iid;
+                    // WiseCP runtime: row['number'] (fatura no), row['id'], row['cdate'] (olusturulma tarihi)
+                    $iid = isset($row['id']) ? $row['id'] : '';
+                    $num = isset($row['number']) ? $row['number'] : (isset($row['num']) ? $row['num'] : $iid);
 
                     $amount = '';
                     if(class_exists('Money') && method_exists('Money', 'formatter_symbol') && isset($row['amount']) && isset($row['amount_cid'])) {
                         $amount = Money::formatter_symbol($row['amount'], $row['amount_cid']);
                     }
 
-                    $ctime = isset($row['ctime']) ? $row['ctime'] : (isset($row['creation_date']) ? $row['creation_date'] : '');
+                    // Classic: cdate (olusturulma), duedate (son odeme), datepaid (odendi)
+                    $ctime = isset($row['cdate']) ? $row['cdate']
+                           : (isset($row['ctime']) ? $row['ctime']
+                           : (isset($row['creation_date']) ? $row['creation_date'] : ''));
                     $duedate = isset($row['duedate']) ? $row['duedate'] : '';
 
                     $ctime_fmt = '';
