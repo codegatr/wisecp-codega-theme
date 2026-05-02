@@ -4385,7 +4385,7 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     }
 }
 
-/* === GENEL OVERFLOW KORUMA === */
-html, body{ overflow-x:hidden; }
-.cdg-container{ box-sizing:border-box; }
+/* === GENEL OVERFLOW KORUMA (SADECE container, body değil!) === */
+.cdg-container{ box-sizing:border-box; max-width:100%; }
+body{ box-sizing:border-box; }
 
