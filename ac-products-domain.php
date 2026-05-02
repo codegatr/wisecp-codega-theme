@@ -63,7 +63,14 @@ if(!function_exists('cdg_link')) {
 }
 
 // === Defansif defaults ===
-$products       = isset($products) && is_array($products) ? $products : [];
+// WiseCP runtime: $list primary (Classic standardi), $orders ve $products fallback
+if(isset($list) && is_array($list)) {
+    $products = $list;
+} elseif(isset($orders) && is_array($orders)) {
+    $products = $orders;
+} elseif(!isset($products) || !is_array($products)) {
+    $products = [];
+}
 $filter_counts  = isset($filter_counts) && is_array($filter_counts) ? $filter_counts : [];
 $situations     = isset($situations) && is_array($situations) ? $situations : [];
 $links          = isset($links) && is_array($links) ? $links : [];
