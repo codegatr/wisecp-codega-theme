@@ -817,7 +817,7 @@ foreach($options as $opt_k => $opt_v) {
                     <?php endif; ?>
                     <?php if(!empty($creation_info['date'])): ?>
                     <li>
-                        <span class="cdg-pd2-info-label">Olusturulma</span>
+                        <span class="cdg-pd2-info-label">Oluşturulma</span>
                         <span class="cdg-pd2-info-value"><?php echo htmlspecialchars($creation_info['date'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </li>
                     <?php endif; ?>

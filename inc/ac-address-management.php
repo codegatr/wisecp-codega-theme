@@ -276,7 +276,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
 
                 <div class="cdg-form-group">
                     <label class="cdg-form-label">Adres Etiketi <span style="color:#ef4444;">*</span></label>
-                    <input type="text" name="name" id="cdg-addr-name" class="cdg-form-control" placeholder="Ornek: Ev, Is Yeri, Fatura Adresi" required>
+                    <input type="text" name="name" id="cdg-addr-name" class="cdg-form-control" placeholder="Örnek: Ev, Is Yeri, Fatura Adresi" required>
                 </div>
 
                 <div class="cdg-form-group">
@@ -307,7 +307,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
                 <!-- KURUMSAL: Sirket bilgileri -->
                 <div class="cdg-addr-corporate" style="display:none;">
                     <div class="cdg-form-group">
-                        <label class="cdg-form-label">Sirket Adi <span style="color:#ef4444;">*</span></label>
+                        <label class="cdg-form-label">Şirket Adı <span style="color:#ef4444;">*</span></label>
                         <input type="text" name="company_name" id="cdg-addr-company_name" class="cdg-form-control">
                     </div>
                     <div class="cdg-form-row">
@@ -334,10 +334,10 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
                 </div>
 
                 <div class="cdg-form-group">
-                    <label class="cdg-form-label">Ulke</label>
+                    <label class="cdg-form-label">Ülke</label>
                     <?php if(!empty($ac_country_list)): ?>
                     <select name="country_id" id="cdg-addr-country_id" class="cdg-form-control">
-                        <option value="">Ulke seciniz</option>
+                        <option value="">Ülke seçiniz</option>
                         <?php foreach($ac_country_list as $c):
                             $c_id = is_array($c) ? ($c['id'] ?? '') : (string)$c;
                             $c_name = is_array($c) ? ($c['name'] ?? $c_id) : (string)$c;
@@ -352,7 +352,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
 
                 <div class="cdg-form-row">
                     <div class="cdg-form-group">
-                        <label class="cdg-form-label">Sehir</label>
+                        <label class="cdg-form-label">Şehir</label>
                         <input type="text" name="city" id="cdg-addr-city" class="cdg-form-control">
                     </div>
                     <div class="cdg-form-group">

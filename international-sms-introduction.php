@@ -39,10 +39,10 @@
 
         <div class="cdg-card" style="padding:36px;text-align:center;background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;">
             <i class="bi bi-rocket-takeoff" style="font-size:48px;margin-bottom:16px;"></i>
-            <h2 style="font-size:24px;font-weight:800;margin:0 0 10px;">Hemen Baslamak Icin</h2>
+            <h2 style="font-size:24px;font-weight:800;margin:0 0 10px;">Hemen Başlamak İçin</h2>
             <p style="font-size:14px;opacity:0.9;margin:0 0 20px;">SMS hizmetlerimizi inceleyip size uygun paketi secin</p>
             <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:12px 24px;background:#fff;color:#1e40af;text-decoration:none;border-radius:8px;font-size:14px;font-weight:700;">
-                <i class="bi bi-chat-dots"></i> Iletisime Gec
+                <i class="bi bi-chat-dots"></i> İletişime Gec
             </a>
         </div>
     </div>

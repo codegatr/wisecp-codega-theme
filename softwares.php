@@ -372,7 +372,7 @@ $service_categories = [
             <div class="cdg-soft-step">
                 <div class="cdg-soft-step-num">05</div>
                 <h3>Bakım & Destek</h3>
-                <p>1 yil ücretsiz bakım, 7/24 teknik destek, periyodik guncellemeler.</p>
+                <p>1 yıl ücretsiz bakım, 7/24 teknik destek, periyodik güncellemeler.</p>
             </div>
         </div>
     </div>
@@ -390,7 +390,7 @@ $service_categories = [
             <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-cloud-fill"></i></div><h3>Bulut Tabanli</h3><p>Tüm siştemler scalable, mobil uyumlu, modern.</p></div>
             <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-shield-fill-check"></i></div><h3>KVKK Uyumlu</h3><p>Veri guvenligi, audit log, şifreleme standardi.</p></div>
             <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-headset"></i></div><h3>Canli Destek</h3><p>WhatsApp, telefon, panel uzerinden 7/24.</p></div>
-            <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-arrow-repeat"></i></div><h3>Sürekli Guncelleme</h3><p>Yeni özellikler, performans iyilestirmeleri.</p></div>
+            <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-arrow-repeat"></i></div><h3>Sürekli Güncelleme</h3><p>Yeni özellikler, performans iyilestirmeleri.</p></div>
             <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-flag-fill"></i></div><h3>%100 Yerli</h3><p>Turkce arayuz, Turkiye yasal mevzuatina uygun.</p></div>
             <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-gear-fill"></i></div><h3>Ozellestirilebilir</h3><p>Şirketinize ozel modül ve raporlar gelistiriyoruz.</p></div>
             <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-rocket-takeoff-fill"></i></div><h3>Hızlı Teslim</h3><p>Standart projeler 2-4 hafta, ozel projeler 1-3 ay.</p></div>

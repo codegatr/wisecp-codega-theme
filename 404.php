@@ -1,7 +1,7 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!'); ?>
 <section class="cdg-page-head">
     <div class="cdg-container">
-        <h1>Sayfa Bulunamadi</h1>
+        <h1>Sayfa Bulunamadı</h1>
         <div class="breadcrumb">
             <a href="<?php echo defined('APP_URI') ? APP_URI . '/' : '/'; ?>">Anasayfa</a>
             <span class="sep">/</span>
@@ -13,10 +13,10 @@
     <div class="cdg-container">
         <div class="cdg-empty">
             <div class="icon"><i class="bi bi-compass"></i></div>
-            <h3>Aradiginiz sayfa bulunamadi</h3>
-            <p>Sayfa kaldirilmis veya tasinmis olabilir.</p>
+            <h3>Aradığınız sayfa bulunamadı</h3>
+            <p>Sayfa kaldırılmış veya taşınmış olabilir.</p>
             <a href="<?php echo defined('APP_URI') ? APP_URI . '/' : '/'; ?>" class="cdg-btn cdg-btn-primary mt-3">
-                <i class="bi bi-house"></i> Anasayfaya Don
+                <i class="bi bi-house"></i> Anasayfaya Dön
             </a>
         </div>
     </div>

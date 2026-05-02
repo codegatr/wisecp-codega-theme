@@ -2,11 +2,11 @@
 
 <section class="cdg-page-head">
     <div class="cdg-container">
-        <h1>Sifre Sifirla</h1>
+        <h1>Şifre Sıfırla</h1>
         <div class="breadcrumb">
             <a href="<?php echo APP_URI; ?>/">Anasayfa</a>
             <span class="sep">/</span>
-            <span>Sifre Sifirla</span>
+            <span>Şifre Sıfırla</span>
         </div>
     </div>
 </section>
@@ -29,8 +29,8 @@
                 <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#10b981,#34d399);color:#fff;display:inline-grid;place-items:center;font-size:28px;margin-bottom:12px;">
                     <i class="bi bi-shield-lock-fill"></i>
                 </div>
-                <h2 style="margin-bottom:6px;">Yeni Sifrenizi Belirleyin</h2>
-                <p class="text-muted" style="font-size:13px;">Hesabiniza giris yapmak icin yeni bir sifre olusturun.</p>
+                <h2 style="margin-bottom:6px;">Yeni Şifrenizi Belirleyin</h2>
+                <p class="text-muted" style="font-size:13px;">Hesabınıza giriş yapmak için yeni bir şifre oluşturun.</p>
             </div>
 
             <form action="<?php echo isset($controller_link) ? htmlspecialchars($controller_link, ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; ?>" method="post" id="Reset_Password_Form">
@@ -42,12 +42,12 @@
                     <div style="font-size:13px;color:#475569;background:#f8fafc;padding:10px 12px;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:8px;">
                         <?php echo htmlspecialchars($security_question, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </div>
-                    <input type="text" name="security_question_answer" class="cdg-form-control" placeholder="Cevabiniz" required>
+                    <input type="text" name="security_question_answer" class="cdg-form-control" placeholder="Cevabınız" required>
                 </div>
                 <?php endif; ?>
 
                 <div class="cdg-form-group">
-                    <label class="cdg-form-label">Yeni Sifre</label>
+                    <label class="cdg-form-label">Yeni Şifre</label>
                     <div style="position:relative;">
                         <input type="password" name="password" id="cdg-rst-pw1" class="cdg-form-control" placeholder="En az 6 karakter" required minlength="6" autocomplete="new-password" oninput="cdgRstStrength()">
                         <button type="button" onclick="cdgRstToggle('cdg-rst-pw1','cdg-rst-eye1')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:0;color:#64748b;cursor:pointer;padding:6px;">
@@ -60,13 +60,13 @@
                         <div class="cdg-rst-bar" style="flex:1;height:3px;background:#e2e8f0;border-radius:2px;"></div>
                         <div class="cdg-rst-bar" style="flex:1;height:3px;background:#e2e8f0;border-radius:2px;"></div>
                     </div>
-                    <div id="cdg-rst-strength-text" style="font-size:11px;color:#64748b;margin-top:4px;">Sifre gucu: -</div>
+                    <div id="cdg-rst-strength-text" style="font-size:11px;color:#64748b;margin-top:4px;">Şifre gücü: -</div>
                 </div>
 
                 <div class="cdg-form-group">
-                    <label class="cdg-form-label">Yeni Sifre (Tekrar)</label>
+                    <label class="cdg-form-label">Yeni Şifre (Tekrar)</label>
                     <div style="position:relative;">
-                        <input type="password" name="password_again" id="cdg-rst-pw2" class="cdg-form-control" placeholder="Sifreyi tekrar girin" required minlength="6" autocomplete="new-password" oninput="cdgRstMatch()">
+                        <input type="password" name="password_again" id="cdg-rst-pw2" class="cdg-form-control" placeholder="Şifreyi tekrar girin" required minlength="6" autocomplete="new-password" oninput="cdgRstMatch()">
                         <button type="button" onclick="cdgRstToggle('cdg-rst-pw2','cdg-rst-eye2')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:0;color:#64748b;cursor:pointer;padding:6px;">
                             <i class="bi bi-eye" id="cdg-rst-eye2"></i>
                         </button>
@@ -108,7 +108,7 @@
             bars.forEach(function(b, i) {
                 b.style.background = (i < score) ? colors[score] : '#e2e8f0';
             });
-            text.textContent = 'Sifre gucu: ' + (pw.length === 0 ? '-' : labels[score] || '-');
+            text.textContent = 'Şifre gücü: ' + (pw.length === 0 ? '-' : labels[score] || '-');
             text.style.color = pw.length === 0 ? '#64748b' : colors[score];
         }
         function cdgRstMatch() {
@@ -142,7 +142,7 @@
                     <i class="bi bi-envelope-paper"></i>
                 </div>
                 <h2 style="margin-bottom:6px;">Sifrenizi mi unuttunuz?</h2>
-                <p class="text-muted" style="font-size:13px;">E-posta adresinizi girin, size bir sifirlama baglantisi gonderelim.</p>
+                <p class="text-muted" style="font-size:13px;">E-posta adresinizi girin, size bir sıfırlama bağlantısı gönderelim.</p>
             </div>
 
             <form action="<?php echo isset($forget_password_link) ? htmlspecialchars($forget_password_link, ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; ?>" method="post" id="ForgotPassword_Form">

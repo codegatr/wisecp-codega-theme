@@ -88,14 +88,14 @@ $transactions = isset($list) ? $list : (isset($transactions) ? $transactions : [
         <div style="font-size:32px;font-weight:700;color:var(--cdg-primary);"><?php echo $user_balance_str; ?></div>
     </div>
     <div class="cdg-card">
-        <h4 style="margin-bottom:12px;"><i class="bi bi-plus-circle"></i> Bakiye Yukleme</h4>
-        <p style="font-size:13px;color:var(--cdg-muted);margin-bottom:12px;">Hesabiniza bakiye yuklemek icin asagidaki butonu kullanin.</p>
+        <h4 style="margin-bottom:12px;"><i class="bi bi-plus-circle"></i> Bakiye Yükleme</h4>
+        <p style="font-size:13px;color:var(--cdg-muted);margin-bottom:12px;">Hesabınıza bakiye yüklemek için aşağıdaki butonu kullanın.</p>
         <button type="button" onclick="if(typeof iziModal=='function'){$('#balance-modal').iziModal('open');}else{alert('Bakiye yukleme: WiseCP modul aktif olmalidir.');}" class="cdg-btn cdg-btn-primary" style="width:100%;">
-            <i class="bi bi-credit-card"></i> Yukleme Yap
+            <i class="bi bi-credit-card"></i> Yükleme Yap
         </button>
     </div>
     <div class="cdg-card">
-        <h4 style="margin-bottom:12px;"><i class="bi bi-gear"></i> Otomatik Odeme Ayarlari</h4>
+        <h4 style="margin-bottom:12px;"><i class="bi bi-gear"></i> Otomatik Ödeme Ayarları</h4>
         <p style="font-size:13px;color:var(--cdg-muted);margin-bottom:14px;">Faturalariniz vade tarihinde bakiyenizden otomatik odensin.</p>
 
         <form method="post" action="<?php echo isset($links['controller']) ? htmlspecialchars($links['controller'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; ?>" id="cdg-balance-settings">
@@ -112,12 +112,12 @@ $transactions = isset($list) ? $list : (isset($transactions) ? $transactions : [
                 <label class="cdg-form-label" style="font-size:12px;">Minimum Bakiye Uyari Esigi</label>
                 <input type="number" min="0" step="0.01" name="balance_min" class="cdg-form-control"
                     value="<?php echo htmlspecialchars(isset(User::$init->info['balance_min']) ? User::$init->info['balance_min'] : '0', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
-                    placeholder="Ornek: 100">
+                    placeholder="Örnek: 100">
                 <small style="font-size:11px;color:var(--cdg-muted);">Bakiyeniz bu degerin altina dustugunde uyari gelir.</small>
             </div>
 
             <button type="submit" class="cdg-btn cdg-btn-primary cdg-btn-sm" style="width:100%;">
-                <i class="bi bi-check2"></i> Ayarlari Kaydet
+                <i class="bi bi-check2"></i> Ayarları Kaydet
             </button>
         </form>
     </div>
@@ -134,7 +134,7 @@ $transactions = isset($list) ? $list : (isset($transactions) ? $transactions : [
                 <thead>
                     <tr>
                         <th>Tarih</th>
-                        <th>Aciklama</th>
+                        <th>Açıklama</th>
                         <th style="text-align:right;">Tutar</th>
                         <th style="text-align:center;">Durum</th>
                     </tr>
@@ -173,7 +173,7 @@ $transactions = isset($list) ? $list : (isset($transactions) ? $transactions : [
         <div class="cdg-empty">
             <div class="icon"><i class="bi bi-wallet2"></i></div>
             <h3>Henuz hareket yok</h3>
-            <p>Bakiye yukleme veya odeme islemi yaptiginizda burada gorunecek.</p>
+            <p>Bakiye yükleme veya ödeme işlemi yaptığınızda burada görünecek.</p>
         </div>
     <?php endif; ?>
 </div>
@@ -196,8 +196,8 @@ $user_curr = isset($currency) && $currency ? $currency : 'TRY';
             <i class="bi bi-cash-coin"></i>
         </div>
         <div>
-            <h3 style="font-size:15px;font-weight:800;margin:0;color:#0f172a;">Bakiye Yukle</h3>
-            <div style="font-size:12px;color:#64748b;margin-top:2px;">Hesabiniza bakiye yukleyerek hizli odeme yapabilirsiniz</div>
+            <h3 style="font-size:15px;font-weight:800;margin:0;color:#0f172a;">Bakiye Yükle</h3>
+            <div style="font-size:12px;color:#64748b;margin-top:2px;">Hesabınıza bakiye yükleyerek hızlı ödeme yapabilirsiniz</div>
         </div>
     </div>
 
@@ -205,7 +205,7 @@ $user_curr = isset($currency) && $currency ? $currency : 'TRY';
         <i class="bi bi-info-circle-fill" style="color:#15803d;font-size:18px;flex-shrink:0;"></i>
         <p style="margin:0;font-size:13px;color:#15803d;line-height:1.5;">
             Bakiyeniz hesabinizda saklanir ve istediginiz zaman fatura odemelerinde kullanilabilir.
-            Yukleme islemi anindadir.
+            Yükleme işlemi anındadır.
         </p>
     </div>
 
@@ -245,11 +245,11 @@ $user_curr = isset($currency) && $currency ? $currency : 'TRY';
         var amt = document.getElementById('cdg-bal-amount').value;
         amt = parseFloat(amt);
         if(!amt || amt <= 0) {
-            if(typeof alert_error === 'function') alert_error('Gecerli bir tutar girin', {timer: 3000});
+            if(typeof alert_error === 'function') alert_error('Geçerli bir tutar girin', {timer: 3000});
             return;
         }
         if(typeof MioAjax !== 'function') return;
-        if(!confirm(amt + ' <?php echo htmlspecialchars($user_curr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> bakiye yuklemek icin sepete eklenecek. Devam edilsin mi?')) return;
+        if(!confirm(amt + ' <?php echo htmlspecialchars($user_curr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> bakiye yüklemek için sepete eklenecek. Devam edilsin mi?')) return;
 
         btn.disabled = true;
         var orig = btn.innerHTML;
@@ -262,7 +262,7 @@ $user_curr = isset($currency) && $currency ? $currency : 'TRY';
                 btn.disabled = false; btn.innerHTML = orig;
                 if(r && r.status === 'successful') {
                     if(r.redirect) {
-                        if(typeof alert_success === 'function') alert_success('Odeme sayfasina yonlendiriliyorsunuz...', {timer: 1500});
+                        if(typeof alert_success === 'function') alert_success('Ödeme sayfasına yönlendiriliyorsunuz...', {timer: 1500});
                         setTimeout(function(){ window.location.href = r.redirect; }, 1200);
                     } else {
                         if(typeof alert_success === 'function') alert_success(r.message || 'Bakiye yuklendi', {timer: 2000});

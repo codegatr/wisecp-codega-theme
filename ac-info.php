@@ -86,7 +86,7 @@ if(!empty($udata['gsm'])) {
         <i class="bi bi-sliders"></i> Tercihler
     </button>
     <button type="button" class="cdg-info-tab" data-tab="password" onclick="cdgInfoTab('password')">
-        <i class="bi bi-shield-lock"></i> Sifre Degistir
+        <i class="bi bi-shield-lock"></i> Şifre Değiştir
     </button>
     <button type="button" class="cdg-info-tab" data-tab="security" onclick="cdgInfoTab('security')">
         <i class="bi bi-key"></i> Guvenlik
@@ -213,11 +213,11 @@ if(!empty($udata['gsm'])) {
             <!-- KURUMSAL ALANLAR -->
             <div class="cdg-info-corporate" <?php echo !$is_corporate ? 'style="display:none;"' : ''; ?>>
                 <h4 style="margin:20px 0 12px;color:#0f172a;font-size:15px;font-weight:800;">
-                    <i class="bi bi-building"></i> Sirket Bilgileri
+                    <i class="bi bi-building"></i> Şirket Bilgileri
                 </h4>
 
                 <div class="cdg-form-group">
-                    <label class="cdg-form-label">Sirket Adi</label>
+                    <label class="cdg-form-label">Şirket Adı</label>
                     <input type="text" name="company_name" class="cdg-form-control" value="<?php echo htmlspecialchars($u('company_name'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                 </div>
 
@@ -240,10 +240,10 @@ if(!empty($udata['gsm'])) {
 
             <!-- Ulke -->
             <div class="cdg-form-group">
-                <label class="cdg-form-label">Ulke</label>
+                <label class="cdg-form-label">Ülke</label>
                 <?php if(!empty($country_list)): ?>
                 <select name="country_id" class="cdg-form-control" id="cdg-info-country" onchange="cdgInfoLoadCities(this.value)">
-                    <option value="">Ulke seciniz</option>
+                    <option value="">Ülke seçiniz</option>
                     <?php foreach($country_list as $c):
                         $c_id = is_array($c) ? ($c['id'] ?? '') : (string)$c;
                         $c_name = is_array($c) ? ($c['name'] ?? $c_id) : (string)$c;
@@ -253,14 +253,14 @@ if(!empty($udata['gsm'])) {
                     <?php endforeach; ?>
                 </select>
                 <?php else: ?>
-                <input type="text" name="country_id" class="cdg-form-control" value="<?php echo htmlspecialchars($u('country_id', '215'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Ulke ID (varsayilan: Turkiye)">
+                <input type="text" name="country_id" class="cdg-form-control" value="<?php echo htmlspecialchars($u('country_id', '215'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Ülke ID (varsayılan: Türkiye)">
                 <?php endif; ?>
             </div>
 
-            <!-- Sehir / Ilce -->
+            <!-- Şehir / İlçe -->
             <div class="cdg-form-row">
                 <div class="cdg-form-group">
-                    <label class="cdg-form-label">Sehir</label>
+                    <label class="cdg-form-label">Şehir</label>
                     <input type="text" name="city" id="cdg-info-city" class="cdg-form-control" value="<?php echo htmlspecialchars($u('city'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                 </div>
                 <div class="cdg-form-group">
@@ -349,7 +349,7 @@ if(!empty($udata['gsm'])) {
 <div class="cdg-info-pane" id="cdg-info-pane-password" style="display:none;">
     <div class="cdg-card">
         <div class="cdg-card-head">
-            <h3><i class="bi bi-shield-lock"></i> Sifre Degistir</h3>
+            <h3><i class="bi bi-shield-lock"></i> Şifre Değiştir</h3>
         </div>
 
         <div class="cdg-alert cdg-alert-info" style="margin-bottom:16px;">
@@ -362,7 +362,7 @@ if(!empty($udata['gsm'])) {
             <input type="hidden" name="operation" value="ModifyPassword">
 
             <div class="cdg-form-group">
-                <label class="cdg-form-label">Yeni Sifre <span style="color:#ef4444;">*</span></label>
+                <label class="cdg-form-label">Yeni Şifre <span style="color:#ef4444;">*</span></label>
                 <div style="position:relative;">
                     <input type="password" name="password" id="cdg-info-pw1" class="cdg-form-control" placeholder="En az 6 karakter" required minlength="6" autocomplete="new-password" oninput="cdgInfoPwStrength()">
                     <button type="button" onclick="cdgInfoPwToggle('cdg-info-pw1','cdg-info-eye1')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:0;color:#64748b;cursor:pointer;padding:6px;">
@@ -375,13 +375,13 @@ if(!empty($udata['gsm'])) {
                     <div class="cdg-info-pw-bar" style="flex:1;height:3px;background:#e2e8f0;border-radius:2px;"></div>
                     <div class="cdg-info-pw-bar" style="flex:1;height:3px;background:#e2e8f0;border-radius:2px;"></div>
                 </div>
-                <div id="cdg-info-pw-text" style="font-size:11px;color:#64748b;margin-top:4px;">Sifre gucu: -</div>
+                <div id="cdg-info-pw-text" style="font-size:11px;color:#64748b;margin-top:4px;">Şifre gücü: -</div>
             </div>
 
             <div class="cdg-form-group">
-                <label class="cdg-form-label">Yeni Sifre (Tekrar) <span style="color:#ef4444;">*</span></label>
+                <label class="cdg-form-label">Yeni Şifre (Tekrar) <span style="color:#ef4444;">*</span></label>
                 <div style="position:relative;">
-                    <input type="password" name="password_again" id="cdg-info-pw2" class="cdg-form-control" placeholder="Sifreyi tekrar girin" required minlength="6" autocomplete="new-password" oninput="cdgInfoPwMatch()">
+                    <input type="password" name="password_again" id="cdg-info-pw2" class="cdg-form-control" placeholder="Şifreyi tekrar girin" required minlength="6" autocomplete="new-password" oninput="cdgInfoPwMatch()">
                     <button type="button" onclick="cdgInfoPwToggle('cdg-info-pw2','cdg-info-eye2')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:0;color:#64748b;cursor:pointer;padding:6px;">
                         <i class="bi bi-eye" id="cdg-info-eye2"></i>
                     </button>
@@ -391,7 +391,7 @@ if(!empty($udata['gsm'])) {
 
             <div style="margin-top:24px;display:flex;justify-content:flex-end;">
                 <button type="submit" class="cdg-btn cdg-btn-success" style="padding:12px 24px;">
-                    <i class="bi bi-shield-check"></i> Sifreyi Degistir
+                    <i class="bi bi-shield-check"></i> Şifreyi Değiştir
                 </button>
             </div>
         </form>
@@ -425,12 +425,12 @@ if(!empty($udata['gsm'])) {
 
             <div class="cdg-form-group">
                 <label class="cdg-form-label">Guvenlik Sorusu</label>
-                <input type="text" name="security_question" class="cdg-form-control" value="<?php echo htmlspecialchars($u('security_question'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Ornek: Ilk evcil hayvanimin ismi nedir?">
+                <input type="text" name="security_question" class="cdg-form-control" value="<?php echo htmlspecialchars($u('security_question'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Örnek: İlk evcil hayvanımın ismi nedir?">
             </div>
 
             <div class="cdg-form-group">
-                <label class="cdg-form-label">Cevap</label>
-                <input type="password" name="security_question_answer" class="cdg-form-control" placeholder="Cevabiniz (sifreli saklanir)" autocomplete="new-password">
+                <label class="cdg-form-label">Güvenlik Sorusu Cevabı</label>
+                <input type="password" name="security_question_answer" class="cdg-form-control" placeholder="Cevabınız (şifreli saklanır)" autocomplete="new-password">
             </div>
 
             <div style="margin-top:20px;display:flex;justify-content:flex-end;">
@@ -534,7 +534,7 @@ window.cdgInfoPwStrength = function() {
     var labels = ['Cok zayif', 'Zayif', 'Orta', 'Iyi', 'Cok guclu'];
     var colors = ['#ef4444', '#f59e0b', '#fbbf24', '#10b981', '#059669'];
     bars.forEach(function(b, i) { b.style.background = (i < score) ? colors[score] : '#e2e8f0'; });
-    text.textContent = 'Sifre gucu: ' + (pw.length === 0 ? '-' : labels[score] || '-');
+    text.textContent = 'Şifre gücü: ' + (pw.length === 0 ? '-' : labels[score] || '-');
     text.style.color = pw.length === 0 ? '#64748b' : colors[score];
 };
 window.cdgInfoPwMatch = function() {

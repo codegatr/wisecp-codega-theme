@@ -92,7 +92,7 @@ elseif(isset($orders) && is_array($orders)) $items = $orders;
                         <th style="text-align:right;">Tutar</th>
                         <th style="text-align:center;">Bitis Tarihi</th>
                         <th style="text-align:center;">Durum</th>
-                        <th style="text-align:right;">Islem</th>
+                        <th style="text-align:right;">İşlem</th>
                     </tr>
                 </thead>
                 <tbody>

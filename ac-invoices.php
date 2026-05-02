@@ -83,11 +83,11 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
                 <thead>
                     <tr>
                         <th>Fatura No</th>
-                        <th style="text-align:center;">Olusturma</th>
+                        <th style="text-align:center;">Oluşturma</th>
                         <th style="text-align:center;">Vade</th>
                         <th style="text-align:right;">Tutar</th>
                         <th style="text-align:center;">Durum</th>
-                        <th style="text-align:right;">Islem</th>
+                        <th style="text-align:right;">İşlem</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -155,7 +155,7 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
                         <td style="text-align:right;">
                             <?php if(isset($row['detail_link'])): ?>
                                 <a href="<?php echo $row['detail_link']; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">
-                                    <i class="bi bi-eye"></i> Goruntule
+                                    <i class="bi bi-eye"></i> Görüntüle
                                 </a>
                             <?php endif; ?>
                         </td>
@@ -168,7 +168,7 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
         <div class="cdg-empty">
             <div class="icon"><i class="bi bi-receipt"></i></div>
             <h3>Fatura bulunmuyor</h3>
-            <p>Henuz hicbir faturaniz olusturulmamis.</p>
+            <p>Henüz hiçbir faturanız oluşturulmamış.</p>
         </div>
     <?php endif; ?>
 </div>

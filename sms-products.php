@@ -24,7 +24,7 @@
             </p>
             <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
                 <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" class="cdg-btn cdg-btn-primary">
-                    <i class="bi bi-chat-dots"></i> Iletisim
+                    <i class="bi bi-chat-dots"></i> İletişim
                 </a>
                 <a href="<?php echo APP_URI; ?>/" class="cdg-btn cdg-btn-outline">
                     <i class="bi bi-house"></i> Anasayfa

@@ -67,7 +67,7 @@ if(!$is_admin) {
               . '?key=' . urlencode($secret);
 
     http_response_code(200); // 403 değil, normal sayfa - kullanıcı dostu
-    ?><!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"><title>Codega - Guncelleme Erisimi</title>
+    ?><!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"><title>Codega - Güncelleme Erişimi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
@@ -87,11 +87,11 @@ if(!$is_admin) {
     </style></head><body>
     <div class="card">
         <div class="icon">🔐</div>
-        <h1>Guncelleme Merkezi</h1>
-        <p class="lead">Admin oturumunuz otomatik tespit edilemedi. Asagidaki guvenli URL'i kullanarak guncelleme sayfasina erisebilirsiniz:</p>
+        <h1>Güncelleme Merkezi</h1>
+        <p class="lead">Admin oturumunuz otomatik tespit edilemedi. Aşağıdaki güvenli URL'i kullanarak güncelleme sayfasına erişebilirsiniz:</p>
         <div class="url-box"><?php echo htmlspecialchars($self_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
         <a href="<?php echo htmlspecialchars($self_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="btn">
-            <span>Guncelleme Merkezine Git</span>
+            <span>Güncelleme Merkezine Git</span>
             <span>&rarr;</span>
         </a>
         <div class="info">
@@ -99,7 +99,7 @@ if(!$is_admin) {
             Secret key her tema kurulumunda otomatik ve benzersiz uretilir. Sadece bu sunucuya FTP/dosya erisimi olan kisi gorebilir.
         </div>
         <div class="small">
-            Secret key'i degistirmek icin <code>theme-config.php</code> dosyasinda <code>update_secret</code> degerini guncelleyin.
+            Secret key'i değiştirmek için <code>theme-config.php</code> dosyasında <code>update_secret</code> değerini güncelleyin.
         </div>
     </div>
     </body></html><?php
@@ -265,7 +265,7 @@ if($action === 'apply') {
         'old_version'     => $current_version,
         'new_version'     => $new_version,
         'backup_file'     => basename($backup_file),
-        'message'         => "v{$current_version} -> v{$new_version} basariyla guncellendi",
+        'message'         => "v{$current_version} -> v{$new_version} başarıyla güncellendi",
     ]);
     exit;
 }
@@ -276,7 +276,7 @@ if($action === 'apply') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Codega Tema - Guncelleme Merkezi</title>
+    <title>Codega Tema - Güncelleme Merkezi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -324,17 +324,17 @@ if($action === 'apply') {
 <div class="container">
 
     <div class="hero">
-        <div class="eyebrow"><i class="bi bi-arrow-clockwise"></i> Guncelleme Merkezi</div>
+        <div class="eyebrow"><i class="bi bi-arrow-clockwise"></i> Güncelleme Merkezi</div>
         <h1>Codega Tema</h1>
-        <p>WiseCP icin gelistirilen ozel tema</p>
+        <p>WiseCP için geliştirilen özel tema</p>
         <span class="version-badge">
             <i class="bi bi-tag"></i> Mevcut Surum: v<?php echo htmlspecialchars($current_version, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
         </span>
     </div>
 
     <div class="card">
-        <h2><i class="bi bi-cloud-download"></i> Otomatik Guncelleme</h2>
-        <p class="text-muted">Tek tıkla GitHub uzerinden son surume guncelleyin.</p>
+        <h2><i class="bi bi-cloud-download"></i> Otomatik Güncelleme</h2>
+        <p class="text-muted">Tek tıkla GitHub üzerinden son sürüme güncelleyin.</p>
 
         <div class="stat-grid">
             <div class="stat">
@@ -368,7 +368,7 @@ if($action === 'apply') {
     </div>
 
     <div class="card">
-        <h2><i class="bi bi-info-circle"></i> Hakkinda</h2>
+        <h2><i class="bi bi-info-circle"></i> Hakkında</h2>
         <p class="text-muted" style="margin-bottom:12px;">
             Codega tema, tek tikla GitHub Releases uzerinden otomatik guncellenir.
             Guncellemeden once mevcut dosyalar <code>.backups/</code> klasorune yedeklenir.
@@ -376,7 +376,7 @@ if($action === 'apply') {
         <ul class="change-list">
             <li>GitHub Repo: <code><?php echo htmlspecialchars($repo, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></li>
             <li>Update URL: <code><?php echo htmlspecialchars($check_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></li>
-            <li>Yedekleme: Her guncellemeden once otomatik</li>
+            <li>Yedekleme: Her güncellemeden önce otomatik</li>
         </ul>
     </div>
 
@@ -408,7 +408,7 @@ async function checkUpdate() {
         latest.textContent = 'v' + d.latest_version;
 
         if(d.has_update) {
-            status.innerHTML = '<span style="color:#f59e0b;">Guncelleme Var</span>';
+            status.innerHTML = '<span style="color:#f59e0b;">Güncelleme Var</span>';
             msg.innerHTML = '<div class="alert alert-warning"><i class="bi bi-cloud-arrow-down"></i><div><strong>Yeni surum mevcut!</strong> v' + d.current_version + ' &rarr; v' + d.latest_version + ' (' + (d.release_date || '') + ')</div></div>';
             apply.disabled = false;
             apply.dataset.version = d.latest_version;
@@ -441,7 +441,7 @@ async function applyUpdate() {
 
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span> Guncelleniyor (bu birkac saniye surebilir)...';
-    msg.innerHTML = '<div class="alert alert-info"><i class="bi bi-cloud-arrow-down"></i><div>GitHub uzerinden indiriliyor ve dosyalar guncelleniyor...</div></div>';
+    msg.innerHTML = '<div class="alert alert-info"><i class="bi bi-cloud-arrow-down"></i><div>GitHub üzerinden indiriliyor ve dosyalar güncelleniyorlleniyor...</div></div>';
 
     try {
         const r = await fetch('?action=apply&key=<?php echo urlencode($secret); ?>');

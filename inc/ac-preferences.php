@@ -62,7 +62,7 @@ if(class_exists('Money') && method_exists('Money','getCurrencies')) {
                 <div style="font-size:14px;font-weight:700;color:#0f172a;margin-bottom:2px;">
                     <i class="bi bi-envelope-fill" style="color:#3b82f6;"></i> E-posta Bildirimleri
                 </div>
-                <div style="font-size:12px;color:#64748b;">Onemli olaylar, fatura ve guncellemeler e-posta ile gelsin.</div>
+                <div style="font-size:12px;color:#64748b;">Önemli olaylar, fatura ve güncellemeler e-posta ile gelsin.</div>
             </div>
             <label class="cdg-switch">
                 <input type="checkbox" name="email_notifications" value="1" <?php echo $email_notif ? 'checked' : ''; ?>>

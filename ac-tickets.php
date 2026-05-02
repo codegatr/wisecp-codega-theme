@@ -99,7 +99,7 @@ $ui_lang_local = isset($ui_lang) ? $ui_lang : 'tr';
                         <th>#ID</th>
                         <th>Konu</th>
                         <th style="text-align:center;">Durum</th>
-                        <th style="text-align:right;">Islem</th>
+                        <th style="text-align:right;">İşlem</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -138,7 +138,7 @@ $ui_lang_local = isset($ui_lang) ? $ui_lang : 'tr';
                         <td style="text-align:right;">
                             <?php if(isset($row['detail_link'])): ?>
                                 <a href="<?php echo $row['detail_link']; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">
-                                    <i class="bi bi-eye"></i> Goruntule
+                                    <i class="bi bi-eye"></i> Görüntüle
                                 </a>
                             <?php endif; ?>
                         </td>
@@ -153,7 +153,7 @@ $ui_lang_local = isset($ui_lang) ? $ui_lang : 'tr';
             <h3>Acik destek talebiniz yok</h3>
             <p>Bir sorununuz veya soru oldugunda destek ekibimize ulasabilirsiniz.</p>
             <a href="<?php echo $create_link; ?>" class="cdg-btn cdg-btn-primary mt-3">
-                <i class="bi bi-plus-lg"></i> Yeni Talep Olustur
+                <i class="bi bi-plus-lg"></i> Yeni Talep Oluştur
             </a>
         </div>
     <?php endif; ?>

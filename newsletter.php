@@ -67,7 +67,7 @@ $nl_message = isset($message) ? $message : '';
                 </button>
 
                 <div style="margin-top:14px;text-align:center;font-size:11px;color:#94a3b8;">
-                    <i class="bi bi-shield-check"></i> E-posta adresiniz sadece bulten gondermek icin kullanilir, ucuncu taraflarla paylasilmaz.
+                    <i class="bi bi-shield-check"></i> E-posta adresiniz sadece bülten göndermek için kullanılır, üçüncü taraflarla paylaşılmaz.
                 </div>
             </form>
 

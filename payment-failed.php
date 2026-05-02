@@ -52,7 +52,7 @@ $tickets_link = isset($links['tickets']) ? $links['tickets']
                 <ul style="font-size:12px;color:#78350f;margin:0;padding-left:18px;line-height:1.6;">
                     <li>Kart bilgilerinde hata olabilir (kart no, son kullanma tarihi, CVV)</li>
                     <li>Kart bakiyeniz veya limitiniz yetersiz olabilir</li>
-                    <li>Bankaniz islemi reddetmis olabilir (bankanizla iletisime gecin)</li>
+                    <li>Bankanız işlemi reddetmiş olabilir (bankanızla iletişime geçin)</li>
                     <li>Kart 3D Secure dogrulamasi tamamlanmadi</li>
                 </ul>
             </div>

@@ -121,7 +121,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
         <div class="cdg-page-hero-content">
             <div class="cdg-eyebrow cdg-eyebrow-glow"><i class="bi bi-chat-heart-fill"></i> İletişim</div>
             <h1>Sizinle <span class="cdg-text-gradient">tanışmaktan</span> mutluluk duyariz</h1>
-            <p>Hosting, domain, yazılım çözümlerimiz veya destek hakkinda her konuda bize ulasabilirsiniz. Ortalama yanıt süremiz <strong>5 dakikadan az</strong>.</p>
+            <p>Hosting, domain, yazılım çözümlerimiz veya destek hakkında her konuda bize ulaşabilirsiniz. Ortalama yanıt süremiz <strong>5 dakikadan az</strong>.</p>
             <div class="cdg-page-hero-cta">
                 <a href="https://wa.me/<?php echo $company_wa; ?>" target="_blank" rel="noopener" class="cdg-btn cdg-btn-success cdg-btn-lg cdg-btn-glow"><i class="bi bi-whatsapp"></i> WhatsApp Destek</a>
                 <a href="tel:<?php echo str_replace(' ', '', $company_phone); ?>" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-telephone-fill"></i> <?php echo htmlspecialchars($company_phone, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
@@ -203,8 +203,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
                             <label>Konu</label>
                             <select name="subject">
                                 <option value="">Konu secin...</option>
-                                <option>Hosting Hakkinda</option>
-                                <option>Domain Hakkinda</option>
+                                <option>Hosting Hakkında</option>
+                                <option>Domain Hakkında</option>
                                 <option>Yazılım Hizmetleri</option>
                                 <option>Teknik Destek</option>
                                 <option>Faturalama</option>
@@ -294,7 +294,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
     <div class="cdg-container">
         <div class="cdg-section-head">
             <div class="cdg-eyebrow">Sik Sorulan</div>
-            <h2>İletişim hakkinda <span class="cdg-text-gradient">sik sorulan sorular</span></h2>
+            <h2>İletişim hakkında <span class="cdg-text-gradient">sık sorulan sorular</span></h2>
         </div>
         <div class="cdg-faq-list" style="max-width:780px;margin:32px auto 0;">
             <details class="cdg-faq-item" open>

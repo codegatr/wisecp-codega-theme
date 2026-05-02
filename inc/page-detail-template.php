@@ -85,7 +85,7 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
                             <i class="bi bi-arrow-left"></i> Tum <?php echo htmlspecialchars($pd_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                         </a>
                         <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" class="cdg-btn cdg-btn-primary">
-                            <i class="bi bi-chat-dots"></i> Iletisime Gec
+                            <i class="bi bi-chat-dots"></i> İletişime Gec
                         </a>
                     </div>
                 </div>

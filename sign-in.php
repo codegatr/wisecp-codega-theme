@@ -356,7 +356,7 @@ if(class_exists('Config') && Config::get("options/crtacwshop")) $sign_up = false
 
                         <div class="cdg-auth-card-head">
                             <h2><?php echo __("website/sign/forget-form-title"); ?></h2>
-                            <p>Sifrenizi sifirlamak icin e-posta adresinizi girin</p>
+                            <p>Şifrenizi sıfırlamak için e-posta adresinizi girin</p>
                         </div>
 
                         <div class="cdg-form-group">

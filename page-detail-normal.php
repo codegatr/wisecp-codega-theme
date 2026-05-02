@@ -35,7 +35,7 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
                 <?php else: ?>
                 <div style="text-align:center;padding:40px 20px;color:#94a3b8;">
                     <i class="bi bi-file-earmark-text" style="font-size:48px;display:block;margin-bottom:8px;opacity:0.5;"></i>
-                    <p style="font-size:14px;margin:0;">Bu sayfa icin henuz icerik eklenmemis.</p>
+                    <p style="font-size:14px;margin:0;">Bu sayfa için henüz içerik eklenmemiş.</p>
                 </div>
                 <?php endif; ?>
             </article>
@@ -65,9 +65,9 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
                 <div class="cdg-card" style="padding:20px;background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;">
                     <i class="bi bi-chat-square-text" style="font-size:28px;"></i>
                     <h4 style="font-size:14px;font-weight:800;margin:8px 0 6px;">Sorulariniz mi var?</h4>
-                    <p style="font-size:12px;opacity:0.9;margin:0 0 12px;">Bizimle iletisime gecin, hizmetlerimiz hakkinda bilgi alin.</p>
+                    <p style="font-size:12px;opacity:0.9;margin:0 0 12px;">Bizimle iletişime geçin, hizmetlerimiz hakkında bilgi alın.</p>
                     <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;color:#1e40af;text-decoration:none;border-radius:6px;font-size:12px;font-weight:700;">
-                        <i class="bi bi-envelope"></i> Iletisim
+                        <i class="bi bi-envelope"></i> İletişim
                     </a>
                 </div>
             </aside>

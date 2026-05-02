@@ -59,7 +59,7 @@ if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) {
                         <i class="bi bi-life-preserver"></i>
                     </div>
                     <h4 style="font-size:16px;font-weight:800;color:#0f172a;margin:0 0 6px;">Bu makale sorununuzu cozemedi mi?</h4>
-                    <p style="font-size:13px;color:#475569;margin:0 0 14px;">Destek ekibimiz size yardimci olmak icin hazir.</p>
+                    <p style="font-size:13px;color:#475569;margin:0 0 14px;">Destek ekibimiz size yardımcı olmak için hazır.</p>
                     <a href="<?php echo htmlspecialchars($kb_tickets_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-btn cdg-btn-primary">
                         <i class="bi bi-life-preserver"></i> Destek Talebi Olustur
                     </a>

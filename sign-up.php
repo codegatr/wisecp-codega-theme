@@ -257,7 +257,7 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
                         <?php if(isset($countryList) && is_array($countryList)): ?>
                         <div class="cdg-form-row">
                             <div class="cdg-form-group">
-                                <label class="cdg-form-label">Ulke</label>
+                                <label class="cdg-form-label">Ülke</label>
                                 <select name="country" class="cdg-form-control" onchange="if(typeof getCities=='function') getCities(this.options[this.selectedIndex].value);">
                                     <?php foreach($countryList as $country): ?>
                                         <option value="<?php echo $country['id'] ?? $country['code'] ?? ''; ?>" data-code="<?php echo $country['code'] ?? ''; ?>"><?php echo $country['name'] ?? ''; ?></option>
@@ -265,7 +265,7 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
                                 </select>
                             </div>
                             <div class="cdg-form-group">
-                                <label class="cdg-form-label">Sehir</label>
+                                <label class="cdg-form-label">Şehir</label>
                                 <input type="text" name="city" class="cdg-form-control" placeholder="Sehir">
                             </div>
                         </div>

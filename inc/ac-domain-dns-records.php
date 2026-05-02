@@ -128,7 +128,7 @@ $ttl_options = [
                             <td style="text-align:center;">
                                 <button type="button" onclick="cdgDomain.dnsRecordEdit(<?php echo (int)$k; ?>, <?php echo htmlspecialchars(json_encode([
                                     'type' => $r_type, 'name' => $r_name, 'value' => $r_value, 'ttl' => $r_ttl, 'identity' => $r_identity
-                                ], JSON_UNESCAPED_UNICODE), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>)" title="Duzenle" style="background:#3b82f6;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;margin-right:4px;">
+                                ], JSON_UNESCAPED_UNICODE), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>)" title="Düzenle" style="background:#3b82f6;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;margin-right:4px;">
                                     <i class="bi bi-pencil"></i>
                                 </button>
                                 <button type="button" onclick="cdgDomain.dnsRecordDelete(<?php echo (int)$k; ?>, '<?php echo htmlspecialchars(addslashes($r_identity), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', '<?php echo htmlspecialchars(addslashes($r_type), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', '<?php echo htmlspecialchars(addslashes($r_name), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Sil" style="background:#ef4444;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;">

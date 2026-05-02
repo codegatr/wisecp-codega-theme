@@ -831,7 +831,7 @@ $discounted_total = $inv_subtotal - $total_discount;
             ?>
 
             <?php if($cdg_payment_screen): ?>
-            <!-- 2. ASAMA: Odeme Detaylari (havale bilgisi, kredi karti formu vs.) -->
+            <!-- 2. AŞAMA: Ödeme Detayları (havale bilgisi, kredi karti formu vs.) -->
             <div style="margin-bottom:16px;padding:14px;background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
                     <div>

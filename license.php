@@ -67,15 +67,15 @@ $controller_link = isset($links['controller']) ? $links['controller'] : '';
                     <i class="bi bi-check2"></i>
                 </div>
                 <h4 style="font-size:16px;font-weight:800;color:#15803d;margin:0 0 6px;">Lisans Aktif</h4>
-                <p style="font-size:13px;color:#166534;margin:0;">Sorgulanan domain icin gecerli bir lisans mevcuttur.</p>
+                <p style="font-size:13px;color:#166534;margin:0;">Sorgulanan domain için geçerli bir lisans mevcuttur.</p>
             </div>
 
             <div id="cdg-license-result-fail" style="display:none;margin-top:20px;padding:18px;background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #fca5a5;border-radius:10px;text-align:center;">
                 <div style="width:54px;height:54px;border-radius:50%;background:#ef4444;color:#fff;display:inline-grid;place-items:center;font-size:24px;margin-bottom:10px;">
                     <i class="bi bi-x"></i>
                 </div>
-                <h4 style="font-size:16px;font-weight:800;color:#b91c1c;margin:0 0 6px;">Lisans Bulunamadi</h4>
-                <p style="font-size:13px;color:#7f1d1d;margin:0 0 12px;">Bu domain icin gecerli bir lisans bulunamadi veya suresi dolmus.</p>
+                <h4 style="font-size:16px;font-weight:800;color:#b91c1c;margin:0 0 6px;">Lisans Bulunamadı</h4>
+                <p style="font-size:13px;color:#7f1d1d;margin:0 0 12px;">Bu domain için geçerli bir lisans bulunamadı veya süresi dolmuş.</p>
                 <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" class="cdg-btn cdg-btn-danger" style="font-size:13px;">
                     <i class="bi bi-flag"></i> Korsanligi Bildir
                 </a>
@@ -83,7 +83,7 @@ $controller_link = isset($links['controller']) ? $links['controller'] : '';
         </div>
 
         <div style="text-align:center;margin-top:14px;font-size:12px;color:#94a3b8;">
-            <i class="bi bi-info-circle"></i> Bu sayfa lisans dogrulama icin kullanilir, satin alma icin <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" style="color:#1e40af;font-weight:700;">iletisime gecin</a>.
+            <i class="bi bi-info-circle"></i> Bu sayfa lisans doğrulama için kullanılır, satın alma için <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" style="color:#1e40af;font-weight:700;">iletisime gecin</a>.
         </div>
     </div>
 </section>

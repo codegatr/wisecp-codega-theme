@@ -928,13 +928,13 @@ $transfer_lock = !empty($options['transferlock']);
 
         <div class="cdg-pdm-card" style="margin-top:18px;">
             <div class="cdg-pdm-card-head">
-                <h3><i class="bi bi-pencil-square"></i> Detayli WHOIS Duzenleme</h3>
-                <span style="font-size:11px;color:#94a3b8;">Tum kontak tipleri icin manuel duzenleme</span>
+                <h3><i class="bi bi-pencil-square"></i> Detaylı WHOIS Düzenleme</h3>
+                <span style="font-size:11px;color:#94a3b8;">Tüm kontak tipleri için manuel düzenleme</span>
             </div>
             <div class="cdg-pdm-card-body">
                 <div class="cdg-pdm-alert cdg-pdm-alert-warning">
                     <i class="bi bi-exclamation-triangle"></i>
-                    <div>WHOIS bilgilerinizi profil secmeden de manuel olarak duzenleyebilirsiniz. Her kontak tipi icin ayri bilgi girebilirsiniz.</div>
+                    <div>WHOIS bilgilerinizi profil seçmeden de manuel olarak düzenleyebilirsiniz. Her kontak tipi için ayrı bilgi girebilirsinizsiniz.</div>
                 </div>
 
                 <form method="post" action="<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" id="cdg-pdm-whois-form">
@@ -987,7 +987,7 @@ $transfer_lock = !empty($options['transferlock']);
                                 <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][Name]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-Name" value="<?php echo htmlspecialchars($cw['Name'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Ad Soyad">
                             </div>
                             <div class="cdg-pdm-field">
-                                <label class="cdg-pdm-label">Sirket Adi</label>
+                                <label class="cdg-pdm-label">Şirket Adı</label>
                                 <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][Company]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-Company" value="<?php echo htmlspecialchars($cw['Company'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Opsiyonel">
                             </div>
                         </div>
@@ -1023,7 +1023,7 @@ $transfer_lock = !empty($options['transferlock']);
 
                         <div class="cdg-pdm-form-row" style="grid-template-columns:1fr 1fr 1fr 120px;">
                             <div class="cdg-pdm-field">
-                                <label class="cdg-pdm-label">Sehir</label>
+                                <label class="cdg-pdm-label">Şehir</label>
                                 <input type="text" name="info[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>][City]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>-City" value="<?php echo htmlspecialchars($cw['City'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                             </div>
                             <div class="cdg-pdm-field">
@@ -1651,7 +1651,7 @@ window.cdgDomain = {
         if(addBtn) addBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
         // Bilgi mesaji
-        if(typeof alert_info === 'function') alert_info('Kayit duzenleme moduna girildi. Form alanlarini guncelleyip Guncelle butonuna basin.', {timer: 3000});
+        if(typeof alert_info === 'function') alert_info('Kayıt düzenleme moduna girildi. Form alanlarını güncelleyip Güncelle butonuna basın.', {timer: 3000});
     },
     // Update kaydi gonder
     dnsRecordUpdate: function() {

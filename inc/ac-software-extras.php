@@ -96,7 +96,7 @@ if(!$is_active) return; // Aktif değilse hiç gösterme
             <?php if(!$license_code && !$license_ip): ?>
             <div style="text-align:center;padding:24px;color:#94a3b8;">
                 <i class="bi bi-key" style="font-size:36px;display:block;margin-bottom:8px;opacity:0.5;"></i>
-                <p style="font-size:13px;margin:0;">Lisans bilgileriniz henuz olusturulmamis veya gosterilemiyor.</p>
+                <p style="font-size:13px;margin:0;">Lisans bilgileriniz henüz oluşturulmamış veya gösterilemiyor.</p>
             </div>
             <?php endif; ?>
         </div>

@@ -301,7 +301,7 @@ $button_icons = [
     <div class="cdg-empty">
         <div class="icon"><i class="bi bi-info-circle"></i></div>
         <h3>Hizmet detaylari hazirlaniyor</h3>
-        <p>Bu hizmet icin detay bilgileri WiseCP modülünüz tarafindan saglanir. Eger bilgi gormuyorsaniz hizmet aktif olmamis veya modül baglantisi kurulmamistir.</p>
+        <p>Bu hizmet için detay bilgileri WiseCP modülünüz tarafından sağlanır. Eğer bilgi görmüyorsanız hizmet aktif olmamış veya modül bağlantısı kurulmamıştırr.</p>
         <a href="<?php echo cdg_link('ac-ps-create-ticket-request'); ?>" class="cdg-btn cdg-btn-primary mt-3">
             <i class="bi bi-headset"></i> Destek Al
         </a>
@@ -315,7 +315,7 @@ $button_icons = [
 ?>
 <div class="cdg-card mt-3">
     <div class="cdg-card-head">
-        <h3><i class="bi bi-tools"></i> Hizmet Islemleri</h3>
+        <h3><i class="bi bi-tools"></i> Hizmet İşlemleri</h3>
         <?php if($panel_url): ?>
             <span style="font-size:12px;color:var(--cdg-muted);">DirectAdmin/cPanel uzerinden gerceklesir</span>
         <?php endif; ?>
@@ -324,12 +324,12 @@ $button_icons = [
         <a href="<?php echo $panel_url ?: '#'; ?>" <?php echo $panel_url ? 'target="_blank" rel="noopener"' : ''; ?> class="cdg-action-card">
             <div class="ico"><i class="bi bi-diagram-3"></i></div>
             <div class="ttl">DNS Yonetimi</div>
-            <div class="dsc">Nameserver, A, CNAME, MX kayitlari</div>
+            <div class="dsc">Nameserver, A, CNAME, MX kayıtları</div>
         </a>
         <a href="<?php echo $panel_url ?: '#'; ?>" <?php echo $panel_url ? 'target="_blank" rel="noopener"' : ''; ?> class="cdg-action-card">
             <div class="ico"><i class="bi bi-envelope-at"></i></div>
             <div class="ttl">E-posta Hesaplari</div>
-            <div class="dsc">Olustur, sifre degistir, yonlendirme</div>
+            <div class="dsc">Oluştur, şifre değiştir, yönlendirme</div>
         </a>
         <a href="<?php echo $panel_url ?: '#'; ?>" <?php echo $panel_url ? 'target="_blank" rel="noopener"' : ''; ?> class="cdg-action-card">
             <div class="ico"><i class="bi bi-database"></i></div>
@@ -339,7 +339,7 @@ $button_icons = [
         <a href="<?php echo $panel_url ?: '#'; ?>" <?php echo $panel_url ? 'target="_blank" rel="noopener"' : ''; ?> class="cdg-action-card">
             <div class="ico"><i class="bi bi-folder"></i></div>
             <div class="ttl">Dosya Yoneticisi</div>
-            <div class="dsc">FTP/SFTP, dosya islemleri</div>
+            <div class="dsc">FTP/SFTP, dosya işlemleri</div>
         </a>
         <a href="<?php echo $panel_url ?: '#'; ?>" <?php echo $panel_url ? 'target="_blank" rel="noopener"' : ''; ?> class="cdg-action-card">
             <div class="ico"><i class="bi bi-shield-lock"></i></div>

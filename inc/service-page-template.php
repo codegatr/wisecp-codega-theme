@@ -87,7 +87,7 @@ $svc_extra_html  = $svc_extra_html ?? '';
         <div class="cdg-card" style="padding:36px;text-align:center;background:<?php echo htmlspecialchars($svc_gradient, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>;color:#fff;">
             <i class="bi bi-rocket-takeoff" style="font-size:42px;margin-bottom:12px;display:block;opacity:0.9;"></i>
             <h2 style="font-size:22px;font-weight:800;margin:0 0 8px;color:#fff;">Hemen Baslayin</h2>
-            <p style="font-size:14px;opacity:0.92;margin:0 0 18px;">Detayli bilgi ve fiyat teklifi icin bizimle iletisime gecin.</p>
+            <p style="font-size:14px;opacity:0.92;margin:0 0 18px;">Detaylı bilgi ve fiyat teklifi için bizimle iletişime geçin.</p>
             <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
                 <a href="<?php echo htmlspecialchars($svc_cta_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:12px 24px;background:#fff;color:<?php echo htmlspecialchars($svc_color, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>;text-decoration:none;border-radius:8px;font-size:14px;font-weight:700;transition:transform 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
                     <i class="bi bi-chat-dots"></i> <?php echo htmlspecialchars($svc_cta_text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>

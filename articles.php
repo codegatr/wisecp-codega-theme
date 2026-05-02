@@ -103,7 +103,7 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
                         Bu kategoride yayinlanmis makale bulunmuyor. Yakinda yeni icerikler eklenecektir.
                     </p>
                     <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" class="cdg-btn cdg-btn-primary">
-                        <i class="bi bi-chat-dots"></i> Iletisime Gec
+                        <i class="bi bi-chat-dots"></i> İletişime Gec
                     </a>
                 </div>
                 <?php endif; ?>
@@ -116,7 +116,7 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
                     if($cat_content_clean):
                 ?>
                 <div class="cdg-card" style="margin-top:24px;padding:24px;">
-                    <h4 style="font-size:15px;font-weight:800;color:#0f172a;margin:0 0 12px;"><i class="bi bi-info-circle"></i> Kategori Hakkinda</h4>
+                    <h4 style="font-size:15px;font-weight:800;color:#0f172a;margin:0 0 12px;"><i class="bi bi-info-circle"></i> Kategori Hakkında</h4>
                     <div style="font-size:14px;color:#475569;line-height:1.6;"><?php echo $articles_category['content']; ?></div>
                 </div>
                 <?php endif; endif; ?>
@@ -152,8 +152,8 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
 
                 <div class="cdg-card" style="padding:20px;background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;">
                     <i class="bi bi-life-preserver" style="font-size:32px;"></i>
-                    <h4 style="font-size:14px;font-weight:800;margin:10px 0 6px;">Cevap aradiginiz sorunuz mu var?</h4>
-                    <p style="font-size:12px;opacity:0.9;margin:0 0 12px;">Destek ekibimiz size yardimci olmak icin hazir.</p>
+                    <h4 style="font-size:14px;font-weight:800;margin:10px 0 6px;">Cevap aradığınız sorunuz mu var?</h4>
+                    <p style="font-size:12px;opacity:0.9;margin:0 0 12px;">Destek ekibimiz size yardımcı olmak için hazır.</p>
                     <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('knowledgebase') : '/knowledgebase'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;color:#1e40af;text-decoration:none;border-radius:6px;font-size:12px;font-weight:700;">
                         <i class="bi bi-book"></i> Bilgi Bankasi
                     </a>

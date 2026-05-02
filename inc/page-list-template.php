@@ -136,7 +136,7 @@ $page_title = $pcat['title'] ?? $plabel;
                 <div class="cdg-card" style="padding:20px;background:<?php echo htmlspecialchars($pgrad, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>;color:#fff;">
                     <i class="bi bi-chat-dots" style="font-size:28px;"></i>
                     <h4 style="font-size:14px;font-weight:800;margin:8px 0 6px;">Sorunuz mu var?</h4>
-                    <p style="font-size:12px;opacity:0.9;margin:0 0 12px;">Iletisime gecin, hizmetlerimiz hakkinda bilgi alin.</p>
+                    <p style="font-size:12px;opacity:0.9;margin:0 0 12px;">İletişime geçin, hizmetlerimiz hakkında bilgi alın.</p>
                     <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;color:<?php echo htmlspecialchars($pcolor, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>;text-decoration:none;border-radius:6px;font-size:12px;font-weight:700;">
                         <i class="bi bi-envelope"></i> Bize Yazin
                     </a>
