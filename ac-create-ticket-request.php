@@ -509,7 +509,7 @@ $tickets_url = cdg_link('tickets');
                 <div class="cdg-tk-field">
                     <label class="cdg-tk-label">Dosya Eki (Opsiyonel)</label>
                     <label class="cdg-tk-file" id="cdg-tk-file-drop">
-                        <input type="file" name="attachment[]" id="cdg-tk-file-input" multiple accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.txt,.zip,.gif,.xlsx,.xls">
+                        <input type="file" name="attachments[]" id="cdg-tk-file-input" multiple accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.txt,.zip,.gif,.xlsx,.xls">
                         <i class="bi bi-cloud-arrow-up"></i>
                         <div class="cdg-tk-file-text">Dosya seçmek için tıklayın veya sürükleyin</div>
                         <div class="cdg-tk-file-hint">İzin verilen: <?php echo htmlspecialchars($atachment_extensions); ?></div>

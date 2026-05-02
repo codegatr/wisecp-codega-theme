@@ -590,7 +590,7 @@ function cdg_t_date($date) {
         <div class="cdg-td-reply-head">
             <h3><i class="bi bi-reply-fill"></i> Yanıt Yazın</h3>
         </div>
-        <form id="cdg-td-reply-form" method="post" action="<?php echo htmlspecialchars($controller_url); ?>" onsubmit="return false;">
+        <form id="cdg-td-reply-form" method="post" action="<?php echo htmlspecialchars($controller_url); ?>" enctype="multipart/form-data" onsubmit="return false;">
             <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('reply-ticket'); ?>
             <input type="hidden" name="operation" value="reply">
             <input type="hidden" name="ticket_id" value="<?php echo htmlspecialchars($t_id); ?>">
@@ -601,6 +601,22 @@ function cdg_t_date($date) {
                     class="cdg-td-textarea"
                     placeholder="Yanıtınızı buraya yazın... Sorununuzu en iyi şekilde anlamamız için detay verebilirsiniz."
                     required></textarea>
+
+                <!-- Dosya Eki -->
+                <div style="margin-top:14px;padding:14px;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;">
+                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                        <i class="bi bi-paperclip" style="font-size:20px;color:#1e40af;"></i>
+                        <div style="flex:1;">
+                            <div style="font-size:13px;font-weight:700;color:#0f172a;">Dosya Ekle (Opsiyonel)</div>
+                            <div style="font-size:11px;color:#64748b;" id="cdg-td-attachments-info">Birden fazla dosya secebilirsiniz. Maks 5 MB.</div>
+                        </div>
+                        <input type="file" name="attachments[]" id="cdg-td-attachments" multiple style="display:none;" onchange="cdgTdShowFiles(this)">
+                        <button type="button" class="cdg-td-btn" style="background:#fff;border:1px solid #e2e8f0;color:#475569;padding:6px 14px;font-size:12px;" onclick="document.getElementById('cdg-td-attachments').click()">
+                            <i class="bi bi-folder2-open"></i> Dosya Sec
+                        </button>
+                    </label>
+                    <div id="cdg-td-files-list" style="margin-top:10px;display:none;font-size:12px;"></div>
+                </div>
 
                 <div class="cdg-td-reply-actions">
                     <label class="cdg-td-check">
@@ -630,6 +646,34 @@ function cdg_t_date($date) {
 
 </div>
 </div>
+
+<script>
+// Dosya secimi gosterimi
+window.cdgTdShowFiles = function(input) {
+    var list = document.getElementById('cdg-td-files-list');
+    if(!list) return;
+    if(!input.files || input.files.length === 0) {
+        list.style.display = 'none';
+        return;
+    }
+    var html = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">';
+    var totalSize = 0;
+    for(var i = 0; i < input.files.length; i++) {
+        var f = input.files[i];
+        totalSize += f.size;
+        var sizeStr = (f.size / 1024).toFixed(1) + ' KB';
+        if(f.size > 1024 * 1024) sizeStr = (f.size / 1024 / 1024).toFixed(1) + ' MB';
+        html += '<span style="background:#eff6ff;color:#1e40af;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;">';
+        html += '<i class="bi bi-file-earmark"></i> ' + f.name + ' (' + sizeStr + ')</span>';
+    }
+    html += '</div>';
+    if(totalSize > 5 * 1024 * 1024) {
+        html += '<div style="margin-top:6px;color:#ef4444;font-size:11px;font-weight:700;"><i class="bi bi-exclamation-triangle"></i> Toplam boyut 5 MB sinirini astı!</div>';
+    }
+    list.innerHTML = html;
+    list.style.display = 'block';
+};
+</script>
 
 <script>
 (function(){

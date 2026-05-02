@@ -119,14 +119,31 @@ $status_meta = cdg_inv_status_meta($inv_status);
 // Kullanıcı bilgileri
 $u_kind        = $user_data['kind'] ?? 'individual';
 $u_company     = $user_data['company_name'] ?? '';
-$u_name        = trim(($user_data['name'] ?? '') . ' ' . ($user_data['surname'] ?? ''));
+// WiseCP runtime: full_name primary, name+surname fallback
+$u_name        = '';
+if(!empty($user_data['full_name'])) {
+    $u_name = trim($user_data['full_name']);
+}
+if(!$u_name) {
+    $u_name = trim(($user_data['name'] ?? '') . ' ' . ($user_data['surname'] ?? ''));
+}
 $u_email       = $user_data['email'] ?? '';
-$u_phone       = $user_data['phone'] ?? '';
+$u_phone       = $user_data['phone'] ?? ($user_data['gsm'] ?? '');
 $u_address     = $user_data['address'] ?? '';
 $u_city        = $user_data['city'] ?? '';
-$u_country     = $user_data['country'] ?? '';
+$u_counti      = $user_data['counti'] ?? '';
+$u_zipcode     = $user_data['zipcode'] ?? '';
+$u_country     = $user_data['country'] ?? ($user_data['country_id'] ?? '');
+$u_identity    = $user_data['identity'] ?? '';
 $u_taxoffice   = $user_data['company_tax_office'] ?? '';
-$u_taxnumber   = $user_data['company_tax_number'] ?? ($user_data['identity'] ?? '');
+$u_taxnumber   = $user_data['company_tax_number'] ?? '';
+
+// Komisyon ve refund (Classic uyumlu)
+$inv_commission     = $invoice['pmethod_commission'] ?? 0;
+$inv_commission_rate = $invoice['pmethod_commission_rate'] ?? 0;
+$inv_refunddate     = $invoice['refunddate'] ?? '';
+$inv_sendbta        = !empty($invoice['sendbta']);
+$inv_sendbta_amount = $invoice['sendbta_amount'] ?? 0;
 
 // PDF link
 $pdf_link = cdg_link('detail-invoice-pdf', [(int)($invoice['id'] ?? 0)]);
@@ -544,15 +561,26 @@ $discounted_total = $inv_subtotal - $total_discount;
         <i class="bi bi-check-circle-fill"></i>
         <div>
             <h4>Bu fatura ödenmiştir</h4>
-            <p>Ödeme tarihi: <?php echo htmlspecialchars(cdg_inv_date($inv_datepaid)); ?> · Yöntem: <?php echo htmlspecialchars($inv_pmethod ?: 'Bilinmiyor'); ?></p>
+            <p>
+                Ödeme tarihi: <?php echo htmlspecialchars(cdg_inv_date($inv_datepaid)); ?> · Yöntem: <?php echo htmlspecialchars($inv_pmethod ?: 'Bilinmiyor'); ?>
+                <?php if($inv_commission > 0): ?>
+                · Komisyon: <strong><?php echo htmlspecialchars(cdg_inv_money($inv_commission, $inv_currency)); ?></strong>
+                <?php if($inv_commission_rate): ?>(<?php echo htmlspecialchars($inv_commission_rate); ?>%)<?php endif; ?>
+                <?php endif; ?>
+            </p>
         </div>
     </div>
-    <?php elseif($inv_status === 'refund'): ?>
+    <?php elseif($inv_status === 'refund' || $inv_refunddate): ?>
     <div class="cdg-inv-paid-note" style="background:linear-gradient(135deg,#fee2e2,#fecaca);border-color:#fca5a5;color:#991b1b;">
         <i class="bi bi-arrow-counterclockwise"></i>
         <div>
             <h4>Bu fatura iade edilmiştir</h4>
-            <p>İade tarihi: <?php echo htmlspecialchars(cdg_inv_date($invoice['refunddate'] ?? '')); ?></p>
+            <p>
+                İade tarihi: <?php echo htmlspecialchars(cdg_inv_date($inv_refunddate)); ?>
+                <?php if($inv_datepaid && substr($inv_datepaid, 0, 4) !== '1881'): ?>
+                · Önceden ödendi: <?php echo htmlspecialchars(cdg_inv_date($inv_datepaid)); ?>
+                <?php endif; ?>
+            </p>
         </div>
     </div>
     <?php endif; ?>
@@ -567,26 +595,41 @@ $discounted_total = $inv_subtotal - $total_discount;
             </div>
             <div class="cdg-inv-card-body">
                 <ul class="cdg-inv-info">
-                    <?php if($u_kind === 'company' && $u_company): ?>
-                    <li><span class="cdg-inv-info-label">Firma</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_company); ?></span></li>
+                    <?php if($u_kind === 'corporate' || $u_kind === 'company'): ?>
+                        <?php if($u_company): ?>
+                        <li><span class="cdg-inv-info-label">Firma</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_company); ?></span></li>
+                        <?php endif; ?>
+                        <?php if($u_taxoffice): ?>
+                        <li><span class="cdg-inv-info-label">Vergi Dairesi</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_taxoffice); ?></span></li>
+                        <?php endif; ?>
+                        <?php if($u_taxnumber): ?>
+                        <li><span class="cdg-inv-info-label">Vergi No</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_taxnumber); ?></span></li>
+                        <?php endif; ?>
                     <?php endif; ?>
+
                     <?php if($u_name): ?>
                     <li><span class="cdg-inv-info-label">Ad Soyad</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_name); ?></span></li>
                     <?php endif; ?>
+
+                    <?php if(($u_kind === 'individual') && $u_identity): ?>
+                    <li><span class="cdg-inv-info-label">TC Kimlik</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_identity); ?></span></li>
+                    <?php endif; ?>
+
                     <?php if($u_email): ?>
                     <li><span class="cdg-inv-info-label">E-Posta</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_email); ?></span></li>
                     <?php endif; ?>
                     <?php if($u_phone): ?>
                     <li><span class="cdg-inv-info-label">Telefon</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_phone); ?></span></li>
                     <?php endif; ?>
-                    <?php if($u_address): ?>
-                    <li><span class="cdg-inv-info-label">Adres</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_address . ($u_city ? ', ' . $u_city : '') . ($u_country ? ' / ' . $u_country : '')); ?></span></li>
-                    <?php endif; ?>
-                    <?php if($u_kind === 'company' && $u_taxoffice): ?>
-                    <li><span class="cdg-inv-info-label">Vergi Dairesi</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_taxoffice); ?></span></li>
-                    <?php endif; ?>
-                    <?php if($u_taxnumber): ?>
-                    <li><span class="cdg-inv-info-label"><?php echo $u_kind === 'company' ? 'Vergi No' : 'TC Kimlik'; ?></span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($u_taxnumber); ?></span></li>
+                    <?php if($u_address):
+                        $addr_parts = [$u_address];
+                        if($u_counti) $addr_parts[] = $u_counti;
+                        if($u_city) $addr_parts[] = $u_city;
+                        if($u_zipcode) $addr_parts[] = $u_zipcode;
+                        if($u_country) $addr_parts[] = $u_country;
+                        $full_addr = implode(', ', array_filter($addr_parts));
+                    ?>
+                    <li><span class="cdg-inv-info-label">Adres</span><span class="cdg-inv-info-value"><?php echo htmlspecialchars($full_addr); ?></span></li>
                     <?php endif; ?>
                 </ul>
             </div>
