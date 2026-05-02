@@ -60,6 +60,7 @@ $allow_dns_records    = (is_object($module_con) && method_exists($module_con,'ge
 $allow_dns_sec_records = (is_object($module_con) && method_exists($module_con,'getDnsSecRecords'));
 $allow_forwarding_dmn = (is_object($module_con) && method_exists($module_con,'getForwardingDomain'));
 $allow_forwarding_eml = (is_object($module_con) && method_exists($module_con,'getEmailForwards'));
+$allow_documents      = (isset($info_docs) && is_array($info_docs) && !empty($info_docs));
 
 // Status meta
 function cdg_pdom_status($status) {
@@ -905,6 +906,26 @@ $transfer_lock = !empty($options['transferlock']);
                 </div>
             </div>
         </div>
+
+        <?php if($allow_documents): ?>
+        <!-- Belge Yönetimi Kartı (sadece ülke kodlu domainler için) -->
+        <div class="cdg-pdm-card" style="margin-top:18px;">
+            <div class="cdg-pdm-card-head">
+                <h3><i class="bi bi-file-earmark-text"></i> Belge Yönetimi</h3>
+            </div>
+            <div class="cdg-pdm-card-body">
+                <div class="cdg-pdm-alert cdg-pdm-alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <div>Bu domain için kayıt firması belge istiyor. Domain aktifleşmeden önce gerekli belgeleri yüklemeniz gerekir.</div>
+                </div>
+                <div style="text-align:center;padding:8px 0;">
+                    <button type="button" class="cdg-pdm-btn cdg-pdm-btn-primary" onclick="cdgDomain.openDocuments()">
+                        <i class="bi bi-cloud-upload"></i> Belgeleri Yönet
+                    </button>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
 
     <!-- TAB: TRANSFER -->
@@ -1415,14 +1436,104 @@ window.cdgDomain = {
                 }
             }
         });
+    },
+
+    // === DOMAIN DOCUMENTS ===
+    openDocuments: function(){ this.openModal('cdg-documents-modal'); },
+    docTypeChange: function(sel){
+        var opt = sel.options[sel.selectedIndex];
+        var docId = sel.value;
+        var type = opt ? opt.getAttribute('data-type') : '';
+
+        // Hepsini gizle
+        document.querySelectorAll('.cdg-doc-input').forEach(function(el){
+            el.style.display = 'none';
+        });
+        // Select'leri disable et (form'a gönderilmesin)
+        document.querySelectorAll('.cdg-doc-select-wrap select').forEach(function(s){
+            s.disabled = true;
+        });
+
+        if(docId === '0' || !type) return;
+
+        if(type === 'text') {
+            var t = document.getElementById('cdg-doc-text');
+            if(t) t.style.display = 'block';
+        } else if(type === 'file') {
+            var f = document.getElementById('cdg-doc-file');
+            if(f) f.style.display = 'block';
+        } else if(type === 'select') {
+            var sw = document.getElementById('cdg-doc-select-' + docId);
+            if(sw) {
+                sw.style.display = 'block';
+                var ss = sw.querySelector('select');
+                if(ss) ss.disabled = false;
+            }
+        }
+    },
+    docAdd: function(el){
+        var form = document.getElementById('addDomainDoc');
+        if(!form || typeof MioAjaxElement !== 'function') {
+            // jQuery fallback
+            if(window.jQuery && form) {
+                jQuery(form).ajaxSubmit({
+                    success: function(result){
+                        var solve;
+                        try { solve = (typeof result === 'string') ? JSON.parse(result) : result; } catch(e) { solve = null; }
+                        if(solve && solve.status === 'successful') {
+                            if(typeof alert_success === 'function') alert_success(solve.message || 'Belge eklendi', {timer: 2000});
+                            setTimeout(function(){ window.location.reload(); }, 1500);
+                        } else if(solve && solve.message && typeof alert_error === 'function') {
+                            alert_error(solve.message, {timer: 3000});
+                        }
+                    }
+                });
+            }
+            return;
+        }
+        // WiseCP MioAjaxElement file upload destekli
+        MioAjaxElement(el, {
+            result: 'cdgDocAddHandle',
+            waiting_text: 'Yükleniyor...',
+            progress_text: 'Yükleniyor...'
+        });
+    },
+    docSend: function(el){
+        if(!confirm('Tüm belgelerinizi kayıt firmasına göndermek istediğinize emin misiniz?')) return;
+        if(typeof MioAjax !== 'function') return;
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: { operation: 'sent_domain_doc', id: this.domainId },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Belgeler gönderildi', {timer: 2500});
+                    setTimeout(function(){ window.location.reload(); }, 2000);
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
     }
 };
+
+// Global doc add handler (MioAjaxElement callback için)
+function cdgDocAddHandle(result) {
+    if(!result) return;
+    var solve;
+    try { solve = (typeof result === 'string') ? JSON.parse(result) : result; } catch(e) { solve = null; }
+    if(solve && solve.status === 'successful') {
+        if(typeof alert_success === 'function') alert_success(solve.message || 'Belge eklendi', {timer: 2000});
+        setTimeout(function(){ window.location.reload(); }, 1500);
+    } else if(solve && solve.message && typeof alert_error === 'function') {
+        alert_error(solve.message, {timer: 3000});
+    }
+}
 
 // === Modal: ESC ile kapatma + Outside click ===
 (function(){
     document.addEventListener('keydown', function(e){
         if(e.key === 'Escape') {
-            ['cdg-dns-records-modal','cdg-cns-modal','cdg-dnssec-modal','cdg-email-forwards-modal'].forEach(function(id){
+            ['cdg-dns-records-modal','cdg-cns-modal','cdg-dnssec-modal','cdg-email-forwards-modal','cdg-documents-modal'].forEach(function(id){
                 var m = document.getElementById(id);
                 if(m && m.classList.contains('cdg-dm-open')) cdgDomain.closeModal(id);
             });
@@ -1456,10 +1567,11 @@ window.cdgDomain = {
 </script>
 
 <?php
-// === Domain Modalları (DNS Records / CNS / DNSSEC / Email Forwards) ===
+// === Domain Modalları (DNS Records / CNS / DNSSEC / Email Forwards / Documents) ===
 $cdg_domain_modals_loaded = ['css' => false];
 if($allow_dns_records) include __DIR__ . DS . 'inc' . DS . 'ac-domain-dns-records.php';
 if($allow_dns_cns)     include __DIR__ . DS . 'inc' . DS . 'ac-domain-cns.php';
 if($allow_dns_sec_records) include __DIR__ . DS . 'inc' . DS . 'ac-domain-dnssec.php';
 if($allow_forwarding_eml) include __DIR__ . DS . 'inc' . DS . 'ac-domain-email-forwards.php';
+if($allow_documents) include __DIR__ . DS . 'inc' . DS . 'ac-domain-documents.php';
 ?>
