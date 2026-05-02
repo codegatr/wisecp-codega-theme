@@ -1,46 +1,18 @@
 {
-    "name": "CODEGA WiseCP Theme",
-    "slug": "codega",
-    "version": "1.0.1",
-    "build": "20260501",
+    "name": "Codega",
+    "code": "codega",
+    "version": "2.1.3",
+    "type": "theme",
+    "scope": "website",
     "author": "CODEGA",
     "author_url": "https://codega.com.tr",
+    "support_url": "https://codega.com.tr/contact",
+    "description": "Modern, mavi agirlikli CODEGA klasik temasi. Web yazilim, hosting, domain, SMS ve ozel yazilim hizmetleri icin tasarlanmistir.",
+    "license": "MIT",
     "repo": "codegatr/wisecp-codega-theme",
-    "type": "wisecp-theme",
-    "install_path": "templates/website/codega",
-    "compatibility": {
-        "wisecp": ">=3.0.0",
-        "php": ">=7.4"
-    },
-    "files": {
-        "exclude": [
-            "*.md",
-            ".git*",
-            ".DS_Store",
-            "node_modules/",
-            "tests/"
-        ]
-    },
-    "migration": null,
-    "post_install": {
-        "instructions": [
-            "WiseCP Admin → Themes → Activate CODEGA",
-            "Themes → CODEGA → Settings: Set codega_shared_secret (run: openssl rand -hex 32)",
-            "Copy the same secret to codega.com.tr environment as CODEGA_WISECP_SECRET"
-        ]
-    },
-    "changelog": {
-        "1.0.0": {
-            "date": "2026-05-01",
-            "changes": [
-                "İlk sürüm — Codega marka kimliği (Navy/Gold)",
-                "codega.com.tr SSO köprüsü (HMAC-SHA256 imzalı token)",
-                "API endpointleri: /codega-api/{ping|summary|services|invoices}",
-                "Müşteri paneli: dashboard, hizmetler, faturalar",
-                "Cormorant Garamond + Inter typography pairing",
-                "Tam responsive tasarım (5 breakpoint)",
-                "Replay korumalı nonce cache (1000 entry, 60s skew)"
-            ]
-        }
-    }
+    "min_wisecp_version": "3.0.0",
+    "min_php_version": "7.4.0",
+    "homepage": "https://github.com/codegatr/wisecp-codega-theme",
+    "checking_version_url": "https://raw.githubusercontent.com/codegatr/wisecp-codega-theme/master/version.json",
+    "update_url": "https://github.com/codegatr/wisecp-codega-theme"
 }
