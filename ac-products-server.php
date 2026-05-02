@@ -1,2 +1,9 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
-include __DIR__ . DS . 'ac-products-all.php';
+$cdg_list_kind     = 'server';
+$cdg_list_title    = 'Sunucularım';
+$cdg_list_subtitle = 'VPS ve dedicated sunucularınızı yönetin, yeniden başlatın, performans takibi yapın.';
+$cdg_list_icon     = 'server';
+$cdg_list_color    = '#1e40af';
+$cdg_list_shop_slug = 'products';
+$cdg_list_shop_param = ['server'];
+include __DIR__ . DS . 'inc' . DS . 'ac-product-list-template.php';
