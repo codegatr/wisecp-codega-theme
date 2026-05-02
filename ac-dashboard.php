@@ -718,14 +718,23 @@ $contact_url  = cdg_link('contact');
     </section>
 
     <!-- DUYURU PROMO -->
-    <?php if(isset($news) && is_array($news) && count($news) > 0): ?>
+    <?php
+    // WiseCP'de farkli sürümler farkli variable adlari kullanabilir
+    $cdg_dashboard_news = [];
+    if(isset($dashboard_news) && is_array($dashboard_news)) {
+        $cdg_dashboard_news = $dashboard_news;
+    } elseif(isset($news) && is_array($news)) {
+        $cdg_dashboard_news = $news;
+    }
+    ?>
+    <?php if(!empty($cdg_dashboard_news) && count($cdg_dashboard_news) > 0): ?>
     <section class="cdg-d-card" style="margin-bottom:24px;">
         <div class="cdg-d-card-head">
             <h3 class="cdg-d-card-title"><i class="bi bi-megaphone-fill"></i> Duyurular</h3>
         </div>
         <div class="cdg-d-card-body">
             <ul class="cdg-d-list">
-                <?php $shown_news = 0; foreach($news as $n):
+                <?php $shown_news = 0; foreach($cdg_dashboard_news as $n):
                     if($shown_news >= 3) break;
                     $shown_news++;
                     $n_title = $n['title'] ?? 'Duyuru';

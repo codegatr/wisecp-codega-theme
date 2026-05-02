@@ -1,21 +1,14 @@
 {
-    "version": "3.5.2",
+    "version": "3.5.3",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.2-codega",
-    "tag": "v3.5.2-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.3-codega",
+    "tag": "v3.5.3-codega",
     "changelog": [
-        "v3.5.2 - Iptal Talebi durumu + Iptal geri cekme",
-        "FIX: inc/ac-product-detail-template.php Iptal tab",
-        "  Mevcut iptal talebi varsa durumu gosteriliyor (\\$p_cancellation runtime variable)",
-        "  3 status: pending (sari) / approved (kirmizi) / rejected (yesil)",
-        "  Talep sebebi (reason), iptal turu (urgency: now/period-ending), tarih",
-        "  Yonetici notu (operator_note) gosterimi varsa",
-        "YENI: remove_cancelled_product operation - Iptal talebini geri cekme",
-        "  Sadece onaylanmamis (pending/rejected) durumda buton gozukur",
-        "  Onaylanmis talepler icin uyari mesaji gosterir",
-        "FIX: cancel operation field 'type' yerine 'urgency' (Classic uyumlu)",
-        "  Eskiden: { type: 'immediately' | 'end-of-period' }",
-        "  Yeni: { urgency: 'now' | 'period-ending' }"
+        "v3.5.3 - Dashboard duyurular variable fallback",
+        "FIX: ac-dashboard.php duyurular bolumu",
+        "  Eskiden sadece \\$news variable kullaniliyordu",
+        "  Yeni: \\$dashboard_news primary (Classic uyumlu), \\$news fallback",
+        "  WiseCP'nin farkli surumlerinde duyurular gorunmuyordu - artik ikisi de denenir"
     ]
 }
