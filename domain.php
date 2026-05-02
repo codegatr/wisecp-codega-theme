@@ -1,14 +1,13 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 
-// Diagnostic mode: ?_diag=1 ile global'leri kontrol et
+// Diagnostic mode
 if(isset($_GET['_diag']) && $_GET['_diag'] === '1') {
     header('Content-Type: text/plain; charset=utf-8');
-    echo "=== CODEGA DOMAIN DIAGNOSTIC ===\n\n";
+    echo "=== DOMAIN.PHP DIAGNOSTIC ===\n\n";
     echo "tldList exists: " . (isset($tldList) ? 'YES' : 'NO') . "\n";
     if(isset($tldList) && is_array($tldList)) {
         echo "tldList count: " . count($tldList) . "\n";
-        echo "First 3 TLDs:\n";
-        foreach(array_slice($tldList, 0, 3) as $t) {
+        foreach(array_slice($tldList, 0, 5) as $t) {
             echo "  - " . ($t['name'] ?? '?') . " (reg: " . ($t['reg_price']['amount'] ?? '?') . ")\n";
         }
     }
@@ -16,14 +15,13 @@ if(isset($_GET['_diag']) && $_GET['_diag'] === '1') {
     if(isset($box_tldList) && is_array($box_tldList)) {
         echo "box_tldList count: " . count($box_tldList) . "\n";
     }
-    echo "\nDomains class exists: " . (class_exists('Domains') ? 'YES' : 'NO') . "\n";
-    echo "Tld class exists: " . (class_exists('Tld') ? 'YES' : 'NO') . "\n";
-    echo "Money class exists: " . (class_exists('Money') ? 'YES' : 'NO') . "\n";
-    echo "\nHosting:\n";
-    echo "  showCategory: " . (isset($showCategory) ? 'YES (' . ($showCategory['title'] ?? '?') . ')' : 'NO') . "\n";
-    echo "  category: " . (isset($category) ? 'YES (' . ($category['title'] ?? '?') . ')' : 'NO') . "\n";
-    echo "  get_list: " . (isset($get_list) && is_callable($get_list) ? 'YES' : 'NO') . "\n";
-    echo "  get_categories: " . (isset($get_categories) && is_callable($get_categories) ? 'YES' : 'NO') . "\n";
+    echo "\nlinks: " . (isset($links) ? 'SET' : 'NOT SET') . "\n";
+    if(isset($links) && is_array($links)) {
+        foreach($links as $k => $v) echo "  - $k: $v\n";
+    }
+    echo "\ncaptcha: " . (isset($captcha) && $captcha ? 'YES (' . get_class($captcha) . ')' : 'NO') . "\n";
+    echo "Validation class: " . (class_exists('Validation') ? 'YES' : 'NO') . "\n";
+    echo "Money class: " . (class_exists('Money') ? 'YES' : 'NO') . "\n";
     exit;
 }
 
@@ -48,7 +46,6 @@ if(!function_exists('cdg_link')) {
 $contact_url = cdg_link('contact');
 $hosting_url = cdg_link('products', ['hosting']);
 
-// Currency symbol cache
 $currency_symbols = [];
 if(class_exists('Money') && method_exists('Money', 'getCurrencies')) {
     foreach(Money::getCurrencies() AS $currency){
@@ -71,7 +68,7 @@ $override_usrcurrency = $override_usrcurrency ?? false;
 // TLD count
 $tld_count = isset($tldList) && is_array($tldList) ? count($tldList) : 0;
 
-// Featured TLD'ler ($box_tldList) - admin panelinden seçilenler
+// Featured TLD'ler
 $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : [];
 ?>
 
@@ -87,20 +84,16 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
     </div>
     <div class="cdg-container">
         <div class="cdg-domain-hero-content">
-            <div class="cdg-domain-badge"><i class="bi bi-globe2"></i> Domain Tescil</div>
-            <h1>Hayalinizdeki <span class="cdg-text-gradient-light">alan adınız</span> sizi bekliyor</h1>
-            <p class="cdg-domain-lead"><?php echo $tld_count > 0 ? $tld_count . '+' : '500+'; ?> uzantı desteği · Anlık sorgu · Anında aktivasyon</p>
+            <div class="cdg-domain-badge"><i class="bi bi-globe2"></i> Domain Sorgulama</div>
+            <h1>Hayalinizdeki <span class="cdg-text-gradient-light">alan adını</span> kaydedin</h1>
+            <p class="cdg-domain-lead"><?php echo $tld_count > 0 ? $tld_count . '+' : '500+'; ?> uzantı desteği ile her ihtiyaca uygun domain. Fiyatlar panelden anlık güncellenir.</p>
 
-            <form id="checkForm" action="<?php echo isset($links["controller"]) ? $links["controller"] : ""; ?>" method="POST" class="cdg-domain-search-form mio-ajax-form">
-                <input type="hidden" name="type" value="domain">
-                <input type="hidden" name="domain" id="hiddenDomain">
-                <input type="hidden" name="tcode" id="hiddenTcode" value="">
-                <?php if(class_exists("CSRF")) echo CSRF::input(); ?>
-
+            <!-- DOMAIN SORGULAMA INPUT -->
+            <div class="cdg-domain-search-wrap">
                 <div class="cdg-domain-search-input">
                     <i class="bi bi-search"></i>
-                    <input type="text" id="domainInput" placeholder="alanadi.com" autocomplete="off" required>
-                    <a href="javascript:void(0);" id="submitnow" class="cdg-btn cdg-btn-primary cdg-btn-glow">
+                    <input type="text" id="domainInput" placeholder="alanadi.com" autocomplete="off" required onkeydown="if(event.keyCode==13){event.preventDefault();submitnow(document.getElementById('submitnow'));}">
+                    <a href="javascript:void(0);" id="submitnow" class="cdg-btn cdg-btn-primary cdg-btn-glow" onclick="submitnow(this);">
                         <i class="bi bi-search"></i> <span>Sorgula</span>
                     </a>
                 </div>
@@ -108,9 +101,26 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                     <input type="checkbox" id="transferCheckbox">
                     <span>Mevcut domainimi transfer etmek istiyorum</span>
                 </label>
-                <div class="transfercode" style="display:none;margin-top:10px;">
+                <div class="transfercode" id="transfercode" style="display:none;margin-top:10px;">
                     <input type="text" placeholder="EPP / Auth Kodu" id="eppCode" class="cdg-domain-epp">
                 </div>
+            </div>
+
+            <!-- WiseCP'NIN GERÇEK FORM YAPISI (Netwise'dan birebir) -->
+            <form id="checkForm" action="<?php echo isset($links['controller']) ? $links['controller'] : ''; ?>" method="post" onsubmit="return false;">
+                <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('domain-check'); ?>
+                <input type="hidden" name="operation" value="check">
+                <input type="hidden" name="type" value="domain">
+                <input type="hidden" name="domain" value="">
+                <input type="hidden" name="tcode" value="">
+                <?php if(isset($captcha) && $captcha): ?>
+                    <div class="captcha-contents" style="margin-top:14px;">
+                        <div><?php echo $captcha->getOutput(); ?></div>
+                        <?php if($captcha->input): ?>
+                            <input id="captchainputs" name="<?php echo $captcha->input_name; ?>" type="text" placeholder="Güvenlik Kodu" class="cdg-domain-epp" style="margin-top:8px;">
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
             </form>
 
             <?php if(!empty($featured_tlds)): ?>
@@ -130,34 +140,31 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
     </div>
 </section>
 
-<!-- SORGU SONUC ALANI (JavaScript ile doldurulacak) -->
+<!-- SORGU SONUC ALANI -->
 <section class="cdg-section" id="search-results" style="display:none;">
     <div class="cdg-container">
         <div class="cdg-search-results-head">
             <h2 id="searchTitle"><span class="cdg-text-gradient">Sorgu Sonuçları</span></h2>
             <p>Aşağıdaki uzantıları siparişe ekleyebilirsiniz.</p>
         </div>
-        <div id="searchResults" class="cdg-search-results">
-            <!-- AJAX results -->
+
+        <!-- Loading state -->
+        <div id="searchLoading" class="cdg-search-result loading" style="display:none;">
+            <div class="cdg-search-result-name">
+                <i class="bi bi-hourglass-split" style="animation:cdgSpin 1s linear infinite;color:#1e40af;"></i>
+                <strong>Sorgulanıyor...</strong>
+            </div>
         </div>
+
+        <!-- Sonuçlar buraya eklenecek -->
+        <div id="searchResults" class="cdg-search-results"></div>
+
+        <!-- Hata göstergesi -->
+        <div id="searchError" style="display:none;"></div>
     </div>
 </section>
 
-<!-- LOADING TEMPLATE (görünmez) -->
-<div id="loading-template" style="display:none;">
-    <div class="cdg-search-result loading">
-        <div class="cdg-search-result-name">
-            <i class="bi bi-hourglass-split" style="animation:cdgSpin 1s linear infinite;"></i>
-            <strong class="domain-name">domain.com</strong>
-        </div>
-        <div class="cdg-search-result-price">
-            <span style="color:#94a3b8;font-size:13px;">Sorgulanıyor...</span>
-        </div>
-        <div></div>
-    </div>
-</div>
-
-<!-- ÖNE ÇIKAN TLD'LER (kart görünümü) -->
+<!-- ÖNE ÇIKAN TLD'LER -->
 <?php if(!empty($featured_tlds)): ?>
 <section class="cdg-section">
     <div class="cdg-container">
@@ -172,7 +179,6 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                 $tra = '';
                 $ren = '';
                 $promo_reg = '';
-                $promo_tra = '';
 
                 if(isset($tld['reg_price']['amount'])) {
                     $reg = Money::formatter_symbol($tld['reg_price']['amount'], $tld['reg_price']['cid'], !$override_usrcurrency);
@@ -184,7 +190,6 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                     $ren = Money::formatter_symbol($tld['ren_price']['amount'], $tld['ren_price']['cid'], !$override_usrcurrency);
                 }
 
-                // Promosyon kontrolü
                 $is_promo = !empty($tld['promo_status']) && (
                     substr($tld['promo_duedate'] ?? '', 0, 4) == '1881' ||
                     (class_exists('DateManager') && DateManager::strtotime(($tld['promo_duedate'] ?? '') . " 23:59:59") > DateManager::strtotime())
@@ -268,13 +273,9 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                             );
 
                             $promo_reg = '';
-                            $promo_tra = '';
                             if($is_promo) {
                                 if(!empty($row['promo_register_price']) && $row['promo_register_price'] > 0) {
                                     $promo_reg = Money::formatter_symbol($row['promo_register_price'], $row['currency'] ?? 'TRY', !$override_usrcurrency);
-                                }
-                                if(!empty($row['promo_transfer_price']) && $row['promo_transfer_price'] > 0) {
-                                    $promo_tra = Money::formatter_symbol($row['promo_transfer_price'], $row['currency'] ?? 'TRY', !$override_usrcurrency);
                                 }
                             }
                         ?>
@@ -297,16 +298,9 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                                 <?php endif; ?>
                             </td>
                             <td><?php echo $ren; ?></td>
+                            <td><?php echo $tra; ?></td>
                             <td>
-                                <?php if($promo_tra): ?>
-                                <span style="text-decoration:line-through;color:#94a3b8;font-size:12px;"><?php echo $tra; ?></span>
-                                <strong style="color:#10b981;"><?php echo $promo_tra; ?></strong>
-                                <?php else: ?>
-                                <?php echo $tra; ?>
-                                <?php endif; ?>
-                            </td>
-                            <td>
-                                <button onclick="document.getElementById('domainInput').value='alanadi.<?php echo htmlspecialchars($row['name']); ?>';document.getElementById('domainInput').focus();window.scrollTo({top:0,behavior:'smooth'});" class="cdg-btn cdg-btn-outline cdg-btn-sm">
+                                <button type="button" onclick="document.getElementById('domainInput').value='alanadi.<?php echo htmlspecialchars($row['name']); ?>';document.getElementById('domainInput').focus();window.scrollTo({top:0,behavior:'smooth'});" class="cdg-btn cdg-btn-outline cdg-btn-sm">
                                     <i class="bi bi-search"></i> Sorgula
                                 </button>
                             </td>
@@ -340,278 +334,255 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
     </div>
 </section>
 
-<!-- SSS -->
-<section class="cdg-section" style="background:#f8fafc;">
-    <div class="cdg-container">
-        <div class="cdg-section-head">
-            <div class="cdg-eyebrow">Sık Sorulan</div>
-            <h2>Domain hakkında <span class="cdg-text-gradient">sık sorulan sorular</span></h2>
-        </div>
-        <div class="cdg-faq-list" style="max-width:780px;margin:32px auto 0;">
-            <details class="cdg-faq-item" open>
-                <summary><span>Domain alımı ne kadar sürede aktif olur?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">Ödeme onayından sonra <strong>dakikalar içinde</strong> domain'iniz aktif olur.</div>
-            </details>
-            <details class="cdg-faq-item">
-                <summary><span>Mevcut domain'imi nasıl transfer ederim?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">Mevcut sağlayıcınızdan <strong>EPP (auth) kodu</strong> alın, yukarıdaki sorgu kutusunda transfer kutusunu işaretleyip kodu girin.</div>
-            </details>
-            <details class="cdg-faq-item">
-                <summary><span>Hangi domain uzantısı benim için uygun?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">Türkiye odaklı işletme: <strong>.com.tr</strong> veya <strong>.tr</strong>. Uluslararası: <strong>.com</strong>. Marka korumak için birden fazla uzantı almanızı öneririz.</div>
-            </details>
-        </div>
-    </div>
-</section>
-
-<!-- DOMAIN SORGULAMA SCRIPTI - WiseCP MioAjax Pattern -->
+<!-- DOMAIN SORGULAMA SCRIPTI -->
 <script type="text/javascript">
-var situations = {};
+var situations = [], loading_template = '';
 situations['unknown'] = '<?php echo function_exists("__") ? __("website/domain/situations-unknown") : "Belirsiz"; ?>';
 situations['premium'] = '<?php echo function_exists("__") ? __("website/domain/situations-premium") : "Premium"; ?>';
 situations['available'] = '<?php echo function_exists("__") ? __("website/domain/situations-available") : "Müsait"; ?>';
 situations['unavailable'] = '<?php echo function_exists("__") ? __("website/domain/situations-unavailable") : "Alındı"; ?>';
 
+var contact_button = '<a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">İletişim</a>';
 var epp_code_support = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($epp_code_support) : json_encode($epp_code_support); ?>;
 var tlds = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($tlds) : json_encode($tlds); ?>;
+var disabled_style = "background:none; color:#333; cursor:no-drop; opacity:0.3;";
 
-(function(){
-    var ready = function(fn){
-        if(document.readyState !== 'loading') fn();
-        else document.addEventListener('DOMContentLoaded', fn);
-    };
+// Transfer toggle
+document.addEventListener('DOMContentLoaded', function(){
+    var transferCb = document.getElementById('transferCheckbox');
+    var transferBox = document.getElementById('transfercode');
+    if(transferCb && transferBox) {
+        transferCb.addEventListener('change', function(){
+            transferBox.style.display = this.checked ? 'block' : 'none';
+            var eppI = document.getElementById('eppCode');
+            if(this.checked && eppI) eppI.focus();
+        });
+    }
+});
 
-    ready(function(){
+// JSON parse helper
+function getJsonSafe(result) {
+    try {
+        if(typeof result === 'object') return result;
+        return JSON.parse(result);
+    } catch(e) {
+        var match = (result || '').match(/\{[\s\S]*\}/);
+        if(match) {
+            try { return JSON.parse(match[0]); } catch(e2) { return false; }
+        }
+        return false;
+    }
+}
+
+// HTML escape
+function escHTML(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+}
+
+// AJAX submit fonksiyonu - WiseCP MioAjax + jQuery yedek + fetch yedek
+function submitnow(elem) {
+    var btn = elem;
+    if(btn.getAttribute('data-pending') === 'true') return false;
+    btn.setAttribute('data-pending', 'true');
+
+    var domainInput = document.getElementById('domainInput');
+    var domain = (domainInput.value || '').trim().toLowerCase();
+    if(!domain) {
+        btn.removeAttribute('data-pending');
+        domainInput.focus();
+        return false;
+    }
+
+    // Form alanlarını doldur
+    var form = document.getElementById('checkForm');
+    if(form) {
+        var domainField = form.querySelector('input[name=domain]');
+        var tcodeField  = form.querySelector('input[name=tcode]');
+        var typeField   = form.querySelector('input[name=type]');
         var transferCb  = document.getElementById('transferCheckbox');
-        var transferBox = document.querySelector('.transfercode');
-        var btn         = document.getElementById('submitnow');
-        var input       = document.getElementById('domainInput');
-        var hiddenInp   = document.getElementById('hiddenDomain');
-        var hiddenTcode = document.getElementById('hiddenTcode');
+        var eppInput    = document.getElementById('eppCode');
 
-        if(transferCb && transferBox) {
-            transferCb.addEventListener('change', function(){
-                transferBox.style.display = this.checked ? 'block' : 'none';
-                var eppI = document.getElementById('eppCode');
-                if(this.checked && eppI) eppI.focus();
-            });
-        }
+        if(domainField) domainField.value = domain;
+        if(typeField)   typeField.value = 'domain';
+        if(tcodeField)  tcodeField.value = (transferCb && transferCb.checked && eppInput) ? eppInput.value : '';
+    }
 
-        // Submit button click
-        if(btn) {
-            btn.addEventListener('click', function(){
-                cdgDoSubmit();
-            });
-        }
+    // UI: loading state
+    var resultsSection = document.getElementById('search-results');
+    var resultsContainer = document.getElementById('searchResults');
+    var searchTitle = document.getElementById('searchTitle');
+    var loadingEl = document.getElementById('searchLoading');
+    var errorEl = document.getElementById('searchError');
 
-        // Enter tuşu
-        if(input) {
-            input.addEventListener('keydown', function(e){
-                if(e.key === 'Enter') {
-                    e.preventDefault();
-                    cdgDoSubmit();
-                }
-            });
-        }
+    resultsSection.style.display = 'block';
+    searchTitle.innerHTML = '<span class="cdg-text-gradient">"' + escHTML(domain) + '"</span> için sonuçlar';
+    resultsContainer.innerHTML = '';
+    errorEl.style.display = 'none';
+    loadingEl.style.display = 'flex';
 
-        // ?domain= ile geldiyse otomatik sorgula
-        var urlParams = new URLSearchParams(window.location.search);
-        var gDomain = urlParams.get('domain');
-        if(gDomain && input) {
-            input.value = gDomain;
-            setTimeout(cdgDoSubmit, 300);
-        }
+    setTimeout(function(){
+        resultsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }, 100);
+
+    // Yöntem 1: WiseCP MioAjax (CSRF dahil)
+    if(typeof window.jQuery !== 'undefined' && typeof window.MioAjax !== 'undefined') {
+        var request = window.MioAjax({
+            action: window.jQuery('#checkForm').attr('action'),
+            form:   window.jQuery('#checkForm'),
+            method: 'POST',
+        }, true, true);
+
+        request.done(function(result){
+            btn.removeAttribute('data-pending');
+            handleResponse(result, domain);
+        });
+        request.fail(function(xhr, status, err){
+            btn.removeAttribute('data-pending');
+            showError('Sorgulama hatası: ' + (err || status || 'Bilinmeyen'));
+        });
+        return false;
+    }
+
+    // Yöntem 2: jQuery serialize + .post (MioAjax yoksa)
+    if(typeof window.jQuery !== 'undefined') {
+        window.jQuery.ajax({
+            url: window.jQuery('#checkForm').attr('action'),
+            type: 'POST',
+            data: window.jQuery('#checkForm').serialize(),
+            dataType: 'text',
+        }).done(function(result){
+            btn.removeAttribute('data-pending');
+            handleResponse(result, domain);
+        }).fail(function(xhr, status, err){
+            btn.removeAttribute('data-pending');
+            showError('Sorgulama hatası: ' + (err || status));
+        });
+        return false;
+    }
+
+    // Yöntem 3: vanilla fetch (jQuery de yoksa)
+    var fd = new FormData(form);
+    fetch(form.action || window.location.href, {
+        method: 'POST',
+        body: fd,
+        credentials: 'same-origin',
+    }).then(function(r){ return r.text(); })
+    .then(function(text){
+        btn.removeAttribute('data-pending');
+        handleResponse(text, domain);
+    }).catch(function(err){
+        btn.removeAttribute('data-pending');
+        showError('Sorgulama hatası: ' + err.message);
     });
 
-    window.cdgDoSubmit = function(){
-        var btn       = document.getElementById('submitnow');
-        var input     = document.getElementById('domainInput');
-        var hiddenInp = document.getElementById('hiddenDomain');
-        var hiddenTc  = document.getElementById('hiddenTcode');
-        var eppInput  = document.getElementById('eppCode');
-        var transferCb= document.getElementById('transferCheckbox');
+    return false;
+}
 
-        if(!input) return;
-        var domain = (input.value || '').trim().toLowerCase();
-        if(!domain) {
-            input.focus();
-            return;
-        }
+function handleResponse(result, query) {
+    var loadingEl = document.getElementById('searchLoading');
+    loadingEl.style.display = 'none';
 
-        if(btn && btn.getAttribute('data-pending') === 'true') return;
-        if(btn) btn.setAttribute('data-pending', 'true');
-
-        if(hiddenInp) hiddenInp.value = domain;
-        if(hiddenTc)  hiddenTc.value  = (transferCb && transferCb.checked && eppInput) ? eppInput.value : '';
-
-        var resultsSection = document.getElementById('search-results');
-        var resultsContainer = document.getElementById('searchResults');
-        var searchTitle = document.getElementById('searchTitle');
-
-        resultsSection.style.display = 'block';
-        searchTitle.innerHTML = '<span class="cdg-text-gradient">"' + cdgEscapeHTML(domain) + '"</span> için sonuçlar';
-        resultsContainer.innerHTML = '<div class="cdg-search-result loading"><div class="cdg-search-result-name"><i class="bi bi-hourglass-split" style="animation:cdgSpin 1s linear infinite;"></i> <strong>Sorgulanıyor...</strong></div></div>';
-
-        setTimeout(function(){
-            resultsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
-        }, 100);
-
-        // jQuery + MioAjax kullan
-        if(typeof window.jQuery !== 'undefined' && typeof window.MioAjax !== 'undefined') {
-            var request = window.MioAjax({
-                action: window.jQuery('#checkForm').attr('action'),
-                form:   window.jQuery('#checkForm'),
-                method: 'POST',
-            }, true, true);
-
-            request.done(function(result){
-                if(btn) btn.removeAttribute('data-pending');
-                cdgRenderResults(result, domain);
-            });
-
-            request.fail(function(xhr, status, err){
-                if(btn) btn.removeAttribute('data-pending');
-                cdgRenderError('Sorgulama sırasında hata oluştu: ' + (err || status));
-            });
-
-        } else if(typeof window.jQuery !== 'undefined') {
-            // jQuery var ama MioAjax yok - native ajax
-            window.jQuery.post(
-                window.jQuery('#checkForm').attr('action'),
-                window.jQuery('#checkForm').serialize()
-            ).done(function(result){
-                if(btn) btn.removeAttribute('data-pending');
-                cdgRenderResults(result, domain);
-            }).fail(function(xhr, status, err){
-                if(btn) btn.removeAttribute('data-pending');
-                cdgRenderError('Sorgulama hatasi: ' + (err || status));
-            });
-
-        } else {
-            // jQuery yok - vanilla fetch
-            var formData = new FormData(document.getElementById('checkForm'));
-            fetch(document.getElementById('checkForm').action, {
-                method: 'POST',
-                body: formData,
-                credentials: 'same-origin',
-            })
-            .then(function(r){ return r.text(); })
-            .then(function(text){
-                if(btn) btn.removeAttribute('data-pending');
-                cdgRenderResults(text, domain);
-            })
-            .catch(function(err){
-                if(btn) btn.removeAttribute('data-pending');
-                cdgRenderError('Sorgulama hatasi: ' + err.message);
-            });
-        }
-    };
-
-    window.cdgRenderResults = function(result, query){
-        var container = document.getElementById('searchResults');
-        if(!result) {
-            cdgRenderError('Sunucudan boş yanıt geldi.');
-            return;
-        }
-
-        var solve = null;
-        try {
-            if(typeof result === 'string') {
-                solve = JSON.parse(result);
-            } else {
-                solve = result;
-            }
-        } catch(e) {
-            // JSON değil - HTML içinde olabilir
-            var match = (result || '').match(/\{[\s\S]*\}/);
-            if(match) {
-                try { solve = JSON.parse(match[0]); } catch(e2) {}
-            }
-        }
-
-        if(!solve) {
-            cdgRenderError('Yanit ayrıştırılamadı. Lütfen tekrar deneyin.');
-            return;
-        }
-
-        if(solve.status === 'error') {
-            cdgRenderError(solve.message || 'Bilinmeyen hata.');
-            return;
-        }
-
-        if(!solve.data || !solve.data.length) {
-            container.innerHTML = '<div class="cdg-search-result"><div class="cdg-search-result-name"><i class="bi bi-info-circle"></i> Sonuç bulunamadı.</div></div>';
-            return;
-        }
-
-        var html = '';
-        solve.data.forEach(function(item, idx){
-            var name = (item.domain || item.name || '').toString();
-            var status = item.status || 'unknown';
-            var statusLabel = situations[status] || status;
-            var statusColor = '#94a3b8';
-            var statusIcon = 'bi-question-circle';
-            if(status === 'available') { statusColor = '#10b981'; statusIcon = 'bi-check-circle-fill'; }
-            else if(status === 'unavailable') { statusColor = '#ef4444'; statusIcon = 'bi-x-circle-fill'; }
-            else if(status === 'premium') { statusColor = '#f59e0b'; statusIcon = 'bi-star-fill'; }
-
-            var priceHTML = '';
-            if(item.price) priceHTML = '<span class="num">' + cdgEscapeHTML(item.price.toString()) + '</span>';
-            else if(item.amount) priceHTML = '<span class="num">' + cdgEscapeHTML(item.amount.toString()) + '</span>';
-
-            var actionHTML = '';
-            if(status === 'available' && item.order_link) {
-                actionHTML = '<a href="' + cdgEscapeHTML(item.order_link) + '" class="cdg-btn cdg-btn-primary cdg-btn-sm"><i class="bi bi-cart-plus"></i> Sepete Ekle</a>';
-            } else if(status === 'unavailable') {
-                actionHTML = '<button class="cdg-btn cdg-btn-outline cdg-btn-sm" disabled><i class="bi bi-x"></i> Alındı</button>';
-            } else if(status === 'premium') {
-                actionHTML = '<a href="' + cdgEscapeHTML(item.order_link || '#') + '" class="cdg-btn cdg-btn-outline cdg-btn-sm" style="border-color:#f59e0b;color:#f59e0b;"><i class="bi bi-star-fill"></i> Premium</a>';
-            } else {
-                actionHTML = '<span style="color:#94a3b8;font-size:13px;">—</span>';
-            }
-
-            var primaryClass = idx === 0 ? ' primary' : '';
-            html += '<div class="cdg-search-result' + primaryClass + '">' +
-                '<div class="cdg-search-result-name">' +
-                '<i class="bi ' + statusIcon + '" style="color:' + statusColor + ';"></i> ' +
-                '<strong>' + cdgEscapeHTML(name) + '</strong>' +
-                (idx === 0 ? '<span class="cdg-search-result-badge">İlk Tercih</span>' : '') +
-                '<span style="color:' + statusColor + ';font-weight:600;font-size:13px;margin-left:8px;">' + cdgEscapeHTML(statusLabel) + '</span>' +
-                '</div>' +
-                '<div class="cdg-search-result-price">' + priceHTML + '</div>' +
-                '<div>' + actionHTML + '</div>' +
-            '</div>';
-        });
-
-        container.innerHTML = html;
-    };
-
-    window.cdgRenderError = function(msg){
-        var container = document.getElementById('searchResults');
-        container.innerHTML = '<div class="cdg-search-result" style="border-color:#fca5a5;background:#fee2e2;">' +
-            '<div class="cdg-search-result-name" style="color:#991b1b;">' +
-            '<i class="bi bi-exclamation-triangle-fill"></i> ' +
-            '<strong>' + cdgEscapeHTML(msg) + '</strong>' +
-            '</div>' +
-            '<div></div>' +
-            '<div></div>' +
-        '</div>';
-    };
-
-    window.cdgEscapeHTML = function(s){
-        return String(s == null ? '' : s).replace(/[&<>"\']/g, function(c){
-            return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-        });
-    };
-})();
-
-// Spinner animation
-(function(){
-    if(!document.getElementById('cdgSpinStyle')) {
-        var st = document.createElement('style');
-        st.id = 'cdgSpinStyle';
-        st.textContent = '@keyframes cdgSpin { from{transform:rotate(0);} to{transform:rotate(360deg);} }';
-        document.head.appendChild(st);
+    if(!result || result === '') {
+        showError('Sunucudan boş yanıt geldi. WiseCP form action URL bulunamadı olabilir. Lütfen tekrar deneyin veya destek alın.');
+        return;
     }
+
+    var solve = getJsonSafe(result);
+    if(!solve) {
+        showError('Yanıt ayrıştırılamadı. Sunucudan beklenmeyen veri geldi.');
+        console.log('Domain check raw response:', result);
+        return;
+    }
+
+    if(solve.status === 'error') {
+        showError(solve.message || 'Sorgulama sırasında hata oluştu.');
+        return;
+    }
+
+    if(!solve.data || !solve.data.length) {
+        showError('Sonuç bulunamadı.');
+        return;
+    }
+
+    // Sonuçları render et
+    var container = document.getElementById('searchResults');
+    var html = '';
+
+    solve.data.forEach(function(item, idx) {
+        var fullDomain = (item.sld || '') + '.' + (item.tld || item.name || '');
+        if(!item.sld && item.domain) fullDomain = item.domain;
+
+        var status = item.status || 'unknown';
+        var statusLabel = situations[status] || status;
+        var statusColor = '#94a3b8';
+        var statusIcon = 'bi-question-circle';
+        if(status === 'available') { statusColor = '#10b981'; statusIcon = 'bi-check-circle-fill'; }
+        else if(status === 'unavailable') { statusColor = '#ef4444'; statusIcon = 'bi-x-circle-fill'; }
+        else if(status === 'premium') { statusColor = '#f59e0b'; statusIcon = 'bi-star-fill'; }
+
+        // Fiyat
+        var priceHTML = '<span style="color:#94a3b8;font-size:13px;">—</span>';
+        if(item.reg_price && item.reg_price.length > 0 && item.reg_price[0].price) {
+            priceHTML = '<span class="num">' + escHTML(item.reg_price[0].price.toString()) + '</span>';
+            if(item.reg_price[0].period) {
+                priceHTML += '<small style="color:#94a3b8;font-size:11px;margin-left:4px;">/' + escHTML(item.reg_price[0].period) + '</small>';
+            }
+        } else if(item.price) {
+            priceHTML = '<span class="num">' + escHTML(item.price.toString()) + '</span>';
+        }
+
+        // Action
+        var actionHTML = '';
+        if(status === 'available') {
+            var orderLink = item.order_link || '#';
+            actionHTML = '<a href="' + escHTML(orderLink) + '" class="cdg-btn cdg-btn-primary cdg-btn-sm"><i class="bi bi-cart-plus"></i> Sepete Ekle</a>';
+        } else if(status === 'unavailable') {
+            actionHTML = '<button class="cdg-btn cdg-btn-outline cdg-btn-sm" disabled style="opacity:0.5;cursor:not-allowed;"><i class="bi bi-x"></i> Alındı</button>';
+        } else if(status === 'premium') {
+            actionHTML = contact_button;
+        } else {
+            actionHTML = '<span style="color:#94a3b8;font-size:13px;">—</span>';
+        }
+
+        var primaryClass = idx === 0 ? ' primary' : '';
+        html += '<div class="cdg-search-result' + primaryClass + '">' +
+            '<div class="cdg-search-result-name">' +
+            '<i class="bi ' + statusIcon + '" style="color:' + statusColor + ';"></i> ' +
+            '<strong>' + escHTML(fullDomain) + '</strong> ' +
+            (idx === 0 ? '<span class="cdg-search-result-badge">İlk Tercih</span>' : '') +
+            '<span style="color:' + statusColor + ';font-weight:600;font-size:13px;margin-left:8px;">' + escHTML(statusLabel) + '</span>' +
+            '</div>' +
+            '<div class="cdg-search-result-price">' + priceHTML + '</div>' +
+            '<div>' + actionHTML + '</div>' +
+        '</div>';
+    });
+
+    container.innerHTML = html;
+}
+
+function showError(msg) {
+    var loadingEl = document.getElementById('searchLoading');
+    var errorEl = document.getElementById('searchError');
+    var resultsContainer = document.getElementById('searchResults');
+
+    loadingEl.style.display = 'none';
+    resultsContainer.innerHTML = '';
+
+    errorEl.style.display = 'block';
+    errorEl.innerHTML = '<div class="cdg-form-alert error" style="text-align:left;background:#fee2e2;border:1px solid #fecaca;color:#991b1b;padding:18px 22px;border-radius:14px;display:flex;align-items:center;gap:12px;">' +
+        '<i class="bi bi-exclamation-triangle-fill" style="font-size:20px;"></i>' +
+        '<span>' + escHTML(msg) + '</span>' +
+    '</div>';
+}
+
+// CSS spinner
+(function(){
+    if(document.getElementById('cdgSpinStyle')) return;
+    var st = document.createElement('style');
+    st.id = 'cdgSpinStyle';
+    st.textContent = '@keyframes cdgSpin { from{transform:rotate(0);} to{transform:rotate(360deg);} }';
+    document.head.appendChild(st);
 })();
 </script>

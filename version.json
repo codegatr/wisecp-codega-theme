@@ -1,19 +1,21 @@
 {
-    "version": "2.8.6",
+    "version": "2.8.7",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.8.6-codega",
-    "tag": "v2.8.6-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.8.7-codega",
+    "tag": "v2.8.7-codega",
     "changelog": [
-        "v2.8.6 - ANASAYFA TLD GERCEK API",
-        "INDEX: Hard-coded TLD'ler (.com 299, .com.tr 199 vb.) TAMAMEN kaldirildi",
-        "INDEX: 4 yontemli TLD cekimi:",
-        "  1. GLOBALS['tldList'] - WiseCP runtime global'i",
-        "  2. Tld::getActives / getList / getAll - WiseCP core class",
-        "  3. DB::table('tlds') - dogrudan veritabani",
-        "  4. theme-config.php featured_tlds - admin tanimi",
-        "INDEX: Hicbiri calismassa TLD bolumu otomatik GIZLENIR (sahte veri yok)",
-        "INDEX: Diagnostic mode ?_diag=1 - mevcut WiseCP class/method'larini listeler",
-        "Money::formatter_symbol ile gercek para birimi format"
+        "v2.8.7 - DOMAIN AJAX SORGU NETWISE BIRE BIR",
+        "FIX: 'Sunucudan bos yanit geldi' hatasi - form yapisi yanlisti",
+        "FORM: Validation::get_csrf_token('domain-check') (CSRF::input degil)",
+        "FORM: <input name='operation' value='check'> eklendi",
+        "FORM: <input name='type' value='domain'> + tcode hidden",
+        "FORM: action=$links['controller'] (Netwise birebir)",
+        "FORM: Captcha desteği eklendi (admin etkinlestirmisse)",
+        "JS: 3 katmanli AJAX (MioAjax -> jQuery.ajax -> fetch)",
+        "JS: WiseCP response yapisi parse: solve.data[i].sld + .tld + .reg_price[0].price",
+        "JS: 4 durum (available/unavailable/premium/unknown) + ikon + renk",
+        "JS: 'İlk Tercih' rozeti ilk sonuca",
+        "DIAGNOSTIC: ?_diag=1 ile $links + $captcha + Validation kontrol"
     ]
 }
