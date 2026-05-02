@@ -368,13 +368,31 @@ document.addEventListener('DOMContentLoaded', function(){
     // Anasayfadan ?domain= ile geldiyse otomatik sorgula
     var urlParams = new URLSearchParams(window.location.search);
     var gDomain = urlParams.get('domain');
+
+    // Captcha kodu da geliyorsa input'a yaz
+    var captchaInput = document.getElementById('captchainputs');
+    if(captchaInput) {
+        // WiseCP captcha input_name'i biliyoruz: name attribute'un kontrol edelim
+        var capName = captchaInput.getAttribute('name');
+        var capValueFromUrl = urlParams.get(capName);
+        if(capValueFromUrl) {
+            captchaInput.value = capValueFromUrl;
+        }
+    }
+
     if(gDomain) {
         var input = document.getElementById('domainInput');
         if(input && input.value && input.value.length > 0) {
-            // Kısa delay - sayfa tam yüklensin
-            setTimeout(function(){
-                submitnow(document.getElementById('submitnow'));
-            }, 400);
+            // Captcha doluysa hemen submit, değilse focus
+            if(captchaInput && !captchaInput.value) {
+                // Captcha var ama dolmamış - kullanıcının doldurması gerek
+                captchaInput.focus();
+            } else {
+                // Captcha yok ya da dolu - direkt sorgula
+                setTimeout(function(){
+                    submitnow(document.getElementById('submitnow'));
+                }, 400);
+            }
         }
     }
 });

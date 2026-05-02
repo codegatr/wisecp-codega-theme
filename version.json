@@ -1,15 +1,17 @@
 {
-    "version": "2.9.1",
+    "version": "2.9.2",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.1-codega",
-    "tag": "v2.9.1-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.9.2-codega",
+    "tag": "v2.9.2-codega",
     "changelog": [
-        "v2.9.1 - Domain captcha modern tasarimla geri eklendi",
-        "WiseCP backend captcha bekledigi icin tema tarafinda da render etmek gerek",
-        "TASARIM: Glassmorphism kart - 'Robot olmadiginizi dogrulayin' baslikli",
-        "TASARIM: Captcha resmi beyaz arka plan + golge",
-        "TASARIM: Input alani altin focus halkasi",
-        "Yine de tercih edilen cozum admin panelden kapatmak"
+        "v2.9.2 - Anasayfa hero formuna captcha eklendi",
+        "INDEX: $captcha global'i varsa form altinda captcha kutusu render ediliyor",
+        "INDEX: Glassmorphism kart - 'Robot degilim' baslikli",
+        "INDEX: Form submit'te captcha bos ise input'a kirmizi shadow + focus",
+        "INDEX: Captcha kodu hidden input olarak GET parametresine ekleniyor",
+        "DOMAIN: URL'den captcha kodunu okuyup captcha input'a yazma",
+        "DOMAIN: Eger captcha doluysa otomatik sorgula, degilse focus al",
+        "Akis: Anasayfa kod gir + domain yaz -> /alan-adi'ye otomatik tek seferde gonderim"
     ]
 }
