@@ -471,6 +471,22 @@ function cdg_aff_date($d) {
                 <div class="cdg-aff-stat-value"><?php echo (int)$total_hits; ?></div>
             </div>
         </div>
+
+        <?php
+        // Yonlendirme sayilari (WiseCP runtime: $references_today, $references_total)
+        $ref_today = isset($references_today) ? (int)$references_today : 0;
+        $ref_total = isset($references_total) ? (int)$references_total : 0;
+        if($ref_today > 0 || $ref_total > 0):
+        ?>
+        <div class="cdg-aff-stat-card" style="border-left:4px solid #ef4444;">
+            <div class="cdg-aff-stat-icon" style="background:linear-gradient(135deg,#ef4444,#f87171);"><i class="bi bi-people"></i></div>
+            <div class="cdg-aff-stat-info">
+                <div class="cdg-aff-stat-label">Yönlendirme</div>
+                <div class="cdg-aff-stat-value"><?php echo $ref_today; ?></div>
+                <div style="font-size:11px;color:#64748b;margin-top:4px;">Toplam: <strong><?php echo $ref_total; ?></strong></div>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
 
     <?php if($tracking_url): ?>
@@ -490,6 +506,9 @@ function cdg_aff_date($d) {
         <button class="cdg-aff-tab active" data-pane="transactions"><i class="bi bi-receipt"></i> İşlemler</button>
         <button class="cdg-aff-tab" data-pane="withdrawals"><i class="bi bi-cash-coin"></i> Para Çekimleri</button>
         <button class="cdg-aff-tab" data-pane="hits"><i class="bi bi-cursor"></i> Tıklamalar</button>
+        <?php if(isset($referrer_list) && is_array($referrer_list) && !empty($referrer_list)): ?>
+        <button class="cdg-aff-tab" data-pane="referrers"><i class="bi bi-people"></i> Yönlendirmeler</button>
+        <?php endif; ?>
         <button class="cdg-aff-tab" data-pane="banners"><i class="bi bi-image"></i> Banner'lar</button>
     </div>
 
@@ -637,6 +656,52 @@ function cdg_aff_date($d) {
             <?php endif; ?>
         </div>
     </div>
+
+    <!-- REFERRERS / YONLENDIRMELER -->
+    <?php if(isset($referrer_list) && is_array($referrer_list) && !empty($referrer_list)): ?>
+    <div class="cdg-aff-pane" id="cdg-aff-pane-referrers">
+        <div class="cdg-aff-card">
+            <div class="cdg-aff-card-head">
+                <h3><i class="bi bi-people"></i> Yönlendirilen Kullanıcılar</h3>
+                <span style="background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;">
+                    Toplam: <?php echo count($referrer_list); ?>
+                </span>
+            </div>
+            <div style="overflow-x:auto;">
+            <table class="cdg-aff-table">
+                <thead>
+                    <tr>
+                        <th style="width:60px;">#</th>
+                        <th>Yönlendiren URL</th>
+                        <th style="width:120px;text-align:center;">Tıklama</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($referrer_list as $k => $row):
+                        if(!is_array($row)) continue;
+                        $r_url = $row['referrer'] ?? '';
+                        $r_hits = $row['hits'] ?? 0;
+                    ?>
+                    <tr>
+                        <td><?php echo (int)$k + 1; ?></td>
+                        <td>
+                            <?php if($r_url): ?>
+                            <a href="<?php echo htmlspecialchars($r_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noreferrer noopener" style="color:#1e40af;text-decoration:none;word-break:break-all;">
+                                <i class="bi bi-link-45deg"></i> <?php echo htmlspecialchars($r_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                            </a>
+                            <?php else: ?>
+                            <span style="color:#94a3b8;font-style:italic;">Doğrudan ziyaret</span>
+                            <?php endif; ?>
+                        </td>
+                        <td style="text-align:center;"><strong style="color:#1e40af;"><?php echo (int)$r_hits; ?></strong></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <!-- BANNERS -->
     <div class="cdg-aff-pane" id="cdg-aff-pane-banners">

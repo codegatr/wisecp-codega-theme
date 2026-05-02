@@ -89,6 +89,16 @@ if(!empty($udata['gsm'])) {
     <button type="button" class="cdg-info-tab" data-tab="security" onclick="cdgInfoTab('security')">
         <i class="bi bi-key"></i> Guvenlik
     </button>
+    <?php
+    // Belge dogrulama gerekiyorsa tab goster
+    $cdg_show_docvrf = isset($remainingVerifications) && is_array($remainingVerifications) && !empty($remainingVerifications['document_filters']);
+    if($cdg_show_docvrf):
+    ?>
+    <button type="button" class="cdg-info-tab" data-tab="docvrf" onclick="cdgInfoTab('docvrf')" style="background:#fef3c7;color:#92400e;">
+        <i class="bi bi-shield-check"></i> Belge Dogrulama
+        <span style="display:inline-block;background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:4px;font-weight:700;">!</span>
+    </button>
+    <?php endif; ?>
 </div>
 
 <!-- TAB: PROFIL BILGILERI -->
@@ -429,6 +439,13 @@ if(!empty($udata['gsm'])) {
         </form>
     </div>
 </div>
+
+<!-- TAB: BELGE DOGRULAMA -->
+<?php if(isset($remainingVerifications) && is_array($remainingVerifications) && !empty($remainingVerifications['document_filters'])): ?>
+<div class="cdg-info-pane" id="cdg-info-pane-docvrf" style="display:none;">
+    <?php include __DIR__ . DS . 'inc' . DS . 'ac-document-verification.php'; ?>
+</div>
+<?php endif; ?>
 
 <style>
 .cdg-info-tab {

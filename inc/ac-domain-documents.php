@@ -90,7 +90,57 @@ if(empty($info_docs)) return; // Belge gerektirmeyen domainler için modal yok
                 </div>
             </form>
 
+            <?php
+            // Yuklenmis belgeler listesi (uploaded_docs runtime variable)
+            $uploaded_docs = isset($uploaded_docs) && is_array($uploaded_docs) ? $uploaded_docs : [];
+            $has_unsent = false;
+            if(!empty($uploaded_docs)):
+                $doc_status_meta = [
+                    'unsent'    => ['lbl' => 'Henüz gönderilmedi', 'cls' => 'cdg-doc-st-unsent', 'icon' => 'clock', 'color' => '#64748b'],
+                    'pending'   => ['lbl' => 'Onay bekliyor',      'cls' => 'cdg-doc-st-pending', 'icon' => 'hourglass-split', 'color' => '#f59e0b'],
+                    'declined'  => ['lbl' => 'Reddedildi',         'cls' => 'cdg-doc-st-declined', 'icon' => 'x-circle', 'color' => '#ef4444'],
+                    'verified'  => ['lbl' => 'Onaylandı',          'cls' => 'cdg-doc-st-verified', 'icon' => 'check-circle', 'color' => '#10b981'],
+                ];
+            ?>
+            <div style="margin-top:18px;padding:16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;">
+                <div style="font-size:12px;font-weight:800;color:#1e40af;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">
+                    <i class="bi bi-files"></i> Yüklenmiş Belgeler (<?php echo count($uploaded_docs); ?>)
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <?php foreach($uploaded_docs as $ud):
+                        $st = $ud['status'] ?? 'unsent';
+                        if($st === 'unsent') $has_unsent = true;
+                        $st_meta = $doc_status_meta[$st] ?? $doc_status_meta['unsent'];
+                        $ud_id = (int)($ud['id'] ?? 0);
+                    ?>
+                    <div style="display:grid;grid-template-columns:1fr 1.5fr auto;gap:10px;align-items:center;padding:10px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;">
+                        <div style="font-size:13px;font-weight:700;color:#1e293b;"><?php echo htmlspecialchars($ud['name'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                        <div style="font-size:12px;color:#475569;word-break:break-all;">
+                            <?php if(!empty($ud['file']) && is_array($ud['file'])): ?>
+                                <i class="bi bi-paperclip"></i> <?php echo htmlspecialchars($ud['file']['name'] ?? 'dosya', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                                <a href="<?php echo htmlspecialchars($controller_url . '?operation=download_domain_doc_file&id=' . $ud_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" style="margin-left:6px;color:#1e40af;" title="İndir">
+                                    <i class="bi bi-download"></i>
+                                </a>
+                            <?php else: ?>
+                                <?php echo htmlspecialchars($ud['value'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                            <?php endif; ?>
+                        </div>
+                        <div style="text-align:right;">
+                            <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:<?php echo $st_meta['color']; ?>15;color:<?php echo $st_meta['color']; ?>;border:1px solid <?php echo $st_meta['color']; ?>40;border-radius:6px;font-size:11px;font-weight:700;">
+                                <i class="bi bi-<?php echo $st_meta['icon']; ?>"></i> <?php echo $st_meta['lbl']; ?>
+                            </span>
+                            <?php if(!empty($ud['status_msg'])): ?>
+                            <div style="font-size:10px;color:#94a3b8;margin-top:3px;">(<?php echo htmlspecialchars($ud['status_msg'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>)</div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+
             <!-- Hazır olduğunda gönder butonu -->
+            <?php if(empty($uploaded_docs) || $has_unsent): ?>
             <div style="margin-top:16px;padding:14px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;text-align:center;">
                 <p style="margin:0 0 10px;color:#15803d;font-size:13px;">
                     <strong><i class="bi bi-check-circle"></i> Tüm belgeler eklendiğinde</strong> aşağıdaki butonla kayıt firmasına gönderebilirsiniz.
@@ -99,6 +149,7 @@ if(empty($info_docs)) return; // Belge gerektirmeyen domainler için modal yok
                     <i class="bi bi-send"></i> Belgeleri Gönder
                 </a>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

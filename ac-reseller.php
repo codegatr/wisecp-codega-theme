@@ -434,11 +434,65 @@ function cdg_res_money($a, $cid = 0) {
         </div>
         <div class="cdg-res-card-body">
             <p style="font-size:13px;color:var(--r-muted);margin:0 0 14px;">Bayi olarak otomatik sipariş ve yönetim için API entegrasyonumuza erişebilirsiniz.</p>
-            <a href="javascript:void(0);" onclick="if(typeof open_modal==='function') open_modal('api_access');" class="cdg-res-btn cdg-res-btn-primary">
-                <i class="bi bi-code"></i> API Bilgilerine Eriş
+            <a href="javascript:void(0);" onclick="cdgResApiToggle();" class="cdg-res-btn cdg-res-btn-primary">
+                <i class="bi bi-code"></i> API Bilgilerine Eriş / Gizle
             </a>
+
+            <!-- API Bilgileri Inline Panel -->
+            <div id="cdg-res-api-panel" style="display:none;margin-top:16px;padding:18px;background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:10px;color:#e2e8f0;">
+                <p style="margin:0 0 14px;font-size:13px;color:#cbd5e1;">
+                    <i class="bi bi-shield-lock"></i> Aşağıdaki bilgiler hassastır - hiç kimseyle paylaşmayın.
+                </p>
+
+                <?php if(!empty($info['api_key'])): ?>
+                <div style="margin-bottom:14px;">
+                    <label style="display:block;font-size:11px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">API Anahtarı (API Key)</label>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <input type="text" readonly id="cdg-res-api-key-input" value="<?php echo htmlspecialchars($info['api_key'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="flex:1;padding:9px 12px;background:#020617;border:1px solid #334155;border-radius:6px;color:#fff;font-family:monospace;font-size:13px;">
+                        <button type="button" onclick="cdgResCopyApi()" style="padding:9px 14px;background:#3b82f6;color:#fff;border:0;border-radius:6px;cursor:pointer;font-size:13px;font-weight:700;">
+                            <i class="bi bi-clipboard"></i> <span id="cdg-res-api-copy-text">Kopyala</span>
+                        </button>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <?php if(!empty($links['api'])): ?>
+                <div style="margin-bottom:14px;">
+                    <label style="display:block;font-size:11px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">API Endpoint URL</label>
+                    <input type="text" readonly value="<?php echo htmlspecialchars($links['api'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="width:100%;padding:9px 12px;background:#020617;border:1px solid #334155;border-radius:6px;color:#fff;font-family:monospace;font-size:13px;box-sizing:border-box;">
+                </div>
+                <?php endif; ?>
+
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <?php if(!empty($links['kbase'])): ?>
+                    <a href="<?php echo htmlspecialchars($links['kbase'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#1e293b;border:1px solid #475569;border-radius:6px;color:#e2e8f0;text-decoration:none;font-size:13px;">
+                        <i class="bi bi-book"></i> Dökümantasyon
+                    </a>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script>
+    function cdgResApiToggle() {
+        var p = document.getElementById('cdg-res-api-panel');
+        if(p) p.style.display = (p.style.display === 'none' ? 'block' : 'none');
+    }
+    function cdgResCopyApi() {
+        var i = document.getElementById('cdg-res-api-key-input');
+        if(!i) return;
+        i.select(); i.setSelectionRange(0, 99999);
+        if(navigator.clipboard) {
+            navigator.clipboard.writeText(i.value).then(function(){
+                var t = document.getElementById('cdg-res-api-copy-text');
+                if(t) { var orig = t.textContent; t.textContent = 'Kopyalandi!'; setTimeout(function(){ t.textContent = orig; }, 2000); }
+            });
+        } else {
+            try { document.execCommand('copy'); alert('Kopyalandi'); } catch(e) {}
+        }
+    }
+    </script>
     <?php endif; ?>
 
     <!-- INDIRIM GECMIS -->

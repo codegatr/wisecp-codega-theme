@@ -13,6 +13,9 @@ $cdg_pd_back_slug = 'products-hosting';
 // Generic template (Özet, Ödeme, Detaylar, İptal vs)
 include __DIR__ . DS . 'inc' . DS . 'ac-product-detail-template.php';
 
+// Hosting kullanim grafikleri (Disk + Bandwidth)
+include __DIR__ . DS . 'inc' . DS . 'ac-hosting-usage.php';
+
 // Hosting'e özel kartlar (cPanel/Plesk panel girişi + şifre değiştirme + email butonu)
 include __DIR__ . DS . 'inc' . DS . 'ac-hosting-extras.php';
 
