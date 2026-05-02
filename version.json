@@ -1,14 +1,12 @@
 {
-    "version": "2.1.3",
+    "version": "2.1.4",
     "release_date": "2026-05-02",
-    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.3/Codega-v2.1.3.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.3",
+    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.4/Codega-v2.1.4.zip",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.4",
     "changelog": [
-        "v2.1.3 - OTOMATIK GUNCELLEME SISTEMI",
-        "update.php: WiseCP admin panelinden veya direct URL ile tek tikla guncelleme",
-        "GitHub Releases entegrasyonu - tek tik indir + extract + uygula",
-        "Otomatik yedekleme: .backups/ klasoru, eski surum saklanir",
-        "Modern guncelleme UI - mavi gradient hero, stat kartlar, changelog liste",
-        "Erisim: WiseCP admin oturumu VEYA secret key (theme-config.php update_secret)"
+        "v2.1.4 - update.php yetkilendirme akilliligi",
+        "Cok katmanli admin tespit: session anahtarlari + WiseCP Admin class",
+        "Erisim yoksa: 403 yerine SELF-SERVICE URL gosterimi (tek tikla giris)",
+        "Yer imine eklenebilir guvenli URL (secret key dahil)"
     ]
 }

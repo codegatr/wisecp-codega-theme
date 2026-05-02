@@ -13,43 +13,97 @@
  *   - Yoksa: ?key=XXXX ile manuel erişim (theme-config.php'den okunan secret)
  */
 
-// WiseCP CORE'a bağlan (admin oturum kontrolü için)
-$wisecp_root = realpath(__DIR__ . '/../../..');
-$bootstrap_paths = [
-    $wisecp_root . '/coremio/Bootstrap.php',
-    __DIR__ . '/../../../coremio/Bootstrap.php',
-];
+// === YETKİLENDİRME ===
+// 1) Çok katmanlı WiseCP admin oturum tespiti
+// 2) Secret key fallback (theme-config.php'den okunan + ilk çalıştırmada üretilen)
+// 3) Erişim yoksa: Self-service URL göster (kullanıcıya direkt link ver)
 
-$has_wisecp = false;
-foreach($bootstrap_paths as $bp) {
-    if(file_exists($bp)) { $has_wisecp = true; break; }
+if(session_status() == PHP_SESSION_NONE) @session_start();
+
+$is_admin = false;
+
+// Session içinde herhangi bir admin/wisecp anahtarı?
+$admin_keys = ['admin','admin_id','wisecp_admin','wisecp_admin_id','admin_data','admin_user','wcp_admin','adminpanel'];
+foreach($admin_keys as $ak) {
+    if(!empty($_SESSION[$ak])) { $is_admin = true; break; }
+}
+// Session anahtarlarında "admin" geçen + boş olmayan
+if(!$is_admin) {
+    foreach($_SESSION as $k => $v) {
+        if(stripos($k,'admin') !== false && !empty($v)) { $is_admin = true; break; }
+    }
+}
+// WiseCP CORE Admin class
+if(!$is_admin && class_exists('Admin', false)) {
+    if(method_exists('Admin','logged_in') && @Admin::logged_in()) $is_admin = true;
+    elseif(isset(\Admin::$init) && @\Admin::$init->logged_in()) $is_admin = true;
 }
 
-// Yetkilendirme: WiseCP admin oturumu VEYA secret key
-$is_admin = false;
-if($has_wisecp && session_status() == PHP_SESSION_NONE) @session_start();
-if(isset($_SESSION['wisecp_admin']) || isset($_SESSION['admin'])) $is_admin = true;
-
+// Theme config'ten secret oku/üret
 $config = @include __DIR__ . '/theme-config.php';
 $secret = isset($config['settings']['update_secret']) ? $config['settings']['update_secret'] : '';
 if(!$secret) {
-    // İlk kez çalışıyorsa secret üret ve theme-config.php'ye yaz
     $secret = bin2hex(random_bytes(16));
-    $cfg_content = file_get_contents(__DIR__ . '/theme-config.php');
-    $cfg_content = str_replace(
-        "'show_cta'      => 1,",
-        "'show_cta'      => 1,\n        'update_secret' => '" . $secret . "',",
-        $cfg_content
-    );
-    @file_put_contents(__DIR__ . '/theme-config.php', $cfg_content);
+    $cfg_content = @file_get_contents(__DIR__ . '/theme-config.php');
+    if($cfg_content && strpos($cfg_content, 'update_secret') === false) {
+        $cfg_content = str_replace(
+            "'show_cta'      => 1,",
+            "'show_cta'      => 1,\n        'update_secret' => '" . $secret . "',",
+            $cfg_content
+        );
+        @file_put_contents(__DIR__ . '/theme-config.php', $cfg_content);
+    }
 }
 
+// URL'deki key parametresi
 $key_param = isset($_REQUEST['key']) ? $_REQUEST['key'] : '';
-if(!$is_admin && hash_equals($secret, $key_param)) $is_admin = true;
+if(!$is_admin && $secret && hash_equals($secret, $key_param)) $is_admin = true;
 
+// Erişim yoksa SELF-SERVICE URL göster
 if(!$is_admin) {
-    http_response_code(403);
-    die('<!DOCTYPE html><html><head><meta charset="utf-8"><title>403</title></head><body style="font-family:sans-serif;text-align:center;padding:80px;"><h1>403 - Erisim Yok</h1><p>Bu sayfaya WiseCP admin oturumu ile veya gecerli secret key ile erisilebilir.</p><p style="color:#888;font-size:13px;">Secret key icin tema dosyalarinda <code>theme-config.php</code> &rarr; <code>update_secret</code> alanina bakiniz.</p></body></html>');
+    $self_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https://' : 'http://')
+              . $_SERVER['HTTP_HOST']
+              . strtok($_SERVER['REQUEST_URI'], '?')
+              . '?key=' . urlencode($secret);
+
+    http_response_code(200); // 403 değil, normal sayfa - kullanıcı dostu
+    ?><!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"><title>Codega - Guncelleme Erisimi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',sans-serif}
+    body{background:linear-gradient(135deg,#f8fafc,#e0e7ff);min-height:100vh;display:grid;place-items:center;padding:20px;color:#1e293b}
+    .card{max-width:640px;background:#fff;border-radius:20px;padding:48px;box-shadow:0 20px 60px rgba(30,64,175,0.10)}
+    .icon{width:72px;height:72px;border-radius:18px;background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;display:grid;place-items:center;font-size:36px;margin-bottom:24px;box-shadow:0 8px 24px rgba(30,64,175,0.30)}
+    h1{font-size:30px;font-weight:800;margin-bottom:10px;color:#0f172a}
+    .lead{color:#64748b;margin-bottom:24px;line-height:1.6;font-size:15px}
+    .url-box{background:#f8fafc;padding:18px;border-radius:12px;font-family:'Menlo','Monaco',monospace;font-size:13px;word-break:break-all;border:2px dashed #c7d2fe;margin-bottom:20px;color:#1e40af;line-height:1.5}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;text-decoration:none;border-radius:12px;font-weight:700;font-size:15px;transition:all 0.2s;box-shadow:0 4px 16px rgba(30,64,175,0.20)}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(30,64,175,0.40)}
+    .info{margin-top:28px;padding:16px;background:#fffbeb;border-radius:10px;font-size:13px;color:#92400e;border-left:4px solid #f59e0b;line-height:1.6}
+    .info strong{display:block;margin-bottom:4px;color:#78350f}
+    .small{font-size:12px;color:#94a3b8;margin-top:24px;padding-top:20px;border-top:1px solid #e2e8f0;line-height:1.6}
+    code{background:#f1f5f9;padding:2px 8px;border-radius:6px;font-family:'Menlo','Monaco',monospace;font-size:12px;color:#1e40af}
+    </style></head><body>
+    <div class="card">
+        <div class="icon">🔐</div>
+        <h1>Guncelleme Merkezi</h1>
+        <p class="lead">Admin oturumunuz otomatik tespit edilemedi. Asagidaki guvenli URL'i kullanarak guncelleme sayfasina erisebilirsiniz:</p>
+        <div class="url-box"><?php echo htmlspecialchars($self_url); ?></div>
+        <a href="<?php echo htmlspecialchars($self_url); ?>" class="btn">
+            <span>Guncelleme Merkezine Git</span>
+            <span>&rarr;</span>
+        </a>
+        <div class="info">
+            <strong>💡 Bu URL'i kaydedin (yer imine ekleyin)</strong>
+            Secret key her tema kurulumunda otomatik ve benzersiz uretilir. Sadece bu sunucuya FTP/dosya erisimi olan kisi gorebilir.
+        </div>
+        <div class="small">
+            Secret key'i degistirmek icin <code>theme-config.php</code> dosyasinda <code>update_secret</code> degerini guncelleyin.
+        </div>
+    </div>
+    </body></html><?php
+    exit;
 }
 
 // İşlem yönlendirici
