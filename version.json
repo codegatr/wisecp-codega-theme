@@ -1,12 +1,15 @@
 {
-    "version": "2.1.9",
+    "version": "2.2.0",
     "release_date": "2026-05-02",
-    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.9/Codega-v2.1.9.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.9",
+    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.2.0/Codega-v2.2.0.zip",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.2.0",
     "changelog": [
-        "v2.1.9 - KRITIK: Giris butonu click handler fallback eklendi",
-        "MioAjax yuklenmemis olsa bile jQuery AJAX ile manuel submit yapar",
-        "getJson, alert_error, open_modal fallback fonksiyonlari",
-        "X-Requested-With: XMLHttpRequest header otomatik (CSRF kabul edilir)"
+        "v2.2.0 - DASHBOARD YENILENDI: Hizmetleri sergileyen zengin anasayfa",
+        "Karsilama hero: gradient mavi orb + 'Hosgeldiniz [isim]' + 2 CTA",
+        "Stat kartlari: gradient ikonlar (mavi/sari/yesil/mor) + tiklanabilir link",
+        "Aktif hizmetler + destek talepleri (varsa) - 2 sutun grid",
+        "HIZMETLERIMIZ sergi: 6 servis kart (Hosting/Sunucu/Domain/SSL/SMS/Ozel)",
+        "Aktif hizmet yoksa: gradient CTA banner '%30 kazanin'",
+        "Domainlerim mini tablosu (varsa)"
     ]
 }

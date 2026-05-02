@@ -1334,3 +1334,89 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     .cdg-form-row{grid-template-columns:1fr;}
     .cdg-radio-group{grid-template-columns:1fr;}
 }
+
+/* ==================== DASHBOARD ZENGİN ANASAYFA ==================== */
+
+.cdg-dash-hero{
+    position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#1e40af 0%,#3b82f6 60%,#06b6d4 100%);
+    color:#fff;border-radius:20px;padding:36px;
+    margin-bottom:24px;
+    box-shadow:0 12px 40px rgba(30,64,175,0.20);
+}
+.cdg-dash-hero-bg{position:absolute;inset:0;pointer-events:none;}
+.cdg-dash-hero-glow{
+    position:absolute;top:-150px;right:-150px;width:400px;height:400px;
+    background:radial-gradient(circle,rgba(255,255,255,0.20) 0%,transparent 70%);
+    filter:blur(40px);
+}
+.cdg-dash-hero-bg::after{
+    content:'';position:absolute;inset:0;
+    background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
+    background-size:24px 24px;
+    mask-image:linear-gradient(135deg,transparent,#000 50%,transparent);
+    -webkit-mask-image:linear-gradient(135deg,transparent,#000 50%,transparent);
+}
+.cdg-dash-hero-inner{
+    position:relative;z-index:1;
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:24px;
+}
+.cdg-dash-greeting{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 14px;border-radius:99px;
+    background:rgba(255,255,255,0.18);backdrop-filter:blur(10px);
+    font-size:13px;font-weight:500;margin-bottom:14px;
+    border:1px solid rgba(255,255,255,0.2);
+}
+.cdg-dash-greeting i{color:#fbbf24;}
+.cdg-dash-hero h1{
+    font-size:30px;font-weight:800;margin:0 0 8px;
+    color:#fff;line-height:1.2;letter-spacing:-0.5px;
+}
+.cdg-dash-hero-accent{
+    background:linear-gradient(135deg,#fbbf24,#fde047);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+.cdg-dash-hero p{margin:0;opacity:0.92;font-size:15px;line-height:1.6;max-width:560px;}
+.cdg-dash-hero-actions{display:flex;gap:10px;flex-wrap:wrap;}
+
+/* Stat kartları - link versiyonu */
+.cdg-stat-link{
+    display:flex;align-items:center;gap:14px;
+    padding:18px 20px;background:#fff;
+    border:1px solid var(--cdg-border);border-radius:14px;
+    text-decoration:none;color:var(--cdg-text);
+    transition:all 0.2s;
+}
+.cdg-stat-link:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 28px rgba(30,64,175,0.10);
+    border-color:rgba(30,64,175,0.25);
+}
+.cdg-stat-icon{
+    width:48px;height:48px;border-radius:12px;
+    color:#fff;display:grid;place-items:center;
+    font-size:22px;flex-shrink:0;
+}
+.cdg-stat-body{flex:1;min-width:0;}
+.cdg-stat-body .label{font-size:11px;color:var(--cdg-muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:600;margin-bottom:4px;}
+.cdg-stat-body .value{font-size:26px;font-weight:800;color:#0f172a;line-height:1;margin-bottom:4px;}
+.cdg-stat-body .meta{font-size:11px;color:var(--cdg-muted);}
+
+/* Section head - panel içinde */
+.mt-4{margin-top:32px;}
+
+@media (max-width:768px){
+    .cdg-dash-hero{padding:24px;}
+    .cdg-dash-hero h1{font-size:22px;}
+    .cdg-dash-hero-actions{width:100%;}
+    .cdg-dash-hero-actions .cdg-btn{flex:1;justify-content:center;}
+    .cdg-stat-grid{grid-template-columns:repeat(2,1fr)!important;}
+    .cdg-stat-link{padding:14px;}
+    .cdg-stat-body .value{font-size:20px;}
+}
+@media (max-width:480px){
+    .cdg-stat-grid{grid-template-columns:1fr!important;}
+}
