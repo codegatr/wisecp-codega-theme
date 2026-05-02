@@ -4140,24 +4140,26 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     .cdg-domain-captcha-input{width:100%;}
 }
 
-/* ==================== v2.9.3 - Hero Form Inline Captcha ==================== */
+/* ==================== v2.9.4 - Inline Captcha (Hero + Domain) ==================== */
 
-/* Form yapısı: input + captcha + button (tek satır) */
+/* === ANASAYFA HERO (input + captcha + buton tek satır) === */
 .cdg-hero-domain-with-captcha{
     display:flex;
-    align-items:center;
-    gap:8px;
+    align-items:stretch;
+    gap:0;
     background:#fff;
-    border-radius:14px;
+    border-radius:16px;
     padding:6px;
-    box-shadow:0 12px 40px rgba(0,0,0,0.12);
-    max-width:780px;
+    box-shadow:0 16px 48px rgba(0,0,0,0.14);
+    max-width:880px;
     flex-wrap:nowrap;
 }
 
+/* Hero input alanı (captcha varken) - ARAMA İKONU İÇİN PADDING KORUNMALI */
 .cdg-hero-domain-with-captcha .cdg-hero-domain-input{
     flex:1 1 auto;
-    min-width:200px;
+    min-width:160px;
+    position:relative;
     background:transparent;
     box-shadow:none;
     padding:0;
@@ -4165,26 +4167,32 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     border-right:1px solid #e2e8f0;
     margin:0;
 }
-
+.cdg-hero-domain-with-captcha .cdg-hero-domain-input i{
+    position:absolute;left:16px;top:50%;transform:translateY(-50%);
+    color:#94a3b8;font-size:18px;
+    pointer-events:none;
+}
 .cdg-hero-domain-with-captcha .cdg-hero-domain-input input{
     border:0;
     background:transparent;
     box-shadow:none;
-    padding:14px 16px;
+    padding:14px 14px 14px 48px;  /* SOL 48px - arama ikonu boşluğu */
     width:100%;
-    font-size:16px;
+    font-size:15px;
+    color:#0f172a;
+    font-family:inherit;
+    outline:none;
 }
 
-/* Captcha bloğu (input ile button arası) */
+/* Hero captcha bloğu */
 .cdg-hero-domain-captcha{
     display:flex;
     align-items:center;
     gap:8px;
     flex-shrink:0;
+    padding:0 10px;
     border-right:1px solid #e2e8f0;
-    padding-right:8px;
 }
-
 .cdg-hero-captcha-img-inline{
     flex-shrink:0;
     background:#f8fafc;
@@ -4201,9 +4209,8 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     max-height:30px;
     max-width:100%;
 }
-
 .cdg-hero-domain-captcha input{
-    width:130px;
+    width:120px;
     padding:11px 12px;
     border:1px solid #e2e8f0;
     border-radius:8px;
@@ -4213,68 +4220,177 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     font-family:inherit;
     font-weight:600;
     letter-spacing:0.5px;
+    outline:none;
+    transition:all 0.2s;
 }
 .cdg-hero-domain-captcha input:focus{
-    outline:none;
     border-color:#1e40af;
     box-shadow:0 0 0 3px rgba(30,64,175,0.10);
 }
 .cdg-hero-domain-captcha input::placeholder{
     color:#94a3b8;
     font-weight:500;
-    text-transform:none;
     letter-spacing:0;
 }
 
-.cdg-hero-domain-with-captcha button{
+.cdg-hero-domain-with-captcha button,
+.cdg-hero-domain-with-captcha .cdg-btn{
     flex-shrink:0;
-    padding:13px 24px;
+    padding:14px 24px;
     border-radius:10px;
     font-size:14px;
     white-space:nowrap;
+    margin-left:6px;
 }
 
-/* Mobil */
+/* === DOMAIN SAYFASI (input + captcha + buton tek satır) === */
+.cdg-domain-search-with-captcha{
+    display:flex;
+    align-items:stretch;
+    gap:0;
+    background:#fff;
+    border-radius:16px;
+    padding:6px;
+    box-shadow:0 16px 48px rgba(0,0,0,0.18);
+    max-width:880px;
+    margin:0 auto;
+    flex-wrap:nowrap;
+}
+
+.cdg-domain-search-input-main{
+    flex:1 1 auto;
+    min-width:160px;
+    position:relative;
+    border-right:1px solid #e2e8f0;
+}
+.cdg-domain-search-input-main i{
+    position:absolute;left:18px;top:50%;transform:translateY(-50%);
+    color:#94a3b8;font-size:18px;
+    pointer-events:none;
+}
+.cdg-domain-search-input-main input{
+    border:0;
+    background:transparent;
+    box-shadow:none;
+    padding:14px 14px 14px 48px;
+    width:100%;
+    font-size:15px;
+    color:#0f172a;
+    font-family:inherit;
+    outline:none;
+}
+
+.cdg-domain-search-captcha{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-shrink:0;
+    padding:0 10px;
+    border-right:1px solid #e2e8f0;
+}
+.cdg-domain-captcha-img{
+    flex-shrink:0;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    padding:4px 8px;
+    height:38px;
+    display:flex;align-items:center;justify-content:center;
+    min-width:90px;
+}
+.cdg-domain-captcha-img img,
+.cdg-domain-captcha-img > div,
+.cdg-domain-captcha-img canvas{
+    max-height:30px;
+    max-width:100%;
+}
+.cdg-domain-search-captcha input{
+    width:120px;
+    padding:11px 12px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:#fff;
+    color:#0f172a;
+    font-size:14px;
+    font-family:inherit;
+    font-weight:600;
+    letter-spacing:0.5px;
+    outline:none;
+    transition:all 0.2s;
+}
+.cdg-domain-search-captcha input:focus{
+    border-color:#1e40af;
+    box-shadow:0 0 0 3px rgba(30,64,175,0.10);
+}
+.cdg-domain-search-captcha input::placeholder{
+    color:#94a3b8;
+    font-weight:500;
+    letter-spacing:0;
+}
+
+.cdg-domain-search-with-captcha .cdg-btn{
+    flex-shrink:0;
+    padding:14px 24px;
+    border-radius:10px;
+    margin-left:6px;
+    white-space:nowrap;
+}
+
+/* === MOBİL === */
 @media (max-width:900px){
-    .cdg-hero-domain-with-captcha{
+    .cdg-hero-domain-with-captcha,
+    .cdg-domain-search-with-captcha{
         flex-wrap:wrap;
     }
-    .cdg-hero-domain-with-captcha .cdg-hero-domain-input{
+    .cdg-hero-domain-with-captcha .cdg-hero-domain-input,
+    .cdg-domain-search-input-main{
         flex:1 1 100%;
         border-right:0;
         border-bottom:1px solid #e2e8f0;
     }
-    .cdg-hero-domain-with-captcha .cdg-hero-domain-input input{
-        padding:14px 14px;
-    }
-    .cdg-hero-domain-captcha{
+    .cdg-hero-domain-captcha,
+    .cdg-domain-search-captcha{
         flex:1;
-        border-right:1px solid #e2e8f0;
+        margin-top:6px;
     }
-    .cdg-hero-domain-captcha input{
+    .cdg-hero-domain-captcha input,
+    .cdg-domain-search-captcha input{
         flex:1;
         width:auto;
         min-width:80px;
     }
+    .cdg-hero-domain-with-captcha button,
+    .cdg-hero-domain-with-captcha .cdg-btn,
+    .cdg-domain-search-with-captcha .cdg-btn{
+        margin-top:6px;
+        margin-left:6px;
+    }
 }
 
 @media (max-width:560px){
-    .cdg-hero-domain-with-captcha{
+    .cdg-hero-domain-with-captcha,
+    .cdg-domain-search-with-captcha{
         flex-direction:column;
         gap:6px;
         padding:8px;
     }
     .cdg-hero-domain-with-captcha .cdg-hero-domain-input,
+    .cdg-domain-search-input-main,
     .cdg-hero-domain-captcha,
-    .cdg-hero-domain-with-captcha button{
+    .cdg-domain-search-captcha,
+    .cdg-hero-domain-with-captcha button,
+    .cdg-hero-domain-with-captcha .cdg-btn,
+    .cdg-domain-search-with-captcha .cdg-btn{
         width:100%;
         flex:1 1 100%;
-        border:0;
+        margin-left:0;
+        margin-top:0;
     }
-    .cdg-hero-domain-captcha{
-        padding-right:0;
+    .cdg-hero-domain-captcha,
+    .cdg-domain-search-captcha{
+        padding:8px 0;
+        border-right:0;
         border-top:1px solid #e2e8f0;
         border-bottom:1px solid #e2e8f0;
-        padding:8px 0;
     }
 }

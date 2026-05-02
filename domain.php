@@ -90,9 +90,19 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
 
             <!-- DOMAIN SORGULAMA INPUT -->
             <div class="cdg-domain-search-wrap">
-                <div class="cdg-domain-search-input">
-                    <i class="bi bi-search"></i>
-                    <input type="text" id="domainInput" value="<?php echo isset($_GET['domain']) ? htmlspecialchars(trim($_GET['domain'])) : ''; ?>" placeholder="alanadi.com" autocomplete="off" required onkeydown="if(event.keyCode==13){event.preventDefault();submitnow(document.getElementById('submitnow'));}">
+                <div class="cdg-domain-search-input<?php echo (isset($captcha) && $captcha) ? ' cdg-domain-search-with-captcha' : ''; ?>">
+                    <div class="cdg-domain-search-input-main">
+                        <i class="bi bi-search"></i>
+                        <input type="text" id="domainInput" value="<?php echo isset($_GET['domain']) ? htmlspecialchars(trim($_GET['domain'])) : ''; ?>" placeholder="alanadi.com" autocomplete="off" required onkeydown="if(event.keyCode==13){event.preventDefault();submitnow(document.getElementById('submitnow'));}">
+                    </div>
+                    <?php if(isset($captcha) && $captcha): ?>
+                    <div class="cdg-domain-search-captcha">
+                        <div class="cdg-domain-captcha-img"><?php echo $captcha->getOutput(); ?></div>
+                        <?php if($captcha->input): ?>
+                        <input id="captchainputs" name="<?php echo $captcha->input_name; ?>" type="text" placeholder="Güvenlik Kodu" autocomplete="off" maxlength="10">
+                        <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
                     <a href="javascript:void(0);" id="submitnow" class="cdg-btn cdg-btn-primary cdg-btn-glow" onclick="submitnow(this);">
                         <i class="bi bi-search"></i> <span>Sorgula</span>
                     </a>
@@ -113,20 +123,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                 <input type="hidden" name="type" value="domain">
                 <input type="hidden" name="domain" value="">
                 <input type="hidden" name="tcode" value="">
-                <?php if(isset($captcha) && $captcha): ?>
-                    <div class="cdg-domain-captcha">
-                        <div class="cdg-domain-captcha-label">
-                            <i class="bi bi-shield-fill-check"></i>
-                            <span>Robot olmadığınızı doğrulayın</span>
-                        </div>
-                        <div class="cdg-domain-captcha-row">
-                            <div class="cdg-domain-captcha-image"><?php echo $captcha->getOutput(); ?></div>
-                            <?php if($captcha->input): ?>
-                            <input id="captchainputs" name="<?php echo $captcha->input_name; ?>" type="text" placeholder="Yandaki kodu yazın" class="cdg-domain-captcha-input" autocomplete="off">
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
+                <?php /* Captcha search-input içine taşındı - WiseCP form'una JS ile aktarılacak */ ?>
             </form>
 
             <?php if(!empty($featured_tlds)): ?>
@@ -444,6 +441,30 @@ function submitnow(elem) {
         if(domainField) domainField.value = domain;
         if(typeField)   typeField.value = 'domain';
         if(tcodeField)  tcodeField.value = (transferCb && transferCb.checked && eppInput) ? eppInput.value : '';
+
+        // Captcha kodu - search-input içindeki captchainputs değerini form'a hidden olarak ekle
+        var captchaInput = document.getElementById('captchainputs');
+        if(captchaInput) {
+            var capName = captchaInput.getAttribute('name');
+            // Form'da bu name ile hidden var mı kontrol et
+            var existingCap = form.querySelector('input[name="' + capName + '"]');
+            if(!existingCap) {
+                existingCap = document.createElement('input');
+                existingCap.type = 'hidden';
+                existingCap.name = capName;
+                form.appendChild(existingCap);
+            }
+            existingCap.value = captchaInput.value || '';
+
+            // Boşsa uyar
+            if(!captchaInput.value || captchaInput.value.trim().length < 1) {
+                btn.removeAttribute('data-pending');
+                captchaInput.focus();
+                captchaInput.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.40)';
+                setTimeout(function(){ captchaInput.style.boxShadow = ''; }, 1500);
+                return false;
+            }
+        }
     }
 
     // UI: loading state
