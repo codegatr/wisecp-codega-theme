@@ -76,4 +76,12 @@ if(isset($hoptions["page"]) && $hoptions["page"] != "index" && isset($meta["titl
 
 <!-- WiseCP main script -->
 <script>var template_address = "<?php echo $tadress; ?>";</script>
+
+<!-- jQuery - WiseCP MioAjax ve diger global JS bunu gerektirir -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
+
+<!-- WiseCP main script (MioAjax, alert_error, getJson, open_modal vs.) -->
 <?php if(class_exists('View') && method_exists('View', 'main_script')) View::main_script(); ?>
+
+<!-- Classic temadan kalan icin jquery alias'leri (bazi pluginler bekler) -->
+<script>if(typeof jQuery!=='undefined' && typeof window.$==='undefined') window.$=jQuery;</script>

@@ -1,14 +1,12 @@
 {
-    "version": "2.1.7",
+    "version": "2.1.8",
     "release_date": "2026-05-02",
-    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.7/Codega-v2.1.7.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.7",
+    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.8/Codega-v2.1.8.zip",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.8",
     "changelog": [
-        "v2.1.7 - GERCEK COZUM: Classic tema MioAjax pattern uygulandi",
-        "sign-in.php: $master_content_none + MioAjax submit + signin_submit JS + two-factor + location-verification modal",
-        "sign-up.php: $master_content_none + mio-ajax-form + signup_submit JS + kurumsal/bireysel radio cards",
-        "Submit butonu: type=button + mio-ajax-submit class + mio-ajax-options JSON",
-        "WiseCP login endpoint AJAX bekliyor - normal POST CSRF hatasi veriyordu",
-        "Auth sayfa tasarimi: 2-kolon (promo + form), Codega gradient + glassmorphism"
+        "v2.1.8 - KRITIK: jQuery main-head.php'ye eklendi",
+        "$ is not defined hatasi cozuldu - Cloudflare CDN'den jQuery 3.7.1 yukleniyor",
+        "WiseCP MioAjax/alert_error/open_modal gibi global JS fonksiyonlar artik calisir",
+        "View::main_script() jQuery'den SONRA yukleniyor (bagimlilik sirasi dogru)"
     ]
 }
