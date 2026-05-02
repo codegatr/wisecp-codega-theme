@@ -741,6 +741,72 @@ $discounted_total = $inv_subtotal - $total_discount;
         </div>
     </div>
 
+    <!-- KUPON UYGULA -->
+    <?php if($inv_status === 'unpaid'): ?>
+    <div class="cdg-inv-card" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#fcd34d;">
+        <div class="cdg-inv-card-head" style="border-color:rgba(146,64,14,0.2);">
+            <h3 style="color:#92400e;"><i class="bi bi-ticket-perforated-fill"></i> Kupon Kodu Var Mi?</h3>
+        </div>
+        <div class="cdg-inv-card-body">
+            <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;">
+                <input type="text" id="cdg-inv-coupon-code" class="cdg-form-control" placeholder="Kupon kodunuzu girin..." style="font-family:'Courier New',monospace;font-size:14px;letter-spacing:1px;font-weight:700;text-transform:uppercase;">
+                <button type="button" id="cdg-inv-apply-coupon" class="cdg-inv-btn" style="background:#92400e;color:#fff;padding:10px 20px;border:0;border-radius:8px;font-weight:700;cursor:pointer;">
+                    <i class="bi bi-check-circle"></i> Uygula
+                </button>
+            </div>
+            <div id="cdg-inv-coupon-result" style="display:none;margin-top:10px;font-size:13px;"></div>
+        </div>
+    </div>
+
+    <script>
+    (function(){
+        var btn = document.getElementById('cdg-inv-apply-coupon');
+        var inp = document.getElementById('cdg-inv-coupon-code');
+        var res = document.getElementById('cdg-inv-coupon-result');
+        if(!btn || !inp) return;
+
+        btn.addEventListener('click', function(){
+            var code = inp.value.trim();
+            if(!code) {
+                res.style.display = 'block';
+                res.style.color = '#b91c1c';
+                res.innerHTML = '<i class="bi bi-exclamation-circle"></i> Lutfen kupon kodu girin.';
+                return;
+            }
+            if(typeof MioAjax !== 'function') {
+                alert('Kupon uygulama: WiseCP MioAjax bulunamadi.');
+                return;
+            }
+            var orig = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Uygulaniyor...';
+
+            MioAjax({
+                url: '<?php echo htmlspecialchars($form_action ?? '', ENT_QUOTES); ?>',
+                type: 'post',
+                data: { operation: 'apply_coupon', code: code },
+                result: function(r) {
+                    btn.disabled = false; btn.innerHTML = orig;
+                    res.style.display = 'block';
+                    if(r && r.status === 'successful') {
+                        res.style.color = '#15803d';
+                        res.innerHTML = '<i class="bi bi-check-circle-fill"></i> ' + (r.message || 'Kupon basariyla uygulandi!');
+                        setTimeout(function(){ window.location.reload(); }, 1500);
+                    } else {
+                        res.style.color = '#b91c1c';
+                        res.innerHTML = '<i class="bi bi-x-circle-fill"></i> ' + ((r && r.message) || 'Kupon uygulanamadi.');
+                    }
+                }
+            });
+        });
+
+        inp.addEventListener('keypress', function(e){
+            if(e.key === 'Enter') { e.preventDefault(); btn.click(); }
+        });
+    })();
+    </script>
+    <?php endif; ?>
+
     <!-- ÖDEME -->
     <?php if($inv_status === 'unpaid' && $form_action): ?>
     <div class="cdg-inv-card">

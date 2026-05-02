@@ -840,6 +840,148 @@ $transfer_lock = !empty($options['transferlock']);
                 <?php endif; ?>
             </div>
         </div>
+
+        <?php
+        // === MANUEL WHOIS FORM (Detayli Iletisim Bilgileri) ===
+        // WiseCP runtime: $contact_types (registrant, admin, tech, billing), $whois (mevcut bilgiler)
+        $cdg_contact_types = isset($contact_types) && is_array($contact_types) ? $contact_types : [
+            'registrant' => 'Sahibi',
+            'admin'      => 'Yonetici',
+            'tech'       => 'Teknik',
+            'billing'    => 'Faturalama',
+        ];
+        $cdg_whois_data = isset($whois) && is_array($whois) ? $whois : [];
+        ?>
+
+        <div class="cdg-pdm-card" style="margin-top:18px;">
+            <div class="cdg-pdm-card-head">
+                <h3><i class="bi bi-pencil-square"></i> Detayli WHOIS Duzenleme</h3>
+                <span style="font-size:11px;color:#94a3b8;">Tum kontak tipleri icin manuel duzenleme</span>
+            </div>
+            <div class="cdg-pdm-card-body">
+                <div class="cdg-pdm-alert cdg-pdm-alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <div>WHOIS bilgilerinizi profil secmeden de manuel olarak duzenleyebilirsiniz. Her kontak tipi icin ayri bilgi girebilirsiniz.</div>
+                </div>
+
+                <form method="post" action="<?php echo htmlspecialchars($controller_url); ?>" id="cdg-pdm-whois-form">
+                    <?php echo cdg_csrf('domain_modify_whois'); ?>
+                    <input type="hidden" name="operation" value="domain_modify_whois">
+                    <input type="hidden" name="id" value="<?php echo (int)$d_id; ?>">
+
+                    <!-- Contact Type Tabs -->
+                    <div style="display:flex;gap:4px;background:#f8fafc;padding:5px;border-radius:8px;margin-bottom:14px;flex-wrap:wrap;">
+                        <?php $first_ct = true; foreach($cdg_contact_types as $ct_key => $ct_label): ?>
+                        <button type="button" class="cdg-pdm-ct-tab <?php echo $first_ct ? 'active' : ''; ?>" data-ct="<?php echo htmlspecialchars($ct_key); ?>" onclick="cdgPdmCtTab(this, '<?php echo htmlspecialchars($ct_key); ?>')">
+                            <?php
+                            $ct_icon = ['registrant' => 'person-fill', 'admin' => 'person-gear', 'tech' => 'tools', 'billing' => 'receipt'][$ct_key] ?? 'person';
+                            ?>
+                            <i class="bi bi-<?php echo $ct_icon; ?>"></i> <?php echo htmlspecialchars($ct_label); ?>
+                        </button>
+                        <?php $first_ct = false; endforeach; ?>
+                    </div>
+
+                    <!-- Contact Type Panes -->
+                    <?php $first_ct = true; foreach($cdg_contact_types as $ct_key => $ct_label):
+                        $cw = $cdg_whois_data[$ct_key] ?? [];
+                    ?>
+                    <div class="cdg-pdm-ct-pane" id="cdg-pdm-ct-pane-<?php echo htmlspecialchars($ct_key); ?>" style="display:<?php echo $first_ct ? 'block' : 'none'; ?>;">
+
+                        <!-- Profil Sec (varsa) -->
+                        <?php if(!empty($whois_profiles)): ?>
+                        <div class="cdg-pdm-field">
+                            <label class="cdg-pdm-label">Hizli Profil Secimi</label>
+                            <select name="profile_id[<?php echo htmlspecialchars($ct_key); ?>]" class="cdg-pdm-select" data-ct="<?php echo htmlspecialchars($ct_key); ?>" onchange="cdgPdmWhoisFillFromProfile(this, '<?php echo htmlspecialchars($ct_key); ?>')">
+                                <option value="0">— Manuel doldurun veya profil secin —</option>
+                                <?php foreach($whois_profiles as $pf):
+                                    if(!is_array($pf)) continue;
+                                    $pf_id = $pf['id'] ?? 0;
+                                    $pf_name = $pf['name'] ?? 'Profil';
+                                    $pf_info = $pf['information'] ?? '';
+                                    $pf_selected = (isset($cw['profile_id']) && $cw['profile_id'] == $pf_id) ? 'selected' : '';
+                                ?>
+                                <option value="<?php echo (int)$pf_id; ?>" data-information='<?php echo htmlspecialchars($pf_info); ?>' <?php echo $pf_selected; ?>>
+                                    <?php echo htmlspecialchars($pf_name . (!empty($pf['person_name']) ? ' (' . $pf['person_name'] . ')' : '')); ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <?php endif; ?>
+
+                        <div class="cdg-pdm-form-row" style="grid-template-columns:1fr 1fr;">
+                            <div class="cdg-pdm-field">
+                                <label class="cdg-pdm-label">Tam Ad <span style="color:#ef4444;">*</span></label>
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Name]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-Name" value="<?php echo htmlspecialchars($cw['Name'] ?? ''); ?>" placeholder="Ad Soyad">
+                            </div>
+                            <div class="cdg-pdm-field">
+                                <label class="cdg-pdm-label">Sirket Adi</label>
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Company]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-Company" value="<?php echo htmlspecialchars($cw['Company'] ?? ''); ?>" placeholder="Opsiyonel">
+                            </div>
+                        </div>
+
+                        <div class="cdg-pdm-field">
+                            <label class="cdg-pdm-label">E-posta <span style="color:#ef4444;">*</span></label>
+                            <input type="email" name="info[<?php echo htmlspecialchars($ct_key); ?>][EMail]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-EMail" value="<?php echo htmlspecialchars($cw['EMail'] ?? ''); ?>" placeholder="ornek@example.com">
+                        </div>
+
+                        <div class="cdg-pdm-form-row" style="grid-template-columns:120px 1fr 120px 1fr;">
+                            <div class="cdg-pdm-field">
+                                <label class="cdg-pdm-label">Tel Kod</label>
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][PhoneCountryCode]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($cw['PhoneCountryCode'] ?? '+90'); ?>" placeholder="+90">
+                            </div>
+                            <div class="cdg-pdm-field">
+                                <label class="cdg-pdm-label">Telefon <span style="color:#ef4444;">*</span></label>
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Phone]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-Phone" value="<?php echo htmlspecialchars($cw['Phone'] ?? ''); ?>" placeholder="555 123 4567">
+                            </div>
+                            <div class="cdg-pdm-field">
+                                <label class="cdg-pdm-label">Faks Kod</label>
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][FaxCountryCode]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($cw['FaxCountryCode'] ?? ''); ?>">
+                            </div>
+                            <div class="cdg-pdm-field">
+                                <label class="cdg-pdm-label">Faks</label>
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Fax]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($cw['Fax'] ?? ''); ?>">
+                            </div>
+                        </div>
+
+                        <div class="cdg-pdm-field">
+                            <label class="cdg-pdm-label">Adres <span style="color:#ef4444;">*</span></label>
+                            <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Address]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-Address" value="<?php echo htmlspecialchars($cw['AddressLine1'] ?? ($cw['Address'] ?? '')); ?>" placeholder="Sokak, mahalle, no">
+                        </div>
+
+                        <div class="cdg-pdm-form-row" style="grid-template-columns:1fr 1fr 1fr 120px;">
+                            <div class="cdg-pdm-field">
+                                <label class="cdg-pdm-label">Sehir</label>
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][City]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-City" value="<?php echo htmlspecialchars($cw['City'] ?? ''); ?>">
+                            </div>
+                            <div class="cdg-pdm-field">
+                                <label class="cdg-pdm-label">Bolge</label>
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][State]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-State" value="<?php echo htmlspecialchars($cw['State'] ?? ''); ?>">
+                            </div>
+                            <div class="cdg-pdm-field">
+                                <label class="cdg-pdm-label">Ulke (Kod)</label>
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][Country]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-Country" value="<?php echo htmlspecialchars($cw['Country'] ?? 'TR'); ?>" maxlength="3" placeholder="TR">
+                            </div>
+                            <div class="cdg-pdm-field">
+                                <label class="cdg-pdm-label">Posta Kodu</label>
+                                <input type="text" name="info[<?php echo htmlspecialchars($ct_key); ?>][ZipCode]" class="cdg-pdm-input cdg-pdm-whois-<?php echo htmlspecialchars($ct_key); ?>-ZipCode" value="<?php echo htmlspecialchars($cw['ZipCode'] ?? ''); ?>">
+                            </div>
+                        </div>
+
+                        <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#475569;cursor:pointer;margin-top:8px;">
+                            <input type="checkbox" name="apply_to_all[<?php echo htmlspecialchars($ct_key); ?>]" value="1">
+                            <i class="bi bi-arrows-collapse"></i> Bu bilgileri diger tum kontak tiplerine de uygula
+                        </label>
+                    </div>
+                    <?php $first_ct = false; endforeach; ?>
+
+                    <div style="margin-top:20px;display:flex;justify-content:flex-end;">
+                        <button type="submit" class="cdg-pdm-btn cdg-pdm-btn-primary">
+                            <i class="bi bi-save"></i> Manuel WHOIS'i Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- TAB: YÖNLENDIRME -->
@@ -1920,7 +2062,55 @@ function removeDnsSecRecord(k, el){ return cdgDomain.dnssecDelete(k); }
         });
     }
 })();
+// === WHOIS Contact Type Tab Switching ===
+window.cdgPdmCtTab = function(btn, ctKey) {
+    document.querySelectorAll('.cdg-pdm-ct-tab').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('.cdg-pdm-ct-pane').forEach(function(p){ p.style.display = 'none'; });
+    btn.classList.add('active');
+    var pane = document.getElementById('cdg-pdm-ct-pane-' + ctKey);
+    if(pane) pane.style.display = 'block';
+};
+
+// === WHOIS Profile -> Form Fill ===
+window.cdgPdmWhoisFillFromProfile = function(sel, ctKey) {
+    var opt = sel.options[sel.selectedIndex];
+    if(!opt || sel.value === '0') return;
+    var info = opt.getAttribute('data-information');
+    if(!info) return;
+    try {
+        var data = JSON.parse(info);
+        var fields = ['Name', 'Company', 'EMail', 'Phone', 'PhoneCountryCode', 'Address', 'AddressLine1', 'City', 'State', 'Country', 'ZipCode'];
+        fields.forEach(function(f){
+            var el = document.querySelector('.cdg-pdm-whois-' + ctKey + '-' + f);
+            if(el && data[f] !== undefined) el.value = data[f];
+        });
+    } catch(e) { console.error('Profil parse hatasi:', e); }
+};
+
 </script>
+
+<style>
+.cdg-pdm-ct-tab {
+    flex: 1;
+    min-width: 110px;
+    padding: 9px 14px;
+    background: transparent;
+    border: 0;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.cdg-pdm-ct-tab:hover { background: #fff; color: #0f172a; }
+.cdg-pdm-ct-tab.active { background: #fff; color: #1e40af; box-shadow: 0 1px 3px rgba(15,23,42,0.06); }
+</style>
 
 <?php
 // === Domain Modalları (DNS Records / CNS / DNSSEC / Email Forwards / Documents) ===

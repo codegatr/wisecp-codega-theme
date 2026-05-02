@@ -1,16 +1,25 @@
 {
-    "version": "3.4.9",
+    "version": "3.5.0",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.4.9-codega",
-    "tag": "v3.4.9-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.0-codega",
+    "tag": "v3.5.0-codega",
     "changelog": [
-        "v3.4.9 - Bakiye otomatik odeme formu islevsel hale getirildi",
-        "FIX: ac-balance.php otomatik odeme checkbox'i form ile baglandi",
-        "  Eskiden: sadece gorsel checkbox (form yok, kaydetmiyordu)",
-        "  Yeni: form method=post, operation=update_settings, CSRF token",
-        "  Eklenen alan: balance_min (minimum bakiye uyari esigi)",
-        "  Tum WiseCP balance ayarlari artik kaydedilebilir",
-        "  Otomatik odeme + Min bakiye + Kaydet butonu tek formda"
+        "v3.5.0 - WHOIS manuel form + Fatura kupon kodu uygulama",
+        "YENI: ac-product-domain.php WHOIS tab'ina manuel form bolumu",
+        "  4 contact tipi tab: Sahibi (Registrant) / Yonetici (Admin) / Teknik (Tech) / Faturalama (Billing)",
+        "  Her tip icin 12 alan: Name, Company, EMail, Phone (CountryCode), Fax, Address, City, State, Country (kod), ZipCode",
+        "  WiseCP runtime variable'lari: \\$contact_types, \\$whois (mevcut bilgi)",
+        "  Hizli profil secimi (otomatik form doldurma JS ile)",
+        "  apply_to_all checkbox (bilgileri tum tiplere uygula)",
+        "  Submit -> domain_modify_whois operation (Classic uyumlu info[ct][...] yapisi)",
+        "YENI: ac-detail-invoice.php Kupon Kodu Uygulama karti",
+        "  Sari gradient (yellow-to-amber) tema",
+        "  Buyuk harf zorlamali input (uppercase + monospace + letter-spacing)",
+        "  apply_coupon operation -> AJAX uygulama",
+        "  Animated basari/hata mesajlari",
+        "  Enter tusu ile uygulama (UX kolayligi)",
+        "  Sadece odenmemis faturalarda gorunuyor (\\$inv_status==='unpaid')",
+        "Domain whois manuel duzenleme = profil bagimsiz (Classic ile %100 uyumlu)"
     ]
 }
