@@ -3,7 +3,7 @@ return [
     'meta' => [
         'name'        => 'Codega',
         'description' => 'Modern, mavi agirlikli CODEGA klasik temasi. Web yazilim, hosting, domain, SMS ve ozel yazilim hizmetleri icin tasarlanmistir.',
-        'version'     => '2.8.2',
+        'version'     => '2.8.3',
         'provider'    => 'CODEGA',
         'website'     => 'https://codega.com.tr',
         'image'       => '',
@@ -65,9 +65,11 @@ return [
 
         // İletişim
         'contact' => [
-            'phone'   => '+90 (332) 000 00 00',
-            'email'   => 'info@codega.com.tr',
-            'address' => 'Konya, Turkiye',
+            'phone'    => '+90 510 220 42 06',
+            'whatsapp' => '905102204206',
+            'email'    => 'info@codega.com.tr',
+            'address'  => 'Konya, Türkiye',
+            'hours'    => 'Pazartesi - Cuma: 09:00 - 18:00',
         ],
     ],
 ];

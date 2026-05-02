@@ -1,24 +1,16 @@
 {
-    "version": "2.8.2",
+    "version": "2.8.3",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.8.2-codega",
-    "tag": "v2.8.2-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.8.3-codega",
+    "tag": "v2.8.3-codega",
     "changelog": [
-        "v2.8.2 - HOSTING DUZELTME + TELEFON + TURKCE",
-        "HOSTING: hosting-products.php Netwise mantigi bire bir kopyalandi",
-        "HOSTING: $product[buy_link] kullaniliyor (WiseCP otomatik /siparis/hosting/{id} pattern)",
-        "HOSTING: $get_list, $get_categories runtime cagrilari",
-        "HOSTING: Tab navigation ile alt kategoriler (Ekonomik/Profesyonel/Bayi)",
-        "HOSTING: Multi-period select (paket icindeki farkli sureler)",
-        "DOMAIN: Diagnostic mode (?_diag=1) eklendi - tldList global'i kontrol",
-        "HOSTING: Diagnostic mode (?_diag=1) eklendi - showCategory/category kontrol",
-        "TELEFON: Tum dosyalarda yeni numara: 0 510 220 42 06",
-        "TELEFON: WhatsApp linkleri: https://wa.me/905102204206",
-        "TELEFON: tel: linkleri: tel:+905102204206",
-        "TURKCE: Header menusu - Ana Sayfa, Yazilim->Yazilim, Iletisim->Iletisim",
-        "TURKCE: Header butonlar - Hesabim, Cikis, Giris, Kayit Ol",
-        "TURKCE: Footer - Sirket, Bilgi Bankasi, Iletisim, Tum hak",
-        "TURKCE: sign-up/sign-in icindeki kalan Sifre, Sirket, Sonuc duzeltildi"
+        "v2.8.3 - theme-config.php telefon duzeltmesi",
+        "FIX: theme-config.php'deki '+90 (332) 000 00 00' placeholder'i kaldirildi",
+        "FIX: Yeni numara: +90 510 220 42 06",
+        "FIX: WhatsApp: 905102204206",
+        "FIX: Calisma saatleri eklendi: Pazartesi - Cuma 09:00 - 18:00",
+        "FIX: Adres Konya, Turkiye -> Konya, Turkiye (utf-8)",
+        "iletisim sayfasi artik dogru numarayi gosteriyor (theme-config'den okuyor)"
     ]
 }
