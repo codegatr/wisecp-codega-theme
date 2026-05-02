@@ -1,14 +1,14 @@
 {
-    "version": "2.1.6",
+    "version": "2.1.7",
     "release_date": "2026-05-02",
-    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.6/Codega-v2.1.6.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.6",
+    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.1.7/Codega-v2.1.7.zip",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.1.7",
     "changelog": [
-        "v2.1.6 - KRITIK GIRIS FORM CSRF FIX",
-        "sign-in.php: action=$login_link (Netwise pattern), action input kaldirildi",
-        "sign-up.php: action=$register_link, gereksiz hidden input kaldirildi",
-        "sign-reset-password.php: action=$forget_password_link",
-        "Validation::get_csrf_token('sign') kosulsuz cagri (artik garantili)",
-        "Form id'leri WiseCP convention: Signin_Form, Signup_Form, ForgotPassword_Form"
+        "v2.1.7 - GERCEK COZUM: Classic tema MioAjax pattern uygulandi",
+        "sign-in.php: $master_content_none + MioAjax submit + signin_submit JS + two-factor + location-verification modal",
+        "sign-up.php: $master_content_none + mio-ajax-form + signup_submit JS + kurumsal/bireysel radio cards",
+        "Submit butonu: type=button + mio-ajax-submit class + mio-ajax-options JSON",
+        "WiseCP login endpoint AJAX bekliyor - normal POST CSRF hatasi veriyordu",
+        "Auth sayfa tasarimi: 2-kolon (promo + form), Codega gradient + glassmorphism"
     ]
 }
