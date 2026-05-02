@@ -1,16 +1,16 @@
 {
-    "version": "3.2.3",
+    "version": "3.2.4",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.2.3-codega",
-    "tag": "v3.2.3-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.2.4-codega",
+    "tag": "v3.2.4-codega",
     "changelog": [
-        "v3.2.3 - Musteri-Musteri Domain Transfer Service eklendi",
-        "GUNCELLEME: ac-product-domain.php Transfer tab'i",
-        "  Yeni kart: Domain Sahipligini Baska Musteriye Transfer",
-        "  Form: hedef email + sifre",
-        "  Bekleyen transferler tablosu (CtoC list)",
-        "  Tek tek talep iptali",
-        "Operations: transfer_service, remove_transfer_service"
+        "v3.2.4 - DNS Records inline edit + Email Forwards Classic-uyumlu wrapper",
+        "YENI: cdgDomain.dnsRecordEdit / dnsRecordSave / dnsRecordCancelEdit",
+        "YENI: Global wrapper functions: editDnsRecord, saveDnsRecord, cancelDnsRecord, removeDnsRecord",
+        "YENI: Global wrapper: editEmailForward, saveEmailForward, cancelEmailForward, removeEmailForward, removeDnsSecRecord",
+        "WiseCP'nin ?bring=dns-records endpoint'inden gelen Classic format HTML",
+        "  inline onclick='editDnsRecord(k)' cagrilarini cdgDomain'a bagliyor",
+        "Operations: update_dns_record"
     ]
 }

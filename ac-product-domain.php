@@ -1290,6 +1290,66 @@ window.cdgDomain = {
             }
         });
     },
+    dnsRecordEdit: function(k){
+        var row = document.getElementById('DnsRecord_' + k);
+        if(!row) return;
+        // edit-wrap'ları aç, show-wrap'ları kapat
+        var nameEditInput = row.querySelector('.dns-record-name .edit-wrap input');
+        var valueEditInput = row.querySelector('.dns-record-value .edit-wrap input');
+        var nameShow = row.querySelector('.dns-record-name .show-wrap');
+        var valueShow = row.querySelector('.dns-record-value .show-wrap');
+        if(nameEditInput && nameShow) nameEditInput.value = nameShow.textContent.trim();
+        if(valueEditInput && valueShow) valueEditInput.value = valueShow.textContent.trim();
+
+        row.querySelectorAll('.edit-wrap, .edit-wrap-ttl, .edit-wrap-priority').forEach(function(el){ el.style.display = ''; });
+        row.querySelectorAll('.show-wrap, .show-wrap-ttl, .show-wrap-priority').forEach(function(el){ el.style.display = 'none'; });
+        var editC = row.querySelector('.edit-content');
+        var noEditC = row.querySelector('.no-edit-content');
+        if(editC) editC.style.display = '';
+        if(noEditC) noEditC.style.display = 'none';
+    },
+    dnsRecordCancelEdit: function(k){
+        var row = document.getElementById('DnsRecord_' + k);
+        if(!row) return;
+        row.querySelectorAll('.edit-wrap, .edit-wrap-ttl, .edit-wrap-priority').forEach(function(el){ el.style.display = 'none'; });
+        row.querySelectorAll('.show-wrap, .show-wrap-ttl, .show-wrap-priority').forEach(function(el){ el.style.display = ''; });
+        var editC = row.querySelector('.edit-content');
+        var noEditC = row.querySelector('.no-edit-content');
+        if(editC) editC.style.display = 'none';
+        if(noEditC) noEditC.style.display = '';
+    },
+    dnsRecordSave: function(k){
+        var row = document.getElementById('DnsRecord_' + k);
+        if(!row || typeof MioAjax !== 'function') return;
+
+        var type = (row.querySelector('input[name="type"]') || {}).value || '';
+        var identity = (row.querySelector('input[name="identity"]') || {}).value || '';
+        var name = (row.querySelector('.dns-record-name .edit-wrap input') || {}).value || '';
+        var value = (row.querySelector('.dns-record-value .edit-wrap input') || {}).value || '';
+        var ttl = (row.querySelector('.dns-record-ttl .edit-wrap-ttl select') || {}).value || '';
+        var priority = (row.querySelector('.dns-record-ttl .edit-wrap-priority input') || {}).value || '';
+
+        if(!name || !value) {
+            if(typeof alert_error === 'function') alert_error('Ad ve değer alanları zorunludur', {timer: 3000});
+            return;
+        }
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: {
+                operation: 'update_dns_record', id: this.domainId,
+                type: type, identity: identity, name: name, value: value,
+                ttl: ttl, priority: priority
+            },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Kayıt güncellendi', {timer: 1500});
+                    cdgDomain.dnsRecordsReload();
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
 
     // === CNS (Child Nameserver) ===
     openCNS: function(){
@@ -1653,6 +1713,20 @@ function cdgDocAddHandle(result) {
         alert_error(solve.message, {timer: 3000});
     }
 }
+
+// === Classic-uyumlu Global Wrapper Fonksiyonları ===
+// WiseCP'nin ?bring=dns-records / ?bring=email-forwards endpoint'leri
+// Classic temasının inline onclick="editDnsRecord(k)" kodunu döndürdüğü için
+// bu global isimlendirmeleri cdgDomain'e bağlıyoruz.
+function editDnsRecord(k){ return cdgDomain.dnsRecordEdit(k); }
+function saveDnsRecord(k, el){ return cdgDomain.dnsRecordSave(k); }
+function cancelDnsRecord(k){ return cdgDomain.dnsRecordCancelEdit(k); }
+function removeDnsRecord(k, el){ return cdgDomain.dnsRecordDelete(k); }
+function editEmailForward(k){ return cdgDomain.emailForwardEdit(k); }
+function saveEmailForward(k, el){ return cdgDomain.emailForwardSave(k); }
+function cancelEmailForward(k){ return cdgDomain.emailForwardCancelEdit(k); }
+function removeEmailForward(k, el){ return cdgDomain.emailForwardDelete(k); }
+function removeDnsSecRecord(k, el){ return cdgDomain.dnssecDelete(k); }
 
 // === Modal: ESC ile kapatma + Outside click ===
 (function(){
