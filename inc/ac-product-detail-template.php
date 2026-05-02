@@ -870,4 +870,6 @@ window.cdgPd2 = {
 if(in_array($cdg_pd_kind ?? '', ['hosting','server','software','special'])) {
     $upgrade_inc = __DIR__ . DS . 'ac-product-upgrade.php';
     if(file_exists($upgrade_inc)) include $upgrade_inc;
+    $addon_inc = __DIR__ . DS . "ac-product-addons.php";
+    if(file_exists($addon_inc)) include $addon_inc;
 }
