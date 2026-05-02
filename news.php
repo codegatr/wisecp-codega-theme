@@ -1,23 +1,7 @@
-<?php defined('CORE_FOLDER') OR exit('You can not get in here!'); ?>
-<section class="cdg-page-head">
-    <div class="cdg-container">
-        <h1>Haberler</h1>
-        <div class="breadcrumb">
-            <a href="<?php echo APP_URI; ?>/">Anasayfa</a>
-            <span class="sep">/</span>
-            <span>Haberler</span>
-        </div>
-    </div>
-</section>
-<section class="cdg-section">
-    <div class="cdg-container">
-        <div class="cdg-empty">
-            <div class="icon"><i class="bi bi-newspaper"></i></div>
-            <h3>Haberler</h3>
-            <p>CODEGA hakkinda guncel haberler.</p>
-            <a href="<?php echo (class_exists('Controllers') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" class="cdg-btn cdg-btn-primary mt-3">
-                <i class="bi bi-chat-dots"></i> Bilgi Al
-            </a>
-        </div>
-    </div>
-</section>
+<?php defined('CORE_FOLDER') OR exit('You can not get in here!');
+$cdg_list_kind = 'news';
+$cdg_list_label = 'Haberler';
+$cdg_list_icon = 'newspaper';
+$cdg_list_color = '#7c3aed';
+$cdg_list_gradient = 'linear-gradient(135deg,#7c3aed,#a78bfa)';
+include __DIR__ . DS . 'inc' . DS . 'page-list-template.php';
