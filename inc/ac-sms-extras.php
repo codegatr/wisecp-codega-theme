@@ -492,23 +492,155 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
         </div>
     </div>
 
-    <!-- TAB: PLACEHOLDER (kara liste/raporlar/kredi v3.3.2'de gelecek) -->
+    <!-- TAB: KARA LİSTE -->
     <div class="cdg-sms-pane" id="cdg-sms-pane-black">
-        <div class="cdg-sms-card" style="text-align:center;padding:40px;">
-            <i class="bi bi-shield-x" style="font-size:48px;color:#94a3b8;"></i>
-            <p style="margin:12px 0 0;color:#64748b;">Kara liste yönetimi v3.3.2'de eklenecek.</p>
+        <div class="cdg-sms-card">
+            <div class="cdg-sms-card-title"><i class="bi bi-shield-x-fill"></i> Kara Liste Yönetimi</div>
+            <p style="font-size:13px;color:#64748b;margin:0 0 14px;">
+                Bu listeye eklediğiniz numaralara <strong>SMS gönderimi yapılmaz</strong>. Her satıra bir numara girin.
+                Listeyi tamamen değiştirmek için textarea'yı düzenleyin ve <strong>Güncelle</strong> butonuna basın.
+            </p>
+            <div class="cdg-sms-field">
+                <label class="cdg-sms-label">Numaralar (<span id="cdg-sms-bl-count">0</span>)</label>
+                <textarea id="cdg-sms-blacklist" class="cdg-sms-textarea" rows="10" placeholder="5301234567&#10;5302345678" onkeyup="cdgSmsBlCount()"><?php
+                    $bl_text = '';
+                    if(isset($options['black_list']) && $options['black_list']) {
+                        $bl_text = str_replace(',', "\n", $options['black_list']);
+                    } elseif(!empty($black_list)) {
+                        $bl_text = is_array($black_list) ? implode("\n", $black_list) : $black_list;
+                    }
+                    echo htmlspecialchars($bl_text);
+                ?></textarea>
+            </div>
+            <button type="button" class="cdg-sms-btn cdg-sms-btn-danger" onclick="cdgSmsUpdateBlackList(this)">
+                <i class="bi bi-shield-check"></i> Kara Listeyi Güncelle
+            </button>
         </div>
     </div>
+
+    <!-- TAB: RAPORLAR -->
     <div class="cdg-sms-pane" id="cdg-sms-pane-reports">
-        <div class="cdg-sms-card" style="text-align:center;padding:40px;">
-            <i class="bi bi-bar-chart" style="font-size:48px;color:#94a3b8;"></i>
-            <p style="margin:12px 0 0;color:#64748b;">SMS raporları v3.3.2'de eklenecek.</p>
+        <div class="cdg-sms-card">
+            <div class="cdg-sms-card-title"><i class="bi bi-bar-chart-fill"></i> SMS Gönderim Raporları</div>
+            <?php if(!empty($reports)): ?>
+            <table class="cdg-sms-table">
+                <thead>
+                    <tr>
+                        <th>Tarih</th>
+                        <th>Mesaj</th>
+                        <th style="width:100px;">Numara</th>
+                        <th style="width:100px;">Kredi</th>
+                        <th style="width:80px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($reports as $rep):
+                    $r_id = (int)($rep['id'] ?? 0);
+                    $r_msg = $rep['message'] ?? ($rep['text'] ?? '');
+                    $r_count = $rep['count'] ?? ($rep['number_count'] ?? 0);
+                    $r_credit = $rep['credit'] ?? ($rep['used_credit'] ?? 0);
+                    $r_date = $rep['cdate'] ?? ($rep['date'] ?? '');
+                    if(class_exists('DateManager') && method_exists('DateManager','format') && class_exists('Config')) {
+                        try { $r_date = DateManager::format(Config::get("options/date-format") . " H:i", $r_date); } catch(\Throwable $e) {}
+                    }
+                ?>
+                <tr>
+                    <td style="font-size:11px;color:#64748b;"><?php echo htmlspecialchars($r_date); ?></td>
+                    <td><?php echo htmlspecialchars(mb_strimwidth(strip_tags($r_msg), 0, 60, '...')); ?></td>
+                    <td><strong><?php echo (int)$r_count; ?></strong></td>
+                    <td><strong><?php echo (int)$r_credit; ?></strong> SMS</td>
+                    <td>
+                        <button type="button" class="cdg-sms-group-action" onclick="cdgSmsReportDetail(<?php echo $r_id; ?>)" title="Detay">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php else: ?>
+            <div class="cdg-sms-empty">
+                <i class="bi bi-bar-chart"></i>
+                <div>Henüz gönderim raporu yok</div>
+            </div>
+            <?php endif; ?>
+        </div>
+
+        <!-- Rapor detay modal -->
+        <div id="cdg-sms-report-detail" style="display:none;">
+            <div class="cdg-sms-card">
+                <div class="cdg-sms-card-title"><i class="bi bi-info-circle"></i> Rapor Detayı</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
+                    <div style="background:#dcfce7;border:1px solid #86efac;border-radius:8px;padding:12px;text-align:center;">
+                        <div style="font-size:24px;font-weight:800;color:#15803d;" id="cdg-sms-rep-delivered">0</div>
+                        <div style="font-size:11px;color:#15803d;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;">Teslim Edildi</div>
+                    </div>
+                    <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px;text-align:center;">
+                        <div style="font-size:24px;font-weight:800;color:#92400e;" id="cdg-sms-rep-waiting">0</div>
+                        <div style="font-size:11px;color:#92400e;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;">Bekleyen</div>
+                    </div>
+                    <div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:12px;text-align:center;">
+                        <div style="font-size:24px;font-weight:800;color:#991b1b;" id="cdg-sms-rep-error">0</div>
+                        <div style="font-size:11px;color:#991b1b;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;">Hatalı</div>
+                    </div>
+                </div>
+                <button type="button" class="cdg-sms-btn cdg-sms-btn-outline" onclick="document.getElementById('cdg-sms-report-detail').style.display='none';">
+                    <i class="bi bi-x-lg"></i> Kapat
+                </button>
+            </div>
         </div>
     </div>
+
+    <!-- TAB: KREDİ YENİLEME -->
     <div class="cdg-sms-pane" id="cdg-sms-pane-credit">
-        <div class="cdg-sms-card" style="text-align:center;padding:40px;">
-            <i class="bi bi-coin" style="font-size:48px;color:#94a3b8;"></i>
-            <p style="margin:12px 0 0;color:#64748b;">Kredi yenileme v3.3.2'de eklenecek.</p>
+        <div class="cdg-sms-card">
+            <div class="cdg-sms-card-title"><i class="bi bi-coin"></i> SMS Kredisi Yükle</div>
+            <p style="font-size:13px;color:#64748b;margin:0 0 14px;">
+                Mevcut paketlerden birini seçerek SMS kredinizi yükleyin. Ödeme tamamlandığında kredi anında hesabınıza yansır.
+            </p>
+
+            <?php if(!empty($credit_list)): ?>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));gap:12px;margin-bottom:14px;">
+                <?php foreach($credit_list as $item):
+                    $i_id = (int)($item['id'] ?? 0);
+                    $i_title = $item['title'] ?? '';
+                    $price_amount = $item['price']['amount'] ?? 0;
+                    $price_cid = $item['price']['cid'] ?? 'TRY';
+                    $price_str = '';
+                    if(class_exists('Money') && method_exists('Money','formatter_symbol')) {
+                        try { $price_str = Money::formatter_symbol($price_amount, $price_cid, true); } catch(\Throwable $e) { $price_str = $price_amount . ' ' . $price_cid; }
+                    } else {
+                        $price_str = $price_amount . ' ' . $price_cid;
+                    }
+                ?>
+                <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:18px;text-align:center;transition:all 0.2s;cursor:pointer;" onclick="cdgSmsBuyCredit(<?php echo $i_id; ?>)" onmouseenter="this.style.borderColor='#06b6d4';this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(6,182,212,0.15)';" onmouseleave="this.style.borderColor='#e2e8f0';this.style.transform='';this.style.boxShadow='';">
+                    <div style="font-size:13px;font-weight:700;color:#475569;margin-bottom:6px;"><?php echo htmlspecialchars($i_title); ?></div>
+                    <div style="font-size:24px;font-weight:800;color:#06b6d4;margin-bottom:10px;"><?php echo htmlspecialchars($price_str); ?></div>
+                    <button type="button" class="cdg-sms-btn cdg-sms-btn-primary" style="width:100%;justify-content:center;">
+                        <i class="bi bi-cart-plus"></i> Satın Al
+                    </button>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <?php else: ?>
+            <div class="cdg-sms-empty">
+                <i class="bi bi-coin"></i>
+                <div>Kredi yükleme paketi tanımlı değil</div>
+            </div>
+            <?php endif; ?>
+        </div>
+
+        <!-- Cancel Link -->
+        <div class="cdg-sms-card">
+            <div class="cdg-sms-card-title"><i class="bi bi-link-45deg"></i> İptal Linki Ayarı</div>
+            <p style="font-size:13px;color:#64748b;margin:0 0 14px;">
+                İYS yasası gereği ticari SMS'lerin sonunda <strong>iptal/abonelikten çıkma linki</strong> bulunması gerekir.
+                Bu özelliği aktifleştirirseniz, gönderdiğiniz mesajlara otomatik olarak iptal linki eklenir.
+            </p>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                <input type="checkbox" id="cdg-sms-cancellink" onchange="cdgSmsToggleCancelLink(this)" <?php echo (!empty($cancel_link_text) ? 'checked' : ''); ?>>
+                <span style="font-size:13px;font-weight:700;color:#0f172a;">Otomatik iptal linki ekle</span>
+            </label>
         </div>
     </div>
 
@@ -728,7 +860,106 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
         });
     };
 
-    // İlk hesaplama
+    // === KARA LİSTE ===
+    window.cdgSmsBlCount = function() {
+        var ta = document.getElementById('cdg-sms-blacklist');
+        if(!ta) return;
+        var lines = ta.value.split('\n').filter(function(l){ return l.trim().length > 0; });
+        var el = document.getElementById('cdg-sms-bl-count');
+        if(el) el.textContent = lines.length;
+    };
+
+    window.cdgSmsUpdateBlackList = function(btn) {
+        var ta = document.getElementById('cdg-sms-blacklist');
+        if(!ta) return;
+        var numbers = ta.value;
+        if(typeof MioAjax !== 'function') return;
+        if(!confirm('Kara listeyi güncellemek istediğinize emin misiniz? Mevcut liste tamamen değiştirilecektir.')) return;
+
+        btn.disabled = true;
+        var orig = btn.innerHTML;
+        btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Güncelleniyor...';
+
+        MioAjax({
+            url: cdgSmsUrl, type: 'post',
+            data: { operation: 'update_black_list', id: cdgSmsPid, numbers: numbers },
+            result: function(r) {
+                btn.disabled = false; btn.innerHTML = orig;
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Kara liste güncellendi', {timer: 2000});
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 4000});
+                }
+            }
+        });
+    };
+
+    // === RAPORLAR ===
+    window.cdgSmsReportDetail = function(rid) {
+        if(typeof MioAjax !== 'function') return;
+        var detailEl = document.getElementById('cdg-sms-report-detail');
+        detailEl.style.display = 'block';
+        detailEl.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+
+        document.getElementById('cdg-sms-rep-delivered').textContent = '...';
+        document.getElementById('cdg-sms-rep-waiting').textContent = '...';
+        document.getElementById('cdg-sms-rep-error').textContent = '...';
+
+        MioAjax({
+            url: cdgSmsUrl, type: 'post',
+            data: { operation: 'get_sms_report', id: rid },
+            result: function(r) {
+                if(r && r.status === 'successful') {
+                    document.getElementById('cdg-sms-rep-delivered').textContent = r.conducted_count || 0;
+                    document.getElementById('cdg-sms-rep-waiting').textContent = r.waiting_count || 0;
+                    document.getElementById('cdg-sms-rep-error').textContent = r.erroneous_count || 0;
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 4000});
+                }
+            }
+        });
+    };
+
+    // === KREDİ YÜKLEME ===
+    window.cdgSmsBuyCredit = function(creditPackId) {
+        if(typeof MioAjax !== 'function') return;
+        if(!confirm('Bu kredi paketini satın almak istediğinize emin misiniz? Ödeme sayfasına yönlendirileceksiniz.')) return;
+
+        MioAjax({
+            url: cdgSmsUrl, type: 'post',
+            data: { operation: 'sms_credit_renewal', pid: creditPackId },
+            result: function(r) {
+                if(r && r.status === 'successful' && r.redirect) {
+                    window.location.href = r.redirect;
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 4000});
+                }
+            }
+        });
+    };
+
+    // === CANCEL LINK TOGGLE ===
+    window.cdgSmsToggleCancelLink = function(checkbox) {
+        if(typeof MioAjax !== 'function') return;
+        var stat = checkbox.checked ? 'on' : 'off';
+
+        MioAjax({
+            url: cdgSmsUrl, type: 'post',
+            data: { operation: 'update_cancel_link', id: cdgSmsPid, status: stat },
+            result: function(r) {
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || (stat === 'on' ? 'İptal linki aktif edildi' : 'İptal linki devre dışı bırakıldı'), {timer: 2000});
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 4000});
+                    // Geri al
+                    checkbox.checked = !checkbox.checked;
+                }
+            }
+        });
+    };
+
+    // İlk hesaplamalar
     cdgSmsCount();
+    cdgSmsBlCount();
 })();
 </script>
