@@ -156,3 +156,8 @@ $f = function($key, $default = '') use ($info) {
         </div>
     </form>
 </div>
+
+<?php
+// === Saklı Kart Yönetimi ===
+$stored_cards_inc = __DIR__ . DS . 'inc' . DS . 'ac-stored-cards.php';
+if(file_exists($stored_cards_inc)) include $stored_cards_inc;
