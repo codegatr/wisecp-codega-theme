@@ -84,6 +84,7 @@ $f = function($key, $default = '') use ($info) {
     <?php endif; ?>
 
     <form action="" method="post" autocomplete="off">
+        <input type="hidden" name="operation" value="update_settings">
         <?php if(class_exists('Validation') && method_exists('Validation', 'get_csrf_token')): ?>
             <input type="hidden" name="token" value="<?php echo Validation::get_csrf_token('account', false); ?>">
         <?php endif; ?>

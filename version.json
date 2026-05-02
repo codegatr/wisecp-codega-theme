@@ -1,23 +1,20 @@
 {
-    "version": "3.3.5",
+    "version": "3.3.6",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.3.5-codega",
-    "tag": "v3.3.5-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.3.6-codega",
+    "tag": "v3.3.6-codega",
     "changelog": [
-        "v3.3.5 - KVKK/GDPR + SMS Origin Sil",
-        "YENI: inc/ac-gdpr.php (220 satir)",
-        "  KVKK/GDPR talep modulu ac-info.php sonuna eklendi",
-        "  KVKK 11. Madde aciklama bilgi kutusu (yesil)",
-        "  3 action: remove (hesap silme), anonymize (anonimlestirme), cancel (iptal)",
-        "  Bekleyen talep gosterimi (sari uyari + operator notu + iptal butonu)",
-        "  Iki kart: Hesap Silme (kirmizi), Anonimlestirme (sari)",
-        "  Kapsamli onay dialogu (silme icin uyarilar)",
-        "  CSRF token destegi",
-        "GUNCELLEME: inc/ac-sms-extras.php",
-        "  Origin tablosuna 'Sil' butonu eklendi (kirmizi cop ikonu)",
-        "  cdgSmsDeleteOrigin JS fonksiyonu",
-        "GUNCELLEME: ac-info.php sonunda KVKK include",
-        "Operations: gdpr_request (3 action), delete_origin"
+        "v3.3.6 - Hesap Ayarlari + Bakiye Yukleme",
+        "FIX: ac-info.php form'unda 'operation' hidden field eksikti",
+        "  - <input type='hidden' name='operation' value='update_settings'> eklendi",
+        "  - WiseCP backend artik form submit'i dogru tanir ve hesap bilgileri guncellenir",
+        "YENI: ac-balance.php sonuna Bakiye Yukle karti eklendi",
+        "  - Yesil gradient kart (Codega tasarimi)",
+        "  - Min/max kontrol (Config'den)",
+        "  - Hizli secim chip'leri (50/100/250/500/1000)",
+        "  - Onay dialogu + redirect ile odeme sayfasina yonlendirme",
+        "  - cdgBalanceBuy JS handler",
+        "Operations: update_settings, buy_credit"
     ]
 }

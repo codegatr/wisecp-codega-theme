@@ -157,3 +157,102 @@ $transactions = isset($list) ? $list : (isset($transactions) ? $transactions : [
         </div>
     <?php endif; ?>
 </div>
+
+<?php
+// === Bakiye Yükleme Kartı ===
+$controller_url_bal = isset($links['controller']) ? $links['controller'] : '';
+$min_buy = (class_exists('Config') && method_exists('Config','get'))
+    ? @Config::get('credit_settings/min_purchase')
+    : 0;
+$max_buy = (class_exists('Config') && method_exists('Config','get'))
+    ? @Config::get('credit_settings/max_purchase')
+    : 0;
+$user_curr = isset($currency) && $currency ? $currency : 'TRY';
+?>
+
+<div class="cdg-balance-buy-card" style="margin-top:24px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:22px;box-shadow:0 4px 12px rgba(15,23,42,0.04);font-family:'Plus Jakarta Sans',sans-serif;box-sizing:border-box;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;">
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#10b981,#34d399);color:#fff;display:grid;place-items:center;font-size:18px;">
+            <i class="bi bi-cash-coin"></i>
+        </div>
+        <div>
+            <h3 style="font-size:15px;font-weight:800;margin:0;color:#0f172a;">Bakiye Yukle</h3>
+            <div style="font-size:12px;color:#64748b;margin-top:2px;">Hesabiniza bakiye yukleyerek hizli odeme yapabilirsiniz</div>
+        </div>
+    </div>
+
+    <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:14px 16px;margin-bottom:16px;display:flex;gap:10px;">
+        <i class="bi bi-info-circle-fill" style="color:#15803d;font-size:18px;flex-shrink:0;"></i>
+        <p style="margin:0;font-size:13px;color:#15803d;line-height:1.5;">
+            Bakiyeniz hesabinizda saklanir ve istediginiz zaman fatura odemelerinde kullanilabilir.
+            Yukleme islemi anindadir.
+        </p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;">
+        <div>
+            <label style="display:block;font-size:11px;font-weight:700;color:#475569;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px;">
+                Yuklenecek Tutar (<?php echo htmlspecialchars($user_curr); ?>)
+                <?php if($min_buy || $max_buy): ?>
+                <span style="font-weight:400;color:#94a3b8;">
+                    <?php if($min_buy): ?>· Min: <?php echo $min_buy; ?><?php endif; ?>
+                    <?php if($max_buy): ?>· Max: <?php echo $max_buy; ?><?php endif; ?>
+                </span>
+                <?php endif; ?>
+            </label>
+            <input type="number" id="cdg-bal-amount" min="<?php echo $min_buy ?: 1; ?>" <?php if($max_buy) echo 'max="' . $max_buy . '"'; ?> step="0.01"
+                style="width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:inherit;"
+                placeholder="100">
+        </div>
+        <button type="button" onclick="cdgBalanceBuy(this)" style="padding:11px 22px;background:linear-gradient(135deg,#10b981,#34d399);color:#fff;border:0;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 10px rgba(16,185,129,0.22);">
+            <i class="bi bi-cart-plus"></i> Sepete Ekle
+        </button>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+        <button type="button" onclick="document.getElementById('cdg-bal-amount').value=50;" style="padding:6px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:99px;font-size:12px;color:#475569;cursor:pointer;font-family:inherit;">50</button>
+        <button type="button" onclick="document.getElementById('cdg-bal-amount').value=100;" style="padding:6px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:99px;font-size:12px;color:#475569;cursor:pointer;font-family:inherit;">100</button>
+        <button type="button" onclick="document.getElementById('cdg-bal-amount').value=250;" style="padding:6px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:99px;font-size:12px;color:#475569;cursor:pointer;font-family:inherit;">250</button>
+        <button type="button" onclick="document.getElementById('cdg-bal-amount').value=500;" style="padding:6px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:99px;font-size:12px;color:#475569;cursor:pointer;font-family:inherit;">500</button>
+        <button type="button" onclick="document.getElementById('cdg-bal-amount').value=1000;" style="padding:6px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:99px;font-size:12px;color:#475569;cursor:pointer;font-family:inherit;">1000</button>
+    </div>
+</div>
+
+<script>
+(function(){
+    var cdgBalUrl = '<?php echo htmlspecialchars($controller_url_bal, ENT_QUOTES); ?>';
+    window.cdgBalanceBuy = function(btn) {
+        var amt = document.getElementById('cdg-bal-amount').value;
+        amt = parseFloat(amt);
+        if(!amt || amt <= 0) {
+            if(typeof alert_error === 'function') alert_error('Gecerli bir tutar girin', {timer: 3000});
+            return;
+        }
+        if(typeof MioAjax !== 'function') return;
+        if(!confirm(amt + ' <?php echo htmlspecialchars($user_curr); ?> bakiye yuklemek icin sepete eklenecek. Devam edilsin mi?')) return;
+
+        btn.disabled = true;
+        var orig = btn.innerHTML;
+        btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Isleniyor...';
+
+        MioAjax({
+            url: cdgBalUrl, type: 'post',
+            data: { operation: 'buy_credit', amount: amt },
+            result: function(r) {
+                btn.disabled = false; btn.innerHTML = orig;
+                if(r && r.status === 'successful') {
+                    if(r.redirect) {
+                        if(typeof alert_success === 'function') alert_success('Odeme sayfasina yonlendiriliyorsunuz...', {timer: 1500});
+                        setTimeout(function(){ window.location.href = r.redirect; }, 1200);
+                    } else {
+                        if(typeof alert_success === 'function') alert_success(r.message || 'Bakiye yuklendi', {timer: 2000});
+                        setTimeout(function(){ window.location.reload(); }, 1500);
+                    }
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 4000});
+                }
+            }
+        });
+    };
+})();
+</script>
