@@ -864,3 +864,10 @@ window.cdgPd2 = {
     }
 };
 </script>
+
+<?php
+// === Paket Yükseltme (hosting/server/software/special için ortak) ===
+if(in_array($cdg_pd_kind ?? '', ['hosting','server','software','special'])) {
+    $upgrade_inc = __DIR__ . DS . 'ac-product-upgrade.php';
+    if(file_exists($upgrade_inc)) include $upgrade_inc;
+}

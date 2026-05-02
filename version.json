@@ -1,23 +1,20 @@
 {
-    "version": "3.2.8",
+    "version": "3.2.9",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.2.8-codega",
-    "tag": "v3.2.8-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.2.9-codega",
+    "tag": "v3.2.9-codega",
     "changelog": [
-        "v3.2.8 - Hosting Email Hesaplari Yonetim Modali (5 op)",
-        "YENI: inc/ac-hosting-emails.php (539 satir)",
-        "  2 tab'li modal: Hesaplar + Yonlendirmeler",
-        "  Hesaplar tab: yeni hesap olustur (username + domain + sifre + kota + sinirsiz toggle)",
-        "  Hesap listesi: sifre degistir + sil",
-        "  Yonlendirmeler tab: yeni yonlendirme + liste + sil",
-        "  Otomatik 12-char rastgele sifre olusturma",
-        "  ESC + outside click ile kapatma, badge'li tab counter",
-        "GUNCELLEME: inc/ac-hosting-extras.php",
-        "  Yeni 'E-Posta Hesaplari' karti (mavi gradient)",
-        "  $can_manage_email flag eklendi (manage-email-account destegi)",
-        "GUNCELLEME: ac-product-hosting.php",
-        "  ac-hosting-emails.php include edildi",
-        "Operations: hosting_add_new_email, hosting_update_email, hosting_delete_email, hosting_add_new_email_forward, hosting_delete_email_forward"
+        "v3.2.9 - Paket Yukseltme modulu (hosting/server/software/special icin ortak)",
+        "YENI: inc/ac-product-upgrade.php (310 satir)",
+        "  Generic upgrade card grid (responsive 280px+)",
+        "  Her paket icin: ad + aciklama + ozellikler (ilk 5) + period dropdown + buton",
+        "  Money::formatter_symbol + View::period ile WiseCP fiyat/donem formatlari",
+        "  Confirmation modal: paket adi + odenecek tutar + bilgi notu",
+        "  Sari/turuncu gradient (yukseltme renk kodu)",
+        "GUNCELLEME: inc/ac-product-detail-template.php",
+        "  Template sonunda upgrade include (hosting/server/software/special)",
+        "Operation: set_upgrade_product (product_id + pirce_id - WiseCP API typo korundu)",
+        "WiseCP runtime: $upgrade array (yukseltilebilir paket listesi)"
     ]
 }
