@@ -554,6 +554,168 @@ foreach($options as $opt_k => $opt_v) {
                 </div>
             </div>
         </div>
+
+        <?php
+        // === HOSTING PAKET DETAYLARI (kota bilgileri) ===
+        if(in_array($cdg_pd_kind, ['hosting', 'server'])):
+            $disk_limit       = isset($options['disk_limit']) ? $options['disk_limit'] : null;
+            $bandwidth_limit  = isset($options['bandwidth_limit']) ? $options['bandwidth_limit'] : null;
+            $email_limit      = isset($options['email_limit']) ? $options['email_limit'] : null;
+            $database_limit   = isset($options['database_limit']) ? $options['database_limit'] : null;
+            $addons_limit     = isset($options['addons_limit']) ? $options['addons_limit'] : null;
+            $subdomain_limit  = isset($options['subdomain_limit']) ? $options['subdomain_limit'] : null;
+            $ftp_limit        = isset($options['ftp_limit']) ? $options['ftp_limit'] : null;
+            $park_limit       = isset($options['park_limit']) ? $options['park_limit'] : null;
+            $cpu_limit        = isset($options['cpu_limit']) ? $options['cpu_limit'] : null;
+            $ram_limit        = isset($options['ram_limit']) ? $options['ram_limit'] : null;
+            $max_email_per_hour = isset($options['max_email_per_hour']) ? $options['max_email_per_hour'] : null;
+            $panel_type       = isset($options['panel_type']) ? $options['panel_type'] : null;
+            $panel_link       = isset($options['panel_link']) ? $options['panel_link'] : null;
+            $hosting_dns      = isset($options['dns']) && is_array($options['dns']) ? $options['dns'] : [];
+            $ftp_info         = isset($options['ftp_info']) && is_array($options['ftp_info']) ? $options['ftp_info'] : [];
+            $creation_info    = isset($options['creation_info']) && is_array($options['creation_info']) ? $options['creation_info'] : [];
+
+            $has_quota = $disk_limit !== null || $bandwidth_limit !== null || $email_limit !== null || $database_limit !== null;
+            $has_panel = $panel_type || $panel_link;
+        ?>
+
+        <?php if($has_quota): ?>
+        <div class="cdg-pd2-card" style="margin-top:18px;">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-hdd-stack"></i> Paket Kotalari</h3>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
+                    <?php
+                    $quotas = [
+                        'disk_limit'      => ['label' => 'Disk', 'icon' => 'hdd-fill', 'unit' => 'MB', 'color' => '#3b82f6'],
+                        'bandwidth_limit' => ['label' => 'Bandwidth', 'icon' => 'arrow-down-up', 'unit' => 'MB', 'color' => '#7c3aed'],
+                        'email_limit'     => ['label' => 'E-posta Hesabi', 'icon' => 'envelope-fill', 'unit' => 'adet', 'color' => '#f59e0b'],
+                        'database_limit'  => ['label' => 'Veritabani', 'icon' => 'database-fill', 'unit' => 'adet', 'color' => '#10b981'],
+                        'addons_limit'    => ['label' => 'Eklenti Domain', 'icon' => 'plus-square-fill', 'unit' => 'adet', 'color' => '#06b6d4'],
+                        'subdomain_limit' => ['label' => 'Subdomain', 'icon' => 'diagram-3-fill', 'unit' => 'adet', 'color' => '#ec4899'],
+                        'ftp_limit'       => ['label' => 'FTP Hesabi', 'icon' => 'cloud-arrow-up-fill', 'unit' => 'adet', 'color' => '#64748b'],
+                        'park_limit'      => ['label' => 'Park Domain', 'icon' => 'p-square-fill', 'unit' => 'adet', 'color' => '#8b5cf6'],
+                    ];
+                    foreach($quotas as $key => $info):
+                        $val = $$key;
+                        if($val === null) continue;
+                        $is_unlimited = ($val === 0 || $val === '0' || strtolower((string)$val) === 'unlimited' || strtolower((string)$val) === 'sinirsiz');
+                        $display = $is_unlimited ? 'Sinirsiz' : (is_numeric($val) ? number_format((int)$val, 0, ',', '.') : $val);
+                    ?>
+                    <div style="background:linear-gradient(135deg,<?php echo $info['color']; ?>15,<?php echo $info['color']; ?>05);border:1px solid <?php echo $info['color']; ?>30;border-radius:10px;padding:14px;">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;color:<?php echo $info['color']; ?>;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">
+                            <i class="bi bi-<?php echo $info['icon']; ?>"></i>
+                            <?php echo $info['label']; ?>
+                        </div>
+                        <div style="font-size:18px;font-weight:800;color:#0f172a;">
+                            <?php echo htmlspecialchars($display); ?>
+                            <?php if(!$is_unlimited): ?>
+                            <span style="font-size:11px;font-weight:600;color:#64748b;"><?php echo $info['unit']; ?></span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+
+                    <?php if($cpu_limit): ?>
+                    <div style="background:linear-gradient(135deg,#ef444415,#ef444405);border:1px solid #ef444430;border-radius:10px;padding:14px;">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;color:#ef4444;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">
+                            <i class="bi bi-cpu-fill"></i> CPU
+                        </div>
+                        <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo htmlspecialchars($cpu_limit); ?></div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if($ram_limit): ?>
+                    <div style="background:linear-gradient(135deg,#8b5cf615,#8b5cf605);border:1px solid #8b5cf630;border-radius:10px;padding:14px;">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;color:#8b5cf6;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">
+                            <i class="bi bi-memory"></i> RAM
+                        </div>
+                        <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo htmlspecialchars($ram_limit); ?></div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if($max_email_per_hour): ?>
+                    <div style="background:linear-gradient(135deg,#f59e0b15,#f59e0b05);border:1px solid #f59e0b30;border-radius:10px;padding:14px;">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;color:#f59e0b;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">
+                            <i class="bi bi-send-fill"></i> Saatlik E-posta
+                        </div>
+                        <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo (int)$max_email_per_hour; ?></div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <?php if(!empty($hosting_dns)): ?>
+        <div class="cdg-pd2-card" style="margin-top:18px;">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-server"></i> Sunucu DNS Bilgileri</h3>
+                <span style="font-size:11px;color:#64748b;">Domaininizi bu sunucuya yonlendirmek icin bu nameserver'lari kullanin</span>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <ul class="cdg-pd2-info">
+                    <?php foreach($hosting_dns as $idx => $ns):
+                        if(!$ns) continue;
+                    ?>
+                    <li style="font-family:'Courier New',monospace;">
+                        <span class="cdg-pd2-info-label">NS<?php echo ($idx + 1); ?></span>
+                        <span class="cdg-pd2-info-value" style="font-weight:700;color:#1e40af;letter-spacing:0.3px;"><?php echo htmlspecialchars($ns); ?></span>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <?php if(!empty($ftp_info) || $panel_type): ?>
+        <div class="cdg-pd2-card" style="margin-top:18px;">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-info-square"></i> Teknik Bilgiler</h3>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <ul class="cdg-pd2-info">
+                    <?php if($panel_type): ?>
+                    <li>
+                        <span class="cdg-pd2-info-label">Kontrol Paneli</span>
+                        <span class="cdg-pd2-info-value">
+                            <span style="display:inline-block;padding:3px 10px;background:#eff6ff;color:#1e40af;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;">
+                                <?php echo htmlspecialchars($panel_type); ?>
+                            </span>
+                        </span>
+                    </li>
+                    <?php endif; ?>
+                    <?php if(!empty($ftp_info['host'])): ?>
+                    <li>
+                        <span class="cdg-pd2-info-label">FTP Sunucu</span>
+                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:600;"><?php echo htmlspecialchars($ftp_info['host']); ?></span>
+                    </li>
+                    <?php endif; ?>
+                    <?php if(!empty($ftp_info['port'])): ?>
+                    <li>
+                        <span class="cdg-pd2-info-label">FTP Port</span>
+                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:600;"><?php echo (int)$ftp_info['port']; ?></span>
+                    </li>
+                    <?php endif; ?>
+                    <?php if(!empty($ftp_info['username'])): ?>
+                    <li>
+                        <span class="cdg-pd2-info-label">FTP Kullanici</span>
+                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:600;"><?php echo htmlspecialchars($ftp_info['username']); ?></span>
+                    </li>
+                    <?php endif; ?>
+                    <?php if(!empty($creation_info['date'])): ?>
+                    <li>
+                        <span class="cdg-pd2-info-label">Olusturulma</span>
+                        <span class="cdg-pd2-info-value"><?php echo htmlspecialchars($creation_info['date']); ?></span>
+                    </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <?php endif; // hosting/server kotalari ?>
     </div>
 
     <!-- TAB: ADDONS -->

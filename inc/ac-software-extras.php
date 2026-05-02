@@ -3,8 +3,8 @@
  * Codega - Software Lisans Yönetimi
  * Operations: change_software_domain, reissue_software
  *
- * WiseCP runtime: $proanse, $links, $change_domain_limit, $change_domain_used,
- *                 $change_domain_has_expired, $current_domain
+ * WiseCP runtime: $proanse, $options, $links, $change_domain_limit, $change_domain_used,
+ *                 $change_domain_has_expired, $current_domain, $license_parameters
  */
 
 $d_status = strtolower($proanse['status'] ?? 'unknown');
@@ -18,8 +18,114 @@ $cd_expired = !empty($change_domain_has_expired);
 $can_change_domain = ($is_active && !$cd_expired);
 $current_domain_str = $current_domain ?? ($proanse['domain'] ?? '');
 
+// === LİSANS BİLGİLERİ (WiseCP runtime: $options) ===
+$sw_options = isset($options) && is_array($options) ? $options : ($proanse['options'] ?? []);
+$license_code = $sw_options['code'] ?? '';
+$license_ip = $sw_options['ip'] ?? '';
+$license_params = isset($license_parameters) && is_array($license_parameters) ? $license_parameters : [];
+$license_params_values = $sw_options['license_parameters'] ?? ($sw_options['parameters'] ?? []);
+
 if(!$is_active) return; // Aktif değilse hiç gösterme
 ?>
+
+<!-- LİSANS BİLGİLERİ KARTI -->
+<div style="margin-top:20px;font-family:'Plus Jakarta Sans',sans-serif;">
+    <div class="cdg-pd2-card">
+        <div class="cdg-pd2-card-head">
+            <h3><i class="bi bi-key-fill"></i> Lisans Bilgileri</h3>
+        </div>
+        <div class="cdg-pd2-card-body">
+            <ul class="cdg-pd2-info">
+                <?php if($current_domain_str): ?>
+                <li>
+                    <span class="cdg-pd2-info-label">Lisans Domaini</span>
+                    <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#1e40af;">
+                        <?php echo htmlspecialchars($current_domain_str); ?>
+                    </span>
+                </li>
+                <?php endif; ?>
+
+                <?php if($license_code): ?>
+                <li>
+                    <span class="cdg-pd2-info-label">Lisans Kodu</span>
+                    <span class="cdg-pd2-info-value">
+                        <span style="display:inline-flex;align-items:center;gap:6px;">
+                            <code id="cdg-sw-license-code" style="background:#f1f5f9;padding:4px 10px;border-radius:6px;font-size:12px;color:#be185d;font-weight:600;letter-spacing:0.5px;">
+                                <?php echo htmlspecialchars($license_code); ?>
+                            </code>
+                            <button type="button" onclick="cdgSwCopy('cdg-sw-license-code', this)" class="cdg-pd2-btn cdg-pd2-btn-outline" style="padding:4px 8px;font-size:11px;" title="Kopyala">
+                                <i class="bi bi-clipboard"></i>
+                            </button>
+                        </span>
+                    </span>
+                </li>
+                <?php endif; ?>
+
+                <?php if($license_ip): ?>
+                <li>
+                    <span class="cdg-pd2-info-label">Lisans IP</span>
+                    <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:600;">
+                        <?php echo htmlspecialchars($license_ip); ?>
+                    </span>
+                </li>
+                <?php endif; ?>
+
+                <?php
+                // Özel lisans parametreleri
+                if(!empty($license_params) && is_array($license_params)):
+                    foreach($license_params as $param):
+                        $p_key = is_array($param) ? ($param['key'] ?? ($param['name'] ?? '')) : '';
+                        $p_label = is_array($param) ? ($param['title'] ?? ($param['label'] ?? $p_key)) : '';
+                        $p_value = '';
+                        if(is_array($license_params_values) && $p_key && isset($license_params_values[$p_key])) {
+                            $p_value = $license_params_values[$p_key];
+                        } elseif(is_array($param) && isset($param['value'])) {
+                            $p_value = $param['value'];
+                        }
+                        if(!$p_label || !$p_value) continue;
+                ?>
+                <li>
+                    <span class="cdg-pd2-info-label"><?php echo htmlspecialchars($p_label); ?></span>
+                    <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:600;">
+                        <?php echo htmlspecialchars($p_value); ?>
+                    </span>
+                </li>
+                <?php endforeach; endif; ?>
+            </ul>
+
+            <?php if(!$license_code && !$license_ip): ?>
+            <div style="text-align:center;padding:24px;color:#94a3b8;">
+                <i class="bi bi-key" style="font-size:36px;display:block;margin-bottom:8px;opacity:0.5;"></i>
+                <p style="font-size:13px;margin:0;">Lisans bilgileriniz henuz olusturulmamis veya gosterilemiyor.</p>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<script>
+window.cdgSwCopy = function(elemId, btn) {
+    var el = document.getElementById(elemId);
+    if(!el) return;
+    var text = el.textContent.trim();
+    if(navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function(){
+            var orig = btn.innerHTML;
+            btn.innerHTML = '<i class="bi bi-check2"></i>';
+            btn.style.color = '#10b981';
+            setTimeout(function(){ btn.innerHTML = orig; btn.style.color = ''; }, 1500);
+        });
+    } else {
+        // Fallback
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); btn.innerHTML = '<i class="bi bi-check2"></i>'; } catch(e){}
+        document.body.removeChild(ta);
+        setTimeout(function(){ btn.innerHTML = '<i class="bi bi-clipboard"></i>'; }, 1500);
+    }
+};
+</script>
 
 <style>
 .cdg-sw-extras {

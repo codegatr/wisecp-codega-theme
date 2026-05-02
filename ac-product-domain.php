@@ -130,16 +130,27 @@ function cdg_csrf($action) {
     return '';
 }
 
-// Mevcut NS kayıtları
+// Mevcut NS kayıtları (WiseCP runtime: $options['ns1'], $options['ns2'], $options['ns3'], $options['ns4'])
 $current_ns = [];
-if(isset($options['nameservers']) && is_array($options['nameservers'])) {
-    $current_ns = $options['nameservers'];
-} elseif(isset($options['ns']) && is_array($options['ns'])) {
-    $current_ns = $options['ns'];
+for($i = 1; $i <= 4; $i++) {
+    $key = 'ns' . $i;
+    if(isset($options[$key]) && $options[$key]) {
+        $current_ns[$i-1] = $options[$key];
+    } else {
+        $current_ns[$i-1] = '';
+    }
 }
-// 4 NS slot
-for($i = 0; $i < 4; $i++) {
-    if(!isset($current_ns[$i])) $current_ns[$i] = '';
+// Geri uyumluluk: bazı module'lar 'nameservers' veya 'ns' array'ı kullanır
+if(empty(array_filter($current_ns))) {
+    if(isset($options['nameservers']) && is_array($options['nameservers'])) {
+        foreach(array_values($options['nameservers']) as $i => $ns) {
+            if($i < 4) $current_ns[$i] = $ns;
+        }
+    } elseif(isset($options['ns']) && is_array($options['ns'])) {
+        foreach(array_values($options['ns']) as $i => $ns) {
+            if($i < 4) $current_ns[$i] = $ns;
+        }
+    }
 }
 
 // Whois privacy
@@ -724,7 +735,7 @@ $transfer_lock = !empty($options['transferlock']);
                     <?php for($i = 1; $i <= 4; $i++): $val = $current_ns[$i-1] ?? ''; ?>
                     <div class="cdg-pdm-field">
                         <label class="cdg-pdm-label">Nameserver <?php echo $i; ?> <?php if($i <= 2): ?><span style="color:#ef4444;">*</span><?php endif; ?></label>
-                        <input type="text" name="ns<?php echo $i; ?>" class="cdg-pdm-input" value="<?php echo htmlspecialchars($val); ?>" placeholder="ns<?php echo $i; ?>.example.com">
+                        <input type="text" name="dns[]" class="cdg-pdm-input" value="<?php echo htmlspecialchars($val); ?>" placeholder="ns<?php echo $i; ?>.example.com">
                     </div>
                     <?php endfor; ?>
 
