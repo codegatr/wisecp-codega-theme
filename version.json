@@ -1,14 +1,13 @@
 {
-    "version": "3.1.9",
+    "version": "3.2.0",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.1.9-codega",
-    "tag": "v3.1.9-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.2.0-codega",
+    "tag": "v3.2.0-codega",
     "changelog": [
-        "v3.1.9 - Cookie popup sag-alt kompakt toast'a alindi",
-        "FIX: Cookie popup artik sag-altta kucuk toast (max 340px)",
-        "FIX: Padding/font/icon hepsi kompakt hale getirildi (12-14px font)",
-        "FIX: Yesil gradient buton -> Sade mavi (daha az dikkat cekici)",
-        "FIX: Sayfa ortasini kapatmiyor, sag-alta sabit"
+        "v3.2.0 - Cookie popup tamamen KALDIRILDI",
+        "REMOVE: constant-js.php - ckplcy_cookie_popup_html bos string atandi",
+        "REMOVE: constant-css.php - #mio-cookie-popup CSS bloku silindi",
+        "Cookie popup artik temada gozukmeyecek (WiseCP cookie aktif olsa bile)"
     ]
 }
