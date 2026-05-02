@@ -45,9 +45,7 @@ if(!function_exists('cdg_link')) {
             'balance-page'            => 'ac-ps-balance',
             'info'                    => 'ac-ps-info',
             'ac-info'                 => 'ac-ps-info',
-            'products-hosting'        => 'products-hosting',
-            'hosting-products'        => 'products-hosting',
-            'public-hosting'          => 'products-hosting',
+            'public-hosting'          => 'hosting-products',
             'products'                => 'ac-ps-products',
             'all-orders'              => 'ac-ps-products',
             'products-t'              => 'ac-ps-products-t',
@@ -104,7 +102,7 @@ if(!function_exists('cdg_link')) {
 
             <ul class="cdg-nav">
                 <li><a href="<?php echo $home_link; ?>" class="<?php echo cdg_active(['index',''], $current_page); ?>">Ana Sayfa</a></li>
-                <li><a href="<?php echo cdg_link('products-hosting'); ?>" class="<?php echo cdg_active(['products','hosting-products'], $current_page); ?>">Hosting</a></li>
+                <li><a href="<?php echo cdg_link('hosting-products'); ?>" class="<?php echo cdg_active(['products','hosting-products'], $current_page); ?>">Hosting</a></li>
                 <li><a href="<?php echo cdg_link('domain'); ?>"                class="<?php echo cdg_active('domain', $current_page); ?>">Domain</a></li>
                 <li><a href="<?php echo cdg_link('softwares'); ?>"             class="<?php echo cdg_active(['softwares','special-products'], $current_page); ?>">Yazılım</a></li>
                 <li><a href="<?php echo cdg_link('knowledgebase'); ?>"         class="<?php echo cdg_active(['knowledgebase','articles','news'], $current_page); ?>">Bilgi</a></li>

@@ -94,7 +94,7 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
             <div>
                 <h4>Hizmetler</h4>
                 <ul>
-                    <li><a href="<?php echo cdg_link('products', ['hosting']); ?>">Hosting</a></li>
+                    <li><a href="<?php echo cdg_link('hosting-products'); ?>">Hosting</a></li>
                     <li><a href="<?php echo cdg_link('domain'); ?>">Domain</a></li>
                 </ul>
             </div>
