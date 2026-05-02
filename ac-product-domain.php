@@ -844,6 +844,26 @@ $transfer_lock = !empty($options['transferlock']);
             <div>Bu domain için yönlendirme özelliği mevcut değil. Domain modülünüz bu işlemi desteklemiyor olabilir.</div>
         </div>
         <?php endif; ?>
+
+        <?php if($allow_forwarding_eml): ?>
+        <!-- E-Posta Yönlendirme Kartı -->
+        <div class="cdg-pdm-card" style="margin-top:18px;">
+            <div class="cdg-pdm-card-head">
+                <h3><i class="bi bi-envelope-arrow-up"></i> E-Posta Yönlendirme</h3>
+            </div>
+            <div class="cdg-pdm-card-body">
+                <div class="cdg-pdm-alert cdg-pdm-alert-info">
+                    <i class="bi bi-info-circle"></i>
+                    <div>Domain'inize gelen e-postaları (örn. <strong>info@<?php echo htmlspecialchars($d_name); ?></strong>) başka bir adrese yönlendirebilirsiniz.</div>
+                </div>
+                <div style="text-align:center;padding:8px 0;">
+                    <button type="button" class="cdg-pdm-btn cdg-pdm-btn-primary" onclick="cdgDomain.openEmailForwards()">
+                        <i class="bi bi-list-task"></i> E-Posta Yönlendirmelerini Yönet
+                    </button>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
 
     <!-- TAB: GUVENLIK -->
@@ -1267,6 +1287,134 @@ window.cdgDomain = {
                 }
             }
         });
+    },
+
+    // === EMAIL FORWARDS ===
+    openEmailForwards: function(){
+        this.openModal('cdg-email-forwards-modal');
+        this.emailForwardsReload();
+    },
+    emailForwardsReload: function(){
+        var tbody = document.getElementById('getEmailForwards_tbody');
+        if(!tbody) return;
+        tbody.innerHTML = '<tr><td colspan="4"><div class="cdg-dm-loading"><i class="bi bi-arrow-clockwise"></i>Yönlendirmeler yükleniyor...</div></td></tr>';
+        if(window.jQuery) {
+            jQuery.get(this.controllerUrl + '?bring=email-forwards&id=' + this.domainId, function(html){
+                if(html && html.trim()) tbody.innerHTML = html;
+                else tbody.innerHTML = '<tr><td colspan="4"><div class="cdg-dm-empty"><i class="bi bi-inbox"></i><p>Henüz yönlendirme yok</p></div></td></tr>';
+            }).fail(function(){
+                tbody.innerHTML = '<tr><td colspan="4"><div class="cdg-dm-empty"><i class="bi bi-exclamation-triangle"></i><p>Yönlendirmeler yüklenemedi</p></div></td></tr>';
+            });
+        }
+    },
+    emailForwardAdd: function(){
+        var prefix = document.getElementById('EmailForward_prefix').value.trim();
+        var target = document.getElementById('EmailForward_target').value.trim();
+
+        if(!prefix || !target) {
+            if(typeof alert_error === 'function') alert_error('Prefix ve hedef e-posta zorunludur', {timer: 3000});
+            return;
+        }
+        // Basit email validasyonu
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(target)) {
+            if(typeof alert_error === 'function') alert_error('Geçerli bir e-posta adresi girin', {timer: 3000});
+            return;
+        }
+        if(typeof MioAjax !== 'function') return;
+
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: { operation: 'add_email_forward', id: this.domainId, prefix: prefix, target: target },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    document.getElementById('EmailForward_prefix').value = '';
+                    document.getElementById('EmailForward_target').value = '';
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Yönlendirme eklendi', {timer: 1500});
+                    cdgDomain.emailForwardsReload();
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+    emailForwardEdit: function(k){
+        var row = document.getElementById('EmailForward_' + k);
+        if(!row) return;
+        var editWrap = row.querySelector('.edit-wrap');
+        var showWrap = row.querySelector('.show-wrap');
+        var editContent = row.querySelector('.edit-content');
+        var noEditContent = row.querySelector('.no-edit-content');
+        var input = editWrap ? editWrap.querySelector('input') : null;
+        var currentTarget = row.querySelector('input[name="target"]');
+        if(input && currentTarget) input.value = currentTarget.value;
+        if(editWrap) editWrap.style.display = 'block';
+        if(showWrap) showWrap.style.display = 'none';
+        if(editContent) editContent.style.display = 'inline-flex';
+        if(noEditContent) noEditContent.style.display = 'none';
+    },
+    emailForwardCancelEdit: function(k){
+        var row = document.getElementById('EmailForward_' + k);
+        if(!row) return;
+        var editWrap = row.querySelector('.edit-wrap');
+        var showWrap = row.querySelector('.show-wrap');
+        var editContent = row.querySelector('.edit-content');
+        var noEditContent = row.querySelector('.no-edit-content');
+        if(editWrap) editWrap.style.display = 'none';
+        if(showWrap) showWrap.style.display = 'block';
+        if(editContent) editContent.style.display = 'none';
+        if(noEditContent) noEditContent.style.display = 'inline-flex';
+    },
+    emailForwardSave: function(k){
+        var row = document.getElementById('EmailForward_' + k);
+        if(!row || typeof MioAjax !== 'function') return;
+        var prefix = row.querySelector('input[name="prefix"]').value;
+        var oldTarget = row.querySelector('input[name="target"]').value;
+        var identity = (row.querySelector('input[name="identity"]') || {}).value || '';
+        var newTarget = (row.querySelector('.edit-wrap input') || {}).value;
+        if(!newTarget) {
+            if(typeof alert_error === 'function') alert_error('Hedef e-posta boş olamaz', {timer: 3000});
+            return;
+        }
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newTarget)) {
+            if(typeof alert_error === 'function') alert_error('Geçerli bir e-posta adresi girin', {timer: 3000});
+            return;
+        }
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: {
+                operation: 'update_email_forward', id: this.domainId,
+                identity: identity, prefix: prefix, target: oldTarget, target_new: newTarget
+            },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Yönlendirme güncellendi', {timer: 1500});
+                    cdgDomain.emailForwardsReload();
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+    emailForwardDelete: function(k){
+        if(!confirm('Bu yönlendirmeyi silmek istediğinize emin misiniz?')) return;
+        var row = document.getElementById('EmailForward_' + k);
+        if(!row || typeof MioAjax !== 'function') return;
+        var data = { operation: 'delete_email_forward', id: this.domainId };
+        ['identity','prefix','target'].forEach(function(f){
+            var inp = row.querySelector('input[name="' + f + '"]');
+            if(inp) data[f] = inp.value;
+        });
+        MioAjax({
+            url: this.controllerUrl, type: 'post', data: data,
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Yönlendirme silindi', {timer: 1500});
+                    cdgDomain.emailForwardsReload();
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
     }
 };
 
@@ -1274,7 +1422,7 @@ window.cdgDomain = {
 (function(){
     document.addEventListener('keydown', function(e){
         if(e.key === 'Escape') {
-            ['cdg-dns-records-modal','cdg-cns-modal','cdg-dnssec-modal'].forEach(function(id){
+            ['cdg-dns-records-modal','cdg-cns-modal','cdg-dnssec-modal','cdg-email-forwards-modal'].forEach(function(id){
                 var m = document.getElementById(id);
                 if(m && m.classList.contains('cdg-dm-open')) cdgDomain.closeModal(id);
             });
@@ -1308,9 +1456,10 @@ window.cdgDomain = {
 </script>
 
 <?php
-// === Domain Modalları (DNS Records / CNS / DNSSEC) ===
+// === Domain Modalları (DNS Records / CNS / DNSSEC / Email Forwards) ===
 $cdg_domain_modals_loaded = ['css' => false];
 if($allow_dns_records) include __DIR__ . DS . 'inc' . DS . 'ac-domain-dns-records.php';
 if($allow_dns_cns)     include __DIR__ . DS . 'inc' . DS . 'ac-domain-cns.php';
 if($allow_dns_sec_records) include __DIR__ . DS . 'inc' . DS . 'ac-domain-dnssec.php';
+if($allow_forwarding_eml) include __DIR__ . DS . 'inc' . DS . 'ac-domain-email-forwards.php';
 ?>

@@ -1,13 +1,17 @@
 {
-    "version": "3.2.0",
+    "version": "3.2.1",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.2.0-codega",
-    "tag": "v3.2.0-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.2.1-codega",
+    "tag": "v3.2.1-codega",
     "changelog": [
-        "v3.2.0 - Cookie popup tamamen KALDIRILDI",
-        "REMOVE: constant-js.php - ckplcy_cookie_popup_html bos string atandi",
-        "REMOVE: constant-css.php - #mio-cookie-popup CSS bloku silindi",
-        "Cookie popup artik temada gozukmeyecek (WiseCP cookie aktif olsa bile)"
+        "v3.2.1 - Email Forwards yonetim modali eklendi",
+        "YENI: inc/ac-domain-email-forwards.php (94 satir)",
+        "  E-posta yonlendirme modal: prefix@domain -> hedef@external.com",
+        "GUNCELLEME: ac-product-domain.php",
+        "  Yonlendirme tab'ina E-Posta Yonlendirme karti eklendi",
+        "  cdgDomain JS object: openEmailForwards, emailForwardAdd, emailForwardEdit, emailForwardSave, emailForwardDelete, emailForwardCancelEdit",
+        "Operations: add_email_forward, update_email_forward, delete_email_forward",
+        "AJAX list: ?bring=email-forwards"
     ]
 }
