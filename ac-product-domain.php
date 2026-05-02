@@ -835,6 +835,11 @@ $transfer_lock = !empty($options['transferlock']);
                         <button type="button" class="cdg-pdm-btn cdg-pdm-btn-primary" onclick="cdgDomain.setForward()">
                             <i class="bi bi-save"></i> Yönlendirme Ayarla
                         </button>
+                        <?php if(!empty($forward_domain_active)): ?>
+                        <button type="button" class="cdg-pdm-btn cdg-pdm-btn-outline" onclick="cdgDomain.cancelForward()" style="margin-left:8px;">
+                            <i class="bi bi-x-circle"></i> Yönlendirmeyi İptal Et
+                        </button>
+                        <?php endif; ?>
                     </div>
                 </form>
             </div>
@@ -954,9 +959,15 @@ $transfer_lock = !empty($options['transferlock']);
                     <div>
                         <h4 style="font-size:14px;font-weight:800;margin:0 0 10px;">İptal Talebi</h4>
                         <p style="font-size:13px;color:var(--pdm-muted);margin:0 0 14px;">Domaininizi sonlandırmak isterseniz iptal talebi oluşturabilirsiniz.</p>
+                        <?php if($d_status === 'cancelled' || $d_status === 'canceled'): ?>
+                        <button type="button" class="cdg-pdm-btn cdg-pdm-btn-success" onclick="cdgDomain.removeCancelled()">
+                            <i class="bi bi-arrow-counterclockwise"></i> İptal Talebini Geri Al
+                        </button>
+                        <?php else: ?>
                         <button type="button" class="cdg-pdm-btn cdg-pdm-btn-danger" onclick="cdgDomain.cancelDomain()">
                             <i class="bi bi-x-circle"></i> İptal Talebi
                         </button>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -1693,6 +1704,104 @@ window.cdgDomain = {
                     var row = document.getElementById('cdg-tsv-row-' + tsvId);
                     if(row) row.remove();
                     if(typeof alert_success === 'function') alert_success(r.message || 'Transfer talebi iptal edildi', {timer: 1500});
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+
+    // === DNSSEC Delete ===
+    dnssecDelete: function(k){
+        if(!confirm('Bu DNSSEC kaydını silmek istediğinize emin misiniz?')) return;
+        var row = document.getElementById('DnsRecord_' + k); // Classic'te DnsSecRecord da DnsRecord_<k> ID'siyle render ediliyor, ama bazı modüllerde DnsSecRecord_<k> olabilir
+        if(!row) row = document.getElementById('DnsSecRecord_' + k);
+        if(!row || typeof MioAjax !== 'function') return;
+        var data = { operation: 'delete_dns_sec_record', id: this.domainId, k: k };
+        ['identity','digest','key_tag','digest_type','algorithm'].forEach(function(f){
+            var inp = row.querySelector('input[name="' + f + '"]');
+            if(inp) data[f] = inp.value;
+        });
+        MioAjax({
+            url: this.controllerUrl, type: 'post', data: data,
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'DNSSEC silindi', {timer: 1500});
+                    cdgDomain.dnssecReload();
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+
+    // === CNS Modify / Delete ===
+    cnsModify: function(cnsId){
+        var row = document.querySelector('[data-cns-id="' + cnsId + '"]');
+        if(!row) return;
+        var ipInput = row.querySelector('input[name="ip"]');
+        var newIp = prompt('Yeni IP adresi:', ipInput ? ipInput.value : '');
+        if(!newIp) return;
+        if(typeof MioAjax !== 'function') return;
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: { operation: 'domain_modify_cns', id: this.domainId, cns_id: cnsId, ip: newIp },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'CNS güncellendi', {timer: 1500});
+                    cdgDomain.cnsReload();
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+    cnsDelete: function(cnsId){
+        if(!confirm('Bu Child Nameserver kaydını silmek istediğinize emin misiniz?')) return;
+        if(typeof MioAjax !== 'function') return;
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: { operation: 'domain_delete_cns', id: this.domainId, cns_id: cnsId },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'CNS silindi', {timer: 1500});
+                    cdgDomain.cnsReload();
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+
+    // === Domain Forward Cancel ===
+    cancelForward: function(){
+        if(!confirm('Domain yönlendirmesini iptal etmek istediğinize emin misiniz?')) return;
+        if(typeof MioAjax !== 'function') return;
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: { operation: 'cancel_forward_domain', id: this.domainId },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Yönlendirme iptal edildi', {timer: 1500});
+                    setTimeout(function(){ window.location.reload(); }, 1200);
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+
+    // === Cancel Undo (iptal talebini geri al) ===
+    removeCancelled: function(){
+        if(!confirm('İptal talebini geri almak istediğinize emin misiniz? Domain yenilemeye devam eder.')) return;
+        if(typeof MioAjax !== 'function') return;
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: { operation: 'remove_cancelled_product', id: this.domainId },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'İptal talebi geri alındı', {timer: 1500});
+                    setTimeout(function(){ window.location.reload(); }, 1500);
                 } else if(r && r.message && typeof alert_error === 'function') {
                     alert_error(r.message, {timer: 3000});
                 }
