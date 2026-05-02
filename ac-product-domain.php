@@ -994,11 +994,17 @@ window.cdgDomain = {
     },
 
     toggleTransferLock: function(el){
-        // WiseCP'de transfer lock için ayrı operation gerekebilir - genel placeholder
-        if(typeof alert_info === 'function') {
-            alert_info('Transfer kilidi değişikliği işleniyor...', {timer: 2000});
+        // Transfer kilidi domain modülüne özgü bir özelliktir; WiseCP core'da generic operation yoktur.
+        // Mevcut durumu gösterir, değişiklik için kullanıcıyı destek talebine yönlendirir.
+        if(!confirm('Transfer kilidi durumunu değiştirmek için destek ekibimize bilet açacağız. Devam edilsin mi?')) return;
+        var ticketsUrl = '<?php echo htmlspecialchars(cdg_link("create-ticket-request")); ?>';
+        var domainName = '<?php echo htmlspecialchars($d_name, ENT_QUOTES); ?>';
+        var subjectParam = encodeURIComponent('Transfer kilidi değişiklik talebi: ' + domainName);
+        if(ticketsUrl && ticketsUrl !== '#') {
+            location.href = ticketsUrl + (ticketsUrl.indexOf('?') >= 0 ? '&' : '?') + 'subject=' + subjectParam;
+        } else if(typeof alert_info === 'function') {
+            alert_info('Lütfen destek ekibimizle iletişime geçin.', {timer: 3000});
         }
-        // Eğer modül destekliyorsa AJAX gönderilebilir
     },
 
     toggleWhoisPrivacy: function(el){
@@ -1052,15 +1058,259 @@ window.cdgDomain = {
 
     cancelDomain: function(){
         if(!confirm('Domaininizin iptal talebini oluşturmak istediğinize emin misiniz? Bu işlem geri alınamaz.')) return;
-        if(typeof alert_info === 'function') alert_info('İptal talebi oluşturuluyor...', {timer: 2000});
+        if(typeof MioAjax !== 'function') {
+            if(typeof alert_error === 'function') alert_error('AJAX motoru yüklenemedi', {timer: 3000});
+            return;
+        }
+        MioAjax({
+            url: this.controllerUrl,
+            type: 'post',
+            data: { operation: 'canceled_product', id: this.domainId, type: 'end-of-period' },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'İptal talebiniz alındı', {timer: 2500});
+                    setTimeout(function(){ location.reload(); }, 2000);
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
     },
 
     requestEpp: function(){
-        alert('EPP / Auth Code talebiniz e-posta adresinize gönderilecektir. Lütfen destek ekibimizle iletişime geçin.');
+        // EPP/Auth code WiseCP core'da generic bir operation değil — modüle özgü
+        // En iyi yaklaşım: Destek talebi oluşturmaya yönlendir
+        if(!confirm('EPP / Auth Code talebi için destek ekibimize bir bilet açacağız. Devam edilsin mi?')) return;
+        var ticketsUrl = '<?php echo htmlspecialchars(cdg_link("create-ticket-request")); ?>';
+        var domainName = '<?php echo htmlspecialchars($d_name, ENT_QUOTES); ?>';
+        var subjectParam = encodeURIComponent('EPP / Auth Code talebi: ' + domainName);
+        // Ticket sayfasına yönlendir, başlığı önceden doldur
+        if(ticketsUrl && ticketsUrl !== '#') {
+            location.href = ticketsUrl + (ticketsUrl.indexOf('?') >= 0 ? '&' : '?') + 'subject=' + subjectParam;
+        } else {
+            alert('Lütfen destek ekibimizle iletişime geçin.');
+        }
     },
 
-    openDnsRecords: function(){ alert('DNS kayıtları yönetimi yakında. Şimdilik ana sayfadan ?bring=dns-records adresine gidebilirsiniz.'); },
-    openCNS: function(){ alert('Child Nameserver yönetimi yakında.'); },
-    openDnsSec: function(){ alert('DNSSEC yönetimi yakında.'); }
+    // === MODAL AÇMA / KAPAMA ===
+    openModal: function(id) {
+        var m = document.getElementById(id);
+        if(!m) return;
+        m.classList.add('cdg-dm-open');
+        document.body.style.overflow = 'hidden';
+    },
+    closeModal: function(id) {
+        var m = document.getElementById(id);
+        if(!m) return;
+        m.classList.remove('cdg-dm-open');
+        document.body.style.overflow = '';
+    },
+
+    // === DNS RECORDS ===
+    openDnsRecords: function(){
+        this.openModal('cdg-dns-records-modal');
+        this.dnsRecordsReload();
+    },
+    dnsRecordsReload: function(){
+        var tbody = document.getElementById('getDnsRecords_tbody');
+        if(!tbody) return;
+        tbody.innerHTML = '<tr><td colspan="5"><div class="cdg-dm-loading"><i class="bi bi-arrow-clockwise"></i>Kayıtlar yükleniyor...</div></td></tr>';
+        if(window.jQuery) {
+            jQuery.get(this.controllerUrl + '?bring=dns-records&id=' + this.domainId, function(html){
+                if(html && html.trim()) tbody.innerHTML = html;
+                else tbody.innerHTML = '<tr><td colspan="5"><div class="cdg-dm-empty"><i class="bi bi-inbox"></i><p>Henüz DNS kaydı yok</p></div></td></tr>';
+            }).fail(function(){
+                tbody.innerHTML = '<tr><td colspan="5"><div class="cdg-dm-empty"><i class="bi bi-exclamation-triangle"></i><p>Kayıtlar yüklenemedi</p></div></td></tr>';
+            });
+        }
+    },
+    dnsRecordAdd: function(){
+        var type = document.getElementById('DnsRecord_type').value;
+        var name = document.getElementById('DnsRecord_name').value.trim();
+        var value = document.getElementById('DnsRecord_value').value.trim();
+        var ttl = document.getElementById('DnsRecord_ttl').value;
+        var priorityEl = document.getElementById('DnsRecord_priority');
+        var priority = (type === 'MX' && priorityEl) ? priorityEl.value : '';
+
+        if(!name || !value) {
+            if(typeof alert_error === 'function') alert_error('Ad ve değer alanları zorunludur', {timer: 3000});
+            return;
+        }
+        if(typeof MioAjax !== 'function') return;
+
+        MioAjax({
+            url: this.controllerUrl,
+            type: 'post',
+            data: { operation: 'add_dns_record', id: this.domainId, type: type, name: name, value: value, ttl: ttl, priority: priority },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    document.getElementById('DnsRecord_name').value = '';
+                    document.getElementById('DnsRecord_value').value = '';
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Kayıt eklendi', {timer: 1500});
+                    cdgDomain.dnsRecordsReload();
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+    dnsRecordDelete: function(k){
+        if(!confirm('Bu DNS kaydını silmek istediğinize emin misiniz?')) return;
+        var row = document.getElementById('DnsRecord_' + k);
+        if(!row || typeof MioAjax !== 'function') return;
+        var data = { operation: 'delete_dns_record', id: this.domainId, k: k };
+        ['type','identity','name','value'].forEach(function(f){
+            var inp = row.querySelector('input[name="' + f + '"]');
+            if(inp) data[f] = inp.value;
+        });
+        MioAjax({
+            url: this.controllerUrl, type: 'post', data: data,
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Kayıt silindi', {timer: 1500});
+                    cdgDomain.dnsRecordsReload();
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+
+    // === CNS (Child Nameserver) ===
+    openCNS: function(){
+        this.openModal('cdg-cns-modal');
+        this.cnsReload();
+    },
+    cnsReload: function(){
+        var wrap = document.getElementById('cns-wrap');
+        if(!wrap) return;
+        wrap.innerHTML = '<tr><td colspan="3"><div class="cdg-dm-loading"><i class="bi bi-arrow-clockwise"></i>CNS yükleniyor...</div></td></tr>';
+        if(window.jQuery) {
+            jQuery.get(this.controllerUrl + '?bring=cns-list&id=' + this.domainId, function(html){
+                if(html && html.trim()) wrap.innerHTML = html;
+                else wrap.innerHTML = '<tr><td colspan="3"><div class="cdg-dm-empty"><i class="bi bi-inbox"></i><p>Tanımlı Child Nameserver yok</p></div></td></tr>';
+            }).fail(function(){
+                wrap.innerHTML = '<tr><td colspan="3"><div class="cdg-dm-empty"><i class="bi bi-exclamation-triangle"></i><p>CNS listesi yüklenemedi</p></div></td></tr>';
+            });
+        }
+    },
+    cnsAdd: function(){
+        var ns = document.getElementById('CNS_ns').value.trim();
+        var ip = document.getElementById('CNS_ip').value.trim();
+        if(!ns || !ip) {
+            if(typeof alert_error === 'function') alert_error('Hostname ve IP alanları zorunludur', {timer: 3000});
+            return;
+        }
+        if(typeof MioAjax !== 'function') return;
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: { operation: 'domain_add_cns', id: this.domainId, ns: ns, ip: ip },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    document.getElementById('CNS_ns').value = '';
+                    document.getElementById('CNS_ip').value = '';
+                    if(typeof alert_success === 'function') alert_success(r.message || 'CNS eklendi', {timer: 1500});
+                    cdgDomain.cnsReload();
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    },
+
+    // === DNSSEC ===
+    openDnsSec: function(){
+        this.openModal('cdg-dnssec-modal');
+        this.dnssecReload();
+    },
+    dnssecReload: function(){
+        var tbody = document.getElementById('getDnsSecRecords_tbody');
+        if(!tbody) return;
+        tbody.innerHTML = '<tr><td colspan="5"><div class="cdg-dm-loading"><i class="bi bi-arrow-clockwise"></i>DNSSEC kayıtları yükleniyor...</div></td></tr>';
+        if(window.jQuery) {
+            jQuery.get(this.controllerUrl + '?bring=dns-sec-records&id=' + this.domainId, function(html){
+                if(html && html.trim()) tbody.innerHTML = html;
+                else tbody.innerHTML = '<tr><td colspan="5"><div class="cdg-dm-empty"><i class="bi bi-shield"></i><p>Henüz DNSSEC kaydı yok</p></div></td></tr>';
+            }).fail(function(){
+                tbody.innerHTML = '<tr><td colspan="5"><div class="cdg-dm-empty"><i class="bi bi-exclamation-triangle"></i><p>DNSSEC kayıtları yüklenemedi</p></div></td></tr>';
+            });
+        }
+    },
+    dnssecAdd: function(){
+        var digest = document.getElementById('DnsSecRecord_digest').value.trim();
+        var keyTag = document.getElementById('DnsSecRecord_key_tag').value.trim();
+        var digestType = document.getElementById('DnsSecRecord_digest_type').value;
+        var algorithm = document.getElementById('DnsSecRecord_algorithm').value;
+
+        if(!digest || !keyTag || !digestType || !algorithm) {
+            if(typeof alert_error === 'function') alert_error('Tüm alanlar zorunludur', {timer: 3000});
+            return;
+        }
+        if(typeof MioAjax !== 'function') return;
+        MioAjax({
+            url: this.controllerUrl, type: 'post',
+            data: {
+                operation: 'add_dns_sec_record', id: this.domainId,
+                digest: digest, key_tag: keyTag,
+                digest_type: digestType, algorithm: algorithm
+            },
+            result: function(r){
+                if(r && r.status === 'successful') {
+                    document.getElementById('DnsSecRecord_digest').value = '';
+                    document.getElementById('DnsSecRecord_key_tag').value = '';
+                    document.getElementById('DnsSecRecord_digest_type').value = '';
+                    document.getElementById('DnsSecRecord_algorithm').value = '';
+                    if(typeof alert_success === 'function') alert_success(r.message || 'DNSSEC eklendi', {timer: 1500});
+                    cdgDomain.dnssecReload();
+                } else if(r && r.message && typeof alert_error === 'function') {
+                    alert_error(r.message, {timer: 3000});
+                }
+            }
+        });
+    }
 };
+
+// === Modal: ESC ile kapatma + Outside click ===
+(function(){
+    document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape') {
+            ['cdg-dns-records-modal','cdg-cns-modal','cdg-dnssec-modal'].forEach(function(id){
+                var m = document.getElementById(id);
+                if(m && m.classList.contains('cdg-dm-open')) cdgDomain.closeModal(id);
+            });
+        }
+    });
+    document.querySelectorAll('.cdg-dm-overlay').forEach(function(ov){
+        ov.addEventListener('click', function(e){
+            if(e.target === this) cdgDomain.closeModal(this.id);
+        });
+    });
+
+    // DNS Record type değişimine göre placeholder + priority göster/gizle
+    var typeSel = document.getElementById('DnsRecord_type');
+    if(typeSel) {
+        typeSel.addEventListener('change', function(){
+            var t = this.value;
+            var pri = document.getElementById('DnsRecord_priority_wrap');
+            var val = document.getElementById('DnsRecord_value');
+            if(pri) pri.style.display = (t === 'MX') ? '' : 'none';
+            if(val) {
+                if(t === 'A') val.placeholder = 'IPv4 adresi (ör: 192.168.1.1)';
+                else if(t === 'AAAA') val.placeholder = 'IPv6 adresi';
+                else if(t === 'CNAME' || t === 'MX' || t === 'NS') val.placeholder = 'Hedef hostname';
+                else if(t === 'TXT') val.placeholder = 'Metin değeri (SPF, DKIM vb.)';
+                else if(t === 'SRV') val.placeholder = 'Hedef sunucu';
+                else val.placeholder = '';
+            }
+        });
+    }
+})();
 </script>
+
+<?php
+// === Domain Modalları (DNS Records / CNS / DNSSEC) ===
+$cdg_domain_modals_loaded = ['css' => false];
+if($allow_dns_records) include __DIR__ . DS . 'inc' . DS . 'ac-domain-dns-records.php';
+if($allow_dns_cns)     include __DIR__ . DS . 'inc' . DS . 'ac-domain-cns.php';
+if($allow_dns_sec_records) include __DIR__ . DS . 'inc' . DS . 'ac-domain-dnssec.php';
+?>
