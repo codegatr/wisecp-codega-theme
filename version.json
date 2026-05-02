@@ -1,18 +1,23 @@
 {
-    "version": "2.7.1",
+    "version": "2.8.0",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.7.1-codega",
-    "tag": "v2.7.1-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.8.0-codega",
+    "tag": "v2.8.0-codega",
     "changelog": [
-        "v2.7.1 - SIGN-IN/UP KURUMSAL PREMIUM (kraliyet teması kaldırıldı)",
-        "Tac SVG ve kraliyet metni kaldırıldı (mecazi yorumlanmis)",
-        "Yerine: animated mesh gradient + floating shapes + particles",
-        "Sign-in: 'Hizmetlerinizi tek panelden yönetin'",
-        "Sign-up: 'Profesyonel hosting deneyimi sizi bekliyor'",
-        "SSL/KVKK/ISO 27001 trust badges (alt taraf)",
-        "Cam efektli (glassmorphism) form kartı",
-        "Üst gradient bar (sarı/cyan/mavi)",
-        "Floating geometric shapes (zarif animasyon)"
+        "v2.8.0 - DOMAIN API + DASHBOARD PREMIUM + HEADER + OKUNABILIRLIK",
+        "DOMAIN: WiseCP API ile gercek TLD listesi cekiliyor (Domains::getList + Tld::getList)",
+        "DOMAIN: 4 kategori (Populer/TR/Klasik/Yeni Nesil) + tam fiyat tablosu",
+        "DOMAIN: Sorgu formu + sonuc sayfasi (sepete ekle)",
+        "PRODUCTS-HOSTING: Yeni public hosting kategori sayfasi (3 sekmeli)",
+        "DASHBOARD: Premium tema (gold accent + cam efekti + animasyonlu avatar)",
+        "DASHBOARD: Greeting (Gunaydin/Iyi gunler/Iyi aksamlar) + premium uye rozeti",
+        "DASHBOARD: 4 stat card (gradient ikon, hover animasyon)",
+        "DASHBOARD: Aktif hizmetler grid (durum cubuklari + status renkleri)",
+        "DASHBOARD: 6 hizli erisim karti",
+        "DASHBOARD: 2 promo banner (avantaj + guvenlik)",
+        "HEADER: Menu font 14px -> 16px, padding 10x14 -> 12x20, weight 500 -> 600",
+        "AUTH: Form input arka plan #f8fafc, kontrast yukseltildi",
+        "YAZILIM: Karakter tonlari koyulastirildi, font-weight 500 -> 500/700"
     ]
 }
