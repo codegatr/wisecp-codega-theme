@@ -1,4 +1,5 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
+if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public-styles.php')) include __DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public-styles.php';
 
 $nl_action = isset($newsletter_action) ? $newsletter_action : '';
 $nl_email = isset($email) ? $email : '';

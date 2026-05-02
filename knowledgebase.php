@@ -1,4 +1,5 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
+if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public-styles.php')) include __DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public-styles.php';
 
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {

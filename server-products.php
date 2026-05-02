@@ -1,5 +1,8 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!'); ?>
 
+<?php if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public-styles.php')) include __DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public-styles.php'; ?>
+
+
 <section class="cdg-page-head">
     <div class="cdg-container">
         <h1><i class="bi bi-server"></i> Server Hizmetleri</h1>
