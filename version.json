@@ -1,8 +1,11 @@
 {
     "version": "2.3.0",
     "release_date": "2026-05-02",
-    "file_url": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.3.0-codega/Codega-v2.3.0.zip",
+    "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
+    "file_url_alt": "https://cdn.jsdelivr.net/gh/codegatr/wisecp-codega-theme@main/Codega-v2.3.0.zip",
+    "file_url_release": "https://github.com/codegatr/wisecp-codega-theme/releases/download/v2.3.0-codega/Codega-v2.3.0.zip",
     "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v2.3.0-codega",
+    "tag": "v2.3.0-codega",
     "changelog": [
         "v2.3.0 - PREMIUM ANASAYFA: 16 bolumlu profesyonel landing page",
         "Hero PRO: 3D orb + 2 spinning ring + 4 floating card + uptime stat",
