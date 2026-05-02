@@ -2921,204 +2921,230 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
     .cdg-kb-cat-head h2{font-size:18px;}
 }
 
-/* ==================== v2.7.0 - KRALİYET SARAYI TEMASI ==================== */
+/* ==================== v2.7.1 - KURUMSAL PREMIUM AUTH ==================== */
 
-.cdg-royal-section{
+.cdg-auth-section{
     position:relative;
     min-height:calc(100vh - 80px);
     padding:60px 0;
-    background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 35%,#3730a3 70%,#581c87 100%);
+    background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 40%,#1e40af 70%,#3b82f6 100%);
     overflow:hidden;
     color:#fff;
+    display:flex;
+    align-items:center;
 }
 
-.cdg-royal-bg{position:absolute;inset:0;pointer-events:none;}
-.cdg-royal-bg-gradient{
+.cdg-auth-section .cdg-container{position:relative;z-index:2;}
+
+.cdg-auth-bg{position:absolute;inset:0;pointer-events:none;}
+.cdg-auth-mesh{
     position:absolute;inset:0;
     background:
-        radial-gradient(at 20% 30%, rgba(252,211,77,0.20) 0%, transparent 50%),
-        radial-gradient(at 80% 70%, rgba(168,85,247,0.25) 0%, transparent 50%),
-        radial-gradient(at 50% 100%, rgba(220,38,38,0.15) 0%, transparent 50%);
-    animation: cdgRoyalShift 30s ease-in-out infinite alternate;
+        radial-gradient(at 15% 20%, rgba(59,130,246,0.40) 0%, transparent 45%),
+        radial-gradient(at 85% 30%, rgba(6,182,212,0.30) 0%, transparent 50%),
+        radial-gradient(at 75% 80%, rgba(139,92,246,0.30) 0%, transparent 50%),
+        radial-gradient(at 30% 90%, rgba(16,185,129,0.20) 0%, transparent 50%);
+    animation: cdgAuthMeshShift 25s ease-in-out infinite alternate;
 }
-@keyframes cdgRoyalShift{
-    0%{transform:scale(1) rotate(0deg);}
-    100%{transform:scale(1.15) rotate(8deg);}
-}
-.cdg-royal-bg-pattern{
-    position:absolute;inset:0;
-    background-image:
-        radial-gradient(circle at 25% 25%, rgba(252,211,77,0.06) 1px, transparent 1px),
-        radial-gradient(circle at 75% 75%, rgba(252,211,77,0.06) 1px, transparent 1px);
-    background-size: 40px 40px;
-    opacity:0.5;
-}
-.cdg-royal-orb{
-    position:absolute;border-radius:50%;
-    background:radial-gradient(circle,rgba(252,211,77,0.30),rgba(252,211,77,0) 70%);
-    filter:blur(40px);
-    animation: cdgRoyalFloat 12s ease-in-out infinite;
-}
-.cdg-royal-orb-1{width:400px;height:400px;top:-100px;left:-100px;}
-.cdg-royal-orb-2{width:500px;height:500px;bottom:-150px;right:-150px;animation-delay:6s;}
-@keyframes cdgRoyalFloat{
-    0%,100%{transform:translate(0,0);}
-    50%{transform:translate(30px,-30px);}
+@keyframes cdgAuthMeshShift{
+    0%{transform:scale(1);}
+    100%{transform:scale(1.15) rotate(5deg);}
 }
 
-.cdg-royal-grid{
-    display:grid;grid-template-columns:1fr 1.05fr;gap:48px;
+.cdg-auth-grid-pattern{
+    position:absolute;inset:0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+.cdg-auth-glow{
+    position:absolute;border-radius:50%;
+    filter:blur(80px);opacity:0.6;
+}
+.cdg-auth-glow-1{
+    width:500px;height:500px;top:-150px;left:-150px;
+    background:radial-gradient(circle,#3b82f6,transparent 70%);
+    animation: cdgAuthGlow 8s ease-in-out infinite alternate;
+}
+.cdg-auth-glow-2{
+    width:600px;height:600px;bottom:-200px;right:-200px;
+    background:radial-gradient(circle,#06b6d4,transparent 70%);
+    animation: cdgAuthGlow 10s ease-in-out infinite alternate-reverse;
+}
+@keyframes cdgAuthGlow{
+    0%{transform:translate(0,0) scale(1);opacity:0.5;}
+    100%{transform:translate(40px,-40px) scale(1.15);opacity:0.7;}
+}
+
+.cdg-auth-particles{position:absolute;inset:0;pointer-events:none;}
+.cdg-auth-particles span{
+    position:absolute;width:3px;height:3px;border-radius:50%;
+    background:rgba(255,255,255,0.8);
+    box-shadow:0 0 8px rgba(255,255,255,0.6);
+}
+.cdg-auth-particles span:nth-child(1){left:15%;top:25%;animation: cdgAuthFloat 18s infinite ease-in-out;}
+.cdg-auth-particles span:nth-child(2){left:80%;top:35%;animation: cdgAuthFloat 22s infinite ease-in-out 2s;width:4px;height:4px;}
+.cdg-auth-particles span:nth-child(3){left:35%;top:75%;animation: cdgAuthFloat 16s infinite ease-in-out 5s;}
+.cdg-auth-particles span:nth-child(4){left:65%;top:85%;animation: cdgAuthFloat 25s infinite ease-in-out 8s;}
+.cdg-auth-particles span:nth-child(5){left:90%;top:65%;animation: cdgAuthFloat 20s infinite ease-in-out 11s;width:5px;height:5px;}
+.cdg-auth-particles span:nth-child(6){left:25%;top:55%;animation: cdgAuthFloat 17s infinite ease-in-out 13s;}
+.cdg-auth-particles span:nth-child(7){left:55%;top:15%;animation: cdgAuthFloat 19s infinite ease-in-out 6s;width:2px;height:2px;}
+.cdg-auth-particles span:nth-child(8){left:5%;top:80%;animation: cdgAuthFloat 23s infinite ease-in-out 9s;}
+@keyframes cdgAuthFloat{
+    0%,100%{transform:translateY(0) translateX(0);opacity:0.3;}
+    50%{transform:translateY(-40px) translateX(20px);opacity:1;}
+}
+
+.cdg-auth-grid{
+    display:grid;grid-template-columns:1fr 1.05fr;gap:60px;
     align-items:center;
-    min-height:calc(100vh - 200px);
+    min-height:calc(100vh - 240px);
     position:relative;z-index:2;
 }
 
-/* Kraliyet Promo (sol) */
-.cdg-royal-promo{
-    color:#fff;text-align:left;padding:20px 0;
-}
-.cdg-royal-crown-wrap{
-    text-align:center;margin-bottom:24px;
-    position:relative;
-}
-.cdg-royal-crown{
-    width:120px;height:72px;margin:0 auto;
-    filter:drop-shadow(0 8px 24px rgba(252,211,77,0.50));
-    animation: cdgCrownGlow 3s ease-in-out infinite;
-}
-.cdg-royal-crown svg{width:100%;height:100%;}
-@keyframes cdgCrownGlow{
-    0%,100%{filter:drop-shadow(0 8px 24px rgba(252,211,77,0.50));transform:translateY(0);}
-    50%{filter:drop-shadow(0 12px 32px rgba(252,211,77,0.80));transform:translateY(-6px);}
-}
-.cdg-royal-stars{
-    display:flex;justify-content:center;gap:8px;margin-top:8px;
-}
-.cdg-royal-stars span{
-    color:#fde047;font-size:18px;
-    animation: cdgTwinkle 2s ease-in-out infinite;
-}
-.cdg-royal-stars span:nth-child(2){animation-delay:0.5s;font-size:22px;}
-.cdg-royal-stars span:nth-child(3){animation-delay:1s;}
-@keyframes cdgTwinkle{
-    0%,100%{opacity:0.3;transform:scale(1);}
-    50%{opacity:1;transform:scale(1.2);}
-}
+/* SOL: Promo */
+.cdg-auth-promo{color:#fff;text-align:left;padding:20px 0;position:relative;}
 
-.cdg-royal-eyebrow{
+.cdg-auth-shapes{
+    position:absolute;top:-40px;left:-30px;width:200px;height:200px;
+    pointer-events:none;opacity:0.4;
+}
+.cdg-auth-shape{
+    position:absolute;border-radius:14px;
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.10);
+    box-shadow:0 8px 32px rgba(0,0,0,0.10);
+}
+.cdg-auth-shape-1{
+    width:50px;height:50px;top:0;left:0;
+    background:linear-gradient(135deg,rgba(59,130,246,0.30),rgba(59,130,246,0.10));
+    animation: cdgShapeFloat1 6s ease-in-out infinite;
+}
+.cdg-auth-shape-2{
+    width:70px;height:70px;top:80px;left:90px;
+    background:linear-gradient(135deg,rgba(6,182,212,0.30),rgba(6,182,212,0.10));
+    border-radius:50%;
+    animation: cdgShapeFloat2 8s ease-in-out infinite;
+}
+.cdg-auth-shape-3{
+    width:40px;height:40px;top:30px;left:140px;
+    background:linear-gradient(135deg,rgba(245,158,11,0.30),rgba(245,158,11,0.10));
+    transform:rotate(45deg);
+    animation: cdgShapeFloat3 7s ease-in-out infinite;
+}
+@keyframes cdgShapeFloat1{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-15px) rotate(8deg);}}
+@keyframes cdgShapeFloat2{0%,100%{transform:translateY(0);}50%{transform:translateY(20px);}}
+@keyframes cdgShapeFloat3{0%,100%{transform:rotate(45deg);}50%{transform:rotate(135deg);}}
+
+.cdg-auth-promo-badge{
     display:inline-flex;align-items:center;gap:8px;
-    padding:8px 16px;
-    background:linear-gradient(135deg,rgba(252,211,77,0.15),rgba(252,211,77,0.08));
-    border:1px solid rgba(252,211,77,0.40);
+    padding:7px 14px;
+    background:rgba(255,255,255,0.10);
+    border:1px solid rgba(255,255,255,0.18);
     border-radius:99px;
-    color:#fde047;font-size:12px;font-weight:700;
-    text-transform:uppercase;letter-spacing:0.8px;
+    color:#fff;font-size:12px;font-weight:600;
+    text-transform:uppercase;letter-spacing:0.6px;
     backdrop-filter:blur(10px);
-    margin-bottom:18px;
+    margin-bottom:20px;position:relative;z-index:1;
 }
-.cdg-royal-eyebrow i{color:#fde047;}
+.cdg-auth-promo-badge i{color:#22d3ee;font-size:14px;}
 
-.cdg-royal-promo h1{
-    font-size:42px;font-weight:800;letter-spacing:-1px;line-height:1.1;
-    margin-bottom:14px;color:#fff;
-}
-.cdg-text-gold{
-    background:linear-gradient(135deg,#fde047,#facc15,#ca8a04);
-    -webkit-background-clip:text;background-clip:text;
-    color:transparent;
-    text-shadow:0 0 30px rgba(252,211,77,0.30);
+.cdg-auth-promo h1{
+    font-size:38px;font-weight:800;letter-spacing:-1px;line-height:1.15;
+    margin-bottom:14px;color:#fff;position:relative;z-index:1;
 }
 
-.cdg-royal-promo p{
-    font-size:15px;line-height:1.7;color:rgba(255,255,255,0.85);
-    margin-bottom:24px;
+.cdg-text-gradient-light{
+    background:linear-gradient(135deg,#facc15 0%,#fbbf24 50%,#22d3ee 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 
-.cdg-royal-features{
+.cdg-auth-lead{
+    font-size:15px;line-height:1.7;color:rgba(255,255,255,0.82);
+    margin-bottom:24px;max-width:480px;
+}
+
+.cdg-auth-features{
     list-style:none;padding:0;margin:0 0 28px;
     display:flex;flex-direction:column;gap:10px;
 }
-.cdg-royal-features li{
+.cdg-auth-features li{
     font-size:14px;color:rgba(255,255,255,0.92);
     display:flex;align-items:center;gap:10px;font-weight:500;
 }
-.cdg-royal-features li i{
-    color:#fde047;font-size:18px;
-    filter:drop-shadow(0 0 8px rgba(252,211,77,0.50));
+.cdg-auth-features li i{
+    color:#22d3ee;font-size:18px;
+    filter:drop-shadow(0 0 8px rgba(34,211,238,0.40));
 }
 
-.cdg-royal-cta{
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(252,211,77,0.20);
+.cdg-auth-promo-cta{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.12);
     border-radius:14px;
     padding:18px 22px;
     backdrop-filter:blur(10px);
     margin-bottom:18px;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
 }
-.cdg-royal-cta p{
+.cdg-auth-promo-cta p{
     font-size:13px;color:rgba(255,255,255,0.85);
-    margin-bottom:10px;font-weight:500;
+    margin:0;font-weight:500;flex:1;
 }
 
-.cdg-btn-gold{
-    background:linear-gradient(135deg,#fde047,#facc15,#ca8a04)!important;
-    color:#1e3a8a!important;border:0;font-weight:700!important;
-    box-shadow:0 8px 20px rgba(252,211,77,0.30);
+.cdg-auth-trust-badges{
+    display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;
 }
-.cdg-btn-gold:hover{
-    transform:translateY(-2px);
-    box-shadow:0 12px 28px rgba(252,211,77,0.50);
-    color:#1e3a8a!important;
-}
-
-.cdg-royal-seal{
-    display:flex;align-items:center;gap:8px;
+.cdg-auth-trust-badges span{
+    display:inline-flex;align-items:center;gap:6px;
     font-size:11px;color:rgba(255,255,255,0.65);
     text-transform:uppercase;letter-spacing:0.5px;font-weight:600;
 }
-.cdg-royal-seal i{color:#fde047;font-size:14px;}
+.cdg-auth-trust-badges span i{color:#22d3ee;font-size:14px;}
 
-/* Form (sağ) - mevcut cdg-auth-card kullanılıyor, sadece beyaz/koyu zit */
-.cdg-royal-section .cdg-auth-form-wrap{
-    position:relative;z-index:2;
+/* SAĞ: Form Card */
+.cdg-auth-section .cdg-auth-form-wrap{position:relative;z-index:2;}
+.cdg-auth-section .cdg-auth-card{
+    background:#fff;
+    box-shadow:0 20px 60px rgba(0,0,0,0.30),0 0 0 1px rgba(255,255,255,0.10);
+    border-radius:20px;padding:36px 32px;position:relative;
 }
-.cdg-royal-section .cdg-auth-card{
-    background:rgba(255,255,255,0.97);
-    backdrop-filter:blur(24px);
-    box-shadow:
-        0 20px 60px rgba(0,0,0,0.30),
-        0 0 0 1px rgba(252,211,77,0.20),
-        0 0 80px rgba(252,211,77,0.15);
-    border:1px solid rgba(252,211,77,0.25);
-    border-radius:20px;
-    position:relative;
-}
-.cdg-royal-section .cdg-auth-card::before{
-    content:'';position:absolute;
-    top:-1px;left:-1px;right:-1px;bottom:-1px;
-    background:linear-gradient(135deg,#fde047,#facc15,#fde047);
-    border-radius:20px;z-index:-1;
-    opacity:0.4;
-    filter:blur(8px);
+.cdg-auth-section .cdg-auth-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,#facc15,#22d3ee,#3b82f6);
+    border-radius:20px 20px 0 0;
 }
 
-.cdg-royal-section .cdg-auth-card-head h2{
-    color:#1e3a8a;font-weight:800;letter-spacing:-0.5px;
+.cdg-auth-section .cdg-auth-card-head{margin-bottom:24px;}
+.cdg-auth-section .cdg-auth-card-head h2{
+    color:#0f172a;font-weight:800;letter-spacing:-0.5px;
+    font-size:26px;margin-bottom:6px;
+}
+.cdg-auth-section .cdg-auth-card-head p{color:#64748b;font-size:14px;}
+
+.cdg-auth-section .cdg-btn-white{
+    background:rgba(255,255,255,0.95);color:#0f172a!important;
+    border:0;font-weight:600;
+}
+.cdg-auth-section .cdg-btn-white:hover{
+    background:#fff;color:#0f172a!important;transform:translateY(-1px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.20);
 }
 
 /* Mobil */
 @media (max-width:900px){
-    .cdg-royal-grid{
-        grid-template-columns:1fr;gap:32px;
-        min-height:auto;
-    }
-    .cdg-royal-promo{text-align:center;padding:0;}
-    .cdg-royal-promo h1{font-size:32px;}
-    .cdg-royal-features li{justify-content:center;}
-    .cdg-royal-seal{justify-content:center;}
+    .cdg-auth-grid{grid-template-columns:1fr;gap:32px;min-height:auto;}
+    .cdg-auth-promo{text-align:center;padding:0;}
+    .cdg-auth-promo h1{font-size:28px;}
+    .cdg-auth-features li{justify-content:center;}
+    .cdg-auth-trust-badges{justify-content:center;}
+    .cdg-auth-promo-cta{flex-direction:column;text-align:center;}
+    .cdg-auth-shapes{display:none;}
 }
-
 @media (max-width:520px){
-    .cdg-royal-promo h1{font-size:26px;}
-    .cdg-royal-crown{width:90px;height:54px;}
+    .cdg-auth-promo h1{font-size:24px;}
+    .cdg-auth-section .cdg-auth-card{padding:28px 22px;}
 }
