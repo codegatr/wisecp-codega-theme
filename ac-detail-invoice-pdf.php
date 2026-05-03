@@ -588,6 +588,37 @@ body {
         </table>
     </div>
 
+    <?php
+    // === AddQRCodetoInvoiceDetailinClientArea Hook (PDF için) ===
+    // E-Fatura/e-Arşiv entegrasyonları PDF içinde de QR kod gösterebilsin
+    if(class_exists('Hook') && !empty($invoice)) {
+        try {
+            $cdg_pdf_qr_codes = Hook::run("AddQRCodetoInvoiceDetailinClientArea", $invoice);
+            if(is_array($cdg_pdf_qr_codes) && !empty($cdg_pdf_qr_codes)) {
+                ?>
+                <div style="margin:18px 0;text-align:center;page-break-inside:avoid;">
+                    <?php foreach($cdg_pdf_qr_codes as $cdg_pdf_qr_block):
+                        if(!is_array($cdg_pdf_qr_block)) continue;
+                        foreach($cdg_pdf_qr_block as $cdg_pdf_qr):
+                            if(!is_array($cdg_pdf_qr)) continue;
+                            $cdg_pdf_qr_img = $cdg_pdf_qr['image'] ?? '';
+                            $cdg_pdf_qr_ttl = $cdg_pdf_qr['title'] ?? '';
+                            if(!$cdg_pdf_qr_img) continue;
+                    ?>
+                    <div style="display:inline-block;margin:0 12px;text-align:center;">
+                        <img src="<?php echo htmlspecialchars($cdg_pdf_qr_img, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="width:90px;height:90px;">
+                        <?php if($cdg_pdf_qr_ttl): ?>
+                            <div style="margin-top:4px;font-size:9px;color:#555;"><?php echo htmlspecialchars($cdg_pdf_qr_ttl, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <?php endforeach; endforeach; ?>
+                </div>
+                <?php
+            }
+        } catch(\Throwable $e) { /* sessiz geç */ }
+    }
+    ?>
+
     <!-- FOOTER -->
     <div class="pdf-footer">
         <span class="stamp"><?php echo htmlspecialchars($status_lbl, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
