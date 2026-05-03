@@ -3,7 +3,7 @@ return [
     'meta' => [
         'name'        => 'Codega',
         'description' => 'Modern, kurumsal CODEGA teması. Web yazılım, hosting, domain, SMS ve özel yazılım hizmetleri için tasarlanmıştır.',
-        'version'     => '3.5.87',
+        'version'     => '3.5.86',
         'provider'    => 'CODEGA',
         'website'     => 'https://codega.com.tr',
         'image'       => '',
@@ -12,19 +12,6 @@ return [
     'settings' => [
         'header-type'      => 1,
         'clientArea-type'  => 1,
-
-        // === HOSTING PANEL ERİŞİM AYARLARI ===
-        // WiseCP $buttons API auto-login token üretmediğinde fallback olarak kullanılır
-        // Müşteri "Panele Git" tıkladığında bu URL'lere yönlendirilir
-        'hosting_panels' => [
-            'directadmin_url' => 'https://codega.com.tr:2222',
-            'cpanel_url'      => '',
-            'plesk_url'       => '',
-            'webmail_url'     => 'https://webmail.codega.com.tr',
-            'phpmyadmin_url'  => 'https://codega.com.tr:2222/phpMyAdmin/',
-            'ftp_port'        => '21',
-            'show_panel_card' => 1,  // 1: Özet tab'ında panel kartı göster, 0: gizle
-        ],
 
         // Renkler — CODEGA klasik
         'color1'           => '1e40af',
@@ -48,7 +35,20 @@ return [
         'show_pricing'  => 1,
         'show_cta'      => 1,
 
-        // Hizmetler
+        // Hosting kontrol panelleri
+        // - directadmin_url / cpanel_url / plesk_url: WiseCP modülünden URL gelmediğinde kullanılır
+        // - default_server_ip: Servis bazında IP yoksa fallback olarak bu IP'den panel URL üretilir
+        // - Müşteri henüz domain bağlamadığında bile IP üzerinden panele girebilsin diye gerekli
+        'hosting_panels' => [
+            'show_panel_card'   => 1,
+            'default_server_ip' => '185.123.54.70',
+            'directadmin_url'   => 'https://185.123.54.70:2222',
+            'cpanel_url'        => '',
+            'plesk_url'         => '',
+            'webmail_url'       => 'https://185.123.54.70:2096',
+            'phpmyadmin_url'    => 'https://185.123.54.70:2222/CMD_DB',
+        ],
+
         'services' => [
             ['icon' => 'bi-code-slash',         'title' => 'Web Yazılım', 'text' => 'Kurumsal site, e-ticaret, ERP, CMS - modern PHP altyapısı.', 'link' => '/contact', 'color' => 'primary'],
             ['icon' => 'bi-hdd-network',        'title' => 'Hosting',     'text' => 'NVMe SSD diskli, LiteSpeed destekli hızlı barındırma.',      'link' => '/hosting-products', 'color' => 'info'],
