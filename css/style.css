@@ -3722,7 +3722,137 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
 @keyframes cdgSpin {from{transform:rotate(0);}to{transform:rotate(360deg);}}
 
 
-/* ==================== Anasayfa + Domain Inline Captcha ==================== */
+/* ==================== Anasayfa + Domain Inline Captcha (TOPLU LAYOUT) ==================== */
+
+/* HERO + DOMAIN form (input + captcha + button TEK SATIR, kompakt) */
+.cdg-hero-domain-with-captcha,
+.cdg-domain-search-with-captcha{
+    display:flex;align-items:stretch;
+    background:#fff;border-radius:14px;padding:5px;
+    box-shadow:0 16px 48px rgba(0,0,0,0.14);
+    width:100%;max-width:880px;
+    flex-wrap:nowrap;gap:4px;box-sizing:border-box;
+}
+.cdg-domain-search-with-captcha{box-shadow:0 20px 60px rgba(0,0,0,0.25);margin:0 auto;}
+
+.cdg-hero-domain-with-captcha .cdg-hero-domain-input,
+.cdg-domain-search-input-main{
+    flex:1 1 0;position:relative;
+    background:transparent;box-shadow:none;padding:0;border-radius:0;margin:0;min-width:0;
+}
+.cdg-hero-domain-with-captcha .cdg-hero-domain-input i,
+.cdg-domain-search-input-main i{
+    position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    color:#94a3b8;font-size:18px;pointer-events:none;z-index:1;
+}
+.cdg-hero-domain-with-captcha .cdg-hero-domain-input input,
+.cdg-domain-search-input-main input{
+    border:0;background:transparent;box-shadow:none;
+    padding:13px 12px 13px 42px;width:100%;font-size:15px;color:#0f172a;
+    font-family:inherit;outline:none;box-sizing:border-box;
+}
+
+.cdg-hero-domain-captcha,
+.cdg-domain-search-captcha{
+    display:flex;align-items:center;gap:6px;
+    flex:0 0 auto;padding:0 4px;
+    border-left:1px solid #e2e8f0;margin-left:2px;
+}
+.cdg-hero-captcha-img-inline,
+.cdg-domain-captcha-img{
+    flex-shrink:0;background:#f8fafc;
+    border:1px solid #e2e8f0;border-radius:7px;padding:2px 4px;height:36px;
+    display:flex;align-items:center;justify-content:center;
+    min-width:60px;max-width:90px;
+}
+.cdg-hero-captcha-img-inline img,
+.cdg-hero-captcha-img-inline > div,
+.cdg-hero-captcha-img-inline canvas,
+.cdg-domain-captcha-img img,
+.cdg-domain-captcha-img > div,
+.cdg-domain-captcha-img canvas{
+    max-height:28px;max-width:100%;
+}
+
+.cdg-hero-domain-captcha input,
+.cdg-domain-search-captcha input{
+    width:130px;flex:0 0 130px;
+    padding:10px 11px;border:1px solid #e2e8f0;border-radius:7px;
+    background:#fff;color:#0f172a;
+    font-size:13px;font-family:inherit;font-weight:600;letter-spacing:0.3px;
+    outline:none;transition:all 0.2s;box-sizing:border-box;
+}
+.cdg-hero-domain-captcha input:focus,
+.cdg-domain-search-captcha input:focus{
+    border-color:#1e40af;box-shadow:0 0 0 3px rgba(30,64,175,0.10);
+}
+.cdg-hero-domain-captcha input::placeholder,
+.cdg-domain-search-captcha input::placeholder{
+    color:#94a3b8;font-weight:500;letter-spacing:0;
+}
+
+.cdg-hero-domain-with-captcha button,
+.cdg-hero-domain-with-captcha .cdg-btn,
+.cdg-domain-search-with-captcha .cdg-btn{
+    flex:0 0 auto;flex-shrink:0;
+    padding:13px 22px;border-radius:10px;font-size:14px;font-weight:700;
+    white-space:nowrap;align-self:stretch;
+    display:inline-flex;align-items:center;justify-content:center;gap:6px;
+    margin-left:2px;
+}
+
+@media (max-width:768px){
+    .cdg-hero-domain-with-captcha,
+    .cdg-domain-search-with-captcha{
+        flex-direction:column;gap:8px;padding:8px;
+    }
+    .cdg-hero-domain-with-captcha .cdg-hero-domain-input,
+    .cdg-domain-search-input-main,
+    .cdg-hero-domain-captcha,
+    .cdg-domain-search-captcha,
+    .cdg-hero-domain-with-captcha button,
+    .cdg-hero-domain-with-captcha .cdg-btn,
+    .cdg-domain-search-with-captcha .cdg-btn{
+        flex:1 1 100%;width:100%;margin:0;
+    }
+    .cdg-hero-domain-captcha,
+    .cdg-domain-search-captcha{
+        border-left:0;border-top:1px solid #e2e8f0;
+        padding-top:8px;justify-content:center;
+    }
+    .cdg-hero-domain-captcha input,
+    .cdg-domain-search-captcha input{
+        flex:1 1 auto;width:auto;
+    }
+}
+
+/* === MOBILE: 768px ALTINDA DIKEY YIGIN === */
+@media (max-width:768px){
+    .cdg-hero-domain-with-captcha,
+    .cdg-domain-search-with-captcha{
+        flex-direction:column;gap:8px;padding:8px;
+    }
+    .cdg-hero-domain-with-captcha .cdg-hero-domain-input,
+    .cdg-domain-search-input-main,
+    .cdg-hero-domain-captcha,
+    .cdg-domain-search-captcha,
+    .cdg-hero-domain-with-captcha button,
+    .cdg-hero-domain-with-captcha .cdg-btn,
+    .cdg-domain-search-with-captcha .cdg-btn{
+        flex:1 1 100%;width:100%;margin:0;
+    }
+    .cdg-hero-domain-captcha,
+    .cdg-domain-search-captcha{
+        border-left:0;
+        border-top:1px solid #e2e8f0;
+        padding-top:8px;justify-content:center;
+    }
+    .cdg-hero-domain-captcha input,
+    .cdg-domain-search-captcha input{
+        flex:1 1 auto;width:auto;
+    }
+}
+
 
 /* HERO + DOMAIN form (input + captcha + button tek satır) */
 .cdg-hero-domain-with-captcha,

@@ -1,20 +1,22 @@
 {
-    "version": "3.5.20",
+    "version": "3.5.21",
     "release_date": "2026-05-03",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.20-codega",
-    "tag": "v3.5.20-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.21-codega",
+    "tag": "v3.5.21-codega",
     "changelog": [
-        "v3.5.20 - Hosting URL: WiseCP runtime defansif fallback chain",
-        "DERIN ARASTIRMA: Yunus'un sitesinde public Hosting sayfasi YOK",
-        "  Calisan URL'ler: /anasayfa, /alan-adi, /yazilimlar, /knowledgebase, /iletisim",
-        "  Calismayan: /products-hosting, /hosting-products (her ikisi de 404)",
-        "  Sebep: WiseCP admin paneli > Sayfa Yoneticisi'nde Hosting public sayfasi tanimlanmamis",
-        "FIX: Header + footer Hosting linki icin defansif URL chain",
-        "  1) WiseCP runtime $links global'inden dene (hosting-products, products-hosting, hosting, public-hosting)",
-        "  2) Yoksa anasayfa + #paketler anchor (anasayfada paketler bolumu var)",
-        "  Sonuc: Yunus admin panelden tanimlasa da tanimlamasa da link calisir",
-        "FIX: index.php pricing section'a id=paketler eklendi",
-        "  Anasayfa #paketler anchor'i artik calisiyor"
+        "v3.5.21 - Domain arama formu kompakt layout",
+        "FIX: Captcha input 'Güvenlik Kodu' yarım kalıyordu",
+        "  ÖNCE: flex:1 1 100px (100px daralinca 'Güvenlik Ko' kesik)",
+        "  ŞİMDİ: width:130px;flex:0 0 130px (sabit 130px, tam görünür)",
+        "FIX: Domain Sorgula butonu sol-altta beliriyordu",
+        "  ÖNCE: 1100px breakpoint, viewport <1100px'te dikey yığın",
+        "  ŞİMDİ: 768px breakpoint, sadece mobil dikey",
+        "FIX: Layout flex değerleri yeniden",
+        "  Input: flex:1 1 0 (esnek, kayan)",
+        "  Captcha: flex:0 0 auto (sabit gerekli kadar)",
+        "  Buton: flex:0 0 auto (sabit, asla alt satır)",
+        "FIX: Hem index.php hero hem domain.php sayfası aynı CSS",
+        "  cdg-hero-domain + cdg-domain-search - tek CSS bloğu"
     ]
 }
