@@ -23,6 +23,10 @@ $options   = isset($options) && is_array($options) ? $options : (isset($proanse[
 $bills     = isset($bills) && is_array($bills) ? $bills : [];
 $buttons   = isset($buttons) && is_array($buttons) ? $buttons : [];
 $supported = isset($supported) && is_array($supported) ? $supported : [];
+$links     = isset($links) && is_array($links) ? $links : [];
+
+// WiseCP native AJAX endpoint - tum hosting operasyonlari buraya POST atilir
+$controller_url = $links['controller'] ?? '';
 
 $d_id        = (int)($proanse['id'] ?? 0);
 $d_name      = $proanse['name'] ?? 'Hosting';
@@ -460,6 +464,44 @@ $cdg_panel_icon = function($type, $name) {
     transition: transform 0.15s;
 }
 .cdg-h-panel-manual:hover { transform: translateY(-1px); }
+
+/* Şifre input grup (eye + magic butonlu) */
+.cdg-h-pw-row {
+    display: flex; gap: 6px;
+    background: #fff;
+    border: 1.5px solid var(--c-border);
+    border-radius: 10px;
+    padding: 4px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+.cdg-h-pw-row:focus-within {
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 3px rgba(46,59,78,0.10);
+}
+.cdg-h-pw-input {
+    flex: 1;
+    border: 0; outline: none;
+    padding: 9px 12px;
+    font-size: 14px;
+    background: transparent;
+    color: var(--c-text);
+    font-family: "JetBrains Mono", Consolas, monospace;
+}
+.cdg-h-pw-side {
+    width: 40px;
+    background: #f1f5f9;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--c-muted);
+    transition: background 0.15s, color 0.15s;
+}
+.cdg-h-pw-side:hover {
+    background: var(--c-primary);
+    color: #fff;
+}
+.cdg-h-pw-side i { font-size: 16px; }
 </style>
 
 <div class="cdg-h">
@@ -705,42 +747,56 @@ $cdg_panel_icon = function($type, $name) {
                 </div>
             </div>
 
-            <!-- ŞİFRE -->
+            <!-- ŞİFRE - WiseCP native şifre değiştirme -->
             <div class="cdg-h-pane" data-pane="password">
+                <?php if($can_change_pw): ?>
+                <div class="cdg-h-card">
+                    <div class="cdg-h-card-head">
+                        <h3><i class="bi bi-key-fill"></i> <?php echo htmlspecialchars($panel_name, ENT_QUOTES); ?> Şifre Değiştir</h3>
+                    </div>
+                    <div class="cdg-h-card-body">
+                        <p style="font-size:13px;color:#64748b;margin:0 0 16px;">
+                            Yeni hosting şifrenizi belirleyin. Güçlü şifre en az 8 karakter, harf, sayı ve özel karakter içermelidir.
+                        </p>
+
+                        <form id="cdgPwForm" data-id="<?php echo $d_id; ?>" autocomplete="off">
+                            <div class="cdg-h-pw-row">
+                                <input type="password" name="password" id="cdgPwInput"
+                                    class="cdg-h-pw-input" placeholder="Yeni şifre"
+                                    autocomplete="new-password" minlength="6" required>
+                                <button type="button" id="cdgPwToggle" class="cdg-h-pw-side" title="Göster/Gizle">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button type="button" id="cdgPwGen" class="cdg-h-pw-side" title="Otomatik Oluştur">
+                                    <i class="bi bi-magic"></i>
+                                </button>
+                            </div>
+
+                            <div class="cdg-h-alert cdg-h-alert-warn" style="margin-top:14px;">
+                                <i class="bi bi-exclamation-triangle"></i>
+                                <div style="font-size:12px;">
+                                    <strong>Önemli:</strong> Şifre değiştikten sonra FTP, e-posta yapılandırmalarınızı yeni şifre ile güncellemeyi unutmayın.
+                                </div>
+                            </div>
+
+                            <button type="submit" class="cdg-h-btn cdg-h-btn-primary" style="width:100%;margin-top:14px;">
+                                <i class="bi bi-check2-circle"></i> Şifreyi Değiştir
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <?php else: ?>
                 <div class="cdg-h-alert cdg-h-alert-warn">
                     <i class="bi bi-exclamation-triangle"></i>
                     <div>
-                        <strong>Hosting Şifresi Değiştirme</strong><br>
-                        Hosting şifrenizi değiştirmek için <strong><?php echo htmlspecialchars($panel_name, ENT_QUOTES); ?></strong> paneline giriş yapın. Yeni şifreyi paneldeki "Hesap Yönetimi → Şifre Değiştir" bölümünden değiştirebilirsiniz.
+                        <strong>Şifre Değişikliği</strong><br>
+                        Bu hizmet için panel üzerinden şifre değişikliği desteklenmiyor.
+                        <?php if($has_buttons || $d_panel_url): ?>
+                        Lütfen kontrol paneline giriş yapın.
+                        <?php endif; ?>
                     </div>
-                </div>
-
-                <?php if($has_buttons || $d_panel_url): ?>
-                <div style="text-align:center;padding:14px 0;">
-                    <?php
-                    $login_url = '';
-                    foreach($buttons as $b_type => $b_value) {
-                        if(stripos((string)$b_type, 'webmail') === false) {
-                            $login_url = $b_value['url'] ?? '';
-                            break;
-                        }
-                    }
-                    if(!$login_url) $login_url = $d_panel_url;
-                    ?>
-                    <?php if($login_url): ?>
-                    <a href="<?php echo htmlspecialchars($login_url, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-h-btn cdg-h-btn-primary">
-                        <i class="bi bi-key-fill"></i> Şifre Değiştirmek İçin Panele Git
-                    </a>
-                    <?php endif; ?>
                 </div>
                 <?php endif; ?>
-
-                <div class="cdg-h-alert cdg-h-alert-info" style="margin-top:14px;">
-                    <i class="bi bi-info-circle"></i>
-                    <div style="font-size:12px;">
-                        <strong>Önemli:</strong> Şifrenizi değiştirdikten sonra FTP, e-posta yapılandırmalarınızı yeni şifre ile güncellemeyi unutmayın.
-                    </div>
-                </div>
             </div>
 
             <!-- YENİLEME -->
@@ -760,14 +816,11 @@ $cdg_panel_icon = function($type, $name) {
                             <li><span class="cdg-h-info-l">Yenileme Ücreti</span><span class="cdg-h-info-v"><?php echo (float)$d_amount; ?> ₺</span></li>
                             <li><span class="cdg-h-info-l">Periyot</span><span class="cdg-h-info-v"><?php echo (int)$d_period; ?> <?php echo htmlspecialchars($d_ptime ?: 'Yıl', ENT_QUOTES); ?></span></li>
                         </ul>
-                        <div style="margin-top:14px;text-align:center;">
-                            <form method="post" action="" style="display:inline-block;">
-                                <input type="hidden" name="renewal_id" value="<?php echo $d_id; ?>">
-                                <button type="submit" name="action" value="renewal" class="cdg-h-btn cdg-h-btn-success">
-                                    <i class="bi bi-arrow-clockwise"></i> Yenileme Faturası Oluştur
-                                </button>
-                            </form>
-                        </div>
+                        <form id="cdgRenForm" data-id="<?php echo $d_id; ?>" style="margin-top:14px;text-align:center;">
+                            <button type="submit" class="cdg-h-btn cdg-h-btn-success">
+                                <i class="bi bi-arrow-clockwise"></i> Yenileme Faturası Oluştur
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <?php else: ?>
@@ -837,8 +890,7 @@ $cdg_panel_icon = function($type, $name) {
                         Bu hizmeti iptal etmek istediğinizden emin misiniz? İptal sonrası tüm verileriniz silinecektir.
                     </div>
                 </div>
-                <form method="post" action="" style="margin-top:14px;">
-                    <input type="hidden" name="cancel_id" value="<?php echo $d_id; ?>">
+                <form id="cdgCancelForm" data-id="<?php echo $d_id; ?>" style="margin-top:14px;">
 
                     <div class="cdg-h-field">
                         <label class="cdg-h-label">İptal Türü</label>
@@ -854,7 +906,7 @@ $cdg_panel_icon = function($type, $name) {
                     </div>
 
                     <div style="text-align:center;">
-                        <button type="submit" name="action" value="cancel" class="cdg-h-btn cdg-h-btn-danger">
+                        <button type="submit" class="cdg-h-btn cdg-h-btn-danger">
                             <i class="bi bi-ban"></i> İptal Talebi Gönder
                         </button>
                     </div>
@@ -870,3 +922,203 @@ $cdg_panel_icon = function($type, $name) {
         </div>
     </div>
 </div>
+
+<?php if($controller_url && ($can_change_pw || $is_active)): ?>
+<script>
+/**
+ * CODEGA Hosting Detay - Minimal Form Submit Handler
+ * - Tab sistemi CSS-only (HİÇ JS yok)
+ * - Sadece form submit'leri WiseCP native API'ye gönderilir
+ * - Inline onclick KULLANILMAZ - addEventListener pattern
+ * - WiseCP MioAjax tercih edilir, fetch fallback
+ */
+(function(){
+    'use strict';
+
+    var CONTROLLER_URL = <?php echo json_encode($controller_url); ?>;
+    var PRODUCT_ID = <?php echo (int)$d_id; ?>;
+
+    // WiseCP API çağrısı (MioAjax > fetch fallback)
+    function api(operation, data, callback) {
+        var payload = { operation: operation };
+        for(var k in data) payload[k] = data[k];
+
+        // 1) WiseCP'in native MioAjax fonksiyonu varsa kullan
+        if(typeof MioAjax === 'function') {
+            try {
+                MioAjax({
+                    url: CONTROLLER_URL,
+                    type: 'post',
+                    data: payload,
+                    result: function(r){ callback(r); }
+                });
+                return;
+            } catch(e) { /* fall through to fetch */ }
+        }
+
+        // 2) Fallback: native fetch
+        var fd = new FormData();
+        for(var k2 in payload) fd.append(k2, payload[k2]);
+        fetch(CONTROLLER_URL, {
+            method: 'POST',
+            body: fd,
+            credentials: 'same-origin',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(function(r){ return r.text(); })
+        .then(function(t){
+            var j = null;
+            try { j = JSON.parse(t); } catch(e) { j = { status: 'error', message: 'Yanıt çözümlenemedi' }; }
+            callback(j);
+        })
+        .catch(function(){ callback({ status: 'error', message: 'Bağlantı hatası' }); });
+    }
+
+    // Bildirim gösterimi (WiseCP alert_success/alert_error tercih)
+    function notify(type, msg) {
+        if(type === 'success' && typeof alert_success === 'function') {
+            alert_success(msg, { timer: 3000 });
+        } else if((type === 'error' || type === 'danger') && typeof alert_error === 'function') {
+            alert_error(msg, { timer: 4000 });
+        } else if(type === 'success' && typeof toastr !== 'undefined') {
+            toastr.success(msg);
+        } else if((type === 'error' || type === 'danger') && typeof toastr !== 'undefined') {
+            toastr.error(msg);
+        } else {
+            alert(msg);
+        }
+    }
+
+    // Buton loading state helper
+    function btnLoading(btn, text) {
+        if(!btn) return null;
+        var orig = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> ' + (text || 'İşleniyor...');
+        return function(){ btn.disabled = false; btn.innerHTML = orig; };
+    }
+
+    // === ŞİFRE FORM ===
+    var pwForm = document.getElementById('cdgPwForm');
+    if(pwForm) {
+        // Toggle göz ikonu
+        var togBtn = document.getElementById('cdgPwToggle');
+        if(togBtn) {
+            togBtn.addEventListener('click', function(){
+                var inp = document.getElementById('cdgPwInput');
+                if(!inp) return;
+                inp.type = (inp.type === 'password') ? 'text' : 'password';
+                var icon = togBtn.querySelector('i');
+                if(icon) icon.className = (inp.type === 'password') ? 'bi bi-eye' : 'bi bi-eye-slash';
+            });
+        }
+
+        // Şifre üreteci
+        var genBtn = document.getElementById('cdgPwGen');
+        if(genBtn) {
+            genBtn.addEventListener('click', function(){
+                var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$%';
+                var pw = '';
+                for(var i=0; i<14; i++) {
+                    pw += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                var inp = document.getElementById('cdgPwInput');
+                if(inp) {
+                    inp.value = pw;
+                    inp.type = 'text';
+                    var icon = togBtn ? togBtn.querySelector('i') : null;
+                    if(icon) icon.className = 'bi bi-eye-slash';
+                }
+            });
+        }
+
+        // Form submit -> WiseCP change_hosting_password
+        pwForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            var inp = document.getElementById('cdgPwInput');
+            if(!inp || !inp.value) {
+                notify('error', 'Lütfen yeni şifre girin');
+                return;
+            }
+            if(inp.value.length < 6) {
+                notify('error', 'Şifre en az 6 karakter olmalı');
+                return;
+            }
+            if(!confirm('Hosting şifrenizi değiştirmek istediğinize emin misiniz?')) return;
+
+            var btn = pwForm.querySelector('button[type=submit]');
+            var restore = btnLoading(btn, 'İşleniyor...');
+
+            api('change_hosting_password', { id: PRODUCT_ID, password: inp.value }, function(r){
+                restore && restore();
+                if(r && (r.status === 'successful' || r.status === 'success')) {
+                    notify('success', r.message || 'Hosting şifreniz başarıyla değiştirildi');
+                    inp.value = '';
+                    inp.type = 'password';
+                    var icon = togBtn ? togBtn.querySelector('i') : null;
+                    if(icon) icon.className = 'bi bi-eye';
+                } else {
+                    notify('error', (r && r.message) || 'Şifre değiştirilemedi');
+                }
+            });
+        });
+    }
+
+    // === YENİLEME FORM ===
+    var renForm = document.getElementById('cdgRenForm');
+    if(renForm) {
+        renForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            if(!confirm('Yenileme faturası oluşturulacak. Onaylıyor musunuz?')) return;
+
+            var btn = renForm.querySelector('button[type=submit]');
+            var restore = btnLoading(btn, 'Fatura oluşturuluyor...');
+
+            api('order_renewal', { id: PRODUCT_ID }, function(r){
+                restore && restore();
+                if(r && (r.status === 'successful' || r.status === 'success')) {
+                    notify('success', r.message || 'Yenileme faturası oluşturuldu');
+                    if(r.url || r.redirect) {
+                        setTimeout(function(){ window.location.href = (r.url || r.redirect); }, 1500);
+                    } else {
+                        setTimeout(function(){ window.location.reload(); }, 1500);
+                    }
+                } else {
+                    notify('error', (r && r.message) || 'Yenileme faturası oluşturulamadı');
+                }
+            });
+        });
+    }
+
+    // === İPTAL FORM ===
+    var cancelForm = document.getElementById('cdgCancelForm');
+    if(cancelForm) {
+        cancelForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            if(!confirm('İptal işlemini onaylıyor musunuz? Bu işlem geri alınamaz.')) return;
+
+            var typeSel = cancelForm.querySelector('select[name="cancel_type"]');
+            var reasonTa = cancelForm.querySelector('textarea[name="cancel_reason"]');
+            var data = {
+                id: PRODUCT_ID,
+                type: typeSel ? typeSel.value : 'end_of_period',
+                reason: reasonTa ? reasonTa.value : ''
+            };
+
+            var btn = cancelForm.querySelector('button[type=submit]');
+            var restore = btnLoading(btn, 'Talep gönderiliyor...');
+
+            api('canceled_product', data, function(r){
+                restore && restore();
+                if(r && (r.status === 'successful' || r.status === 'success')) {
+                    notify('success', r.message || 'İptal talebiniz alındı');
+                    setTimeout(function(){ window.location.reload(); }, 2000);
+                } else {
+                    notify('error', (r && r.message) || 'İptal talebi gönderilemedi');
+                }
+            });
+        });
+    }
+})();
+</script>
+<?php endif; ?>
