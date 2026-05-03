@@ -91,6 +91,12 @@ if(isset($hoptions["page"]) && $hoptions["page"] != "index" && isset($meta["titl
 <!-- CODEGA Kurumsal Kimlik (logo + palet + tipografi) -->
 <?php $brand_inc = __DIR__ . DIRECTORY_SEPARATOR . 'cdg-brand.php'; if(file_exists($brand_inc)) include $brand_inc; ?>
 
+<!-- CODEGA Migration Runner (idempotent, sadece yeni SQL varsa uygular) -->
+<?php
+    $cdg_migration_inc = __DIR__ . DIRECTORY_SEPARATOR . 'cdg-migration-runner.php';
+    if(file_exists($cdg_migration_inc)) include_once $cdg_migration_inc;
+?>
+
 <!-- WiseCP main script -->
 <script>var template_address = "<?php echo $tadress; ?>";</script>
 

@@ -2031,6 +2031,130 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
 .cdg-support-actions{display:flex;gap:10px;flex-wrap:wrap;}
 
 /* 10. SON CTA */
+
+/* ========== OTOMASYON SÜRECİ (v3.5.54 migration) ========== */
+.cdg-automation-section {
+    padding: 80px 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+}
+.cdg-automation-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 8px 4px 24px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+.cdg-auto-step {
+    flex: 1 0 200px;
+    min-width: 200px;
+    padding: 24px 18px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    scroll-snap-align: start;
+}
+.cdg-auto-step:hover {
+    transform: translateY(-4px);
+    border-color: #00D3E5;
+    box-shadow: 0 16px 36px rgba(46,59,78,0.10);
+}
+.cdg-auto-step::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #2E3B4E 0%, #00D3E5 100%);
+    border-radius: 16px 16px 0 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.cdg-auto-step:hover::before { opacity: 1; }
+.cdg-auto-step-icon {
+    width: 50px; height: 50px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    margin-bottom: 14px;
+    box-shadow: 0 8px 18px rgba(46,59,78,0.18);
+}
+.cdg-auto-step-num {
+    font-size: 11px;
+    font-weight: 800;
+    color: #00D3E5;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+.cdg-auto-step h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+}
+.cdg-auto-step p {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+}
+.cdg-auto-step-arrow {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    color: #cbd5e1;
+    font-size: 22px;
+}
+.cdg-automation-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 36px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.cdg-auto-stat {
+    text-align: center;
+    padding: 18px 14px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+}
+.cdg-auto-stat-num {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0f172a;
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+}
+.cdg-auto-stat-lbl {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 600;
+}
+@media (max-width: 1024px) {
+    .cdg-auto-step-arrow { display: none; }
+}
+@media (max-width: 768px) {
+    .cdg-automation-section { padding: 56px 0; }
+    .cdg-auto-step { flex: 1 0 240px; min-width: 240px; }
+    .cdg-automation-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .cdg-auto-stat-num { font-size: 22px; }
+}
+
 .cdg-final-cta{padding:80px 0 100px;background:#fff;}
 .cdg-final-cta-content{
     position:relative;
@@ -4667,6 +4791,11 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
     grid-template-columns: 1fr 1fr;
     gap: 24px;
 }
+.cdg-nav-mega-grid-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+.cdg-nav-mega-grid-3 .cdg-nav-mega { min-width: 760px; }
 .cdg-nav-mega-col { min-width: 0; }
 .cdg-nav-mega-title {
     font-size: 11px;
@@ -4739,6 +4868,7 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
     .cdg-nav-mega.open { display: block; }
     .cdg-nav-mega::before { display: none; }
     .cdg-nav-mega-grid { grid-template-columns: 1fr; gap: 14px; }
+    .cdg-nav-mega-grid-3 { grid-template-columns: 1fr; gap: 14px; }
 }
 
 /* ====================================================

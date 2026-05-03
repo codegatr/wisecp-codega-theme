@@ -512,6 +512,71 @@ $faqs = [
     </div>
 </section>
 
+<!-- 2.5 OTOMASYON SÜRECİ (codega.com.tr migration v3.5.54) -->
+<section class="cdg-automation-section cdg-section">
+    <div class="cdg-container">
+        <div class="cdg-section-head">
+            <div class="cdg-eyebrow">Otomasyon Süreci</div>
+            <h2>Ödemeden sunucuya <span class="cdg-text-gradient">tam otomatik</span></h2>
+            <p>Manuel müdahale olmadan saniyeler içinde çalışan provisioning zinciri. Siparişten faturaya 5 adım, sıfır bekleme.</p>
+        </div>
+        <div class="cdg-automation-flow">
+            <div class="cdg-auto-step" data-step="01">
+                <div class="cdg-auto-step-icon"><i class="bi bi-credit-card-2-front-fill"></i></div>
+                <div class="cdg-auto-step-num">ADIM 01</div>
+                <h3>Sipariş & Ödeme</h3>
+                <p>iyzico / PayTR üzerinden SSL korumalı ödeme alınır.</p>
+            </div>
+            <div class="cdg-auto-step-arrow"><i class="bi bi-arrow-right"></i></div>
+            <div class="cdg-auto-step" data-step="02">
+                <div class="cdg-auto-step-icon"><i class="bi bi-list-check"></i></div>
+                <div class="cdg-auto-step-num">ADIM 02</div>
+                <h3>İşlem Kuyruğu</h3>
+                <p>Onay geldiğinde provisioning görevi otomatik kuyruğa alınır.</p>
+            </div>
+            <div class="cdg-auto-step-arrow"><i class="bi bi-arrow-right"></i></div>
+            <div class="cdg-auto-step" data-step="03">
+                <div class="cdg-auto-step-icon"><i class="bi bi-hdd-network-fill"></i></div>
+                <div class="cdg-auto-step-num">ADIM 03</div>
+                <h3>DirectAdmin API</h3>
+                <p>Hedef sunucuda hosting hesabı API ile saniyeler içinde açılır.</p>
+            </div>
+            <div class="cdg-auto-step-arrow"><i class="bi bi-arrow-right"></i></div>
+            <div class="cdg-auto-step" data-step="04">
+                <div class="cdg-auto-step-icon"><i class="bi bi-receipt"></i></div>
+                <div class="cdg-auto-step-num">ADIM 04</div>
+                <h3>Fatura Oluşturma</h3>
+                <p>KDV hesaplı fatura üretilir ve PDF olarak arşivlenir.</p>
+            </div>
+            <div class="cdg-auto-step-arrow"><i class="bi bi-arrow-right"></i></div>
+            <div class="cdg-auto-step" data-step="05">
+                <div class="cdg-auto-step-icon"><i class="bi bi-envelope-paper-fill"></i></div>
+                <div class="cdg-auto-step-num">ADIM 05</div>
+                <h3>Müşteri Bildirimi</h3>
+                <p>Hesap bilgileri ve fatura SMTP ile müşteriye iletilir.</p>
+            </div>
+        </div>
+        <div class="cdg-automation-stats">
+            <div class="cdg-auto-stat">
+                <div class="cdg-auto-stat-num">&lt;30sn</div>
+                <div class="cdg-auto-stat-lbl">Provisioning Süresi</div>
+            </div>
+            <div class="cdg-auto-stat">
+                <div class="cdg-auto-stat-num">%99.9</div>
+                <div class="cdg-auto-stat-lbl">Otomasyon Başarı Oranı</div>
+            </div>
+            <div class="cdg-auto-stat">
+                <div class="cdg-auto-stat-num">7/24</div>
+                <div class="cdg-auto-stat-lbl">Çalışma Zamanı</div>
+            </div>
+            <div class="cdg-auto-stat">
+                <div class="cdg-auto-stat-num">0</div>
+                <div class="cdg-auto-stat-lbl">Manuel Müdahale</div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- 3. POPÜLER TLD'ler -->
 <?php if($mod_domain && !empty($popular_tlds)): ?>
 <section class="cdg-tld-section cdg-section">

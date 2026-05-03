@@ -21,6 +21,16 @@ $cdg_corp_pages = [
     'gizlilik-politikasi'  => 'gizlilik-politikasi.php',
     'gizlilik-sozlesmesi'  => 'gizlilik-politikasi.php',
     'hizmet-sozlesmesi'    => 'hizmet-sozlesmesi.php',
+    // v3.5.53 codega.com.tr migration
+    'referanslarimiz'      => 'references.php',
+    'our-references'       => 'references.php',
+    'vizyon'               => 'vision.php',
+    'vision'               => 'vision.php',
+    'sistem-durumu'        => 'system-status.php',
+    'system-status'        => 'system-status.php',
+    'erp-yazilimi'         => 'erp.php',
+    'erp-software'         => 'erp.php',
+    'erp'                  => 'erp.php',
 ];
 
 $cdg_corp_slug = '';

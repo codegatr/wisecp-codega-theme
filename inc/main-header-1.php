@@ -142,13 +142,28 @@ if(!function_exists('cdg_link')) {
                 <li class="cdg-nav-mega-parent">
                     <a href="javascript:void(0);" class="cdg-nav-mega-toggle">Kurumsal <i class="bi bi-chevron-down"></i></a>
                     <div class="cdg-nav-mega">
-                        <div class="cdg-nav-mega-grid">
+                        <div class="cdg-nav-mega-grid cdg-nav-mega-grid-3">
                             <div class="cdg-nav-mega-col">
                                 <div class="cdg-nav-mega-title">Hakkımızda</div>
-                                <a href="/hakkimizda.html" class="cdg-nav-mega-link">
+                                <a href="/vizyon.html" class="cdg-nav-mega-link">
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#fee2e2,#fecaca);color:#dc2626;"><i class="bi bi-bullseye"></i></span>
                                     <span><strong>Vizyon &amp; Değerlerimiz</strong><small>Misyonumuz ve ilkelerimiz</small></span>
                                 </a>
+                                <a href="/hakkimizda.html" class="cdg-nav-mega-link">
+                                    <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe);color:#4338ca;"><i class="bi bi-buildings-fill"></i></span>
+                                    <span><strong>Şirket Hikayemiz</strong><small>2005'ten bugüne yolculuk</small></span>
+                                </a>
+                                <a href="/referanslarimiz.html" class="cdg-nav-mega-link">
+                                    <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#b45309;"><i class="bi bi-star-fill"></i></span>
+                                    <span><strong>Referanslarımız</strong><small>Bize güvenen 59+ marka</small></span>
+                                </a>
+                                <a href="/kariyer.html" class="cdg-nav-mega-link">
+                                    <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;"><i class="bi bi-briefcase"></i></span>
+                                    <span><strong>Kariyer</strong><small>Açık pozisyonlar</small></span>
+                                </a>
+                            </div>
+                            <div class="cdg-nav-mega-col">
+                                <div class="cdg-nav-mega-title">Sorumluluk</div>
                                 <a href="/sosyal-sorumluluk.html" class="cdg-nav-mega-link">
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#15803d;"><i class="bi bi-tree"></i></span>
                                     <span><strong>Sosyal Sorumluluk</strong><small>Toplum ve çevre projeleri</small></span>
@@ -157,9 +172,9 @@ if(!function_exists('cdg_link')) {
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#dcfce7,#86efac);color:#16a34a;"><i class="bi bi-recycle"></i></span>
                                     <span><strong>Sürdürülebilirlik</strong><small>Yeşil hosting taahhüdümüz</small></span>
                                 </a>
-                                <a href="/kariyer.html" class="cdg-nav-mega-link">
-                                    <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;"><i class="bi bi-briefcase"></i></span>
-                                    <span><strong>Kariyer</strong><small>Açık pozisyonlar</small></span>
+                                <a href="/sistem-durumu.html" class="cdg-nav-mega-link">
+                                    <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);color:#059669;"><i class="bi bi-activity"></i></span>
+                                    <span><strong>Sistem Durumu</strong><small>Gerçek zamanlı uptime</small></span>
                                 </a>
                             </div>
                             <div class="cdg-nav-mega-col">
