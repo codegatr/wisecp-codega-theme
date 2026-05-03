@@ -2220,22 +2220,106 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
 .cdg-solutions-section{background:#fff;}
 .cdg-solutions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
 .cdg-solution-card{
-    padding:28px;border-radius:18px;
+    padding:0;border-radius:18px;
     background:#fff;border:1px solid #e2e8f0;
-    text-decoration:none;color:inherit;transition:all 0.25s;
-    display:flex;flex-direction:column;
+    color:inherit;transition:all 0.25s;
+    display:flex;flex-direction:column;overflow:hidden;
 }
+.cdg-solution-head{padding:28px;cursor:pointer;display:flex;flex-direction:column;flex:1;transition:all 0.2s;}
+.cdg-solution-head:hover{background:linear-gradient(180deg,#fff,#f8fafc);}
 .cdg-solution-card:hover{
     transform:translateY(-4px);box-shadow:0 16px 40px rgba(46,59,78,0.10);
     border-color:rgba(46,59,78,0.20);
 }
+.cdg-solution-card.open{
+    grid-column:1/-1;
+    transform:none;
+    box-shadow:0 24px 60px rgba(46,59,78,0.15);
+    border-color:rgba(0,211,229,0.4);
+}
+.cdg-solution-card.open .cdg-solution-head{cursor:pointer;}
+.cdg-solution-card.open .cdg-solution-cta i{transform:rotate(180deg);}
+.cdg-solution-card.open .cdg-sol-cta-text{display:none;}
+.cdg-solution-card.open .cdg-sol-cta-text-open{display:inline;}
+.cdg-sol-cta-text-open{display:none;}
 .cdg-solution-icon{
     width:54px;height:54px;border-radius:14px;
     color:#fff;display:grid;place-items:center;font-size:24px;margin-bottom:16px;
 }
 .cdg-solution-card h3{font-size:18px;font-weight:700;color:#0f172a;margin-bottom:6px;}
 .cdg-solution-card p{font-size:13px;color:#64748b;line-height:1.5;margin-bottom:14px;flex:1;}
-.cdg-solution-cta{font-size:12px;font-weight:600;color:#2E3B4E;display:inline-flex;align-items:center;gap:4px;}
+.cdg-solution-cta{font-size:12px;font-weight:600;color:#2E3B4E;display:inline-flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:0.05em;}
+.cdg-solution-cta i{transition:transform 0.3s;}
+
+/* DETAY PANELİ */
+.cdg-solution-detail{
+    max-height:0;overflow:hidden;
+    transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.cdg-solution-card.open .cdg-solution-detail{max-height:1800px;}
+.cdg-solution-detail-inner{
+    padding:0 32px 32px;
+    border-top:1px solid #e2e8f0;
+    background:linear-gradient(180deg,#f8fafc,#fff);
+}
+.cdg-sol-detail-title{
+    font-size:24px;font-weight:800;color:#0f172a;
+    margin:24px 0 12px;letter-spacing:-0.02em;
+}
+.cdg-sol-detail-intro{
+    font-size:15px;color:#475569;line-height:1.7;
+    margin-bottom:24px;max-width:760px;
+}
+.cdg-sol-features{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;
+}
+.cdg-sol-feat{
+    display:flex;gap:12px;align-items:flex-start;
+    padding:14px;border-radius:12px;
+    background:#fff;border:1px solid #e2e8f0;
+    transition:all 0.2s;
+}
+.cdg-sol-feat:hover{
+    border-color:rgba(0,211,229,0.3);
+    transform:translateX(2px);
+    box-shadow:0 4px 14px rgba(15,23,42,0.05);
+}
+.cdg-sol-feat-icon{
+    flex-shrink:0;width:38px;height:38px;
+    display:grid;place-items:center;
+    border-radius:10px;background:rgba(0,211,229,0.08);
+    font-size:18px;
+}
+.cdg-sol-feat strong{
+    display:block;font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;
+}
+.cdg-sol-feat span{
+    font-size:12px;color:#64748b;line-height:1.55;
+}
+.cdg-sol-audience{
+    margin:0 0 20px;padding:14px 18px;
+    border-left:4px solid #2E3B4E;
+    background:rgba(46,59,78,0.04);
+    border-radius:0 10px 10px 0;
+    display:flex;gap:10px;align-items:flex-start;
+    font-size:13px;line-height:1.55;color:#334155;
+}
+.cdg-sol-audience i{font-size:18px;flex-shrink:0;margin-top:1px;}
+.cdg-sol-audience strong{color:#0f172a;}
+.cdg-sol-actions{display:flex;gap:10px;flex-wrap:wrap;}
+
+@media(max-width:1100px){
+    .cdg-sol-features{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:768px){
+    .cdg-solution-card.open{grid-column:1/-1;}
+    .cdg-solution-detail-inner{padding:0 20px 24px;}
+    .cdg-sol-detail-title{font-size:20px;}
+    .cdg-sol-detail-intro{font-size:14px;}
+    .cdg-sol-features{grid-template-columns:1fr;}
+    .cdg-sol-actions{flex-direction:column;}
+    .cdg-sol-actions .cdg-btn{justify-content:center;}
+}
 
 /* SUNUCU - spec list ekle */
 .cdg-server-spec-list{list-style:none;padding:0;margin:14px 0;}

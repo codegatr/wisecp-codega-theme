@@ -317,12 +317,108 @@ $advantages = [
 ];
 
 $solutions = [
-    ['icon' => 'bi-cart3',           'title' => 'E-Ticaret',     'desc' => 'WooCommerce, OpenCart, PrestaShop optimize',     'color' => '#10b981'],
-    ['icon' => 'bi-wordpress',       'title' => 'WordPress',     'desc' => 'Tek tıkla kurulum + WP-CLI + auto update',       'color' => '#21759b'],
-    ['icon' => 'bi-buildings',       'title' => 'Kurumsal',      'desc' => 'Yüksek trafik + dedicated kaynak + SLA',         'color' => '#8b5cf6'],
-    ['icon' => 'bi-mortarboard-fill','title' => 'Eğitim',        'desc' => 'Moodle, Open edX, BBB optimize',                 'color' => '#f59e0b'],
-    ['icon' => 'bi-newspaper',       'title' => 'Haber/Blog',    'desc' => 'Yüksek trafik + CDN + cache layer',              'color' => '#ec4899'],
-    ['icon' => 'bi-stack-overflow',  'title' => 'Yazılımcı',     'desc' => 'Git, Composer, Node, SSH erişimi',               'color' => '#00D3E5'],
+    [
+        'icon'  => 'bi-cart3',
+        'title' => 'E-Ticaret Hosting',
+        'desc'  => 'WooCommerce, OpenCart, PrestaShop, Magento için PCI-DSS uyumlu altyapı',
+        'color' => '#10b981',
+        'detail_title' => 'Online mağazanız için en hızlı altyapı',
+        'detail_intro' => 'E-ticaret sitelerinin %3 üzerinde sayfa yükleme süresi kayıp satışa dönüşür. CODEGA E-Ticaret Hosting; LiteSpeed Enterprise + LSCache + NVMe SSD üçlüsüyle ödeme sayfalarınızı 0.5 saniye altı yükler, dönüşüm oranlarınızı doğrudan artırır. PCI-DSS uyumlu altyapı, SSL ve WAF ile kart ödemeleri uçtan uca güvende.',
+        'features' => [
+            ['icon' => 'bi-lightning-charge-fill', 'title' => 'Ödeme Sayfası Hızı', 'text' => 'LSCache + Redis Object Cache ile checkout 0.5sn altı yükleme; TTFB &lt; 200ms.'],
+            ['icon' => 'bi-shield-lock-fill',      'title' => 'PCI-DSS Uyumlu',    'text' => 'TLS 1.3 zorunlu, kart verisi şifreli sanal POS, ModSecurity WAF, brute-force koruması.'],
+            ['icon' => 'bi-cloud-download-fill',   'title' => 'Tek Tıkla Kurulum',  'text' => 'Softaculous: WooCommerce, OpenCart 4.x, PrestaShop 8.x, Magento 2 anında kurulum.'],
+            ['icon' => 'bi-graph-up',              'title' => 'Yüksek Stok',         'text' => '100.000+ ürün desteği; MariaDB 10.11 InnoDB tuning, query cache optimize.'],
+            ['icon' => 'bi-arrow-clockwise',        'title' => 'Otomatik Yedek',     'text' => 'Günlük JetBackup ile 30 gün geriye dönük restore; ürün-sipariş kaybı yok.'],
+            ['icon' => 'bi-credit-card-2-front',   'title' => 'iyzico/Param/PayTR',  'text' => 'Türk sanal POS sağlayıcılarıyla yerel hosting (düşük latency, hızlı 3D Secure).'],
+        ],
+        'audience' => 'Aylık 10K+ ziyaretçi alan butik mağazalar, B2C e-ticaret, marketplace satıcıları, dropshipping projeleri için ideal.',
+    ],
+    [
+        'icon'  => 'bi-wordpress',
+        'title' => 'WordPress Hosting',
+        'desc'  => 'Apache\'ye göre 9 kat hızlı, WP-CLI + auto update + LiteSpeed Cache hazır',
+        'color' => '#21759b',
+        'detail_title' => 'WordPress için optimize hosting',
+        'detail_intro' => 'WordPress siteleri trafik aldıkça yavaşlar — biz bunu çözdük. CODEGA WordPress Hosting LiteSpeed + LSCache eklentisi + Object Cache (Redis) + PHP 8.3 OpCache ile sitenizi Apache + standart PHP altyapısına göre 9 kat hızlandırır. Tek tıkla otomatik güncelleme, WP-CLI komut satırı, malware tarama dahil.',
+        'features' => [
+            ['icon' => 'bi-magic',                  'title' => 'Tek Tık Kurulum',  'text' => 'Softaculous: WordPress son sürüm + LSCache + Wordfence + Akismet kurulu hazır.'],
+            ['icon' => 'bi-terminal-fill',           'title' => 'WP-CLI Erişimi',    'text' => 'SSH üzerinden tüm WordPress yönetimi; bulk plugin update, DB optimize, search-replace.'],
+            ['icon' => 'bi-arrow-up-circle-fill',    'title' => 'Auto Update',        'text' => 'Core, plugin ve theme güvenlik güncellemeleri otomatik; major sürüm onay ile.'],
+            ['icon' => 'bi-speedometer2',            'title' => 'LSCache Dahil',      'text' => 'Sayfa cache + browser cache + CSS/JS minify + image WebP convert (CDN dahil).'],
+            ['icon' => 'bi-shield-check',            'title' => 'Brute-Force Koruma', 'text' => '/wp-login.php IP rate-limiting, 2FA destekli giriş, xmlrpc.php devre dışı.'],
+            ['icon' => 'bi-files',                   'title' => 'Staging Site',       'text' => 'Tek tıkla canlı sitenin kopyasını test ortamında oluştur, değişikliği güvenle deploy et.'],
+        ],
+        'audience' => 'Bloglar, kurumsal WordPress siteler, WooCommerce mağazalar, dijital ajanslar ve haber siteleri için optimize.',
+    ],
+    [
+        'icon'  => 'bi-buildings',
+        'title' => 'Kurumsal Hosting',
+        'desc'  => 'Dedicated kaynak, %99.95 uptime SLA, premium destek, custom firewall',
+        'color' => '#8b5cf6',
+        'detail_title' => 'Kurumsal seviyede güvence',
+        'detail_intro' => 'Büyük şirketlerin web altyapısı küçük yatak yapamaz. CODEGA Kurumsal Hosting; sizinle paylaşımsız dedicated CPU + RAM + IP, %99.95 uptime SLA garantisi, 4 saat içinde yanıt premium destek ve custom firewall kurallarıyla mission-critical iş yüklerini güvenle barındırır. Cluster mimari ve failover ile sıfır kesinti hedefi.',
+        'features' => [
+            ['icon' => 'bi-cpu-fill',              'title' => 'Dedicated Kaynak',     'text' => 'Garantili 4-32 vCore CPU, 8-128 GB RAM, paylaşımsız NVMe storage; başkası kaynak çalmaz.'],
+            ['icon' => 'bi-award-fill',            'title' => '%99.95 Uptime SLA',    'text' => 'Yıllık downtime 4.5 saatten az; aşımı durumunda krediler. Yazılı SLA sözleşmesi.'],
+            ['icon' => 'bi-people-fill',           'title' => 'Premium Destek',       'text' => 'Atanmış teknik müşteri temsilcisi, telefonla 24/7, 4 saat içinde yanıt SLA\'lı destek.'],
+            ['icon' => 'bi-firewall',               'title' => 'Custom Firewall',      'text' => 'IP whitelist, geo-block, DDoS L7 koruma, custom ModSecurity kuralları.'],
+            ['icon' => 'bi-arrow-repeat',           'title' => 'Cluster + Failover',  'text' => 'Aktif-pasif HA cluster, 1 saniye altı failover, MySQL replication, load balancer.'],
+            ['icon' => 'bi-clipboard-data',         'title' => 'Detaylı Raporlama',     'text' => 'Aylık SLA raporu, kaynak kullanım grafikleri, security audit, performans metrikleri.'],
+        ],
+        'audience' => 'Holding, banka, kamu, üniversite, mission-critical SaaS uygulamaları ve aylık 100K+ ziyaretçi alan kurumsal siteler için.',
+    ],
+    [
+        'icon'  => 'bi-mortarboard-fill',
+        'title' => 'Eğitim Hosting',
+        'desc'  => 'Moodle, Open edX, BigBlueButton, Chamilo - LMS altyapısı için optimize',
+        'color' => '#f59e0b',
+        'detail_title' => 'Online eğitim platformları için',
+        'detail_intro' => 'Bir LMS (Learning Management System) trafiği sıradan bir siteden çok farklı: aynı anda yüzlerce kullanıcı video izler, sınav alır, ödev yükler. CODEGA Eğitim Hosting; Moodle, Open edX, Chamilo gibi LMS\'leri optimize eder, BigBlueButton (BBB) entegrasyonu ile WebRTC üzerinden canlı ders verir. KVKK uyumlu öğrenci verisi koruması.',
+        'features' => [
+            ['icon' => 'bi-camera-video-fill',     'title' => 'BBB / WebRTC',        'text' => 'BigBlueButton kurulu, WebRTC + WebSocket portları açık, canlı ders altyapısı hazır.'],
+            ['icon' => 'bi-easel-fill',             'title' => 'Moodle Optimize',     'text' => 'PHP OPcache + Redis session, MariaDB InnoDB tuning, 5000+ aktif öğrenci destekli.'],
+            ['icon' => 'bi-lock-fill',              'title' => 'KVKK Uyumlu',          'text' => 'Öğrenci kişisel veri şifreli saklama, GDPR/KVKK uyumlu log silme, audit trail.'],
+            ['icon' => 'bi-collection-play-fill',  'title' => 'Yüksek Bandwidth',     'text' => 'Ders kayıt videoları için CDN entegrasyonu, HLS streaming, 100 Mbps+ uplink.'],
+            ['icon' => 'bi-puzzle-fill',            'title' => 'SCORM / xAPI',         'text' => 'SCORM 1.2/2004 paket desteği, xAPI (Tin Can) Learning Record Store entegrasyonu.'],
+            ['icon' => 'bi-people',                  'title' => 'Multi-Tenant',         'text' => 'Tek hosting üzerinde birden fazla okul/kurum için izole LMS instance\'ları.'],
+        ],
+        'audience' => 'Online kurs platformları, üniversiteler, dershaneler, kurumsal eğitim portalları ve uzaktan eğitim projeleri için.',
+    ],
+    [
+        'icon'  => 'bi-newspaper',
+        'title' => 'Haber / Blog Hosting',
+        'desc'  => 'CDN + multi-layer cache + image optimize + Elasticsearch',
+        'color' => '#ec4899',
+        'detail_title' => 'Yüksek trafik için optimize',
+        'detail_intro' => 'Haber siteleri viral içerikle dakikada binlerce ziyaretçi alabilir. CODEGA Haber/Blog Hosting; CDN entegrasyonu (Cloudflare + BunnyCDN), multi-layer cache (Page + Object + Browser), image optimization (WebP + lazy load) ve Elasticsearch arama altyapısıyla sitenizi viral trafikten zarar görmeden çıkartır. Comment spam koruması ve AMP desteği dahil.',
+        'features' => [
+            ['icon' => 'bi-cloud-fill',            'title' => 'CDN Entegrasyonu',     'text' => 'Cloudflare + BunnyCDN, görseller ve statik içerik 200+ noktadan dağıtılır.'],
+            ['icon' => 'bi-layers-fill',            'title' => 'Multi-Layer Cache',     'text' => 'Page cache (LSCache) + Object cache (Redis) + Browser cache; viral trafik için 100x ölçeklenir.'],
+            ['icon' => 'bi-image-fill',             'title' => 'Image Optimize',       'text' => 'Otomatik WebP/AVIF dönüşüm, lazy load, responsive srcset, %70 boyut azalma.'],
+            ['icon' => 'bi-search',                  'title' => 'Elasticsearch',        'text' => 'Tam metin arama; "ilgili haberler" önerileri için ML bazlı içerik benzerliği.'],
+            ['icon' => 'bi-shield-x',                'title' => 'Comment Spam',          'text' => 'Akismet + reCAPTCHA v3 + IP rate-limit; günde 10K+ spam yorum filtrelenir.'],
+            ['icon' => 'bi-phone-fill',              'title' => 'AMP Desteği',           'text' => 'Google AMP HTML servisi, mobil sayfa yükleme &lt; 1sn, Top Stories rank avantajı.'],
+        ],
+        'audience' => 'Ulusal/yerel haber siteleri, bloglar, magazin portalları, content marketing projeleri ve aylık 500K+ pageview alan yayıncılar için.',
+    ],
+    [
+        'icon'  => 'bi-stack-overflow',
+        'title' => 'Yazılımcı Hosting',
+        'desc'  => 'SSH + Git deploy + Composer + Node.js + PHP version switching',
+        'color' => '#00D3E5',
+        'detail_title' => 'Geliştiriciler için tam donanım',
+        'detail_intro' => 'Modern bir yazılım projesi tek-tıklamalı admin panelden yönetilemez. CODEGA Yazılımcı Hosting; tam SSH erişimi, Git post-receive hook ile auto-deploy, Composer 2.x, Node.js 18/20/22, PHP 7.4 / 8.0 / 8.1 / 8.2 / 8.3 anlık geçiş, sınırsız cron job, custom .htaccess ve WebSocket port erişimiyle profesyonel geliştirme akışınızı kesintiye uğratmaz.',
+        'features' => [
+            ['icon' => 'bi-terminal-fill',          'title' => 'Tam SSH Erişimi',     'text' => 'Key-based auth, screen/tmux destekli, sudo gerektirmeyen tüm komutlara erişim.'],
+            ['icon' => 'bi-git',                     'title' => 'Git Auto-Deploy',     'text' => 'Bare repo + post-receive hook ile push sonrası otomatik deploy, rollback desteği.'],
+            ['icon' => 'bi-box-seam',                'title' => 'Composer 2.x',         'text' => 'PHP package manager kurulu, Laravel/Symfony/CodeIgniter projeleri tek komutla setup.'],
+            ['icon' => 'bi-node-plus-fill',          'title' => 'Node.js 18/20/22',     'text' => 'Birden fazla Node sürümü, npm/yarn/pnpm, PM2 ile process management, custom port.'],
+            ['icon' => 'bi-arrow-left-right',        'title' => 'PHP Version Switch',  'text' => 'PHP 7.4 / 8.0 / 8.1 / 8.2 / 8.3 anlık geçiş, projeye özel .htaccess override.'],
+            ['icon' => 'bi-clock-history',           'title' => 'Sınırsız Cron',        'text' => 'Saniye hassasiyetli cron, log retention 30 gün, başarısızlık alert mail.'],
+        ],
+        'audience' => 'Freelance yazılımcılar, ajanslar, SaaS başlangıç projeleri, Laravel/Symfony/Node uygulamaları ve API backend projeleri için.',
+    ],
 ];
 
 $faqs = [
@@ -712,17 +808,70 @@ $faqs = [
             <p>E-ticaretten eğitim platformlarına, her sektör için optimize edilmiş altyapı.</p>
         </div>
         <div class="cdg-solutions-grid">
-            <?php foreach($solutions as $sol): ?>
-            <a href="<?php echo $hosting_url; ?>" class="cdg-solution-card">
-                <div class="cdg-solution-icon" style="background:linear-gradient(135deg,<?php echo $sol['color']; ?>,<?php echo $sol['color']; ?>cc);"><i class="bi <?php echo $sol['icon']; ?>"></i></div>
-                <h3><?php echo $sol['title']; ?></h3>
-                <p><?php echo $sol['desc']; ?></p>
-                <div class="cdg-solution-cta">Detaylar <i class="bi bi-arrow-right"></i></div>
-            </a>
+            <?php foreach($solutions as $idx => $sol): ?>
+            <div class="cdg-solution-card" data-sol="<?php echo $idx; ?>">
+                <div class="cdg-solution-head" onclick="cdgSolToggle(<?php echo $idx; ?>)">
+                    <div class="cdg-solution-icon" style="background:linear-gradient(135deg,<?php echo $sol['color']; ?>,<?php echo $sol['color']; ?>cc);"><i class="bi <?php echo $sol['icon']; ?>"></i></div>
+                    <h3><?php echo $sol['title']; ?></h3>
+                    <p><?php echo $sol['desc']; ?></p>
+                    <div class="cdg-solution-cta">
+                        <span class="cdg-sol-cta-text">Detaylar</span>
+                        <span class="cdg-sol-cta-text-open">Kapat</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="cdg-solution-detail" id="cdg-sol-detail-<?php echo $idx; ?>">
+                    <div class="cdg-solution-detail-inner">
+                        <h4 class="cdg-sol-detail-title"><?php echo htmlspecialchars($sol['detail_title'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h4>
+                        <p class="cdg-sol-detail-intro"><?php echo htmlspecialchars($sol['detail_intro'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
+                        <div class="cdg-sol-features">
+                            <?php foreach($sol['features'] as $feat): ?>
+                            <div class="cdg-sol-feat">
+                                <div class="cdg-sol-feat-icon" style="color:<?php echo $sol['color']; ?>;"><i class="bi <?php echo $feat['icon']; ?>"></i></div>
+                                <div>
+                                    <strong><?php echo htmlspecialchars($feat['title'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
+                                    <span><?php echo $feat['text']; ?></span>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="cdg-sol-audience" style="border-left-color:<?php echo $sol['color']; ?>;">
+                            <i class="bi bi-bullseye" style="color:<?php echo $sol['color']; ?>;"></i>
+                            <span><strong>Kimler için?</strong> <?php echo htmlspecialchars($sol['audience'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                        </div>
+                        <div class="cdg-sol-actions">
+                            <a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-primary"><i class="bi bi-bag-check"></i> Hosting Paketleri</a>
+                            <a href="<?php echo cdg_link('contact'); ?>" class="cdg-btn cdg-btn-secondary"><i class="bi bi-headset"></i> Bilgi Al</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
+<script>
+function cdgSolToggle(idx){
+    var card = document.querySelector('.cdg-solution-card[data-sol="'+idx+'"]');
+    if(!card) return;
+    var allCards = document.querySelectorAll('.cdg-solution-card');
+    var wasOpen = card.classList.contains('open');
+    // Close all
+    allCards.forEach(function(c){ c.classList.remove('open'); });
+    // Open this one if it wasn't open
+    if(!wasOpen){
+        card.classList.add('open');
+        // Smooth scroll to detail
+        setTimeout(function(){
+            var rect = card.getBoundingClientRect();
+            var bottomVisible = rect.bottom <= window.innerHeight;
+            if(!bottomVisible){
+                window.scrollBy({ top: rect.top - 100, behavior: 'smooth' });
+            }
+        }, 50);
+    }
+}
+</script>
 
 <!-- 11. AVANTAJLAR -->
 <section class="cdg-advantages-section cdg-section">

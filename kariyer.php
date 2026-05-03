@@ -45,45 +45,42 @@ if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public
     </div>
 </div>
 
-<h2 style="font-size:24px;font-weight:800;color:#0f172a;margin:0 0 20px;">Açık Pozisyonlar</h2>
+<h2 style="font-size:24px;font-weight:800;color:#0f172a;margin:0 0 20px;">Bizimle çalışmak ister misin?</h2>
 
-<div style="space-y:12px;">
-    <a href="mailto:kariyer@codega.com.tr?subject=Senior%20PHP%20Developer" style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-bottom:12px;text-decoration:none;color:#0f172a;transition:all 0.2s;">
-        <div>
-            <h3 style="font-size:17px;font-weight:800;color:#0f172a;margin:0 0 4px;">Senior PHP Developer</h3>
-            <p style="font-size:13px;color:#64748b;margin:0;"><i class="bi bi-geo-alt"></i> Konya / Hibrit · <i class="bi bi-clock"></i> Tam Zamanlı · <i class="bi bi-cash"></i> 80.000 - 120.000 ₺</p>
-        </div>
-        <span style="background:#2E3B4E;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;">Başvur →</span>
-    </a>
-
-    <a href="mailto:kariyer@codega.com.tr?subject=Sistem%20Yöneticisi" style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-bottom:12px;text-decoration:none;color:#0f172a;">
-        <div>
-            <h3 style="font-size:17px;font-weight:800;color:#0f172a;margin:0 0 4px;">DevOps / Sistem Yöneticisi</h3>
-            <p style="font-size:13px;color:#64748b;margin:0;"><i class="bi bi-geo-alt"></i> İstanbul / Hibrit · <i class="bi bi-clock"></i> Tam Zamanlı · <i class="bi bi-cash"></i> 90.000 - 140.000 ₺</p>
-        </div>
-        <span style="background:#2E3B4E;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;">Başvur →</span>
-    </a>
-
-    <a href="mailto:kariyer@codega.com.tr?subject=Müşteri%20Destek%20Uzmanı" style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-bottom:12px;text-decoration:none;color:#0f172a;">
-        <div>
-            <h3 style="font-size:17px;font-weight:800;color:#0f172a;margin:0 0 4px;">Müşteri Destek Uzmanı (Hosting)</h3>
-            <p style="font-size:13px;color:#64748b;margin:0;"><i class="bi bi-geo-alt"></i> Tamamen Uzaktan · <i class="bi bi-clock"></i> Tam Zamanlı · <i class="bi bi-cash"></i> 45.000 - 70.000 ₺</p>
-        </div>
-        <span style="background:#2E3B4E;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;">Başvur →</span>
-    </a>
-
-    <a href="mailto:kariyer@codega.com.tr?subject=UI/UX%20Tasarımcı" style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;text-decoration:none;color:#0f172a;">
-        <div>
-            <h3 style="font-size:17px;font-weight:800;color:#0f172a;margin:0 0 4px;">UI/UX Tasarımcı (Mid-Senior)</h3>
-            <p style="font-size:13px;color:#64748b;margin:0;"><i class="bi bi-geo-alt"></i> Konya / Hibrit · <i class="bi bi-clock"></i> Tam Zamanlı · <i class="bi bi-cash"></i> 65.000 - 95.000 ₺</p>
-        </div>
-        <span style="background:#2E3B4E;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;">Başvur →</span>
-    </a>
+<div style="background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);border-radius:18px;padding:40px 36px;color:#fff;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-50px;right:-50px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.15) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;">
+        <span style="display:inline-block;background:rgba(0,229,255,0.15);color:#00E5FF;padding:6px 14px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:0.05em;margin-bottom:16px;">YETENEK HAVUZUMUZ</span>
+        <h3 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 12px;line-height:1.3;">CV'ni gönder, doğru pozisyon açıldığında ilk biz haber verelim</h3>
+        <p style="font-size:15px;color:rgba(255,255,255,0.75);line-height:1.65;margin:0 0 24px;max-width:620px;">CODEGA olarak ekibimizi sürekli büyütüyoruz. PHP, sistem yönetimi, müşteri deneyimi, UI/UX, satış, pazarlama — her departmanda yetenekli arkadaşlar arıyoruz. Açık pozisyon olmasa bile <strong style="color:#fff;">CV'ni gönder</strong>, sana uygun rol açıldığında ilk önce seninle iletişime geçelim.</p>
+        <a href="mailto:kariyer@codega.com.tr?subject=CV%20Başvurusu" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#00D3E5 0%,#00E5FF 100%);color:#0f172a;padding:14px 28px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;box-shadow:0 8px 24px rgba(0,211,229,0.35);transition:all 0.2s;">
+            <i class="bi bi-envelope-paper-fill"></i> CV'mi Gönder
+        </a>
+        <p style="font-size:13px;color:rgba(255,255,255,0.55);margin:18px 0 0;"><i class="bi bi-envelope"></i> kariyer@codega.com.tr</p>
+    </div>
 </div>
 
-<div style="background:#f8fafc;border-radius:14px;padding:24px;margin-top:24px;text-align:center;">
-    <p style="font-size:14px;color:#475569;margin:0 0 8px;">Pozisyonlarımızdan biri size uygun değilse...</p>
-    <p style="font-size:15px;font-weight:700;color:#0f172a;margin:0;">CV'nizi <a href="mailto:kariyer@codega.com.tr" style="color:#00D3E5;">kariyer@codega.com.tr</a> adresine gönderin, doğru rol açıldığında size haber verelim.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:24px;">
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:center;">
+        <div style="font-size:28px;margin-bottom:8px;">⚡</div>
+        <strong style="display:block;font-size:14px;color:#0f172a;margin-bottom:4px;">Hızlı süreç</strong>
+        <span style="font-size:12px;color:#64748b;">Başvurular 7 gün içinde değerlendirilir</span>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:center;">
+        <div style="font-size:28px;margin-bottom:8px;">🤝</div>
+        <strong style="display:block;font-size:14px;color:#0f172a;margin-bottom:4px;">Şeffaf süreç</strong>
+        <span style="font-size:12px;color:#64748b;">Ücret aralığı ilanda baştan açıkça yazılır</span>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:center;">
+        <div style="font-size:28px;margin-bottom:8px;">💼</div>
+        <strong style="display:block;font-size:14px;color:#0f172a;margin-bottom:4px;">Tecrübe önemli</strong>
+        <span style="font-size:12px;color:#64748b;">Diploma değil, gerçek katkı sayılır</span>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:center;">
+        <div style="font-size:28px;margin-bottom:8px;">🌱</div>
+        <strong style="display:block;font-size:14px;color:#0f172a;margin-bottom:4px;">Stajyer olabilirsin</strong>
+        <span style="font-size:12px;color:#64748b;">Üniversite öğrencileri için staj programı</span>
+    </div>
 </div>
     </div>
 </section>
