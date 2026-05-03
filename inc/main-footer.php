@@ -139,10 +139,23 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
             <div>
                 <h4>Şirket</h4>
                 <ul>
+                    <li><a href="/hakkimizda.html">Hakkımızda</a></li>
+                    <li><a href="/kariyer.html">Kariyer</a></li>
+                    <li><a href="/sosyal-sorumluluk.html">Sosyal Sorumluluk</a></li>
+                    <li><a href="/surdurulebilirlik.html">Sürdürülebilirlik</a></li>
                     <li><a href="<?php echo cdg_link('references'); ?>">Referanslar</a></li>
                     <li><a href="<?php echo cdg_link('knowledgebase'); ?>">Bilgi Bankası</a></li>
                     <li><a href="<?php echo cdg_link('news'); ?>">Haberler</a></li>
-                    <li><a href="<?php echo cdg_link('contact'); ?>">İletişim</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4>Yasal</h4>
+                <ul>
+                    <li><a href="/kvkk-aydinlatma-metni.html">KVKK Aydınlatma Metni</a></li>
+                    <li><a href="/gizlilik-politikasi.html">Gizlilik Politikası</a></li>
+                    <li><a href="/cerez-politikasi.html">Çerez Politikası</a></li>
+                    <li><a href="/hizmet-sozlesmesi.html">Hizmet Sözleşmesi</a></li>
                 </ul>
             </div>
 

@@ -1725,7 +1725,7 @@ foreach($options as $opt_k => $opt_v) {
         <div class="cdg-pd2-card" style="margin-top:18px;">
             <div class="cdg-pd2-card-head">
                 <h3><i class="bi bi-server"></i> Sunucu DNS Bilgileri</h3>
-                <span style="font-size:11px;color:#64748b;">Domaininizi bu sunucuya yonlendirmek icin bu nameserver'lari kullanin</span>
+                <span style="font-size:11px;color:#64748b;">Domaininizi bu sunucuya yonlendirmek için bu nameserver'lari kullanin</span>
             </div>
             <div class="cdg-pd2-card-body">
                 <ul class="cdg-pd2-info">

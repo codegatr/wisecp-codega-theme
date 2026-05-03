@@ -58,7 +58,7 @@ $sc_message = isset($message) ? $message : '';
 
                 <?php if(isset($captcha) && $captcha): ?>
                 <div class="cdg-form-group">
-                    <label class="cdg-form-label">Guvenlik Dogrulamasi</label>
+                    <label class="cdg-form-label">Güvenlik Dogrulamasi</label>
                     <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px;text-align:center;margin-bottom:8px;">
                         <?php echo $captcha->getOutput(); ?>
                     </div>

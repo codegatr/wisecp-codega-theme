@@ -164,7 +164,7 @@ if(!function_exists('cdg_link')) {
                             </div>
                             <div class="cdg-nav-mega-col">
                                 <div class="cdg-nav-mega-title">Yasal</div>
-                                <a href="/kvkk.html" class="cdg-nav-mega-link">
+                                <a href="/kvkk-aydinlatma-metni.html" class="cdg-nav-mega-link">
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;"><i class="bi bi-shield-lock"></i></span>
                                     <span><strong>KVKK</strong><small>Kişisel verilerin korunması</small></span>
                                 </a>

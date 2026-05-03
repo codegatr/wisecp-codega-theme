@@ -38,7 +38,7 @@
 
                 <?php if(isset($by_name) && $by_name === 'mobile' && isset($security_question) && $security_question): ?>
                 <div class="cdg-form-group">
-                    <label class="cdg-form-label"><i class="bi bi-question-circle"></i> Guvenlik Sorusu</label>
+                    <label class="cdg-form-label"><i class="bi bi-question-circle"></i> Güvenlik Sorusu</label>
                     <div style="font-size:13px;color:#475569;background:#f8fafc;padding:10px 12px;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:8px;">
                         <?php echo htmlspecialchars($security_question, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </div>

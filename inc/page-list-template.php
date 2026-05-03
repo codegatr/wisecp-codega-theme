@@ -101,7 +101,7 @@ $page_title = $pcat['title'] ?? $plabel;
                     <div style="width:72px;height:72px;border-radius:50%;background:#f1f5f9;color:#94a3b8;display:inline-grid;place-items:center;font-size:32px;margin-bottom:14px;">
                         <i class="bi bi-<?php echo htmlspecialchars($picon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
                     </div>
-                    <h3 style="font-size:18px;font-weight:800;color:#0f172a;margin:0 0 8px;">Henuz icerik eklenmemis</h3>
+                    <h3 style="font-size:18px;font-weight:800;color:#0f172a;margin:0 0 8px;">Henuz içerik eklenmemis</h3>
                     <p style="font-size:13px;color:#64748b;margin:0 0 18px;">Yakinda yeni icerikler eklenecektir.</p>
                 </div>
                 <?php endif; ?>

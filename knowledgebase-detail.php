@@ -81,7 +81,7 @@ if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) {
                         </div>
                     </div>
                     <div id="cdg-kb-vote-success-1" style="display:none;text-align:center;color:#10b981;font-weight:700;font-size:14px;">
-                        <i class="bi bi-check-circle-fill"></i> Geri bildiriminiz icin tesekkurler!
+                        <i class="bi bi-check-circle-fill"></i> Geri bildiriminiz için tesekkurler!
                     </div>
                     <div id="cdg-kb-vote-success-2" style="display:none;text-align:center;color:#f59e0b;font-weight:700;font-size:14px;">
                         <i class="bi bi-info-circle-fill"></i> Geri bildiriminiz alindi. Iyilestirmeye calisacagiz.

@@ -47,7 +47,7 @@ if(class_exists('Money') && method_exists('Money','getCurrencies')) {
                 <div style="font-size:14px;font-weight:700;color:#0f172a;margin-bottom:2px;">
                     <i class="bi bi-shield-lock-fill" style="color:#2E3B4E;"></i> Iki Faktorlu Dogrulama (2FA)
                 </div>
-                <div style="font-size:12px;color:#64748b;">Hesap girisleri icin ek guvenlik katmani.</div>
+                <div style="font-size:12px;color:#64748b;">Hesap girisleri için ek güvenlik katmani.</div>
             </div>
             <label class="cdg-switch">
                 <input type="checkbox" name="two_factor" value="1" <?php echo $two_factor ? 'checked' : ''; ?>>
@@ -76,7 +76,7 @@ if(class_exists('Money') && method_exists('Money','getCurrencies')) {
                 <div style="font-size:14px;font-weight:700;color:#0f172a;margin-bottom:2px;">
                     <i class="bi bi-phone-vibrate-fill" style="color:#10b981;"></i> SMS Bildirimleri
                 </div>
-                <div style="font-size:12px;color:#64748b;">Acil durumlar ve onemli bildirimler SMS ile.</div>
+                <div style="font-size:12px;color:#64748b;">Acil durumlar ve önemli bildirimler SMS ile.</div>
             </div>
             <label class="cdg-switch">
                 <input type="checkbox" name="sms_notifications" value="1" <?php echo $sms_notif ? 'checked' : ''; ?>>

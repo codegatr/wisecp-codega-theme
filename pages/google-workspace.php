@@ -15,7 +15,7 @@ $svc_features = [
 $svc_description = '
 <h3 style="color:#0f172a;font-size:18px;font-weight:800;margin:0 0 12px;">Kucuk Isletmelerden Buyuk Sirketlere</h3>
 <p>Google Workspace (eski adiyla G Suite), modern is hayatinin tum ihtiyaclarini karsilayan eksiksiz bir uretkenlik paketidir. Gmail, Drive, Docs, Sheets, Meet, Calendar ve daha bircok arac tek bir abonelikle sunulur.</p>
-<p>Yetkili Google partneri olarak, hesap kurulumu, domain yonlendirmesi, kullanici yonetimi ve teknik destegi Turkce olarak saglariz. Business Starter, Standard, Plus ve Enterprise paketleri icin en uygun fiyatlari sunuyoruz.</p>
+<p>Yetkili Google partneri olarak, hesap kurulumu, domain yonlendirmesi, kullanici yonetimi ve teknik destegi Turkce olarak saglariz. Business Starter, Standard, Plus ve Enterprise paketleri için en uygun fiyatlari sunuyoruz.</p>
 ';
 $svc_cta_text = 'Workspace Paketleri';
 

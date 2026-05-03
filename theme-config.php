@@ -2,8 +2,8 @@
 return [
     'meta' => [
         'name'        => 'Codega',
-        'description' => 'Modern, mavi ağırlıklı CODEGA klasik teması. Web yazılım, hosting, domain, SMS ve özel yazılım hizmetleri için tasarlanmıştır.',
-        'version'     => '3.5.45',
+        'description' => 'Modern, kurumsal CODEGA teması. Web yazılım, hosting, domain, SMS ve özel yazılım hizmetleri için tasarlanmıştır.',
+        'version'     => '3.5.46',
         'provider'    => 'CODEGA',
         'website'     => 'https://codega.com.tr',
         'image'       => '',
@@ -21,8 +21,8 @@ return [
 
         // Banner içeriği
         'banner' => [
-            'heading'      => 'Modern Yazilimla Isinizi Buyutun',
-            'content'      => 'CODEGA olarak web yazilim, hosting, domain ve ozel yazilim cozumleriyle markanizi dijitale tasiyoruz.',
+            'heading'      => 'Modern Yazılımla İşinizi Büyütün',
+            'content'      => 'CODEGA olarak web yazılım, hosting, domain ve özel yazılım çözümleriyle markanızı dijitale taşıyoruz.',
             'button_text1' => 'Hizmetlerimiz',
             'button_link1' => '/hosting-products',
             'button_text2' => 'İletişim',
@@ -37,20 +37,20 @@ return [
 
         // Hizmetler
         'services' => [
-            ['icon' => 'bi-code-slash',         'title' => 'Web Yazilim', 'text' => 'Kurumsal site, e-ticaret, ERP, CMS - modern PHP altyapisi.', 'link' => '/contact', 'color' => 'primary'],
-            ['icon' => 'bi-hdd-network',        'title' => 'Hosting',     'text' => 'NVMe SSD diskli, LiteSpeed destekli hizli barindirma.',      'link' => '/hosting-products', 'color' => 'info'],
-            ['icon' => 'bi-globe2',             'title' => 'Domain',      'text' => 'Yuzlerce uzantida domain tescili ve yonetimi.',              'link' => '/domain', 'color' => 'success'],
-            ['icon' => 'bi-server',             'title' => 'Sunucu',      'text' => 'VDS / VPS / Dedicated sunucu cozumleri.',                    'link' => '/server-products', 'color' => 'warning'],
-            ['icon' => 'bi-chat-square-dots',   'title' => 'Toplu SMS',   'text' => 'BTK onayli toplu SMS gonderim altyapisi.',                   'link' => '/sms-products', 'color' => 'secondary'],
-            ['icon' => 'bi-puzzle',             'title' => 'Ozel Yazilim','text' => 'Isinize ozel ERP, CRM, takip sistemi ve API entegrasyonlari.','link' => '/contact', 'color' => 'danger'],
+            ['icon' => 'bi-code-slash',         'title' => 'Web Yazılım', 'text' => 'Kurumsal site, e-ticaret, ERP, CMS - modern PHP altyapısı.', 'link' => '/contact', 'color' => 'primary'],
+            ['icon' => 'bi-hdd-network',        'title' => 'Hosting',     'text' => 'NVMe SSD diskli, LiteSpeed destekli hızlı barındırma.',      'link' => '/hosting-products', 'color' => 'info'],
+            ['icon' => 'bi-globe2',             'title' => 'Domain',      'text' => 'Yüzlerce uzantıda domain tescili ve yönetimi.',              'link' => '/domain', 'color' => 'success'],
+            ['icon' => 'bi-server',             'title' => 'Sunucu',      'text' => 'VDS / VPS / Dedicated sunucu çözümleri.',                    'link' => '/server-products', 'color' => 'warning'],
+            ['icon' => 'bi-chat-square-dots',   'title' => 'Toplu SMS',   'text' => 'BTK onaylı toplu SMS gönderim altyapısı.',                   'link' => '/sms-products', 'color' => 'secondary'],
+            ['icon' => 'bi-puzzle',             'title' => 'Özel Yazılım','text' => 'İşinize özel ERP, CRM, takip sistemi ve API entegrasyonları.','link' => '/contact', 'color' => 'danger'],
         ],
 
         // Avantajlar
         'features' => [
-            ['icon' => 'bi-lightning-charge-fill', 'title' => 'Hizli Teslim',     'text' => 'Projelerinizi planladigimiz tarihte, eksiksiz teslim ederiz.'],
-            ['icon' => 'bi-shield-check',          'title' => 'Guvenli Altyapi',  'text' => 'SSL, WAF, gunluk yedekleme - kurumsal seviyede guvenlik.'],
-            ['icon' => 'bi-headset',                'title' => '7/24 Destek',     'text' => 'Turkce teknik destek, telefon ve ticket sistemi.'],
-            ['icon' => 'bi-graph-up-arrow',         'title' => 'Olceklenebilir',  'text' => 'Buyudukce buyuyen altyapi - paket degistirme tek tik.'],
+            ['icon' => 'bi-lightning-charge-fill', 'title' => 'Hızlı Teslim',     'text' => 'Projelerinizi planladığımız tarihte, eksiksiz teslim ederiz.'],
+            ['icon' => 'bi-shield-check',          'title' => 'Güvenli Altyapi',  'text' => 'SSL, WAF, gunluk yedekleme - kurumsal seviyede güvenlik.'],
+            ['icon' => 'bi-headset',                'title' => '7/24 Destek',     'text' => 'Türkçe teknik destek, telefon ve ticket sistemi.'],
+            ['icon' => 'bi-graph-up-arrow',         'title' => 'Ölçeklenebilir',  'text' => 'Buyudukce buyuyen altyapı - paket degistirme tek tik.'],
         ],
 
         // Sosyal medya

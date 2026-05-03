@@ -15,7 +15,7 @@ $svc_features = [
 $svc_description = '
 <h3 style="color:#0f172a;font-size:18px;font-weight:800;margin:0 0 12px;">Tek Bir Pakette Her Sey</h3>
 <p>Domain, hosting, SSL sertifikasi, e-posta ve daha fazlasini ayri ayri satin almak yerine bizim hazirladigimiz avantajli paketleri tercih edin. Hem zamanidan hem de butcenizden tasarruf edin.</p>
-<p>Yeni baslayanlar icin "Starter" paketi, kucuk isletmeler icin "Business", e-ticaret siteleri icin "E-Commerce" paketi gibi farkli ihtiyaclara uygun cozumler sunuyoruz. Her pakette ucretsiz domain (.com, .net, .org), unlimited SSL ve 7/24 Turkce teknik destek dahildir.</p>
+<p>Yeni baslayanlar için "Starter" paketi, kucuk isletmeler icin "Business", e-ticaret siteleri icin "E-Commerce" paketi gibi farkli ihtiyaclara uygun cozumler sunuyoruz. Her pakette ucretsiz domain (.com, .net, .org), unlimited SSL ve 7/24 Turkce teknik destek dahildir.</p>
 ';
 $svc_cta_text = 'Paketleri Incele';
 

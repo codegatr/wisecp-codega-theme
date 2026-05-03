@@ -248,7 +248,7 @@ $service_categories = [
     ['icon' => 'bi-cart-check',     'title' => 'E-Ticaret Siştemleri',  'desc' => 'Multi-vendor, B2B, B2C tüm e-ticaret çözümleri.'],
     ['icon' => 'bi-bar-chart-fill', 'title' => 'ERP / CRM',             'desc' => 'Kurumsal kaynak planlama ve musteri iliskileri.'],
     ['icon' => 'bi-cpu-fill',       'title' => 'API Entegrasyonlari',   'desc' => 'GIB, banka, kargo, SMS API entegrasyonlari.'],
-    ['icon' => 'bi-shield-shaded',  'title' => 'Guvenlik Çözümleri',    'desc' => 'AES-256-GCM, 2FA, audit log, KVKK uyumlu.'],
+    ['icon' => 'bi-shield-shaded',  'title' => 'Güvenlik Çözümleri',    'desc' => 'AES-256-GCM, 2FA, audit log, KVKK uyumlu.'],
 ];
 ?>
 

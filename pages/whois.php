@@ -14,7 +14,7 @@ $svc_features = [
 ];
 $svc_description = '
 <h3 style="color:#0f172a;font-size:18px;font-weight:800;margin:0 0 12px;">Domain Hakkinda Detayli Bilgi</h3>
-<p>Bir domainin sahibini, kayit tarihini, ne zaman sona erecegini ve hangi sunucularda barindirildigini ogrenmek istiyorsaniz Whois sorgu aracimiz tam size gore. Tum populer uzantilar (.com, .net, .org, .com.tr, .io vs.) icin gercek zamanli sorgulama yapabilirsiniz.</p>
+<p>Bir domainin sahibini, kayit tarihini, ne zaman sona erecegini ve hangi sunucularda barindirildigini ogrenmek istiyorsaniz Whois sorgu aracimiz tam size gore. Tum populer uzantilar (.com, .net, .org, .com.tr, .io vs.) için gercek zamanli sorgulama yapabilirsiniz.</p>
 <p><strong>Not:</strong> KVKK ve GDPR kapsaminda bireysel kayitlarda sahibin kisisel bilgileri "Whois Privacy" ile gizlenmis olabilir. Bu durumda sadece registrar (kayit kurumu) bilgileri gorunur. Kurumsal domainlerin Whois bilgileri ise genellikle aciktir.</p>
 ';
 $svc_cta_text = 'Domain Sorgu';

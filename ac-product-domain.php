@@ -977,7 +977,7 @@ $transfer_lock = !empty($options['transferlock']);
                         <!-- Profil Sec (varsa) -->
                         <?php if(!empty($whois_profiles)): ?>
                         <div class="cdg-pdm-field">
-                            <label class="cdg-pdm-label">Hizli Profil Secimi</label>
+                            <label class="cdg-pdm-label">Hızlı Profil Secimi</label>
                             <select name="profile_id[<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>]" class="cdg-pdm-select" data-ct="<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" onchange="cdgPdmWhoisFillFromProfile(this, '<?php echo htmlspecialchars($ct_key, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')">
                                 <option value="0">— Manuel doldurun veya profil secin —</option>
                                 <?php foreach($whois_profiles as $pf):

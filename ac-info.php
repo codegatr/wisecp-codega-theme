@@ -504,7 +504,7 @@ if(!empty($udata['gsm'])) {
 <div class="cdg-info-pane" id="cdg-info-pane-security" style="display:none;">
     <div class="cdg-card">
         <div class="cdg-card-head">
-            <h3><i class="bi bi-key"></i> Guvenlik Sorusu</h3>
+            <h3><i class="bi bi-key"></i> Güvenlik Sorusu</h3>
         </div>
 
         <div class="cdg-alert cdg-alert-warning" style="margin-bottom:16px;">
@@ -526,7 +526,7 @@ if(!empty($udata['gsm'])) {
             <input type="hidden" name="address" value="<?php echo htmlspecialchars($u('address'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
 
             <div class="cdg-form-group">
-                <label class="cdg-form-label">Guvenlik Sorusu</label>
+                <label class="cdg-form-label">Güvenlik Sorusu</label>
                 <input type="text" name="security_question" class="cdg-form-control" value="<?php echo htmlspecialchars($u('security_question'), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" placeholder="Örnek: İlk evcil hayvanımın ismi nedir?">
             </div>
 
@@ -785,7 +785,7 @@ if(!empty($udata['gsm'])) {
                 <i class="bi bi-info-circle"></i> Talepleriniz <strong>30 iş günü</strong> içinde değerlendirilir. Detaylı bilgi için
                 <a href="/gizlilik-politikasi.html" style="color:#2E3B4E;font-weight:600;">Gizlilik Politikamızı</a>
                 veya
-                <a href="/kvkk.html" style="color:#2E3B4E;font-weight:600;">KVKK Aydınlatma Metnimizi</a>
+                <a href="/kvkk-aydinlatma-metni.html" style="color:#2E3B4E;font-weight:600;">KVKK Aydınlatma Metnimizi</a>
                 inceleyin.
             </div>
         </div>

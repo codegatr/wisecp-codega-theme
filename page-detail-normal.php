@@ -16,6 +16,7 @@ $cdg_corp_pages = [
     'kariyer'              => 'kariyer.php',
     'kvkk'                 => 'kvkk.php',
     'kvkk-aydinlatma'      => 'kvkk.php',
+    'kvkk-aydinlatma-metni' => 'kvkk.php',
     'cerez-politikasi'     => 'cerez-politikasi.php',
     'gizlilik-politikasi'  => 'gizlilik-politikasi.php',
     'gizlilik-sozlesmesi'  => 'gizlilik-politikasi.php',
