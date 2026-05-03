@@ -366,3 +366,8 @@ $cdg_year = date('Y');
 })();
 </script>
 
+<?php
+// === CDG DEBUG PANEL (her panel sayfasinda yuklenir, F12 -> cdgDbg() ile acilir) ===
+$_dbg_inc = __DIR__ . DIRECTORY_SEPARATOR . 'cdg-debug-panel.php';
+if(file_exists($_dbg_inc)) include $_dbg_inc;
+?>

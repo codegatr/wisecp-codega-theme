@@ -1,25 +1,15 @@
 {
-    "version": "3.5.80",
+    "version": "3.5.81",
     "release_date": "2026-05-03",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.80-codega",
-    "tag": "v3.5.80-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.81-codega",
+    "tag": "v3.5.81-codega",
     "changelog": [
-        "v3.5.80 - Debug panel: console komutuyla aktive (?debug=1 yerine)",
-        "Yunus tespiti: ?debug=1 -> 404 hatasi (WiseCP query string'i yutuyor)",
-        "FIX: URL parametresi yerine console komutu kullaniyoruz",
-        "  - Sayfa her zaman debug HTML'ini icerir (varsayilan gizli)",
-        "  - F12 -> Console -> cdgDbg() yazinca panel acilir",
-        "  - Hicbir URL/route degisikligine bagli degil",
-        "Diagnostik bilgiler:",
-        "  - SES Lockdown durumu (gercek aktif mi)",
-        "  - Tab/Pane DOM sayilari + her birinin atributlari",
-        "  - Inline onclick var mi kontrolu",
-        "  - script.js yuklemeleri",
-        "  - window.cdgPd2Switch tanimli mi",
-        "  - Click tracker (capture phase)",
-        "  - Fallback handler (debug acikken garanti calisir)",
-        "  - JS hata yakalama (window.onerror)",
-        "  - 100ms sonra DOM durum kontrolu"
+        "v3.5.81 - Debug panel TUM panel sayfalarinda (footer'a tasindi)",
+        "Yunus tespiti: /hesabim/hosting-detay/290 -> 404",
+        "  Demek detail-template hic yuklenmiyor, debug panel da yok",
+        "FIX: Debug panel inc/ac-footer-1.php ve ac-footer-2.php'e tasindi",
+        "  Tum panel sayfalarinda (dashboard, hosting listesi, vs.) calisir",
+        "  Yunus dashboard'a gider, F12 -> cdgDbg() yazar, panel her yerde aktif"
     ]
 }
