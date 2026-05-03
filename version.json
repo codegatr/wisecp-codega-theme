@@ -1,19 +1,16 @@
 {
-    "version": "3.5.84",
+    "version": "3.5.85",
     "release_date": "2026-05-03",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.84-codega",
-    "tag": "v3.5.84-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.85-codega",
+    "tag": "v3.5.85-codega",
     "changelog": [
-        "v3.5.84 - Hosting detay debug blogu + CodegaUpdater test surumu",
-        "Yunus tespit etti: Hosting detay'da DirectAdmin/cPanel butonlari hala gorunmuyor",
-        "  Demek WiseCP runtime'da $buttons array'i bos geliyor",
-        "Tespit icin: Sayfa altinda detay/summary collapse'li debug blogu",
-        "  Aktif edilince butun runtime variable'lari gosterir:",
-        "  $proanse, $buttons, $panel_name, $supported, $options, $links",
-        "Bu sayede Yunus hangi field'larin geldigini gorebilir",
-        "Ayrica bu surum CodegaUpdater addon'unun test surumu",
-        "  Yunus addon'u kurar, etkinlestirir, 'Yeni Surum Kontrol Et' der",
-        "  Bu v3.5.84'u indirir ve uygular - tek tikla guncelleme testi"
+        "v3.5.85 - CodegaUpdater test surumu - tek tikla guncelleme testi",
+        "Yunus icin: CodegaUpdater addon'undan tek tikla guncelleme testi yapilabilir",
+        "Hosting detay debug blogu hala aktif (test sonrasi kaldirilacak)",
+        "ROOTDIR fix CodegaUpdater'da basarili",
+        "API endpoint'leri (?action=check, ?action=apply) test edildi ve calisiyor",
+        "Bu surum addon'da Yeni Surum Var olarak gozukmeli",
+        "Guncellemeyi Uygula tikla -> tema otomatik v3.5.85'e yukselmeli"
     ]
 }
