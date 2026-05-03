@@ -53,15 +53,20 @@ for($i=1; $i<=4; $i++) {
 }
 
 // Panel adı/logosu/manuel URL
-$panel_name  = $proanse['panel_name'] ?? ($panel_name ?? 'Kontrol Paneli');
+$panel_name  = $proanse['panel_name'] ?? ($panel_name ?? '');
+if(empty($panel_name) && !empty($options['panel_type'])) {
+    $pt_map = ['directadmin'=>'DirectAdmin','cpanel'=>'cPanel','plesk'=>'Plesk'];
+    $panel_name = $pt_map[strtolower($options['panel_type'])] ?? ucfirst($options['panel_type']);
+}
+if(empty($panel_name)) $panel_name = 'Kontrol Paneli';
 $panel_logo  = $panel_logo ?? '';
-$d_panel_url = $options['panel_url'] ?? ($options['cp_url'] ?? ($options['login_url'] ?? ''));
+$d_panel_url = $options['panel_link'] ?? ($options['panel_url'] ?? ($options['cp_url'] ?? ($options['login_url'] ?? '')));
 
 // Hosting limit bilgileri
-$d_quota     = $options['disk'] ?? ($options['disk_space'] ?? '');
-$d_bandwidth = $options['bandwidth'] ?? ($options['traffic'] ?? '');
-$d_emails    = $options['emails'] ?? '';
-$d_databases = $options['databases'] ?? '';
+$d_quota     = $options['disk_limit'] ?? ($options['disk'] ?? '');
+$d_bandwidth = $options['bandwidth_limit'] ?? ($options['bandwidth'] ?? '');
+$d_emails    = $options['email_limit'] ?? ($options['emails'] ?? '');
+$d_databases = $options['database_limit'] ?? ($options['databases'] ?? '');
 
 // Aktif/destek flagleri
 $is_active = ($d_status === 'active');
@@ -1149,11 +1154,16 @@ $cdg_panel_icon = function($type, $name) {
             '$d_panel_url'        => $d_panel_url ?: '(BOS)',
             '$options_keys'       => array_keys($options),
             '$options[domain]'    => $options['domain'] ?? '(YOK)',
-            '$options[ip]'        => $options['ip'] ?? '(YOK)',
-            '$options[username]'  => $options['username'] ?? '(YOK)',
-            '$options[panel_url]' => $options['panel_url'] ?? '(YOK)',
-            '$options[cp_url]'    => $options['cp_url'] ?? '(YOK)',
-            '$options[login_url]' => $options['login_url'] ?? '(YOK)',
+            '$options[panel_type]'=> $options['panel_type'] ?? '(YOK)',
+            '$options[panel_link]'=> $options['panel_link'] ?? '(YOK)',
+            '$options[server_id]' => $options['server_id'] ?? '(YOK)',
+            '$options[ftp_info]'  => $options['ftp_info'] ?? '(YOK)',
+            '$options[dns]'       => $options['dns'] ?? '(YOK)',
+            '$options[config]'    => $options['config'] ?? '(YOK)',
+            '$options[disk_limit]'    => $options['disk_limit'] ?? '(YOK)',
+            '$options[bandwidth_limit]'=> $options['bandwidth_limit'] ?? '(YOK)',
+            '$options[email_limit]'   => $options['email_limit'] ?? '(YOK)',
+            '$options[database_limit]'=> $options['database_limit'] ?? '(YOK)',
             '$controller_url'     => $links['controller'] ?? '(YOK)',
             '$links_keys'         => array_keys($links),
         ];

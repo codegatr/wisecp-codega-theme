@@ -1,16 +1,22 @@
 {
-    "version": "3.5.85",
+    "version": "3.5.86",
     "release_date": "2026-05-03",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.85-codega",
-    "tag": "v3.5.85-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.86-codega",
+    "tag": "v3.5.86-codega",
     "changelog": [
-        "v3.5.85 - CodegaUpdater test surumu - tek tikla guncelleme testi",
-        "Yunus icin: CodegaUpdater addon'undan tek tikla guncelleme testi yapilabilir",
-        "Hosting detay debug blogu hala aktif (test sonrasi kaldirilacak)",
-        "ROOTDIR fix CodegaUpdater'da basarili",
-        "API endpoint'leri (?action=check, ?action=apply) test edildi ve calisiyor",
-        "Bu surum addon'da Yeni Surum Var olarak gozukmeli",
-        "Guncellemeyi Uygula tikla -> tema otomatik v3.5.85'e yukselmeli"
+        "v3.5.86 - WiseCP runtime field isimleri DUZELTILDI (Yunus debug ciktisindan)",
+        "Tespit: Yunus options_keys gosterdi -> dogru field isimleri:",
+        "  panel_link (panel_url DEGIL)",
+        "  panel_type (DirectAdmin/cPanel tipi)",
+        "  disk_limit (disk DEGIL)",
+        "  bandwidth_limit (bandwidth DEGIL)",
+        "  email_limit (emails DEGIL)",
+        "  database_limit (databases DEGIL)",
+        "  ftp_info (FTP bilgi array'i)",
+        "  config (modul config'i)",
+        "Field isimleri WiseCP'ye uyumlu hale getirildi",
+        "Panel adi otomatik tespit: panel_type -> DirectAdmin/cPanel/Plesk",
+        "Debug blogu genisletildi: config, ftp_info, server_features dahil tum runtime variables"
     ]
 }
