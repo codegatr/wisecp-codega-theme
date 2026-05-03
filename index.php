@@ -241,14 +241,22 @@ if($mod_hosting && class_exists('Products')) {
                                 } catch(\Throwable $e) {}
                             }
 
-                            // 2) buy_link MANUEL inşa — WiseCP order-steps URL formatı
-                            // CRLink('order-steps-p', [type, product_id, step]) → /order-steps/hosting/15/1
+                            // 2) buy_link: Önce CRLink dene, başarısızsa direkt URL inşa et
+                            // (WiseCP gerçek URL formatı /order-steps/{type}/{id} — vea.com.tr/en/order-steps/software/134 örneği)
                             $p['buy_link'] = '';
+                            $buy_try = '';
                             if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Controllers::$init, 'CRLink')) {
                                 try {
-                                    $p['buy_link'] = Controllers::$init->CRLink('order-steps-p', ['hosting', (int)$p['id'], 1]);
-                                } catch(\Throwable $e) {}
+                                    $buy_try = Controllers::$init->CRLink('order-steps-p', ['hosting', (int)$p['id'], 1]);
+                                    // CRLink slug'ı bilmiyorsa ham slug döndürür → manuel inşa et
+                                    if(!$buy_try || strpos($buy_try, 'order-steps-p') !== false) $buy_try = '';
+                                } catch(\Throwable $e) { $buy_try = ''; }
                             }
+                            if(!$buy_try) {
+                                $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
+                                $buy_try = $base . '/order-steps/hosting/' . (int)$p['id'];
+                            }
+                            $p['buy_link'] = $buy_try;
 
                             // 3) JSON alanları decode et (popular flag, button name vb.)
                             if(isset($p['options']) && is_string($p['options'])) {
@@ -322,6 +330,46 @@ if($mod_hosting && class_exists('Products')) {
 }
 
 // === FALLBACK: WiseCP'den çekilemediyse statik mock tablo ===
+
+// DEBUG: ?cdg_debug=1 ile durumu gör
+if(isset($_GET['cdg_debug']) && $_GET['cdg_debug'] == '1') {
+    echo '<div style="background:#0f172a;color:#10b981;padding:20px;font-family:monospace;font-size:12px;line-height:1.7;border:2px solid #10b981;margin:20px;">';
+    echo '<b>=== CDG SEPET DEBUG ===</b><br>';
+    echo 'Products class: ' . (class_exists('Products') ? '✅ var' : '❌ YOK') . '<br>';
+    echo 'Controllers::$init: ' . (class_exists('Controllers') && isset(Controllers::$init) ? '✅ var' : '❌ YOK') . '<br>';
+    echo 'mod_hosting: ' . ($mod_hosting ? '✅ aktif' : '❌ kapalı') . '<br>';
+    echo 'get_select_categories metodu: ' . (class_exists('Products') && method_exists('Products', 'get_select_categories') ? '✅ var' : '❌ YOK') . '<br>';
+    echo 'get_products_with_category metodu: ' . (class_exists('Products') && method_exists('Products', 'get_products_with_category') ? '✅ var' : '❌ YOK') . '<br>';
+    echo 'get_prices metodu: ' . (class_exists('Products') && method_exists('Products', 'get_prices') ? '✅ var' : '❌ YOK') . '<br>';
+    echo 'pricing_dynamic: ' . ($pricing_dynamic ? '✅ DİNAMİK' : '❌ STATİK FALLBACK') . '<br>';
+    echo 'pricing_categories sayısı: ' . count($pricing_categories) . '<br>';
+    echo 'all_hosting_packs sayısı: ' . (isset($all_hosting_packs) ? count($all_hosting_packs) : 0) . '<br>';
+    if(class_exists('Products') && method_exists('Products', 'get_select_categories')) {
+        try {
+            $debug_cats = @Products::get_select_categories('hosting', 0);
+            echo 'Hosting kategorileri (DB): ' . (is_array($debug_cats) ? count($debug_cats) : 'YOK/HATA') . '<br>';
+            if(is_array($debug_cats)) {
+                foreach($debug_cats as $dc) {
+                    echo '  → cat_id=' . ($dc['id'] ?? '?') . ' title=' . htmlspecialchars($dc['title'] ?? '?') . '<br>';
+                    if(isset($dc['id'])) {
+                        $debug_packs = @Products::get_products_with_category('hosting', $dc['id']);
+                        echo '    paket sayısı: ' . (is_array($debug_packs) ? count($debug_packs) : 'YOK') . '<br>';
+                        if(is_array($debug_packs)) {
+                            foreach(array_slice($debug_packs, 0, 3) as $dp) {
+                                $debug_prices = @Products::get_prices('periodicals', 'products', $dp['id']);
+                                echo '      → id=' . ($dp['id'] ?? '?') . ' title=' . htmlspecialchars($dp['title'] ?? '?') . ' price_count=' . (is_array($debug_prices) ? count($debug_prices) : '0') . '<br>';
+                            }
+                        }
+                    }
+                }
+            }
+        } catch(\Throwable $e) {
+            echo 'HATA: ' . htmlspecialchars($e->getMessage()) . '<br>';
+        }
+    }
+    echo '</div>';
+}
+
 if(empty($pricing_categories)) {
     $pricing_categories = [
     [
