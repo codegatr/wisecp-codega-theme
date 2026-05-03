@@ -1100,6 +1100,46 @@ $discounted_total = $inv_subtotal - $total_discount;
     </div>
     <?php endif; ?>
 
+    <?php
+    // === AddQRCodetoInvoiceDetailinClientArea Hook (dev.wisecp.com) ===
+    // E-Fatura, e-Arşiv ve diğer entegrasyonlar fatura detayında QR kod gösterebilsin
+    if(class_exists('Hook') && isset($invoice) && is_array($invoice)) {
+        try {
+            $cdg_invoice_qr_codes = Hook::run("AddQRCodetoInvoiceDetailinClientArea", $invoice);
+            if(is_array($cdg_invoice_qr_codes) && !empty($cdg_invoice_qr_codes)) {
+                ?>
+                <div style="background:#1e293b;border:1px solid #334155;border-radius:14px;padding:20px 24px;margin-top:16px;">
+                    <h3 style="margin:0 0 14px;font-size:14px;color:#fff;display:flex;align-items:center;gap:8px;">
+                        <i class="bi bi-qr-code"></i> Fatura QR Kodları
+                    </h3>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;">
+                        <?php foreach($cdg_invoice_qr_codes as $cdg_qr_block):
+                            if(!is_array($cdg_qr_block)) continue;
+                            foreach($cdg_qr_block as $cdg_qr_item):
+                                if(!is_array($cdg_qr_item)) continue;
+                                $cdg_qr_image = $cdg_qr_item['image'] ?? '';
+                                $cdg_qr_title = $cdg_qr_item['title'] ?? '';
+                                $cdg_qr_desc  = $cdg_qr_item['description'] ?? '';
+                                if(!$cdg_qr_image) continue;
+                        ?>
+                        <div style="background:#0f172a;border:1px solid #334155;border-radius:10px;padding:14px;text-align:center;">
+                            <img src="<?php echo htmlspecialchars($cdg_qr_image); ?>" alt="<?php echo htmlspecialchars($cdg_qr_title); ?>" style="max-width:160px;height:auto;background:#fff;padding:8px;border-radius:6px;">
+                            <?php if($cdg_qr_title): ?>
+                                <div style="margin-top:10px;font-size:13px;color:#fff;font-weight:600;"><?php echo htmlspecialchars($cdg_qr_title); ?></div>
+                            <?php endif; ?>
+                            <?php if($cdg_qr_desc): ?>
+                                <div style="margin-top:4px;font-size:11.5px;color:#94a3b8;line-height:1.5;"><?php echo htmlspecialchars($cdg_qr_desc); ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <?php endforeach; endforeach; ?>
+                    </div>
+                </div>
+                <?php
+            }
+        } catch(\Throwable $e) { /* sessiz geç */ }
+    }
+    ?>
+
 </div>
 </div>
 
