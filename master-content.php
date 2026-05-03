@@ -1,5 +1,9 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 
+// Flag: pages/X.php sayfaları master-content uygulanıp uygulanmadığını kontrol etmek için kullanır
+// Eğer false kalırsa pages sayfası kendi başına footer çağırır (defansif)
+$_cdg_in_master_content = true;
+
 // === SAVUNMA: WiseCP'nin tanımlamadığı her şey için fallback ===
 if(!isset($header_type) || !$header_type)         $header_type = 1;
 if(!isset($clientArea_type) || !$clientArea_type) $clientArea_type = 1;

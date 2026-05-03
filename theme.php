@@ -52,6 +52,29 @@ Class Codega_Theme
         return false;
     }
 
+    /**
+     * Header + Footer manuel render (defansif)
+     *
+     * Bu metod, master-content.php'nin doğru uygulanmadığı durumlarda
+     * sayfa içeriğini header ve footer ile sarmak için kullanılır.
+     *
+     * @param string $content Sayfa içeriği (HTML)
+     * @return string Header + content + footer ile sarılı tam HTML
+     */
+    public function wrap_with_master($content, $hoptions = [])
+    {
+        // Master-content.php'yi kullanarak tam sayfa render et
+        $master_file = __DIR__ . DS . "master-content.php";
+        if(!file_exists($master_file)) return $content;
+
+        ob_start();
+        include $master_file;
+        $master_html = ob_get_clean();
+
+        // {get_content} kısmını gerçek içerikle değiştir
+        return str_replace('{get_content}', $content, $master_html);
+    }
+
     public function main_css()
     {
         $color1 = ltrim(Config::get("theme/color1"), "#");

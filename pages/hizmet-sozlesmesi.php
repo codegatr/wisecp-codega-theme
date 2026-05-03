@@ -67,3 +67,20 @@ if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public
 <p style="font-size:15px;line-height:1.8;color:#475569;">Bu sözleşme, müşterinin hesap oluşturması veya sipariş vermesi anında elektronik ortamda kabul edilmiş sayılır. Sözleşme süresizdir; CODEGA değişiklik hakkını saklı tutar (önemli değişiklikler 30 gün önceden e-posta ile bildirilir).</p>
     </div>
 </section>
+
+<?php
+/* === DEFANSIVE FALLBACK ===
+ * Eğer WiseCP master-content uygulamadıysa (theme.router include_file ile direkt çağrı),
+ * sayfa header ve footer ile sarılmamış olur. Bu durumda manuel sarma yapalım.
+ *
+ * $_cdg_in_master_content flag master-content.php tarafından set edilir.
+ * Eğer false ise demek ki master-content çağrılmamış, biz kendi başımıza footer ekleyelim.
+ */
+if(empty($_cdg_in_master_content) && !headers_sent()) {
+    // Master-content çağrılmamış - footer ekle
+    if(file_exists(__DIR__ . "/../inc/main-footer.php")) {
+        include __DIR__ . "/../inc/main-footer.php";
+    }
+    if(class_exists("View") && method_exists("View", "footer_codes")) View::footer_codes();
+}
+?>

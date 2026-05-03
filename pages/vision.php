@@ -115,3 +115,20 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
     </div>
 </section>
 
+
+<?php
+/* === DEFANSIVE FALLBACK ===
+ * Eğer WiseCP master-content uygulamadıysa (theme.router include_file ile direkt çağrı),
+ * sayfa header ve footer ile sarılmamış olur. Bu durumda manuel sarma yapalım.
+ *
+ * $_cdg_in_master_content flag master-content.php tarafından set edilir.
+ * Eğer false ise demek ki master-content çağrılmamış, biz kendi başımıza footer ekleyelim.
+ */
+if(empty($_cdg_in_master_content) && !headers_sent()) {
+    // Master-content çağrılmamış - footer ekle
+    if(file_exists(__DIR__ . "/../inc/main-footer.php")) {
+        include __DIR__ . "/../inc/main-footer.php";
+    }
+    if(class_exists("View") && method_exists("View", "footer_codes")) View::footer_codes();
+}
+?>

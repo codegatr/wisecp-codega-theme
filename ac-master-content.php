@@ -1,5 +1,8 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 
+// Flag: panel sayfaları master-content uygulanıp uygulanmadığını kontrol etmek için kullanır
+$_cdg_in_master_content = true;
+
 // === SAVUNMA ===
 if(!isset($header_type) || !$header_type)         $header_type = 1;
 if(!isset($clientArea_type) || !$clientArea_type) $clientArea_type = 1;

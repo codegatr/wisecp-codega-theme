@@ -90,6 +90,85 @@ $phone = !empty($pnumbers[0]) ? $pnumbers[0] : (isset($contact_i['phone']) ? $co
 $mail  = !empty($eaddresses[0]) ? $eaddresses[0] : (isset($contact_i['email']) ? $contact_i['email'] : '');
 $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
 ?>
+
+<style>
+/* === FOOTER INLINE FALLBACK CSS ===
+ * style.css ve wisecp.css yüklenmezse bile footer görünsün diye.
+ * Bu kurallar düşük specificity'de, normal CSS yüklenirse override edilir.
+ */
+footer.cdg-footer {
+    background: #0f172a;
+    color: rgba(255,255,255,0.7);
+    padding: 70px 0 0;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    margin-top: 60px;
+}
+footer.cdg-footer .cdg-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+footer.cdg-footer .cdg-footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1.1fr 1.1fr 1fr;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+@media (max-width: 1100px) { footer.cdg-footer .cdg-footer-grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; } footer.cdg-footer .cdg-footer-grid > div:nth-child(1) { grid-column: 1 / -1; } }
+@media (max-width: 880px) { footer.cdg-footer .cdg-footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } footer.cdg-footer .cdg-footer-grid > div:nth-child(1) { grid-column: 1 / -1; } }
+@media (max-width: 540px) { footer.cdg-footer .cdg-footer-grid { grid-template-columns: 1fr; } footer.cdg-footer .cdg-footer-grid > div:nth-child(1) { grid-column: auto; } }
+footer.cdg-footer h4 { color: #fff; font-size: 14px; margin-bottom: 16px; letter-spacing: 0.02em; font-weight: 700; }
+footer.cdg-footer ul { list-style: none; padding: 0; margin: 0; }
+footer.cdg-footer li { margin-bottom: 8px; }
+footer.cdg-footer a { color: rgba(255,255,255,0.6); font-size: 14px; text-decoration: none; transition: color .15s; }
+footer.cdg-footer a:hover { color: #fff; }
+footer.cdg-footer .brand { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 22px; font-weight: 800; margin-bottom: 16px; }
+footer.cdg-footer .desc { font-size: 14px; line-height: 1.65; max-width: 320px; margin-bottom: 18px; }
+footer.cdg-footer .social { display: flex; gap: 8px; }
+footer.cdg-footer .social a {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    display: grid; place-items: center;
+    color: rgba(255,255,255,0.6);
+    transition: all .2s;
+}
+footer.cdg-footer .social a:hover { background: #1e40af; color: #fff; transform: translateY(-2px); }
+footer.cdg-footer .cdg-footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 22px 0;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 13px; color: rgba(255,255,255,0.5);
+}
+footer.cdg-footer .cdg-footer-bottom > div { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+footer.cdg-footer .cdg-footer-bottom-center { justify-content: center; }
+footer.cdg-footer .cdg-footer-bottom-right { justify-content: flex-end; }
+footer.cdg-footer .cdg-footer-version {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: #fff;
+    padding: 3px 9px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+}
+footer.cdg-footer .cdg-footer-version-meta { color: rgba(255,255,255,0.4); font-size: 12px; }
+footer.cdg-footer .cdg-footer-aksoy {
+    display: inline-flex; align-items: baseline; gap: 6px;
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+footer.cdg-footer .cdg-footer-aksoy strong { color: #fff; font-weight: 800; }
+footer.cdg-footer .cdg-footer-aksoy span { color: rgba(255,255,255,0.85); font-weight: 500; }
+@media (max-width: 768px) {
+    footer.cdg-footer .cdg-footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+    footer.cdg-footer .cdg-footer-bottom > div { justify-content: center; }
+}
+</style>
+
 <footer class="cdg-footer">
     <div class="cdg-container">
         <div class="cdg-footer-grid">

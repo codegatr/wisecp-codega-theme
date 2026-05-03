@@ -67,3 +67,16 @@ if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public
 </div>
     </div>
 </section>
+
+<?php
+/* === DEFANSIVE FALLBACK ===
+ * Eğer WiseCP master-content uygulamadıysa, sayfa header/footer ile sarılmamış olur.
+ * $_cdg_in_master_content flag master-content.php tarafından set edilir.
+ */
+if(empty($_cdg_in_master_content) && !headers_sent()) {
+    if(file_exists(__DIR__ . "/inc/main-footer.php")) {
+        include __DIR__ . "/inc/main-footer.php";
+    }
+    if(class_exists("View") && method_exists("View", "footer_codes")) View::footer_codes();
+}
+?>
