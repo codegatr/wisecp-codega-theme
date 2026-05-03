@@ -106,36 +106,224 @@ $mod_hosting = isset($pg_activation['hosting']) ? !empty($pg_activation['hosting
 $mod_domain  = isset($pg_activation['domain'])  ? !empty($pg_activation['domain'])  : true;
 
 // === GERÇEK PAKETLER ===
-$pricing_categories = [
+//
+// 1. ÖNCELİK: WiseCP'den gerçek hosting paketlerini çek (Products::getList).
+//    Her paketin "buy_link" runtime field'ı vardır — tıklanınca order-steps-hosting akışı
+//    devreye girer (cycle/domain seçimi → sepete ekle → ödeme).
+//
+// 2. FALLBACK: Eğer WiseCP'de hiç hosting paketi yoksa veya çekme başarısızsa,
+//    statik mock tablo gösterilir ve buton iletişim formuna yönlendirilir.
+
+$pricing_categories = [];
+$pricing_dynamic    = false;   // true = WiseCP'den geldi, false = statik mock
+
+// === WiseCP'den çek ===
+if($mod_hosting && class_exists('Products')) {
+    try {
+        // Currency sembolleri (price formatter için)
+        $cdg_currency_symbols = [];
+        if(class_exists('Money') && method_exists('Money', 'getCurrencies')) {
+            foreach(Money::getCurrencies() AS $_cur) {
+                $_sym = trim(($_cur['prefix'] ?? '') ?: ($_cur['suffix'] ?? ''));
+                if(!$_sym) $_sym = $_cur['code'] ?? '';
+                if($_sym) $cdg_currency_symbols[] = $_sym;
+            }
+        }
+
+        // Paket formatter — products-hosting.php'deki ile aynı mantık
+        $cdg_format_pkg = function($product) use ($cdg_currency_symbols) {
+            $popular = !empty($product['options']['popular']);
+
+            $amount_value = '';
+            $amount_symbol = '';
+            $period_text = '';
+            $prices = $product['prices'] ?? [];
+            if(isset($prices[0]) && is_array($prices[0])) {
+                $amount = $prices[0]['amount'] ?? 0;
+                $cid    = $prices[0]['cid'] ?? 0;
+                $override = !empty($product['override_usrcurrency']);
+                $price_text = '';
+                if(class_exists('Money') && method_exists('Money', 'formatter_symbol') && $cid) {
+                    try { $price_text = Money::formatter_symbol($amount, $cid, !$override); }
+                    catch(\Throwable $e) { $price_text = number_format((float)$amount, 2, ',', '.'); }
+                } else {
+                    $price_text = number_format((float)$amount, 2, ',', '.');
+                }
+
+                if($cdg_currency_symbols && $price_text) {
+                    $parts = explode(' ', $price_text);
+                    if(count($parts) >= 2) {
+                        if(in_array(reset($parts), $cdg_currency_symbols)) {
+                            $amount_symbol = array_shift($parts);
+                            $amount_value = implode(' ', $parts);
+                        } elseif(in_array(end($parts), $cdg_currency_symbols)) {
+                            $amount_symbol = array_pop($parts);
+                            $amount_value = implode(' ', $parts);
+                        } else { $amount_value = $price_text; }
+                    } else { $amount_value = $price_text; }
+                } else { $amount_value = $price_text; }
+
+                if(class_exists('View') && method_exists('View', 'period')) {
+                    try { $period_text = View::period($prices[0]['time'] ?? 1, $prices[0]['period'] ?? 'year'); }
+                    catch(\Throwable $e) { $period_text = ($prices[0]['time'] ?? 1) . ' ' . ($prices[0]['period'] ?? ''); }
+                }
+            }
+
+            // Features parse
+            $features = [];
+            $raw_features = $product['features'] ?? '';
+            $json_features = null;
+            if(class_exists('Utility') && method_exists('Utility', 'jdecode')) {
+                try { $json_features = Utility::jdecode($raw_features, true); } catch(\Throwable $e) {}
+            }
+            if(!$json_features && is_string($raw_features) && trim($raw_features)) {
+                $decoded = json_decode($raw_features, true);
+                if(is_array($decoded)) $json_features = $decoded;
+            }
+            if(is_array($json_features)) {
+                foreach($json_features as $k => $v) {
+                    if($v !== null && $v !== '' && !is_array($v)) {
+                        $features[] = (is_string($k) && $k && !is_numeric($k) ? $k . ': ' : '') . (string)$v;
+                    } elseif(is_array($v) && isset($v['name'])) {
+                        $val = $v['value'] ?? '';
+                        $features[] = $v['name'] . ($val ? ': ' . $val : '');
+                    }
+                }
+            } elseif(is_string($raw_features) && trim($raw_features)) {
+                foreach(preg_split('/\r\n|\r|\n/', $raw_features) as $line) {
+                    $line = trim($line);
+                    if($line) $features[] = $line;
+                }
+            }
+
+            // İlk 6-7 feature al
+            $features = array_slice($features, 0, 7);
+
+            return [
+                'name'      => $product['title'] ?? ($product['name'] ?? 'Paket'),
+                'subtitle'  => $product['sub_title'] ?? '',
+                'price'     => $amount_value ?: '-',
+                'currency'  => $amount_symbol ?: '₺',
+                'period'    => $period_text ?: 'aylık',
+                'highlight' => $popular,
+                'features'  => $features,
+                'buy_link'  => $product['buy_link'] ?? '',
+                'buy_label' => $product['optionsl']['buy_button_name'] ?? 'Hemen Satın Al',
+            ];
+        };
+
+        // Yöntem A: Tüm hosting kategorilerini al, her biri için paketleri çek
+        $all_hosting_packs = [];
+        if(method_exists('Products', 'getList')) {
+            try {
+                $hp = @Products::getList(['type' => 'hosting', 'status' => 'active']);
+                if(is_array($hp)) $all_hosting_packs = $hp;
+            } catch(\Throwable $e) {}
+        }
+
+        // Yöntem B: Yöntem A boşsa get_products_with_category dene
+        if(empty($all_hosting_packs) && method_exists('Products', 'get_products_with_category')) {
+            // Önce kategorileri al
+            try {
+                $hosting_cats = @Products::get_select_categories('hosting', 0);
+                if(is_array($hosting_cats)) {
+                    foreach($hosting_cats as $hc) {
+                        $cat_id = $hc['id'] ?? 0;
+                        if(!$cat_id) continue;
+                        $pks = @Products::get_products_with_category('hosting', $cat_id);
+                        if(is_array($pks)) {
+                            foreach($pks as $p) {
+                                $p['_cat_title'] = $hc['title'] ?? ('Kategori #' . $cat_id);
+                                $p['_cat_id']    = $cat_id;
+                                $all_hosting_packs[] = $p;
+                            }
+                        }
+                    }
+                }
+            } catch(\Throwable $e) {}
+        }
+
+        // Kategori bazında grupla
+        if(!empty($all_hosting_packs)) {
+            $cdg_grouped = [];   // [cat_id => ['name'=>..., 'packages'=>[]]]
+            foreach($all_hosting_packs as $product) {
+                if(!is_array($product)) continue;
+                $cat_id = $product['category'] ?? ($product['_cat_id'] ?? 0);
+                $cat_name = '';
+
+                if($cat_id && method_exists('Products', 'getCategory')) {
+                    try {
+                        $_cat = @Products::getCategory($cat_id);
+                        if($_cat && isset($_cat['title'])) $cat_name = $_cat['title'];
+                    } catch(\Throwable $e) {}
+                }
+                if(!$cat_name) $cat_name = $product['_cat_title'] ?? 'Hosting Paketleri';
+                if(!$cat_id)   $cat_id = 'general';
+
+                if(!isset($cdg_grouped[$cat_id])) {
+                    $cdg_grouped[$cat_id] = [
+                        'id'       => 'cat_' . $cat_id,
+                        'name'     => $cat_name,
+                        'icon'     => 'bi-rocket-takeoff',
+                        'color'    => '#10b981',
+                        'desc'     => '',
+                        'packages' => [],
+                    ];
+                }
+
+                $formatted = $cdg_format_pkg($product);
+                if($formatted['buy_link']) {  // Sadece buy_link olan paketleri ekle
+                    $cdg_grouped[$cat_id]['packages'][] = $formatted;
+                }
+            }
+
+            // Boş grupları sil + sırayla diziye çevir
+            foreach($cdg_grouped as $g) {
+                if(!empty($g['packages'])) $pricing_categories[] = $g;
+            }
+
+            if(!empty($pricing_categories)) $pricing_dynamic = true;
+        }
+    } catch(\Throwable $e) {
+        // Sessiz fallback'e düş
+        $pricing_categories = [];
+        $pricing_dynamic = false;
+    }
+}
+
+// === FALLBACK: WiseCP'den çekilemediyse statik mock tablo ===
+if(empty($pricing_categories)) {
+    $pricing_categories = [
     [
         'id' => 'ekonomik', 'name' => 'Ekonomik SSD Hosting', 'icon' => 'bi-rocket-takeoff', 'color' => '#10b981',
         'desc' => 'Bireysel ve küçük projeler için uygun fiyatlı paketler',
         'packages' => [
-            ['name' => 'Linux Hosting 1', 'subtitle' => 'Bireysel siteler', 'price' => '150', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['1 Web Sitesi', '5 GB NVMe SSD', '50 GB Trafik', '5 E-posta', 'Ücretsiz SSL', 'Günlük Yedekleme']],
-            ['name' => 'Linux Hosting 2', 'subtitle' => 'Hobi siteleri', 'price' => '289', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true, 'features' => ['3 Web Sitesi', '20 GB NVMe SSD', 'Sınırsız Trafik', '20 E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Günlük Yedekleme']],
-            ['name' => 'Linux Hosting 3', 'subtitle' => 'Küçük işletme', 'price' => '389', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['5 Web Sitesi', '50 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Saatlik Yedek']],
-            ['name' => 'Linux Hosting 4', 'subtitle' => 'Geniş projeler', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Saatlik Yedek']],
+            ['name' => 'Linux Hosting 1', 'subtitle' => 'Bireysel siteler', 'price' => '150', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => '', 'features' => ['1 Web Sitesi', '5 GB NVMe SSD', '50 GB Trafik', '5 E-posta', 'Ücretsiz SSL', 'Günlük Yedekleme']],
+            ['name' => 'Linux Hosting 2', 'subtitle' => 'Hobi siteleri', 'price' => '289', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true, 'buy_link' => '', 'features' => ['3 Web Sitesi', '20 GB NVMe SSD', 'Sınırsız Trafik', '20 E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Günlük Yedekleme']],
+            ['name' => 'Linux Hosting 3', 'subtitle' => 'Küçük işletme', 'price' => '389', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => '', 'features' => ['5 Web Sitesi', '50 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Saatlik Yedek']],
+            ['name' => 'Linux Hosting 4', 'subtitle' => 'Geniş projeler', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => '', 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Saatlik Yedek']],
         ],
     ],
     [
         'id' => 'profesyonel', 'name' => 'Profesyonel SSD Hosting', 'icon' => 'bi-stars', 'color' => '#2E3B4E',
         'desc' => 'Yüksek trafikli siteler ve kurumsal çözümler için',
         'packages' => [
-            ['name' => 'Profesyonel 1', 'subtitle' => 'Kurumsal başlangıç', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', '2 Core CPU', '2 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise']],
-            ['name' => 'Profesyonel 2', 'subtitle' => 'Büyük kurumsal', 'price' => '750', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true, 'features' => ['25 Web Sitesi', '250 GB NVMe SSD', 'Sınırsız Trafik', '4 Core CPU', '4 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Öncelikli Destek']],
-            ['name' => 'Profesyonel 3', 'subtitle' => 'Yüksek trafik', 'price' => '1.200', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['Sınırsız Site', '500 GB NVMe SSD', 'Sınırsız Trafik', '8 Core CPU', '8 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Dedicated IP']],
+            ['name' => 'Profesyonel 1', 'subtitle' => 'Kurumsal başlangıç', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => '', 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', '2 Core CPU', '2 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise']],
+            ['name' => 'Profesyonel 2', 'subtitle' => 'Büyük kurumsal', 'price' => '750', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true, 'buy_link' => '', 'features' => ['25 Web Sitesi', '250 GB NVMe SSD', 'Sınırsız Trafik', '4 Core CPU', '4 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Öncelikli Destek']],
+            ['name' => 'Profesyonel 3', 'subtitle' => 'Yüksek trafik', 'price' => '1.200', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => '', 'features' => ['Sınırsız Site', '500 GB NVMe SSD', 'Sınırsız Trafik', '8 Core CPU', '8 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Dedicated IP']],
         ],
     ],
     [
         'id' => 'bayi', 'name' => 'Bayi (Reseller) Hosting', 'icon' => 'bi-people-fill', 'color' => '#8b5cf6',
         'desc' => 'Web tasarımcıları ve ajanslar için bayilik çözümleri',
         'packages' => [
-            ['name' => 'S BAYİ', 'subtitle' => 'Küçük bayilik', 'price' => '14', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'features' => ['10 DirectAdmin Hesabı', '20 GB NVMe SSD', '200 GB Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label']],
-            ['name' => 'M BAYİ', 'subtitle' => 'Orta bayilik', 'price' => '24', 'currency' => '$', 'period' => 'aylık', 'highlight' => true, 'features' => ['25 DirectAdmin Hesabı', '50 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'DirectAdmin Lisansı']],
-            ['name' => 'L BAYİ', 'subtitle' => 'Büyük bayilik', 'price' => '39', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'features' => ['50 DirectAdmin Hesabı', '100 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'Marka Çözümleri']],
+            ['name' => 'S BAYİ', 'subtitle' => 'Küçük bayilik', 'price' => '14', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'buy_link' => '', 'features' => ['10 DirectAdmin Hesabı', '20 GB NVMe SSD', '200 GB Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label']],
+            ['name' => 'M BAYİ', 'subtitle' => 'Orta bayilik', 'price' => '24', 'currency' => '$', 'period' => 'aylık', 'highlight' => true, 'buy_link' => '', 'features' => ['25 DirectAdmin Hesabı', '50 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'DirectAdmin Lisansı']],
+            ['name' => 'L BAYİ', 'subtitle' => 'Büyük bayilik', 'price' => '39', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'buy_link' => '', 'features' => ['50 DirectAdmin Hesabı', '100 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'Marka Çözümleri']],
         ],
     ],
 ];
+}
 
 // === DOMAIN FİYATLARI - WiseCP'den gerçek çekim ===
 $popular_tlds = [];
@@ -667,8 +855,8 @@ $faqs = [
                         <li><i class="bi bi-check-circle-fill"></i> <?php echo htmlspecialchars($feat, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></li>
                         <?php endforeach; ?>
                     </ul>
-                    <a href="<?php echo $hosting_url; ?>" class="cdg-btn <?php echo !empty($pkg['highlight']) ? 'cdg-btn-primary cdg-btn-glow' : 'cdg-btn-outline'; ?> cdg-btn-block">
-                        <i class="bi bi-cart-plus"></i> Hemen Satın Al
+                    <a href="<?php echo !empty($pkg['buy_link']) ? htmlspecialchars($pkg['buy_link'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : $hosting_url; ?>" class="cdg-btn <?php echo !empty($pkg['highlight']) ? 'cdg-btn-primary cdg-btn-glow' : 'cdg-btn-outline'; ?> cdg-btn-block">
+                        <i class="bi bi-cart-plus"></i> <?php echo !empty($pkg['buy_label']) ? htmlspecialchars($pkg['buy_label'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : 'Hemen Satın Al'; ?>
                     </a>
                 </div>
                 <?php endforeach; ?>
