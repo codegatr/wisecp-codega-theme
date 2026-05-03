@@ -80,3 +80,22 @@
     }
 
 })();
+
+// ========== Back-to-top button scroll handler ==========
+(function(){
+    var btn = document.querySelector('.back-to-top');
+    if(!btn) return;
+
+    function check() {
+        if(window.scrollY > 300) btn.classList.add('active');
+        else btn.classList.remove('active');
+    }
+    window.addEventListener('scroll', check, { passive: true });
+
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    check();
+})();

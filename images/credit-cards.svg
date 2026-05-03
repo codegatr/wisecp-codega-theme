@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 50" width="320" height="50">
+  <!-- VISA -->
+  <g transform="translate(0, 5)">
+    <rect width="60" height="40" rx="6" fill="#fff" stroke="#e5e7eb" stroke-width="1"/>
+    <text x="30" y="26" font-family="Arial, sans-serif" font-size="14" font-weight="900" fill="#1a1f71" text-anchor="middle">VISA</text>
+  </g>
+
+  <!-- Mastercard -->
+  <g transform="translate(70, 5)">
+    <rect width="60" height="40" rx="6" fill="#fff" stroke="#e5e7eb" stroke-width="1"/>
+    <circle cx="24" cy="20" r="9" fill="#eb001b"/>
+    <circle cx="36" cy="20" r="9" fill="#f79e1b" opacity="0.85"/>
+  </g>
+
+  <!-- AMEX -->
+  <g transform="translate(140, 5)">
+    <rect width="60" height="40" rx="6" fill="#006fcf"/>
+    <text x="30" y="25" font-family="Arial, sans-serif" font-size="9" font-weight="800" fill="#fff" text-anchor="middle">AMERICAN</text>
+    <text x="30" y="34" font-family="Arial, sans-serif" font-size="9" font-weight="800" fill="#fff" text-anchor="middle">EXPRESS</text>
+  </g>
+
+  <!-- TROY -->
+  <g transform="translate(210, 5)">
+    <rect width="60" height="40" rx="6" fill="#fff" stroke="#e5e7eb" stroke-width="1"/>
+    <text x="30" y="20" font-family="Arial, sans-serif" font-size="11" font-weight="800" fill="#00aeef" text-anchor="middle">troy</text>
+    <text x="30" y="34" font-family="Arial, sans-serif" font-size="6" font-weight="600" fill="#64748b" text-anchor="middle">TÜRKİYE</text>
+  </g>
+
+  <!-- 3D Secure -->
+  <g transform="translate(280, 5)">
+    <rect width="40" height="40" rx="6" fill="#0f172a"/>
+    <text x="20" y="20" font-family="Arial, sans-serif" font-size="9" font-weight="800" fill="#fff" text-anchor="middle">3D</text>
+    <text x="20" y="32" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#00D3E5" text-anchor="middle">SECURE</text>
+  </g>
+</svg>

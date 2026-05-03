@@ -1073,7 +1073,7 @@
 
 
             <div class="paymentlogos">
-                <img class="plogos1" src="<?php echo $tadress;?>images/credit-cards.png">
+                <img class="plogos1" src="<?php echo $tadress;?>images/credit-cards.svg">
                 <img class="plogos2" src="<?php echo $tadress;?>images/ssl-secure.svg">
                 <div class="clear"></div>
                 <span><?php echo __("website/basket/basketsecnotice"); ?></span>

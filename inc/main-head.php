@@ -30,7 +30,7 @@ if(isset($hoptions["page"]) && $hoptions["page"] != "index" && isset($meta["titl
 <meta name="keywords" content="<?php echo isset($meta["keywords"]) ? $meta["keywords"] : '';?>" />
 <meta name="description" content="<?php echo isset($meta["description"]) ? $meta["description"] : '';?>" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="<?php echo isset($meta["robots"]) ? $meta["robots"] : 'all'; ?>" />
 
 <?php if(class_exists('View') && method_exists('View', 'main_meta')) View::main_meta(); ?>
@@ -41,6 +41,22 @@ if(isset($hoptions["page"]) && $hoptions["page"] != "index" && isset($meta["titl
 
 <?php if(isset($page) && isset($page["mockup"]) && $page["mockup"] != ''): ?>
     <meta property="og:image" content="<?php echo $page["mockup"]; ?>">
+<?php endif; ?>
+
+<!-- Open Graph (Facebook, LinkedIn) -->
+<meta property="og:title" content="<?php echo isset($meta["title"]) ? htmlspecialchars($meta["title"], ENT_QUOTES | ENT_HTML5, 'UTF-8') : 'CODEGA'; ?>" />
+<meta property="og:description" content="<?php echo isset($meta["description"]) ? htmlspecialchars($meta["description"], ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; ?>" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="<?php echo isset($canonical_link) ? $canonical_link : ''; ?>" />
+<meta property="og:site_name" content="CODEGA" />
+<meta property="og:locale" content="tr_TR" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="<?php echo isset($meta["title"]) ? htmlspecialchars($meta["title"], ENT_QUOTES | ENT_HTML5, 'UTF-8') : 'CODEGA'; ?>" />
+<meta name="twitter:description" content="<?php echo isset($meta["description"]) ? htmlspecialchars($meta["description"], ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; ?>" />
+<?php if(isset($page) && isset($page["mockup"]) && $page["mockup"] != ''): ?>
+    <meta name="twitter:image" content="<?php echo $page["mockup"]; ?>">
 <?php endif; ?>
 
 <?php
