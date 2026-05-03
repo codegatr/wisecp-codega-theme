@@ -8,7 +8,6 @@
 if(isset($tpath) && file_exists($tpath . "common-needs.php")) {
     include $tpath . "common-needs.php";
 }
-$wide_content = true;
 $hoptions = ["datatables", "iziModal", "select2"];
 
 if(!function_exists('cdg_link')) {

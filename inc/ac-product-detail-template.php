@@ -16,7 +16,6 @@
 if(isset($tpath) && file_exists($tpath . "common-needs.php")) {
     include $tpath . "common-needs.php";
 }
-$wide_content = true;
 $hoptions = ["datatables"];
 
 if(!function_exists('cdg_link')) {
@@ -174,14 +173,12 @@ foreach($options as $opt_k => $opt_v) {
     --p-shadow-lg: 0 8px 24px rgba(15,23,42,0.08);
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
     color: var(--p-text);
-    background: var(--p-bg);
-    padding: 28px 0;
-    min-height: 100vh;
+    padding: 8px 0 28px;
     box-sizing: border-box;
 }
 .cdg-pd2 *, .cdg-pd2 *::before, .cdg-pd2 *::after { box-sizing: border-box; }
 .cdg-pd2 a { text-decoration: none; color: inherit; }
-.cdg-pd2-wrap { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+.cdg-pd2-wrap { max-width: 100%; margin: 0; padding: 0; }
 
 .cdg-pd2-back {
     display: inline-flex; align-items: center; gap: 8px;
@@ -450,7 +447,7 @@ foreach($options as $opt_k => $opt_v) {
 <div class="cdg-pd2">
 <div class="cdg-pd2-wrap">
 
-    <a href="<?php echo htmlspecialchars($back_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd2-back">
+    <a href="<?php echo htmlspecialchars($back_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd2-back" onclick="if(window.history.length>1){window.history.back();return false;}">
         <i class="bi bi-arrow-left"></i> Listeye Dön
     </a>
 
