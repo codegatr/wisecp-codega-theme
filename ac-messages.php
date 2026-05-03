@@ -157,7 +157,7 @@ function cdg_msglist_date($date) {
 
 <style>
 .cdg-msl {
-    --ml-primary: #1e40af;
+    --ml-primary: #2E3B4E;
     --ml-bg: #f8fafc;
     --ml-card: #fff;
     --ml-text: #0f172a;
@@ -176,13 +176,13 @@ function cdg_msglist_date($date) {
 .cdg-msl-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
 .cdg-msl-hero {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    background: linear-gradient(135deg, #2E3B4E 0%, #00D3E5 100%);
     border-radius: 18px;
     padding: 28px 32px;
     color: #fff;
     margin-bottom: 22px;
     display: flex; align-items: center; gap: 18px;
-    box-shadow: 0 16px 40px rgba(30,64,175,0.20);
+    box-shadow: 0 16px 40px rgba(46,59,78,0.20);
 }
 .cdg-msl-hero-icon {
     width: 56px; height: 56px;
@@ -220,7 +220,7 @@ function cdg_msglist_date($date) {
 .cdg-msl-icon {
     width: 44px; height: 44px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     display: grid; place-items: center;
     font-size: 19px; flex-shrink: 0;

@@ -131,10 +131,10 @@ $wisecp_used = false;
 
 $color_cycle = [
     ['icon' => 'bi-rocket-takeoff', 'color' => '#10b981'],
-    ['icon' => 'bi-stars',          'color' => '#1e40af'],
+    ['icon' => 'bi-stars',          'color' => '#2E3B4E'],
     ['icon' => 'bi-people-fill',    'color' => '#8b5cf6'],
     ['icon' => 'bi-trophy-fill',    'color' => '#f59e0b'],
-    ['icon' => 'bi-shield-fill-check','color' => '#06b6d4'],
+    ['icon' => 'bi-shield-fill-check','color' => '#00D3E5'],
 ];
 
 // Yontem 1: $get_categories + $get_list
@@ -193,7 +193,7 @@ if(!$wisecp_used && isset($showCategory) && is_array($showCategory) && isset($ge
                     'name'     => $showCategory['title'] ?? 'Hosting Paketleri',
                     'desc'     => $showCategory['sub_title'] ?? '',
                     'icon'     => 'bi-rocket-takeoff',
-                    'color'    => '#1e40af',
+                    'color'    => '#2E3B4E',
                     'packages' => $packages,
                 ];
                 $wisecp_used = true;
@@ -244,7 +244,7 @@ if(!$wisecp_used && class_exists('Products') && method_exists('Products', 'getLi
 if(empty($pricing_categories)) {
     $pricing_categories = [
         [
-            'id' => 'demo', 'name' => 'Hosting Paketleri', 'icon' => 'bi-rocket-takeoff', 'color' => '#1e40af',
+            'id' => 'demo', 'name' => 'Hosting Paketleri', 'icon' => 'bi-rocket-takeoff', 'color' => '#2E3B4E',
             'desc' => 'WiseCP\'de henüz hosting paketi tanımlanmamış. Admin panelinden ekleyebilirsiniz.',
             'packages' => [],
         ],
@@ -287,7 +287,7 @@ if(isset($showCategory) && is_array($showCategory)) {
     <div class="cdg-container">
         <div class="cdg-perf-grid">
             <div class="cdg-perf-card"><div class="cdg-perf-icon" style="color:#10b981;"><i class="bi bi-speedometer2"></i></div><div class="cdg-perf-num">28<span>ms</span></div><div class="cdg-perf-lbl">Yanıt Süresi</div></div>
-            <div class="cdg-perf-card"><div class="cdg-perf-icon" style="color:#3b82f6;"><i class="bi bi-graph-up-arrow"></i></div><div class="cdg-perf-num">%99.99<span></span></div><div class="cdg-perf-lbl">Uptime SLA</div></div>
+            <div class="cdg-perf-card"><div class="cdg-perf-icon" style="color:#00D3E5;"><i class="bi bi-graph-up-arrow"></i></div><div class="cdg-perf-num">%99.99<span></span></div><div class="cdg-perf-lbl">Uptime SLA</div></div>
             <div class="cdg-perf-card"><div class="cdg-perf-icon" style="color:#f59e0b;"><i class="bi bi-lightning-charge-fill"></i></div><div class="cdg-perf-num">9<span>x</span></div><div class="cdg-perf-lbl">Hızlı LiteSpeed</div></div>
             <div class="cdg-perf-card"><div class="cdg-perf-icon" style="color:#8b5cf6;"><i class="bi bi-shield-fill-check"></i></div><div class="cdg-perf-num">SSL<span></span></div><div class="cdg-perf-lbl">Ücretsiz</div></div>
         </div>

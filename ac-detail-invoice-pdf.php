@@ -108,7 +108,7 @@ $status_lbl = $status_lbl_map[$inv_status] ?? strtoupper($inv_status);
 $status_color = [
     'paid'    => '#10b981',
     'unpaid'  => '#f59e0b',
-    'waiting' => '#06b6d4',
+    'waiting' => '#00D3E5',
     'refund'  => '#ef4444',
     'cancelled' => '#94a3b8',
 ][$inv_status] ?? '#64748b';
@@ -175,7 +175,7 @@ body {
 .pdf-btn {
     display: inline-block;
     padding: 10px 18px;
-    background: #1e40af;
+    background: #2E3B4E;
     color: #fff;
     border: 0;
     border-radius: 8px;
@@ -186,7 +186,7 @@ body {
     margin-left: 8px;
     font-family: inherit;
 }
-.pdf-btn:hover { background: #1e3a8a; }
+.pdf-btn:hover { background: #1A2332; }
 .pdf-btn-back { background: #fff; color: #0f172a; border: 1px solid #e2e8f0; }
 
 /* Header */
@@ -202,7 +202,7 @@ body {
 .pdf-company-info strong { color: #0f172a; font-size: 14px; }
 
 /* Title row */
-.pdf-title-row { width: 100%; margin: 30px 0 25px; padding-top: 20px; border-top: 2px solid #1e40af; }
+.pdf-title-row { width: 100%; margin: 30px 0 25px; padding-top: 20px; border-top: 2px solid #2E3B4E; }
 .pdf-title-row td { vertical-align: middle; }
 .pdf-title h1 {
     font-size: 38px;
@@ -290,7 +290,7 @@ body {
     margin: 25px 0;
 }
 .pdf-table thead th {
-    background: #1e40af;
+    background: #2E3B4E;
     color: #fff;
     padding: 12px 15px;
     text-align: left;
@@ -339,12 +339,12 @@ body {
 }
 .pdf-totals-table tr.discount td { color: #92400e; }
 .pdf-totals-table tr.final td {
-    border-top: 2px solid #1e40af;
+    border-top: 2px solid #2E3B4E;
     padding-top: 12px;
     font-size: 16px;
 }
 .pdf-totals-table tr.final td:first-child { color: #0f172a; font-weight: 800; }
-.pdf-totals-table tr.final td:last-child { color: #1e40af; }
+.pdf-totals-table tr.final td:last-child { color: #2E3B4E; }
 
 /* Footer */
 .pdf-footer {
@@ -370,7 +370,7 @@ body {
 .pdf-footer .website {
     margin-top: 6px;
     font-size: 11px;
-    color: #1e40af;
+    color: #2E3B4E;
     font-weight: 700;
 }
 
@@ -402,7 +402,7 @@ body {
                 <?php if($logo): ?>
                 <img src="<?php echo htmlspecialchars($logo, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" alt="Logo">
                 <?php else: ?>
-                <strong style="font-size:22px;color:#1e40af;"><?php echo htmlspecialchars($company_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
+                <strong style="font-size:22px;color:#2E3B4E;"><?php echo htmlspecialchars($company_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
                 <?php endif; ?>
             </td>
             <td class="pdf-company-info">

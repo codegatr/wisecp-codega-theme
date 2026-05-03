@@ -26,13 +26,13 @@ $d_name = $proanse['name'] ?? ($options['domain'] ?? 'domain.com');
                 <i class="bi bi-info-circle-fill"></i>
                 <div>
                     Domain'inize gelen e-postaları başka bir hesaba yönlendirebilirsiniz.
-                    Örnek: <code style="background:rgba(30,64,175,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">info@<?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code> → <code style="background:rgba(30,64,175,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">size@gmail.com</code>
+                    Örnek: <code style="background:rgba(46,59,78,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">info@<?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code> → <code style="background:rgba(46,59,78,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">size@gmail.com</code>
                 </div>
             </div>
 
             <!-- Yeni Yönlendirme Ekleme -->
             <div class="cdg-dm-form">
-                <div style="font-size:12px;font-weight:800;color:#1e40af;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">
+                <div style="font-size:12px;font-weight:800;color:#2E3B4E;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">
                     <i class="bi bi-plus-circle"></i> Yeni Yönlendirme
                 </div>
                 <div style="display:grid;grid-template-columns:1fr auto 2fr 60px;gap:8px;align-items:end;">

@@ -131,7 +131,7 @@ $cdg_list_kind     = $cdg_list_kind ?? 'hosting';
 $cdg_list_title    = $cdg_list_title ?? 'Hizmetlerim';
 $cdg_list_subtitle = $cdg_list_subtitle ?? '';
 $cdg_list_icon     = $cdg_list_icon ?? 'hdd-network-fill';
-$cdg_list_color    = $cdg_list_color ?? '#1e40af';
+$cdg_list_color    = $cdg_list_color ?? '#2E3B4E';
 $cdg_list_shop_slug = $cdg_list_shop_slug ?? 'products';
 $cdg_list_shop_param = $cdg_list_shop_param ?? [$cdg_list_kind];
 
@@ -172,11 +172,11 @@ function cdg_pl_status_label($status) {
 
 <style>
 .cdg-pl {
-    --pl-primary: #1e40af;
+    --pl-primary: #2E3B4E;
     --pl-success: #10b981;
     --pl-warning: #f59e0b;
     --pl-danger: #ef4444;
-    --pl-info: #06b6d4;
+    --pl-info: #00D3E5;
     --pl-bg: #f8fafc;
     --pl-card: #fff;
     --pl-text: #0f172a;
@@ -197,14 +197,14 @@ function cdg_pl_status_label($status) {
 .cdg-pl-wrap { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
 
 .cdg-pl-hero {
-    background: linear-gradient(135deg, <?php echo $cdg_list_color; ?> 0%, #3b82f6 100%);
+    background: linear-gradient(135deg, <?php echo $cdg_list_color; ?> 0%, #00D3E5 100%);
     border-radius: 18px;
     padding: 28px 32px;
     color: #fff;
     margin-bottom: 22px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(30,64,175,0.20);
+    box-shadow: 0 16px 40px rgba(46,59,78,0.20);
 }
 .cdg-pl-hero::before {
     content: '';
@@ -246,10 +246,10 @@ function cdg_pl_status_label($status) {
 }
 .cdg-pl-btn-gold {
     background: linear-gradient(135deg, #fde047, #facc15);
-    color: #1e3a8a;
+    color: #1A2332;
     box-shadow: 0 6px 18px rgba(252,211,77,0.30);
 }
-.cdg-pl-btn-gold:hover { transform: translateY(-1px); color: #1e3a8a; }
+.cdg-pl-btn-gold:hover { transform: translateY(-1px); color: #1A2332; }
 .cdg-pl-btn-outline {
     background: #fff;
     color: var(--pl-text);
@@ -285,7 +285,7 @@ function cdg_pl_status_label($status) {
 .cdg-pl-tab.active {
     background: var(--pl-primary);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(30,64,175,0.22);
+    box-shadow: 0 4px 12px rgba(46,59,78,0.22);
 }
 .cdg-pl-tab .count {
     background: rgba(0,0,0,0.10);
@@ -313,7 +313,7 @@ function cdg_pl_status_label($status) {
 .cdg-pl-card-icon {
     width: 48px; height: 48px;
     border-radius: 12px;
-    background: linear-gradient(135deg, <?php echo $cdg_list_color; ?>, #3b82f6);
+    background: linear-gradient(135deg, <?php echo $cdg_list_color; ?>, #00D3E5);
     color: #fff;
     display: grid; place-items: center;
     font-size: 22px;
@@ -347,7 +347,7 @@ function cdg_pl_status_label($status) {
 .cdg-pl-badge-success { background: #d1fae5; color: #065f46; }
 .cdg-pl-badge-warning { background: #fef3c7; color: #92400e; }
 .cdg-pl-badge-danger  { background: #fee2e2; color: #991b1b; }
-.cdg-pl-badge-info    { background: #dbeafe; color: #1e40af; }
+.cdg-pl-badge-info    { background: #CFFAFE; color: #2E3B4E; }
 
 .cdg-pl-empty {
     text-align: center;

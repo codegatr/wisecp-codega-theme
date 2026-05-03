@@ -1,14 +1,14 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!'); ?>
 <style>
     /* CODEGA - Auth sayfasi (sign-in / sign-up) modern tasarim */
-    body#cdg-auth { margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; background: #0a1f44; color: #fff; -webkit-font-smoothing: antialiased; }
+    body#cdg-auth { margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; background: #1A2332; color: #fff; -webkit-font-smoothing: antialiased; }
     body#cdg-auth * { box-sizing: border-box; }
     body#cdg-auth a { text-decoration: none; }
 
     .cdg-auth-section {
         min-height: 100vh;
         position: relative;
-        background: linear-gradient(135deg, #0a1f44 0%, #1e3a8a 50%, #2563eb 100%);
+        background: linear-gradient(135deg, #1A2332 0%, #1A2332 50%, #485A75 100%);
         padding: 40px 20px;
         display: flex;
         align-items: center;
@@ -110,7 +110,7 @@
     }
     .cdg-auth-promo h1 .cdg-text-gradient,
     .cdg-auth-hero-text .cdg-text-gradient {
-        background: linear-gradient(135deg, #fbbf24, #fde047, #06b6d4);
+        background: linear-gradient(135deg, #fbbf24, #fde047, #00D3E5);
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -137,7 +137,7 @@
     }
     .cdg-auth-brand-logo {
         width: 44px; height: 44px;
-        background: linear-gradient(135deg, #1e40af, #2563eb);
+        background: linear-gradient(135deg, #2E3B4E, #485A75);
         border-radius: 10px;
         display: flex;
         align-items: center;
@@ -145,7 +145,7 @@
         color: #fff;
         font-size: 22px;
         font-weight: 900;
-        box-shadow: 0 8px 20px rgba(30,64,175,0.30);
+        box-shadow: 0 8px 20px rgba(46,59,78,0.30);
     }
     .cdg-auth-brand-text { font-size: 22px; font-weight: 900; color: #0f172a; letter-spacing: -0.02em; }
     .cdg-auth-card-head h2 { margin: 6px 0 4px; font-size: 22px; font-weight: 800; color: #0f172a; }
@@ -175,8 +175,8 @@
         box-sizing: border-box;
     }
     .cdg-auth-card input:focus, .cdg-auth-card select:focus, .cdg-auth-card textarea:focus {
-        border-color: #1e40af;
-        box-shadow: 0 0 0 3px rgba(30,64,175,0.12);
+        border-color: #2E3B4E;
+        box-shadow: 0 0 0 3px rgba(46,59,78,0.12);
     }
     .cdg-auth-card .mio-ajax-submit,
     .cdg-auth-card button[type=submit],
@@ -187,7 +187,7 @@
         width: 100%;
         padding: 14px 22px;
         margin-top: 8px;
-        background: linear-gradient(135deg, #2563eb, #1e40af);
+        background: linear-gradient(135deg, #485A75, #2E3B4E);
         color: #fff !important;
         border: 0;
         border-radius: 10px;
@@ -199,19 +199,19 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
         transition: all 0.2s;
-        box-shadow: 0 8px 20px rgba(30,64,175,0.25);
+        box-shadow: 0 8px 20px rgba(46,59,78,0.25);
         font-family: inherit;
     }
     .cdg-auth-card .mio-ajax-submit:hover,
     .cdg-auth-card button[type=submit]:hover,
     .cdg-auth-card .gonderbtn:hover {
-        background: linear-gradient(135deg, #1e40af, #1e3a8a);
+        background: linear-gradient(135deg, #2E3B4E, #1A2332);
         transform: translateY(-2px);
-        box-shadow: 0 12px 28px rgba(30,64,175,0.35);
+        box-shadow: 0 12px 28px rgba(46,59,78,0.35);
     }
     .cdg-auth-card .blueclear, .cdg-auth-card .greybtn {
         display: inline-block;
-        color: #1e40af !important;
+        color: #2E3B4E !important;
         text-decoration: none;
         font-size: 13px;
         font-weight: 600;
@@ -224,7 +224,7 @@
         color: #475569;
         margin-top: 18px;
     }
-    .cdg-auth-card .formfoot a, .cdg-auth-card .formfoot1 a { color: #1e40af; font-weight: 700; }
+    .cdg-auth-card .formfoot a, .cdg-auth-card .formfoot1 a { color: #2E3B4E; font-weight: 700; }
 
     /* Hata/uyari mesajlari */
     .cdg-auth-card .alert, .cdg-auth-card #ErrorBlock {
@@ -294,7 +294,7 @@
     .cdg-auth-modal-content h1 i {
         display: block;
         font-size: 36px;
-        color: #1e40af;
+        color: #2E3B4E;
         margin-bottom: 8px;
     }
     .cdg-auth-modal-content p { color: #64748b; font-size: 14px; line-height: 1.6; text-align: center; margin: 0 0 14px; }

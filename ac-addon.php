@@ -11,7 +11,7 @@ $module_content = $module_content ?? '';
 
 <style>
 .cdg-addon {
-    --a-primary: #1e40af;
+    --a-primary: #2E3B4E;
     --a-bg: #f8fafc;
     --a-card: #fff;
     --a-text: #0f172a;

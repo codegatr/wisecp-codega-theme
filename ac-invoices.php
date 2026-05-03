@@ -126,8 +126,8 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
                 </div>
                 <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo $paid_count; ?> adet</div>
             </div>
-            <div style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border:1px solid #93c5fd;border-radius:10px;padding:14px;">
-                <div style="font-size:11px;font-weight:700;color:#1e40af;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">
+            <div style="background:linear-gradient(135deg,#CFFAFE,#A5F3FC);border:1px solid #67E8F9;border-radius:10px;padding:14px;">
+                <div style="font-size:11px;font-weight:700;color:#2E3B4E;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">
                     <i class="bi bi-receipt"></i> Toplam
                 </div>
                 <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo count($items); ?> fatura</div>

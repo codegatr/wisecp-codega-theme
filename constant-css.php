@@ -38,7 +38,7 @@ if(class_exists('License') && method_exists('License','get_version')) {
 .swal2-popup .swal2-title { font-family: 'Plus Jakarta Sans', sans-serif !important; font-weight: 800 !important; }
 .swal2-popup .swal2-content { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 .swal2-styled.swal2-confirm {
-    background: linear-gradient(135deg, #1e40af, #3b82f6) !important;
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5) !important;
     border: 0 !important;
     border-radius: 10px !important;
     font-weight: 700 !important;
@@ -115,12 +115,12 @@ html { scroll-behavior: smooth; }
     border-radius: 8px;
 }
 .cdg-btn-primary {
-    background: linear-gradient(135deg, #2563eb, #1e40af);
+    background: linear-gradient(135deg, #485A75, #2E3B4E);
     color: #fff !important;
     border-color: transparent;
 }
 .cdg-btn-primary:hover {
-    background: linear-gradient(135deg, #1e40af, #1e3a8a);
+    background: linear-gradient(135deg, #2E3B4E, #1A2332);
     color: #fff !important;
     transform: translateY(-1px);
     box-shadow: 0 6px 16px rgba(30,64,175,0.30);
@@ -132,8 +132,8 @@ html { scroll-behavior: smooth; }
 }
 .cdg-btn-outline:hover {
     background: #f8fafc;
-    border-color: #1e40af;
-    color: #1e40af !important;
+    border-color: #2E3B4E;
+    color: #2E3B4E !important;
 }
 .cdg-btn-ghost {
     background: transparent;
@@ -142,7 +142,7 @@ html { scroll-behavior: smooth; }
 }
 .cdg-btn-ghost:hover {
     background: #f1f5f9;
-    color: #1e40af !important;
+    color: #2E3B4E !important;
 }
 .cdg-btn-ghost i, .cdg-btn-outline i, .cdg-btn-primary i { font-size: 16px; }
 

@@ -90,7 +90,7 @@ $products = [
         'tagline' => 'Kurumsal Kaynak Planlama Siştemi',
         'desc' => 'Şirketinizin tüm operasyonlarini tek panelden yoneten bulut tabanli ERP çözümu. Muhasebe, stok, satis, satin alma, CRM, IK, üretim ve daha fazlasi.',
         'icon' => 'bi-building-fill',
-        'color' => '#1e40af',
+        'color' => '#2E3B4E',
         'highlight' => true,
         'badge' => 'AMIRAL GEMISI',
         'features' => [
@@ -161,7 +161,7 @@ $products = [
         'tagline' => 'Çok Dilli E-Ticaret + Bayi Portali',
         'desc' => '5 dil destekli (TR/EN/AR/RU/FR) e-ticaret + bayi yönetim siştemi. Dinamik urun, kategori, banka entegrasyonu, fiyatlandirma.',
         'icon' => 'bi-cart-fill',
-        'color' => '#06b6d4',
+        'color' => '#00D3E5',
         'features' => [
             '5 dil destegi (TR/EN/AR/RU/FR)',
             'Bayi yönetim paneli',
@@ -298,7 +298,7 @@ $service_categories = [
         <div class="cdg-solutions-grid">
             <?php foreach($service_categories as $cat): ?>
             <div class="cdg-solution-card" style="cursor:default;">
-                <div class="cdg-solution-icon" style="background:linear-gradient(135deg,#1e40af,#3b82f6);"><i class="bi <?php echo $cat['icon']; ?>"></i></div>
+                <div class="cdg-solution-icon" style="background:linear-gradient(135deg,#2E3B4E,#00D3E5);"><i class="bi <?php echo $cat['icon']; ?>"></i></div>
                 <h3><?php echo $cat['title']; ?></h3>
                 <p><?php echo $cat['desc']; ?></p>
             </div>

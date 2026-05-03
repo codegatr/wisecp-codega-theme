@@ -245,7 +245,7 @@ if(!empty($transactions) && is_array($transactions)) {
             <!-- OTOMATİK ÖDEME KARTI -->
             <div class="cdg-bal-card">
                 <div class="cdg-bal-card-head">
-                    <h3><i class="bi bi-gear-fill" style="color:#1e40af;"></i> Otomatik Ödeme</h3>
+                    <h3><i class="bi bi-gear-fill" style="color:#2E3B4E;"></i> Otomatik Ödeme</h3>
                     <span class="cdg-bal-card-sub">Bakiyeden otomatik fatura ödeme</span>
                 </div>
                 <div class="cdg-bal-card-body">
@@ -440,8 +440,8 @@ if(!empty($transactions) && is_array($transactions)) {
     padding: 18px 20px;
 }
 .cdg-bal-stat-primary {
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    border-color: #1e3a8a;
+    background: linear-gradient(135deg, #1A2332, #485A75);
+    border-color: #1A2332;
     color: #fff;
     position: relative;
     overflow: hidden;
@@ -707,7 +707,7 @@ if(!empty($transactions) && is_array($transactions)) {
 .cdg-bal-save-btn {
     width: 100%;
     padding: 11px 18px;
-    background: #1e40af;
+    background: #2E3B4E;
     color: #fff;
     border: 0;
     border-radius: 10px;
@@ -717,7 +717,7 @@ if(!empty($transactions) && is_array($transactions)) {
     font-family: inherit;
     transition: all 0.18s;
 }
-.cdg-bal-save-btn:hover { background: #1e3a8a; transform: translateY(-1px); }
+.cdg-bal-save-btn:hover { background: #1A2332; transform: translateY(-1px); }
 
 /* === TABLE === */
 .cdg-bal-table {
@@ -765,7 +765,7 @@ if(!empty($transactions) && is_array($transactions)) {
 .cdg-bal-badge-success { background: #dcfce7; color: #15803d; }
 .cdg-bal-badge-warning { background: #fef3c7; color: #92400e; }
 .cdg-bal-badge-danger { background: #fee2e2; color: #991b1b; }
-.cdg-bal-badge-info { background: #dbeafe; color: #1e40af; }
+.cdg-bal-badge-info { background: #CFFAFE; color: #2E3B4E; }
 
 .cdg-bal-empty {
     text-align: center;

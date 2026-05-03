@@ -67,7 +67,7 @@ foreach($replies as $reply):
         <?php echo $message; ?>
 
         <?php if($r_enc): ?>
-        <div style="margin-top:10px;display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:#dbeafe;color:#1e3a8a;border-radius:99px;font-size:11px;font-weight:700;">
+        <div style="margin-top:10px;display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:#CFFAFE;color:#1A2332;border-radius:99px;font-size:11px;font-weight:700;">
             <i class="bi bi-shield-lock-fill"></i> Şifrelenmiş Mesaj
         </div>
         <?php endif; ?>

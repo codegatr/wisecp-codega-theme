@@ -69,7 +69,7 @@ $un_message = isset($message) ? $message : '';
             </form>
 
             <div style="margin-top:18px;padding-top:18px;border-top:1px solid #e2e8f0;text-align:center;font-size:12px;color:#64748b;">
-                Geri donmek istediginizde <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('newsletter') : '/newsletter'); ?>" style="color:#1e40af;font-weight:700;text-decoration:none;">tekrar abone olabilirsiniz</a>.
+                Geri donmek istediginizde <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('newsletter') : '/newsletter'); ?>" style="color:#2E3B4E;font-weight:700;text-decoration:none;">tekrar abone olabilirsiniz</a>.
             </div>
         </div>
     </div>

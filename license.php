@@ -25,7 +25,7 @@ $controller_link = isset($links['controller']) ? $links['controller'] : '';
     <div class="cdg-container" style="max-width:600px;">
         <div class="cdg-card" style="padding:36px;">
             <div style="text-align:center;margin-bottom:24px;">
-                <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;display:inline-grid;place-items:center;font-size:28px;margin-bottom:12px;">
+                <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#2E3B4E,#00D3E5);color:#fff;display:inline-grid;place-items:center;font-size:28px;margin-bottom:12px;">
                     <i class="bi bi-shield-check"></i>
                 </div>
                 <h2 style="margin:0 0 6px;font-size:22px;font-weight:800;">Lisans Sorgulama</h2>
@@ -84,7 +84,7 @@ $controller_link = isset($links['controller']) ? $links['controller'] : '';
         </div>
 
         <div style="text-align:center;margin-top:14px;font-size:12px;color:#94a3b8;">
-            <i class="bi bi-info-circle"></i> Bu sayfa lisans doğrulama için kullanılır, satın alma için <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" style="color:#1e40af;font-weight:700;">iletisime gecin</a>.
+            <i class="bi bi-info-circle"></i> Bu sayfa lisans doğrulama için kullanılır, satın alma için <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" style="color:#2E3B4E;font-weight:700;">iletisime gecin</a>.
         </div>
     </div>
 </section>

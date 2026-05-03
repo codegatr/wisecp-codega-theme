@@ -37,7 +37,7 @@ if(isset($hoptions["page"]) && $hoptions["page"] != "index" && isset($meta["titl
 
 <link rel="canonical" href="<?php echo isset($canonical_link) ? $canonical_link : ''; ?>" />
 <link rel="icon" type="image/png" href="<?php echo (isset($favicon_link) && $favicon_link) ? $favicon_link : $tadress.'images/favicon.png'; ?>" />
-<meta name="theme-color" content="<?php echo isset($meta_color) ? $meta_color : '#1e40af'; ?>">
+<meta name="theme-color" content="<?php echo isset($meta_color) ? $meta_color : '#2E3B4E'; ?>">
 
 <?php if(isset($page) && isset($page["mockup"]) && $page["mockup"] != ''): ?>
     <meta property="og:image" content="<?php echo $page["mockup"]; ?>">
@@ -87,6 +87,9 @@ if(isset($hoptions["page"]) && $hoptions["page"] != "index" && isset($meta["titl
 <!-- Codega CSS -->
 <link rel="stylesheet" href="<?php echo $tadress; ?>css/wisecp.css?v=<?php echo time(); ?>" />
 <link rel="stylesheet" href="<?php echo $tadress; ?>css/style.css?v=<?php echo file_exists(__DIR__ . '/../css/style.css') ? filemtime(__DIR__ . '/../css/style.css') : 1; ?>" />
+
+<!-- CODEGA Kurumsal Kimlik (logo + palet + tipografi) -->
+<?php $brand_inc = __DIR__ . DIRECTORY_SEPARATOR . 'cdg-brand.php'; if(file_exists($brand_inc)) include $brand_inc; ?>
 
 <!-- WiseCP main script -->
 <script>var template_address = "<?php echo $tadress; ?>";</script>

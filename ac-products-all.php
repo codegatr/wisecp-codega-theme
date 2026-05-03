@@ -106,11 +106,11 @@ foreach($items as $row) {
 $type_meta = [
     'hosting'      => ['icon' => 'hdd-network-fill',     'color' => '#10b981', 'lbl' => 'Hosting'],
     'server'       => ['icon' => 'server',                'color' => '#8b5cf6', 'lbl' => 'Sunucu'],
-    'domain'       => ['icon' => 'globe2',                'color' => '#06b6d4', 'lbl' => 'Domain'],
+    'domain'       => ['icon' => 'globe2',                'color' => '#00D3E5', 'lbl' => 'Domain'],
     'sms'          => ['icon' => 'chat-dots-fill',        'color' => '#f59e0b', 'lbl' => 'SMS'],
     'software'     => ['icon' => 'code-square',           'color' => '#ec4899', 'lbl' => 'Yazılım'],
-    'special'      => ['icon' => 'star-fill',             'color' => '#1e40af', 'lbl' => 'Özel'],
-    'subscription' => ['icon' => 'arrow-repeat',          'color' => '#3b82f6', 'lbl' => 'Abonelik'],
+    'special'      => ['icon' => 'star-fill',             'color' => '#2E3B4E', 'lbl' => 'Özel'],
+    'subscription' => ['icon' => 'arrow-repeat',          'color' => '#00D3E5', 'lbl' => 'Abonelik'],
 ];
 
 // Status meta map (renkli badge)
@@ -129,8 +129,8 @@ $status_meta_map = [
 <style>
 /* === ÜRÜN VE HİZMETLERİM - Kurumsal Tasarım === */
 .cdg-pl {
-    --pl-primary: #1e40af;
-    --pl-primary-soft: #3b82f6;
+    --pl-primary: #2E3B4E;
+    --pl-primary-soft: #00D3E5;
     --pl-text: #0f172a;
     --pl-muted: #64748b;
     --pl-border: #e2e8f0;
@@ -145,7 +145,7 @@ $status_meta_map = [
 /* HERO */
 .cdg-pl-hero {
     position: relative;
-    background: linear-gradient(135deg, #0a1f44 0%, #1e3a8a 50%, #2563eb 100%);
+    background: linear-gradient(135deg, #1A2332 0%, #1A2332 50%, #485A75 100%);
     border-radius: 18px;
     padding: 28px 32px;
     color: #fff;
@@ -236,13 +236,13 @@ $status_meta_map = [
 }
 .cdg-pl-stat:hover {
     border-color: var(--pl-primary);
-    box-shadow: 0 6px 18px rgba(30,64,175,0.10);
+    box-shadow: 0 6px 18px rgba(46,59,78,0.10);
     transform: translateY(-2px);
 }
 .cdg-pl-stat.active {
     border-color: var(--pl-primary);
-    background: linear-gradient(135deg, rgba(30,64,175,0.06), rgba(30,64,175,0.02));
-    box-shadow: 0 6px 18px rgba(30,64,175,0.12);
+    background: linear-gradient(135deg, rgba(46,59,78,0.06), rgba(46,59,78,0.02));
+    box-shadow: 0 6px 18px rgba(46,59,78,0.12);
 }
 .cdg-pl-stat-row {
     display: flex; align-items: center; gap: 10px;
@@ -295,7 +295,7 @@ $status_meta_map = [
 }
 .cdg-pl-search input:focus {
     border-color: var(--pl-primary);
-    box-shadow: 0 0 0 3px rgba(30,64,175,0.10);
+    box-shadow: 0 0 0 3px rgba(46,59,78,0.10);
 }
 .cdg-pl-search-clear {
     position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
@@ -339,7 +339,7 @@ $status_meta_map = [
     transition: background 0.15s;
 }
 .cdg-pl-table tbody tr:hover {
-    background: linear-gradient(90deg, rgba(30,64,175,0.025), transparent);
+    background: linear-gradient(90deg, rgba(46,59,78,0.025), transparent);
 }
 .cdg-pl-table tbody tr:not(:last-child) {
     border-bottom: 1px solid #f1f5f9;
@@ -471,7 +471,7 @@ $status_meta_map = [
 .cdg-pl-badge i { font-size: 11px; }
 .cdg-pl-badge-success { background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border-color: #6ee7b7; }
 .cdg-pl-badge-warning { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border-color: #fcd34d; }
-.cdg-pl-badge-info    { background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border-color: #93c5fd; }
+.cdg-pl-badge-info    { background: linear-gradient(135deg, #CFFAFE, #A5F3FC); color: #2E3B4E; border-color: #67E8F9; }
 .cdg-pl-badge-danger  { background: linear-gradient(135deg, #fee2e2, #fecaca); color: #991b1b; border-color: #fca5a5; }
 .cdg-pl-badge-muted   { background: #f1f5f9; color: #64748b; border-color: #e2e8f0; }
 
@@ -479,7 +479,7 @@ $status_meta_map = [
 .cdg-pl-manage {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 8px 14px;
-    background: linear-gradient(135deg, #2563eb, #1e40af);
+    background: linear-gradient(135deg, #485A75, #2E3B4E);
     color: #fff !important;
     border-radius: 8px;
     font-size: 12px; font-weight: 700;
@@ -489,9 +489,9 @@ $status_meta_map = [
     text-decoration: none;
 }
 .cdg-pl-manage:hover {
-    background: linear-gradient(135deg, #1e40af, #1e3a8a);
+    background: linear-gradient(135deg, #2E3B4E, #1A2332);
     transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(30,64,175,0.25);
+    box-shadow: 0 6px 14px rgba(46,59,78,0.25);
     color: #fff !important;
 }
 .cdg-pl-manage i { font-size: 13px; }
@@ -513,10 +513,10 @@ $status_meta_map = [
 }
 .cdg-pl-empty-icon {
     width: 80px; height: 80px;
-    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    background: linear-gradient(135deg, #CFFAFE, #A5F3FC);
     border-radius: 20px;
     display: inline-flex; align-items: center; justify-content: center;
-    color: #1e40af;
+    color: #2E3B4E;
     font-size: 36px;
     margin-bottom: 18px;
 }
@@ -581,7 +581,7 @@ $status_meta_map = [
     <div class="cdg-pl-stats">
         <div class="cdg-pl-stat active" data-filter="all">
             <div class="cdg-pl-stat-row">
-                <div class="cdg-pl-stat-icon" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;"><i class="bi bi-grid-3x3-gap-fill"></i></div>
+                <div class="cdg-pl-stat-icon" style="background:linear-gradient(135deg,#CFFAFE,#A5F3FC);color:#2E3B4E;"><i class="bi bi-grid-3x3-gap-fill"></i></div>
                 <div>
                     <div class="cdg-pl-stat-num"><?php echo $stats['total']; ?></div>
                     <div class="cdg-pl-stat-lbl">Tümü</div>
@@ -599,7 +599,7 @@ $status_meta_map = [
         </div>
         <div class="cdg-pl-stat" data-filter="domain">
             <div class="cdg-pl-stat-row">
-                <div class="cdg-pl-stat-icon" style="background:linear-gradient(135deg,#cffafe,#a5f3fc);color:#06b6d4;"><i class="bi bi-globe2"></i></div>
+                <div class="cdg-pl-stat-icon" style="background:linear-gradient(135deg,#cffafe,#a5f3fc);color:#00D3E5;"><i class="bi bi-globe2"></i></div>
                 <div>
                     <div class="cdg-pl-stat-num"><?php echo $stats['domain']; ?></div>
                     <div class="cdg-pl-stat-lbl">Domain</div>
@@ -793,7 +793,7 @@ $status_meta_map = [
             <a href="<?php echo cdg_link('hosting-products'); ?>" class="cdg-pl-manage" style="padding:11px 20px;font-size:13px;">
                 <i class="bi bi-hdd-network-fill"></i> Hosting Al
             </a>
-            <a href="<?php echo cdg_link('domain'); ?>" class="cdg-pl-manage" style="padding:11px 20px;font-size:13px;background:linear-gradient(135deg,#06b6d4,#0891b2);">
+            <a href="<?php echo cdg_link('domain'); ?>" class="cdg-pl-manage" style="padding:11px 20px;font-size:13px;background:linear-gradient(135deg,#00D3E5,#0891b2);">
                 <i class="bi bi-globe2"></i> Domain Al
             </a>
         </div>

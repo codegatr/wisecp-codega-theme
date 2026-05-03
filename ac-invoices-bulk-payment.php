@@ -109,7 +109,7 @@ function cdg_blk_date($d) {
 
 <style>
 .cdg-blk {
-    --b-primary: #1e40af;
+    --b-primary: #2E3B4E;
     --b-success: #10b981;
     --b-warning: #f59e0b;
     --b-bg: #f8fafc;
@@ -143,14 +143,14 @@ function cdg_blk_date($d) {
 .cdg-blk-back:hover { border-color: var(--b-primary); color: var(--b-primary); }
 
 .cdg-blk-hero {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #06b6d4 100%);
+    background: linear-gradient(135deg, #2E3B4E 0%, #00D3E5 50%, #00D3E5 100%);
     border-radius: 18px;
     padding: 28px 32px;
     color: #fff;
     margin-bottom: 22px;
     display: flex; align-items: center; gap: 18px;
     flex-wrap: wrap;
-    box-shadow: 0 16px 40px rgba(30,64,175,0.20);
+    box-shadow: 0 16px 40px rgba(46,59,78,0.20);
 }
 .cdg-blk-hero-icon {
     width: 60px; height: 60px;

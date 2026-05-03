@@ -260,14 +260,14 @@ $balance_url   = cdg_link('ac-ps-balance');
 <style>
 /* === CODEGA DASHBOARD - Kurumsal LNW-Style === */
 .cdg-d {
-    --d-primary: #1e40af;
-    --d-primary-deep: #0a1f44;
+    --d-primary: #2E3B4E;
+    --d-primary-deep: #1A2332;
     --d-gold: #f59e0b;
     --d-gold-light: #fbbf24;
     --d-success: #10b981;
     --d-warning: #f59e0b;
     --d-danger: #ef4444;
-    --d-info: #06b6d4;
+    --d-info: #00D3E5;
     --d-purple: #8b5cf6;
     --d-bg: #f5f7fb;
     --d-card: #ffffff;
@@ -311,7 +311,7 @@ $balance_url   = cdg_link('ac-ps-balance');
 
 /* === GREETING (kompakt, viewport adaptive) === */
 .cdg-d-greet {
-    background: linear-gradient(135deg, #0a1f44 0%, #1e3a8a 50%, #2563eb 100%);
+    background: linear-gradient(135deg, #1A2332 0%, #2E3B4E 45%, #1A4F5C 80%, #00D3E5 110%);
     border-radius: 14px;
     padding: clamp(12px, 1.6vh, 18px) clamp(16px, 2vw, 24px);
     color: #fff;
@@ -342,19 +342,19 @@ $balance_url   = cdg_link('ac-ps-balance');
 }
 .cdg-d-greet-avatar {
     width: 46px; height: 46px;
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    background: linear-gradient(135deg, #00E5FF, #00D3E5);
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 20px; font-weight: 800;
-    color: #422006;
+    color: #1A2332;
     flex-shrink: 0;
-    box-shadow: 0 6px 16px rgba(251,191,36,0.30);
+    box-shadow: 0 6px 16px rgba(0,229,255,0.35);
 }
 .cdg-d-greet-text { flex: 1; min-width: 200px; }
 .cdg-d-greet-eyebrow {
     display: inline-flex; align-items: center; gap: 6px;
     font-size: 10px; font-weight: 700;
-    color: #fde047;
+    color: #00E5FF;
     text-transform: uppercase; letter-spacing: 1px;
     margin-bottom: 1px;
 }
@@ -364,7 +364,7 @@ $balance_url   = cdg_link('ac-ps-balance');
     color: #fff; letter-spacing: -0.01em;
     line-height: 1.2;
 }
-.cdg-d-greet h1 strong { color: #fde047; }
+.cdg-d-greet h1 strong { color: #00E5FF; }
 .cdg-d-greet-meta {
     font-size: 12px;
     color: rgba(255,255,255,0.80);
@@ -382,7 +382,7 @@ $balance_url   = cdg_link('ac-ps-balance');
     transition: all 0.2s;
     white-space: nowrap;
 }
-.cdg-d-greet-cta:hover { background: rgba(255,255,255,0.25); transform: translateY(-1px); color: #fde047; }
+.cdg-d-greet-cta:hover { background: rgba(255,255,255,0.25); transform: translateY(-1px); color: #00E5FF; }
 
 /* === QUICK CARDS (3'lü grid, kompakt) === */
 .cdg-d-quick {
@@ -494,14 +494,14 @@ $balance_url   = cdg_link('ac-ps-balance');
     display: flex; align-items: center; justify-content: space-between;
     padding: 11px 16px;
     color: #fff;
-    background: linear-gradient(135deg, #1e3a8a, #1e40af);
+    background: linear-gradient(135deg, #1A2332, #2E3B4E);
     flex-shrink: 0;
 }
 .cdg-d-panel-head.gold {
     background: linear-gradient(135deg, #f59e0b, #d97706);
 }
 .cdg-d-panel-head.deep {
-    background: linear-gradient(135deg, #0a1f44, #1e3a8a);
+    background: linear-gradient(135deg, #1A2332, #1A2332);
 }
 .cdg-d-panel-head h3 {
     margin: 0;
@@ -621,7 +621,7 @@ $balance_url   = cdg_link('ac-ps-balance');
 }
 .cdg-d-tk-badge.success { background: linear-gradient(135deg,#d1fae5,#a7f3d0); color: #065f46; }
 .cdg-d-tk-badge.warning { background: linear-gradient(135deg,#fef3c7,#fde68a); color: #92400e; }
-.cdg-d-tk-badge.info    { background: linear-gradient(135deg,#dbeafe,#bfdbfe); color: #1e40af; }
+.cdg-d-tk-badge.info    { background: linear-gradient(135deg,#CFFAFE,#A5F3FC); color: #2E3B4E; }
 .cdg-d-tk-badge.danger  { background: linear-gradient(135deg,#fee2e2,#fecaca); color: #991b1b; }
 .cdg-d-tk-badge i { font-size: 10px; }
 
@@ -651,7 +651,7 @@ $balance_url   = cdg_link('ac-ps-balance');
 .cdg-d-news-item:hover {
     border-color: var(--d-primary);
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(30,64,175,0.10);
+    box-shadow: 0 8px 20px rgba(46,59,78,0.10);
 }
 .cdg-d-news-item-title {
     font-size: 13px; font-weight: 700;
@@ -704,7 +704,7 @@ $balance_url   = cdg_link('ac-ps-balance');
                 <div class="cdg-d-quick-card-title">Faturalarım</div>
                 <p class="cdg-d-quick-card-sub">Bekleyen ve geçmiş ödemeler</p>
             </div>
-            <div class="cdg-d-quick-card-icon" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;">
+            <div class="cdg-d-quick-card-icon" style="background:linear-gradient(135deg,#CFFAFE,#A5F3FC);color:#2E3B4E;">
                 <i class="bi bi-receipt"></i>
                 <?php if($count_unpaid_invoices > 0): ?>
                 <span class="cdg-d-quick-card-badge"><?php echo $count_unpaid_invoices; ?></span>
@@ -762,10 +762,10 @@ $balance_url   = cdg_link('ac-ps-balance');
                         $type_icons = [
                             'hosting' => ['hdd-network-fill', '#10b981'],
                             'server'  => ['server', '#8b5cf6'],
-                            'domain'  => ['globe2', '#06b6d4'],
+                            'domain'  => ['globe2', '#00D3E5'],
                             'sms'     => ['chat-dots-fill', '#f59e0b'],
                             'software'=> ['code-square', '#ec4899'],
-                            'special' => ['star-fill', '#1e40af'],
+                            'special' => ['star-fill', '#2E3B4E'],
                         ];
                         $ti = $type_icons[$type] ?? ['box-seam', '#64748b'];
                         $progress_pct = max(0, min(100, ($item['days'] / 30) * 100));
@@ -836,7 +836,7 @@ $balance_url   = cdg_link('ac-ps-balance');
                 <?php else: ?>
                 <div class="cdg-d-empty">
                     <i class="bi bi-headset"></i>
-                    <div class="cdg-d-empty-text">Henüz destek talebiniz yok.<br><a href="<?php echo $create_ticket_url; ?>" style="color:#1e40af;font-weight:700;">İlk talebinizi oluşturun</a></div>
+                    <div class="cdg-d-empty-text">Henüz destek talebiniz yok.<br><a href="<?php echo $create_ticket_url; ?>" style="color:#2E3B4E;font-weight:700;">İlk talebinizi oluşturun</a></div>
                 </div>
                 <?php endif; ?>
             </div>

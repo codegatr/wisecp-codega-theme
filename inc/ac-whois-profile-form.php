@@ -105,7 +105,7 @@ function cdg_whois_csrf($action) {
 
 <style>
 .cdg-wpf {
-    --f-primary: #1e40af;
+    --f-primary: #2E3B4E;
     --f-bg: #f8fafc;
     --f-card: #fff;
     --f-text: #0f172a;
@@ -207,7 +207,7 @@ function cdg_whois_csrf($action) {
 .cdg-wpf-input:focus,
 .cdg-wpf-select:focus {
     border-color: var(--f-primary);
-    box-shadow: 0 0 0 3px rgba(30,64,175,0.10);
+    box-shadow: 0 0 0 3px rgba(46,59,78,0.10);
 }
 
 .cdg-wpf-section {
@@ -253,9 +253,9 @@ function cdg_whois_csrf($action) {
     text-decoration: none;
 }
 .cdg-wpf-btn-primary {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(30,64,175,0.22);
+    box-shadow: 0 6px 18px rgba(46,59,78,0.22);
 }
 .cdg-wpf-btn-primary:hover { transform: translateY(-1px); color: #fff; }
 .cdg-wpf-btn-cancel {

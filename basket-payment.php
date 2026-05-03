@@ -20,7 +20,7 @@
 
 #wrapper .siparisbilgileri, #wrapper .basket-content { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:24px; margin-bottom:20px; }
 
-#wrapper .btn, #wrapper .gonderbtn, #wrapper button[type=submit] { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:10px; font-size:14px; font-weight:700; background:linear-gradient(135deg,#1e40af,#3b82f6)!important; color:#fff!important; border:0; cursor:pointer; text-decoration:none; }
+#wrapper .btn, #wrapper .gonderbtn, #wrapper button[type=submit] { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:10px; font-size:14px; font-weight:700; background:linear-gradient(135deg,#2E3B4E,#00D3E5)!important; color:#fff!important; border:0; cursor:pointer; text-decoration:none; }
 #wrapper .btn:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(30,64,175,0.25); }
 
 #wrapper table { background:#fff; border-radius:12px; overflow:hidden; }
@@ -28,7 +28,7 @@
 #wrapper table td { padding:14px 16px; border-bottom:1px solid #f1f5f9; color:#0f172a; }
 
 #wrapper input[type="text"], #wrapper input[type="email"], #wrapper input[type="tel"], #wrapper input[type="password"], #wrapper select, #wrapper textarea { width:100%; padding:12px 14px; border:2px solid #e2e8f0; border-radius:10px; font-family:inherit; font-size:14px; color:#0f172a; background:#fff; }
-#wrapper input:focus, #wrapper select:focus, #wrapper textarea:focus { border-color:#1e40af; outline:none; box-shadow:0 0 0 3px rgba(30,64,175,0.10); }
+#wrapper input:focus, #wrapper select:focus, #wrapper textarea:focus { border-color:#2E3B4E; outline:none; box-shadow:0 0 0 3px rgba(30,64,175,0.10); }
 
 #wrapper label { font-size:13px; font-weight:600; color:#0f172a; }
 #wrapper .clear { clear:both; }

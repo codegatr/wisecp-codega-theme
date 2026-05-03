@@ -21,7 +21,7 @@ function cdg_inv_badge($status, $situations) {
     $classes = [
         'paid'    => 'background:#d1fae5;color:#065f46;',
         'unpaid'  => 'background:#fef3c7;color:#92400e;',
-        'waiting' => 'background:#dbeafe;color:#1e40af;',
+        'waiting' => 'background:#CFFAFE;color:#2E3B4E;',
         'refund'  => 'background:#fee2e2;color:#991b1b;',
         'cancelled'=>'background:#fee2e2;color:#991b1b;',
     ];
@@ -54,7 +54,7 @@ foreach($list as $row) {
     // Buton (Codega stili)
     $btn = '<a href="' . htmlspecialchars($r_link, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '" '
          . 'style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#fff;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;transition:all 0.18s;" '
-         . 'onmouseover="this.style.borderColor=\'#1e40af\';this.style.color=\'#1e40af\';" '
+         . 'onmouseover="this.style.borderColor=\'#2E3B4E\';this.style.color=\'#2E3B4E\';" '
          . 'onmouseout="this.style.borderColor=\'#e2e8f0\';this.style.color=\'#0f172a\';">'
          . '<i class="bi bi-eye"></i> Görüntüle</a>';
 

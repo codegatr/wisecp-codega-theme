@@ -199,7 +199,7 @@ $no_unlimited = in_array('no-unlimited-email-account', $supported ?? []);
     transition: all 0.15s;
     font-family: inherit;
 }
-.cdg-hem-list-action:hover { border-color: #1e40af; color: #1e40af; }
+.cdg-hem-list-action:hover { border-color: #2E3B4E; color: #2E3B4E; }
 .cdg-hem-list-action.danger { color: #ef4444; border-color: #fecaca; }
 .cdg-hem-list-action.danger:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
 

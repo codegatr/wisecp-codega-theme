@@ -39,7 +39,7 @@ if(empty($info_docs)) return; // Belge gerektirmeyen domainler için modal yok
                 <input type="hidden" name="operation" value="add_domain_doc">
                 <input type="hidden" name="id" value="<?php echo (int)($proanse['id'] ?? 0); ?>">
 
-                <div style="font-size:12px;font-weight:800;color:#1e40af;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">
+                <div style="font-size:12px;font-weight:800;color:#2E3B4E;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">
                     <i class="bi bi-plus-circle"></i> Yeni Belge Ekle
                 </div>
                 <div class="cdg-dm-field" style="margin-bottom:12px;">
@@ -103,7 +103,7 @@ if(empty($info_docs)) return; // Belge gerektirmeyen domainler için modal yok
                 ];
             ?>
             <div style="margin-top:18px;padding:16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;">
-                <div style="font-size:12px;font-weight:800;color:#1e40af;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">
+                <div style="font-size:12px;font-weight:800;color:#2E3B4E;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">
                     <i class="bi bi-files"></i> Yüklenmiş Belgeler (<?php echo count($uploaded_docs); ?>)
                 </div>
                 <div style="display:flex;flex-direction:column;gap:8px;">
@@ -118,7 +118,7 @@ if(empty($info_docs)) return; // Belge gerektirmeyen domainler için modal yok
                         <div style="font-size:12px;color:#475569;word-break:break-all;">
                             <?php if(!empty($ud['file']) && is_array($ud['file'])): ?>
                                 <i class="bi bi-paperclip"></i> <?php echo htmlspecialchars($ud['file']['name'] ?? 'dosya', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
-                                <a href="<?php echo htmlspecialchars($controller_url . '?operation=download_domain_doc_file&id=' . $ud_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" style="margin-left:6px;color:#1e40af;" title="İndir">
+                                <a href="<?php echo htmlspecialchars($controller_url . '?operation=download_domain_doc_file&id=' . $ud_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" style="margin-left:6px;color:#2E3B4E;" title="İndir">
                                     <i class="bi bi-download"></i>
                                 </a>
                             <?php else: ?>

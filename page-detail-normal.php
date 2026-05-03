@@ -45,7 +45,7 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
             <aside class="cdg-pd-sidebar" style="display:flex;flex-direction:column;gap:16px;">
                 <div class="cdg-card" style="padding:20px;">
                     <h4 style="font-size:14px;font-weight:800;color:#0f172a;margin:0 0 14px;display:flex;align-items:center;gap:6px;">
-                        <i class="bi bi-list-ul" style="color:#1e40af;"></i> Ilgili Sayfalar
+                        <i class="bi bi-list-ul" style="color:#2E3B4E;"></i> Ilgili Sayfalar
                     </h4>
                     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
                         <?php foreach($pd_sidebar_items as $side):
@@ -54,8 +54,8 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
                             if(!$s_title) continue;
                         ?>
                         <li>
-                            <a href="<?php echo htmlspecialchars($s_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:flex;gap:8px;padding:8px 12px;text-decoration:none;color:#334155;font-size:13px;border-radius:6px;transition:background 0.15s;" onmouseover="this.style.background='#f8fafc';this.style.color='#1e40af';" onmouseout="this.style.background='';this.style.color='#334155';">
-                                <i class="bi bi-arrow-right-short" style="color:#1e40af;flex-shrink:0;font-size:16px;"></i>
+                            <a href="<?php echo htmlspecialchars($s_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:flex;gap:8px;padding:8px 12px;text-decoration:none;color:#334155;font-size:13px;border-radius:6px;transition:background 0.15s;" onmouseover="this.style.background='#f8fafc';this.style.color='#2E3B4E';" onmouseout="this.style.background='';this.style.color='#334155';">
+                                <i class="bi bi-arrow-right-short" style="color:#2E3B4E;flex-shrink:0;font-size:16px;"></i>
                                 <span><?php echo htmlspecialchars($s_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                             </a>
                         </li>
@@ -63,11 +63,11 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
                     </ul>
                 </div>
 
-                <div class="cdg-card" style="padding:20px;background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;">
+                <div class="cdg-card" style="padding:20px;background:linear-gradient(135deg,#2E3B4E,#00D3E5);color:#fff;">
                     <i class="bi bi-chat-square-text" style="font-size:28px;"></i>
                     <h4 style="font-size:14px;font-weight:800;margin:8px 0 6px;">Sorulariniz mi var?</h4>
                     <p style="font-size:12px;opacity:0.9;margin:0 0 12px;">Bizimle iletişime geçin, hizmetlerimiz hakkında bilgi alın.</p>
-                    <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;color:#1e40af;text-decoration:none;border-radius:6px;font-size:12px;font-weight:700;">
+                    <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('contact') : '/contact'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;color:#2E3B4E;text-decoration:none;border-radius:6px;font-size:12px;font-weight:700;">
                         <i class="bi bi-envelope"></i> İletişim
                     </a>
                 </div>
@@ -88,12 +88,12 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
 .cdg-pd-content-body pre { background: #0f172a; color: #f1f5f9; padding: 14px 18px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
 .cdg-pd-content-body ul, .cdg-pd-content-body ol { padding-left: 24px; margin: 0 0 14px; }
 .cdg-pd-content-body ul li, .cdg-pd-content-body ol li { margin-bottom: 6px; }
-.cdg-pd-content-body blockquote { border-left: 3px solid #3b82f6; background: #eff6ff; padding: 12px 16px; margin: 14px 0; border-radius: 0 8px 8px 0; color: #1e40af; }
+.cdg-pd-content-body blockquote { border-left: 3px solid #00D3E5; background: #eff6ff; padding: 12px 16px; margin: 14px 0; border-radius: 0 8px 8px 0; color: #2E3B4E; }
 .cdg-pd-content-body img { max-width: 100%; height: auto; border-radius: 8px; }
 .cdg-pd-content-body table { width: 100%; border-collapse: collapse; margin: 14px 0; }
 .cdg-pd-content-body table th, .cdg-pd-content-body table td { padding: 8px 12px; border: 1px solid #e2e8f0; font-size: 13px; }
 .cdg-pd-content-body table th { background: #f8fafc; font-weight: 700; }
-.cdg-pd-content-body a { color: #1e40af; text-decoration: underline; }
+.cdg-pd-content-body a { color: #2E3B4E; text-decoration: underline; }
 .cdg-pd-content-body hr { border: 0; border-top: 1px solid #e2e8f0; margin: 24px 0; }
 
 @media (max-width: 900px) {

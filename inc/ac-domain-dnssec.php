@@ -59,7 +59,7 @@ if(empty($algorithms)) {
 
             <!-- Yeni DNSSEC Kaydı -->
             <div class="cdg-dm-form">
-                <div style="font-size:12px;font-weight:800;color:#1e40af;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">
+                <div style="font-size:12px;font-weight:800;color:#2E3B4E;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">
                     <i class="bi bi-plus-circle"></i> Yeni DS Kaydı Ekle
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 110px 140px 1fr 60px;gap:8px;align-items:end;">

@@ -123,7 +123,7 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
                         </div>
                     </div>
                     <div class="cdg-auth-benefit">
-                        <div class="cdg-auth-benefit-icon" style="background:linear-gradient(135deg,#06b6d4,#22d3ee);">
+                        <div class="cdg-auth-benefit-icon" style="background:linear-gradient(135deg,#00D3E5,#22d3ee);">
                             <i class="bi bi-headset"></i>
                         </div>
                         <div>

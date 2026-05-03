@@ -16,12 +16,12 @@
     bottom: 22px;
     width: 44px; height: 44px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     display: grid; place-items: center;
     text-decoration: none;
     font-size: 18px;
-    box-shadow: 0 8px 22px rgba(30,64,175,0.30);
+    box-shadow: 0 8px 22px rgba(46,59,78,0.30);
     opacity: 0;
     pointer-events: none;
     transform: translateY(8px);

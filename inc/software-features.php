@@ -69,8 +69,8 @@ $features = [
     gap: 12px;
     flex-wrap: wrap;
     padding: 28px 22px;
-    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #fef3c7 100%);
-    border: 1px solid #bfdbfe;
+    background: linear-gradient(135deg, #eff6ff 0%, #CFFAFE 50%, #fef3c7 100%);
+    border: 1px solid #A5F3FC;
     border-radius: 18px;
     margin: 22px 0;
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -92,7 +92,7 @@ $features = [
 }
 .cdg-sf-step:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 24px rgba(30,64,175,0.14);
+    box-shadow: 0 12px 24px rgba(46,59,78,0.14);
 }
 
 .cdg-sf-num {
@@ -101,7 +101,7 @@ $features = [
     right: -10px;
     width: 26px; height: 26px;
     background: linear-gradient(135deg, #fde047, #facc15);
-    color: #1e3a8a;
+    color: #1A2332;
     border-radius: 50%;
     display: grid; place-items: center;
     font-size: 12px;
@@ -112,11 +112,11 @@ $features = [
 .cdg-sf-icon {
     width: 52px; height: 52px;
     border-radius: 14px;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     display: grid; place-items: center;
     font-size: 24px;
-    box-shadow: 0 6px 14px rgba(30,64,175,0.25);
+    box-shadow: 0 6px 14px rgba(46,59,78,0.25);
 }
 
 .cdg-sf-title {

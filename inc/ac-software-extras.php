@@ -39,7 +39,7 @@ if(!$is_active) return; // Aktif değilse hiç gösterme
                 <?php if($current_domain_str): ?>
                 <li>
                     <span class="cdg-pd2-info-label">Lisans Domaini</span>
-                    <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#1e40af;">
+                    <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#2E3B4E;">
                         <?php echo htmlspecialchars($current_domain_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </span>
                 </li>
@@ -199,7 +199,7 @@ window.cdgSwCopy = function(elemId, btn) {
     margin-bottom: 12px;
     transition: border 0.15s;
 }
-.cdg-sw-input:focus { border-color: #1e40af; box-shadow: 0 0 0 3px rgba(30,64,175,0.10); }
+.cdg-sw-input:focus { border-color: #2E3B4E; box-shadow: 0 0 0 3px rgba(46,59,78,0.10); }
 .cdg-sw-btn {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 11px 18px;
@@ -214,7 +214,7 @@ window.cdgSwCopy = function(elemId, btn) {
     justify-content: center;
 }
 .cdg-sw-btn:hover { transform: translateY(-1px); }
-.cdg-sw-btn-primary { background: linear-gradient(135deg, #1e40af, #3b82f6); box-shadow: 0 4px 10px rgba(30,64,175,0.22); }
+.cdg-sw-btn-primary { background: linear-gradient(135deg, #2E3B4E, #00D3E5); box-shadow: 0 4px 10px rgba(46,59,78,0.22); }
 .cdg-sw-btn-warn { background: linear-gradient(135deg, #f59e0b, #fbbf24); box-shadow: 0 4px 10px rgba(245,158,11,0.22); }
 .cdg-sw-btn:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
 .cdg-sw-warn-box {
@@ -228,15 +228,15 @@ window.cdgSwCopy = function(elemId, btn) {
 }
 .cdg-sw-warn-box i { flex-shrink: 0; color: #f59e0b; }
 .cdg-sw-info-box {
-    background: #dbeafe;
-    border: 1px solid #93c5fd;
+    background: #CFFAFE;
+    border: 1px solid #67E8F9;
     border-radius: 8px;
     padding: 10px 12px;
-    font-size: 12px; color: #1e40af;
+    font-size: 12px; color: #2E3B4E;
     margin-bottom: 12px;
     display: flex; gap: 8px;
 }
-.cdg-sw-info-box i { flex-shrink: 0; color: #2563eb; }
+.cdg-sw-info-box i { flex-shrink: 0; color: #485A75; }
 </style>
 
 <div class="cdg-sw-extras">
@@ -244,7 +244,7 @@ window.cdgSwCopy = function(elemId, btn) {
     <!-- Domain Değiştirme Kartı -->
     <div class="cdg-sw-card">
         <div class="cdg-sw-card-head">
-            <div class="icon" style="background:linear-gradient(135deg,#1e40af,#3b82f6);"><i class="bi bi-globe2"></i></div>
+            <div class="icon" style="background:linear-gradient(135deg,#2E3B4E,#00D3E5);"><i class="bi bi-globe2"></i></div>
             <h3>Lisans Domain'i Değiştir</h3>
         </div>
 

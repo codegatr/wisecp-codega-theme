@@ -92,8 +92,8 @@ $tickets_url = cdg_link('tickets');
 
 <style>
 .cdg-tk {
-    --tk-primary: #1e40af;
-    --tk-primary-2: #3b82f6;
+    --tk-primary: #2E3B4E;
+    --tk-primary-2: #00D3E5;
     --tk-success: #10b981;
     --tk-warning: #f59e0b;
     --tk-danger: #ef4444;
@@ -135,7 +135,7 @@ $tickets_url = cdg_link('tickets');
 
 /* HERO */
 .cdg-tk-hero {
-    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #3b82f6 100%);
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #00D3E5 100%);
     border-radius: 18px;
     padding: 26px 30px;
     color: #fff;
@@ -219,7 +219,7 @@ $tickets_url = cdg_link('tickets');
 .cdg-tk-select:focus,
 .cdg-tk-textarea:focus {
     border-color: var(--tk-primary);
-    box-shadow: 0 0 0 3px rgba(30,64,175,0.10);
+    box-shadow: 0 0 0 3px rgba(46,59,78,0.10);
 }
 .cdg-tk-textarea {
     min-height: 180px;
@@ -314,8 +314,8 @@ $tickets_url = cdg_link('tickets');
 .cdg-tk-file-item {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 5px 12px;
-    background: #dbeafe;
-    color: #1e40af;
+    background: #CFFAFE;
+    color: #2E3B4E;
     border-radius: 99px;
     font-size: 12px;
     font-weight: 600;
@@ -323,7 +323,7 @@ $tickets_url = cdg_link('tickets');
 }
 .cdg-tk-file-item .x {
     cursor: pointer;
-    color: #1e40af;
+    color: #2E3B4E;
     opacity: 0.6;
     font-weight: 700;
 }
@@ -356,13 +356,13 @@ $tickets_url = cdg_link('tickets');
 }
 .cdg-tk-btn-cancel:hover { border-color: var(--tk-muted); color: var(--tk-text); }
 .cdg-tk-btn-send {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(30,64,175,0.25);
+    box-shadow: 0 6px 18px rgba(46,59,78,0.25);
 }
 .cdg-tk-btn-send:hover {
     transform: translateY(-1px);
-    box-shadow: 0 10px 24px rgba(30,64,175,0.35);
+    box-shadow: 0 10px 24px rgba(46,59,78,0.35);
     color: #fff;
 }
 
@@ -587,7 +587,7 @@ $tickets_url = cdg_link('tickets');
             ['dragenter','dragover'].forEach(function(ev){
                 fileDrop.addEventListener(ev, function(e){
                     e.preventDefault(); e.stopPropagation();
-                    this.style.borderColor = '#1e40af';
+                    this.style.borderColor = '#2E3B4E';
                     this.style.background = '#eff6ff';
                 });
             });

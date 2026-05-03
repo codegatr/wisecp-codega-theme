@@ -233,11 +233,11 @@ if(!empty($udata['gsm'])) {
             <div class="cdg-form-group">
                 <label class="cdg-form-label">Hesap Turu</label>
                 <div style="display:flex;gap:10px;">
-                    <label style="display:flex;align-items:center;gap:6px;padding:10px 14px;border:2px solid <?php echo !$is_corporate ? '#1e40af' : '#e2e8f0'; ?>;border-radius:8px;cursor:pointer;flex:1;background:<?php echo !$is_corporate ? '#eff6ff' : '#fff'; ?>;">
+                    <label style="display:flex;align-items:center;gap:6px;padding:10px 14px;border:2px solid <?php echo !$is_corporate ? '#2E3B4E' : '#e2e8f0'; ?>;border-radius:8px;cursor:pointer;flex:1;background:<?php echo !$is_corporate ? '#eff6ff' : '#fff'; ?>;">
                         <input type="radio" name="kind" value="individual" <?php echo !$is_corporate ? 'checked' : ''; ?> onchange="cdgInfoKind(this.value)">
                         <i class="bi bi-person"></i> <span style="font-size:13px;font-weight:600;">Bireysel</span>
                     </label>
-                    <label style="display:flex;align-items:center;gap:6px;padding:10px 14px;border:2px solid <?php echo $is_corporate ? '#1e40af' : '#e2e8f0'; ?>;border-radius:8px;cursor:pointer;flex:1;background:<?php echo $is_corporate ? '#eff6ff' : '#fff'; ?>;">
+                    <label style="display:flex;align-items:center;gap:6px;padding:10px 14px;border:2px solid <?php echo $is_corporate ? '#2E3B4E' : '#e2e8f0'; ?>;border-radius:8px;cursor:pointer;flex:1;background:<?php echo $is_corporate ? '#eff6ff' : '#fff'; ?>;">
                         <input type="radio" name="kind" value="corporate" <?php echo $is_corporate ? 'checked' : ''; ?> onchange="cdgInfoKind(this.value)">
                         <i class="bi bi-building"></i> <span style="font-size:13px;font-weight:600;">Kurumsal</span>
                     </label>
@@ -265,7 +265,7 @@ if(!empty($udata['gsm'])) {
                     <span style="display:inline-block;margin-left:6px;color:#f59e0b;font-size:11px;font-weight:700;">
                         <i class="bi bi-exclamation-triangle-fill"></i> Onaylanmadi
                     </span>
-                    <button type="button" onclick="cdgVrfOpen('email', <?php echo json_encode($u('email'), JSON_UNESCAPED_UNICODE); ?>)" style="margin-left:8px;background:#1e40af;color:#fff;border:0;padding:3px 10px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;">
+                    <button type="button" onclick="cdgVrfOpen('email', <?php echo json_encode($u('email'), JSON_UNESCAPED_UNICODE); ?>)" style="margin-left:8px;background:#2E3B4E;color:#fff;border:0;padding:3px 10px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;">
                         <i class="bi bi-shield-check"></i> Dogrula
                     </button>
                     <?php endif; ?>
@@ -285,7 +285,7 @@ if(!empty($udata['gsm'])) {
                     <span style="display:inline-block;margin-left:6px;color:#f59e0b;font-size:11px;font-weight:700;">
                         <i class="bi bi-exclamation-triangle-fill"></i> Onaylanmadi
                     </span>
-                    <button type="button" onclick="cdgVrfOpen('gsm', <?php echo json_encode($gsm_full, JSON_UNESCAPED_UNICODE); ?>)" style="margin-left:8px;background:#1e40af;color:#fff;border:0;padding:3px 10px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;">
+                    <button type="button" onclick="cdgVrfOpen('gsm', <?php echo json_encode($gsm_full, JSON_UNESCAPED_UNICODE); ?>)" style="margin-left:8px;background:#2E3B4E;color:#fff;border:0;padding:3px 10px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;">
                         <i class="bi bi-shield-check"></i> Dogrula
                     </button>
                     <?php endif; ?>
@@ -581,7 +581,7 @@ if(!empty($udata['gsm'])) {
             <?php if(!$tfa_enabled): ?>
             <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;text-align:center;">
                 <div style="margin-bottom:14px;">
-                    <i class="bi bi-shield-shaded" style="font-size:48px;color:#1e40af;"></i>
+                    <i class="bi bi-shield-shaded" style="font-size:48px;color:#2E3B4E;"></i>
                 </div>
                 <h4 style="margin:0 0 8px;font-size:16px;font-weight:700;">2FA Şimdi Etkinleştir</h4>
                 <p style="margin:0 0 16px;color:#64748b;font-size:13.5px;line-height:1.6;">
@@ -713,7 +713,7 @@ if(!empty($udata['gsm'])) {
                 <!-- Veri İndir -->
                 <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;">
                     <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-                        <div style="width:42px;height:42px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:20px;flex-shrink:0;">
+                        <div style="width:42px;height:42px;background:linear-gradient(135deg,#CFFAFE,#A5F3FC);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#2E3B4E;font-size:20px;flex-shrink:0;">
                             <i class="bi bi-download"></i>
                         </div>
                         <h4 style="margin:0;font-size:14px;font-weight:700;">Verilerimi İndir</h4>
@@ -777,9 +777,9 @@ if(!empty($udata['gsm'])) {
 
             <div style="margin-top:18px;padding:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;font-size:12px;color:#64748b;line-height:1.6;">
                 <i class="bi bi-info-circle"></i> Talepleriniz <strong>30 iş günü</strong> içinde değerlendirilir. Detaylı bilgi için
-                <a href="/gizlilik-politikasi" style="color:#1e40af;font-weight:600;">Gizlilik Politikamızı</a>
+                <a href="/gizlilik-politikasi" style="color:#2E3B4E;font-weight:600;">Gizlilik Politikamızı</a>
                 veya
-                <a href="/kvkk" style="color:#1e40af;font-weight:600;">KVKK Aydınlatma Metnimizi</a>
+                <a href="/kvkk" style="color:#2E3B4E;font-weight:600;">KVKK Aydınlatma Metnimizi</a>
                 inceleyin.
             </div>
         </div>
@@ -904,13 +904,13 @@ window.cdgInfoKvkk = {
 }
 .cdg-info-shell-icon {
     width: 60px; height: 60px;
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    background: linear-gradient(135deg, #1A2332, #485A75);
     border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 8px 20px rgba(30,64,175,0.25);
+    box-shadow: 0 8px 20px rgba(46,59,78,0.25);
     position: relative;
     overflow: hidden;
 }
@@ -982,8 +982,8 @@ window.cdgInfoKvkk = {
     transition: all 0.18s;
 }
 .cdg-info-shell-btn:hover {
-    border-color: #1e40af;
-    color: #1e40af;
+    border-color: #2E3B4E;
+    color: #2E3B4E;
     transform: translateY(-1px);
 }
 .cdg-info-shell-body {
@@ -1036,16 +1036,16 @@ window.cdgInfoKvkk = {
 }
 .cdg-info-side-link:hover {
     background: #fff;
-    color: #1e40af;
+    color: #2E3B4E;
 }
-.cdg-info-side-link:hover i { color: #1e40af; }
+.cdg-info-side-link:hover i { color: #2E3B4E; }
 .cdg-info-side-link.active {
     background: #fff;
-    color: #1e40af;
-    box-shadow: 0 2px 8px rgba(30,64,175,0.10);
+    color: #2E3B4E;
+    box-shadow: 0 2px 8px rgba(46,59,78,0.10);
     font-weight: 700;
 }
-.cdg-info-side-link.active i { color: #1e40af; }
+.cdg-info-side-link.active i { color: #2E3B4E; }
 .cdg-info-side-link-warning { color: #92400e !important; }
 .cdg-info-side-link-warning i { color: #f59e0b !important; }
 .cdg-info-side-badge {
@@ -1113,7 +1113,7 @@ window.cdgInfoKvkk = {
     font-family: inherit;
 }
 .cdg-info-tab:hover { background: #fff; color: #0f172a; }
-.cdg-info-tab.active { background: #fff; color: #1e40af; box-shadow: 0 2px 6px rgba(15,23,42,0.06); }
+.cdg-info-tab.active { background: #fff; color: #2E3B4E; box-shadow: 0 2px 6px rgba(15,23,42,0.06); }
 .cdg-info-tab i { margin-right: 4px; }
 </style>
 
@@ -1149,7 +1149,7 @@ window.cdgInfoKind = function(kind) {
         var label = r.closest('label');
         if(!label) return;
         if(r.checked) {
-            label.style.borderColor = '#1e40af';
+            label.style.borderColor = '#2E3B4E';
             label.style.background = '#eff6ff';
         } else {
             label.style.borderColor = '#e2e8f0';

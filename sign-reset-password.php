@@ -138,7 +138,7 @@
         ?>
         <div class="cdg-card" style="padding:36px;">
             <div style="text-align:center;margin-bottom:20px;">
-                <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;display:inline-grid;place-items:center;font-size:28px;margin-bottom:12px;">
+                <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#2E3B4E,#00D3E5);color:#fff;display:inline-grid;place-items:center;font-size:28px;margin-bottom:12px;">
                     <i class="bi bi-envelope-paper"></i>
                 </div>
                 <h2 style="margin-bottom:6px;">Sifrenizi mi unuttunuz?</h2>

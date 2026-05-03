@@ -45,7 +45,7 @@ if(class_exists('Money') && method_exists('Money','getCurrencies')) {
         <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:12px;">
             <div style="flex:1;">
                 <div style="font-size:14px;font-weight:700;color:#0f172a;margin-bottom:2px;">
-                    <i class="bi bi-shield-lock-fill" style="color:#1e40af;"></i> Iki Faktorlu Dogrulama (2FA)
+                    <i class="bi bi-shield-lock-fill" style="color:#2E3B4E;"></i> Iki Faktorlu Dogrulama (2FA)
                 </div>
                 <div style="font-size:12px;color:#64748b;">Hesap girisleri icin ek guvenlik katmani.</div>
             </div>
@@ -60,7 +60,7 @@ if(class_exists('Money') && method_exists('Money','getCurrencies')) {
         <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:12px;">
             <div style="flex:1;">
                 <div style="font-size:14px;font-weight:700;color:#0f172a;margin-bottom:2px;">
-                    <i class="bi bi-envelope-fill" style="color:#3b82f6;"></i> E-posta Bildirimleri
+                    <i class="bi bi-envelope-fill" style="color:#00D3E5;"></i> E-posta Bildirimleri
                 </div>
                 <div style="font-size:12px;color:#64748b;">Önemli olaylar, fatura ve güncellemeler e-posta ile gelsin.</div>
             </div>
@@ -159,6 +159,6 @@ if(class_exists('Money') && method_exists('Money','getCurrencies')) {
     border-radius: 50%;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
-.cdg-switch input:checked + .cdg-slider { background-color: #1e40af; }
+.cdg-switch input:checked + .cdg-slider { background-color: #2E3B4E; }
 .cdg-switch input:checked + .cdg-slider:before { transform: translateX(22px); }
 </style>

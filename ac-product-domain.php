@@ -167,7 +167,7 @@ function cdg_pdom_status($status) {
     $map = [
         'active'    => ['cls' => 'cdg-pdm-badge-success', 'lbl' => 'Aktif',          'icon' => 'check-circle-fill', 'color' => '#10b981'],
         'inprocess' => ['cls' => 'cdg-pdm-badge-warning', 'lbl' => 'İşlemde',        'icon' => 'gear-fill',         'color' => '#f59e0b'],
-        'waiting'   => ['cls' => 'cdg-pdm-badge-info',    'lbl' => 'Onay Bekliyor',  'icon' => 'hourglass-split',   'color' => '#06b6d4'],
+        'waiting'   => ['cls' => 'cdg-pdm-badge-info',    'lbl' => 'Onay Bekliyor',  'icon' => 'hourglass-split',   'color' => '#00D3E5'],
         'suspended' => ['cls' => 'cdg-pdm-badge-warning', 'lbl' => 'Askıda',         'icon' => 'pause-circle-fill', 'color' => '#f59e0b'],
         'cancelled' => ['cls' => 'cdg-pdm-badge-danger',  'lbl' => 'İptal',          'icon' => 'x-circle-fill',     'color' => '#ef4444'],
         'expired'   => ['cls' => 'cdg-pdm-badge-danger',  'lbl' => 'Süresi Doldu',   'icon' => 'calendar-x-fill',   'color' => '#ef4444'],
@@ -227,11 +227,11 @@ $transfer_lock = !empty($options['transferlock']);
 
 <style>
 .cdg-pdm {
-    --pdm-primary: #1e40af;
+    --pdm-primary: #2E3B4E;
     --pdm-success: #10b981;
     --pdm-warning: #f59e0b;
     --pdm-danger: #ef4444;
-    --pdm-info: #06b6d4;
+    --pdm-info: #00D3E5;
     --pdm-purple: #8b5cf6;
     --pdm-bg: #f8fafc;
     --pdm-card: #fff;
@@ -268,14 +268,14 @@ $transfer_lock = !empty($options['transferlock']);
 
 /* HERO PANEL */
 .cdg-pdm-hero {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #06b6d4 100%);
+    background: linear-gradient(135deg, #2E3B4E 0%, #00D3E5 50%, #00D3E5 100%);
     border-radius: 18px;
     padding: 28px 32px;
     color: #fff;
     margin-bottom: 22px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(30,64,175,0.20);
+    box-shadow: 0 16px 40px rgba(46,59,78,0.20);
 }
 .cdg-pdm-hero::before {
     content: '';
@@ -367,7 +367,7 @@ $transfer_lock = !empty($options['transferlock']);
 }
 .cdg-pdm-quick-card-renewal .cdg-pdm-quick-icon { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
 .cdg-pdm-quick-card-autopay .cdg-pdm-quick-icon { background: linear-gradient(135deg, #10b981, #34d399); }
-.cdg-pdm-quick-card-lock .cdg-pdm-quick-icon { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+.cdg-pdm-quick-card-lock .cdg-pdm-quick-icon { background: linear-gradient(135deg, #2E3B4E, #00D3E5); }
 .cdg-pdm-quick-card-privacy .cdg-pdm-quick-icon { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
 .cdg-pdm-quick-info { min-width: 0; flex: 1; }
 .cdg-pdm-quick-info-label {
@@ -415,7 +415,7 @@ $transfer_lock = !empty($options['transferlock']);
 .cdg-pdm-tab.active {
     background: var(--pdm-primary);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(30,64,175,0.22);
+    box-shadow: 0 4px 12px rgba(46,59,78,0.22);
 }
 
 /* TAB PANE */
@@ -491,7 +491,7 @@ $transfer_lock = !empty($options['transferlock']);
 .cdg-pdm-input:focus,
 .cdg-pdm-select:focus {
     border-color: var(--pdm-primary);
-    box-shadow: 0 0 0 3px rgba(30,64,175,0.10);
+    box-shadow: 0 0 0 3px rgba(46,59,78,0.10);
 }
 .cdg-pdm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
@@ -509,9 +509,9 @@ $transfer_lock = !empty($options['transferlock']);
     white-space: nowrap;
 }
 .cdg-pdm-btn-primary {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(30,64,175,0.22);
+    box-shadow: 0 6px 18px rgba(46,59,78,0.22);
 }
 .cdg-pdm-btn-primary:hover { transform: translateY(-1px); color: #fff; }
 .cdg-pdm-btn-success {
@@ -586,7 +586,7 @@ $transfer_lock = !empty($options['transferlock']);
 .cdg-pdm-badge-success { background: #d1fae5; color: #065f46; }
 .cdg-pdm-badge-warning { background: #fef3c7; color: #92400e; }
 .cdg-pdm-badge-danger  { background: #fee2e2; color: #991b1b; }
-.cdg-pdm-badge-info    { background: #dbeafe; color: #1e40af; }
+.cdg-pdm-badge-info    { background: #CFFAFE; color: #2E3B4E; }
 
 /* ALERT */
 .cdg-pdm-alert {
@@ -598,8 +598,8 @@ $transfer_lock = !empty($options['transferlock']);
     line-height: 1.5;
 }
 .cdg-pdm-alert i { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-.cdg-pdm-alert-info { background: #dbeafe; color: #1e3a8a; border: 1px solid #93c5fd; }
-.cdg-pdm-alert-info i { color: #1e40af; }
+.cdg-pdm-alert-info { background: #CFFAFE; color: #1A2332; border: 1px solid #67E8F9; }
+.cdg-pdm-alert-info i { color: #2E3B4E; }
 .cdg-pdm-alert-warning { background: #fef3c7; color: #78350f; border: 1px solid #fcd34d; }
 .cdg-pdm-alert-warning i { color: #f59e0b; }
 .cdg-pdm-alert-success { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
@@ -1211,7 +1211,7 @@ $transfer_lock = !empty($options['transferlock']);
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
                         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
                             <div style="font-size:11px;color:#64748b;text-transform:uppercase;font-weight:600;">Yıllık Ücret</div>
-                            <div style="font-size:16px;font-weight:800;color:#1e40af;margin-top:4px;"><?php echo htmlspecialchars($whois_privacy_price, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                            <div style="font-size:16px;font-weight:800;color:#2E3B4E;margin-top:4px;"><?php echo htmlspecialchars($whois_privacy_price, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         </div>
                         <?php if($whois_privacy_endtime): ?>
                         <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px;text-align:center;">
@@ -1658,7 +1658,7 @@ window.cdgDomain = {
         if(addBtn) {
             addBtn.innerHTML = '<i class="bi bi-check-lg"></i> Güncelle';
             addBtn.setAttribute('onclick', 'cdgDomain.dnsRecordUpdate()');
-            addBtn.style.background = '#3b82f6';
+            addBtn.style.background = '#00D3E5';
         }
 
         // Add form'a scroll
@@ -2260,7 +2260,7 @@ window.cdgPdmWhoisFillFromProfile = function(sel, ctKey) {
     gap: 5px;
 }
 .cdg-pdm-ct-tab:hover { background: #fff; color: #0f172a; }
-.cdg-pdm-ct-tab.active { background: #fff; color: #1e40af; box-shadow: 0 1px 3px rgba(15,23,42,0.06); }
+.cdg-pdm-ct-tab.active { background: #fff; color: #2E3B4E; box-shadow: 0 1px 3px rgba(15,23,42,0.06); }
 </style>
 
 <?php

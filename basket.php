@@ -19,7 +19,7 @@
 
 #wrapper .siparisbilgileri, #wrapper .basket-content { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:24px; margin-bottom:20px; }
 
-#wrapper .btn, #wrapper .gonderbtn, #wrapper button[type=submit] { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:10px; font-size:14px; font-weight:700; background:linear-gradient(135deg,#1e40af,#3b82f6)!important; color:#fff!important; border:0; cursor:pointer; text-decoration:none; }
+#wrapper .btn, #wrapper .gonderbtn, #wrapper button[type=submit] { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:10px; font-size:14px; font-weight:700; background:linear-gradient(135deg,#2E3B4E,#00D3E5)!important; color:#fff!important; border:0; cursor:pointer; text-decoration:none; }
 #wrapper .btn:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(30,64,175,0.25); }
 
 #wrapper table { background:#fff; border-radius:12px; overflow:hidden; }
@@ -27,7 +27,7 @@
 #wrapper table td { padding:14px 16px; border-bottom:1px solid #f1f5f9; color:#0f172a; }
 
 #wrapper input[type="text"], #wrapper input[type="email"], #wrapper input[type="tel"], #wrapper input[type="password"], #wrapper select, #wrapper textarea { width:100%; padding:12px 14px; border:2px solid #e2e8f0; border-radius:10px; font-family:inherit; font-size:14px; color:#0f172a; background:#fff; }
-#wrapper input:focus, #wrapper select:focus, #wrapper textarea:focus { border-color:#1e40af; outline:none; box-shadow:0 0 0 3px rgba(30,64,175,0.10); }
+#wrapper input:focus, #wrapper select:focus, #wrapper textarea:focus { border-color:#2E3B4E; outline:none; box-shadow:0 0 0 3px rgba(30,64,175,0.10); }
 
 #wrapper label { font-size:13px; font-weight:600; color:#0f172a; }
 #wrapper .clear { clear:both; }
@@ -686,7 +686,7 @@
 
 /* Tablo başlıkları */
 .sepetbaslik {
-    background: linear-gradient(135deg, #1e40af, #2563eb);
+    background: linear-gradient(135deg, #2E3B4E, #485A75);
     color: #fff;
     padding: 14px 20px;
     border-radius: 0 !important;
@@ -737,7 +737,7 @@
     align-items: center;
     gap: 8px;
     padding: 14px 28px !important;
-    background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+    background: linear-gradient(135deg, #485A75, #2E3B4E) !important;
     color: #fff !important;
     border: 0 !important;
     border-radius: 10px !important;
@@ -749,7 +749,7 @@
 }
 #continueshopbtn:hover,
 .lbtn.gonderbtn:hover {
-    background: linear-gradient(135deg, #1e40af, #1e3a8a) !important;
+    background: linear-gradient(135deg, #2E3B4E, #1A2332) !important;
     color: #fff !important;
     transform: translateY(-1px);
     box-shadow: 0 8px 20px rgba(30,64,175,0.20);
@@ -797,7 +797,7 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 .sepetright .sepetbaslik {
-    background: linear-gradient(135deg, #0a1f44, #1e40af);
+    background: linear-gradient(135deg, #1A2332, #2E3B4E);
     padding: 16px 20px;
     border-radius: 0;
 }
@@ -841,7 +841,7 @@
     margin: 0;
     font-size: 24px;
     font-weight: 900;
-    color: #1e40af;
+    color: #2E3B4E;
 }
 
 /* "Devam Et" butonları (sağ panel altı) */
@@ -850,7 +850,7 @@
     text-align: center !important;
     margin: 14px 20px 20px;
     padding: 14px 24px !important;
-    background: linear-gradient(135deg, #1e40af, #2563eb) !important;
+    background: linear-gradient(135deg, #2E3B4E, #485A75) !important;
     color: #fff !important;
     border: 0 !important;
     border-radius: 10px !important;
@@ -863,7 +863,7 @@
     transition: all 0.2s;
 }
 .gonderbtn:hover {
-    background: linear-gradient(135deg, #1e3a8a, #1e40af) !important;
+    background: linear-gradient(135deg, #1A2332, #2E3B4E) !important;
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(30,64,175,0.30) !important;
     color: #fff !important;
@@ -886,7 +886,7 @@
     width: 32px;
     height: 32px;
     border: 3px solid #e2e8f0;
-    border-top-color: #1e40af;
+    border-top-color: #2E3B4E;
     border-radius: 50%;
     margin: 0 auto;
     animation: cdg-spin 0.8s linear infinite;
@@ -898,13 +898,13 @@
 .yesilbtn { background: #10b981 !important; }
 .yesilbtn:hover { background: #059669 !important; }
 .lbtn {
-    border: 2px solid #1e40af !important;
-    color: #1e40af !important;
+    border: 2px solid #2E3B4E !important;
+    color: #2E3B4E !important;
 }
 .lbtn:hover {
-    border-color: #1e3a8a !important;
+    border-color: #1A2332 !important;
     color: #fff !important;
-    background: #1e40af !important;
+    background: #2E3B4E !important;
 }
 .row-label.green-label {
     display: inline-block;
@@ -916,8 +916,8 @@
 
 /* Checkbox renk override */
 .checkbox-custom:checked + .checkbox-custom-label:before {
-    background: #1e40af !important;
-    border-color: #1e40af !important;
+    background: #2E3B4E !important;
+    border-color: #2E3B4E !important;
 }
 .checkbox-custom + .checkbox-custom-label:before,
 .radio-custom + .radio-custom-label:before {

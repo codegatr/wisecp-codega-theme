@@ -97,7 +97,7 @@ if(!$has_fields) return;
 .cdg-docvrf-field-input:focus,
 .cdg-docvrf-field-select:focus,
 .cdg-docvrf-field-textarea:focus {
-    border-color: #3b82f6;
+    border-color: #00D3E5;
     box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
     outline: none;
 }
@@ -113,7 +113,7 @@ if(!$has_fields) return;
     cursor: pointer;
     transition: border-color .2s;
 }
-.cdg-docvrf-field-file:hover { border-color: #3b82f6; }
+.cdg-docvrf-field-file:hover { border-color: #00D3E5; }
 .cdg-docvrf-field-file-info {
     display: block;
     font-size: 11px; color: #92400e;
@@ -138,7 +138,7 @@ if(!$has_fields) return;
 .cdg-docvrf-radio input,
 .cdg-docvrf-checkbox input { margin: 0; }
 .cdg-docvrf-radio label:hover,
-.cdg-docvrf-checkbox label:hover { border-color: #3b82f6; }
+.cdg-docvrf-checkbox label:hover { border-color: #00D3E5; }
 
 .cdg-docvrf-status-pending {
     display: inline-flex; align-items: center; gap: 6px;

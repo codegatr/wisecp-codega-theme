@@ -170,11 +170,11 @@ function cdg_domain_status_label($status) {
 
 <style>
 .cdg-pd {
-    --pd-primary: #1e40af;
+    --pd-primary: #2E3B4E;
     --pd-success: #10b981;
     --pd-warning: #f59e0b;
     --pd-danger: #ef4444;
-    --pd-info: #06b6d4;
+    --pd-info: #00D3E5;
     --pd-bg: #f8fafc;
     --pd-card: #fff;
     --pd-text: #0f172a;
@@ -197,14 +197,14 @@ function cdg_domain_status_label($status) {
 
 /* HERO */
 .cdg-pd-hero {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #06b6d4 100%);
+    background: linear-gradient(135deg, #2E3B4E 0%, #00D3E5 50%, #00D3E5 100%);
     border-radius: 18px;
     padding: 28px 32px;
     color: #fff;
     margin-bottom: 22px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(30,64,175,0.20);
+    box-shadow: 0 16px 40px rgba(46,59,78,0.20);
 }
 .cdg-pd-hero::before {
     content: '';
@@ -250,10 +250,10 @@ function cdg_domain_status_label($status) {
 }
 .cdg-pd-btn-gold {
     background: linear-gradient(135deg, #fde047, #facc15);
-    color: #1e3a8a;
+    color: #1A2332;
     box-shadow: 0 6px 18px rgba(252,211,77,0.30);
 }
-.cdg-pd-btn-gold:hover { transform: translateY(-1px); color: #1e3a8a; }
+.cdg-pd-btn-gold:hover { transform: translateY(-1px); color: #1A2332; }
 .cdg-pd-btn-ghost {
     background: rgba(255,255,255,0.15);
     color: #fff;
@@ -265,7 +265,7 @@ function cdg_domain_status_label($status) {
     background: var(--pd-primary);
     color: #fff;
 }
-.cdg-pd-btn-primary:hover { background: #1e3a8a; color: #fff; }
+.cdg-pd-btn-primary:hover { background: #1A2332; color: #fff; }
 .cdg-pd-btn-outline {
     background: #fff;
     color: var(--pd-text);
@@ -302,7 +302,7 @@ function cdg_domain_status_label($status) {
 .cdg-pd-tab.active {
     background: var(--pd-primary);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(30,64,175,0.22);
+    box-shadow: 0 4px 12px rgba(46,59,78,0.22);
 }
 .cdg-pd-tab .count {
     background: rgba(0,0,0,0.10);
@@ -316,7 +316,7 @@ function cdg_domain_status_label($status) {
 /* NS KARTI */
 .cdg-pd-ns-card {
     background: linear-gradient(135deg, #eff6ff, #fff);
-    border: 1px solid #bfdbfe;
+    border: 1px solid #A5F3FC;
     border-radius: var(--pd-radius);
     padding: 18px 22px;
     margin-bottom: 18px;
@@ -327,7 +327,7 @@ function cdg_domain_status_label($status) {
 }
 .cdg-pd-ns-head h3 {
     font-size: 14px; font-weight: 800;
-    margin: 0; color: #1e3a8a;
+    margin: 0; color: #1A2332;
     display: flex; align-items: center; gap: 8px;
 }
 .cdg-pd-ns-head h3 i { color: var(--pd-primary); }
@@ -349,7 +349,7 @@ function cdg_domain_status_label($status) {
     outline: none;
     transition: all 0.2s;
 }
-.cdg-pd-ns-input:focus { border-color: var(--pd-primary); box-shadow: 0 0 0 3px rgba(30,64,175,0.10); }
+.cdg-pd-ns-input:focus { border-color: var(--pd-primary); box-shadow: 0 0 0 3px rgba(46,59,78,0.10); }
 .cdg-pd-ns-info {
     font-size: 12px;
     color: var(--pd-muted);
@@ -383,7 +383,7 @@ function cdg_domain_status_label($status) {
 .cdg-pd-card-icon {
     width: 48px; height: 48px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     display: grid; place-items: center;
     font-size: 22px;
@@ -420,7 +420,7 @@ function cdg_domain_status_label($status) {
 .cdg-pd-badge-success { background: #d1fae5; color: #065f46; }
 .cdg-pd-badge-warning { background: #fef3c7; color: #92400e; }
 .cdg-pd-badge-danger  { background: #fee2e2; color: #991b1b; }
-.cdg-pd-badge-info    { background: #dbeafe; color: #1e40af; }
+.cdg-pd-badge-info    { background: #CFFAFE; color: #2E3B4E; }
 
 /* EMPTY */
 .cdg-pd-empty {

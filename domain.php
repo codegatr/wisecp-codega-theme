@@ -145,7 +145,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
 /* CODEGA - DOMAIN SORGULAMA HERO - Modern premium tasarim */
 .cdg-domain-hero {
     position: relative;
-    background: linear-gradient(135deg, #0a1f44 0%, #1e3a8a 35%, #1e40af 70%, #2563eb 100%);
+    background: linear-gradient(135deg, #1A2332 0%, #1A2332 35%, #2E3B4E 70%, #485A75 100%);
     padding: 90px 0 110px;
     overflow: hidden;
     color: #fff;
@@ -237,7 +237,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
     letter-spacing: -0.02em;
 }
 .cdg-text-gradient-light {
-    background: linear-gradient(135deg, #fbbf24 0%, #fde047 50%, #06b6d4 100%);
+    background: linear-gradient(135deg, #fbbf24 0%, #fde047 50%, #00D3E5 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -283,7 +283,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
 }
 .cdg-domain-hero .cdg-domain-search-input-main > i,
 .cdg-domain-hero .cdg-domain-search-input-main > .bi {
-    color: #1e40af !important;
+    color: #2E3B4E !important;
     font-size: 22px !important;
     flex-shrink: 0 !important;
     position: static !important;
@@ -347,7 +347,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
     flex-shrink: 0 !important;
 }
 .cdg-domain-hero .cdg-domain-search-captcha input:focus {
-    border-color: #1e40af !important;
+    border-color: #2E3B4E !important;
     box-shadow: 0 0 0 3px rgba(30,64,175,0.15) !important;
 }
 .cdg-domain-hero .cdg-btn-glow {
@@ -357,7 +357,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
     justify-content: center !important;
     gap: 8px !important;
     padding: 0 32px !important;
-    background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+    background: linear-gradient(135deg, #485A75, #2E3B4E) !important;
     color: #fff !important;
     font-size: 15px !important;
     font-weight: 800 !important;
@@ -373,7 +373,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
 .cdg-domain-hero .cdg-btn-glow::before {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, #1e40af, #1e3a8a);
+    background: linear-gradient(135deg, #2E3B4E, #1A2332);
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -555,7 +555,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
         <!-- Loading state -->
         <div id="searchLoading" class="cdg-search-result loading" style="display:none;">
             <div class="cdg-search-result-name">
-                <i class="bi bi-hourglass-split" style="animation:cdgSpin 1s linear infinite;color:#1e40af;"></i>
+                <i class="bi bi-hourglass-split" style="animation:cdgSpin 1s linear infinite;color:#2E3B4E;"></i>
                 <strong>Sorgulanıyor...</strong>
             </div>
         </div>
@@ -685,7 +685,7 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
                         ?>
                         <tr<?php echo $is_promo ? ' style="background:#fef9c3;"' : ''; ?>>
                             <td>
-                                <strong style="color:<?php echo $is_promo ? '#10b981' : '#1e40af'; ?>;font-size:15px;">.<?php echo htmlspecialchars($row['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
+                                <strong style="color:<?php echo $is_promo ? '#10b981' : '#2E3B4E'; ?>;font-size:15px;">.<?php echo htmlspecialchars($row['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
                                 <?php if(!empty($row['paperwork'])): ?>
                                 <i class="bi bi-file-earmark-text" style="color:#94a3b8;margin-left:6px;font-size:12px;" title="Belge gerekli"></i>
                                 <?php endif; ?>

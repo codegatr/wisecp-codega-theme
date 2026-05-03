@@ -48,7 +48,7 @@ $client_area_types = [
             <?php foreach($header_types as $k => $v):
                 $active = (int)($settings["header_type"] ?? 1) === $k;
             ?>
-                <label style="cursor:pointer;border:2px solid <?php echo $active ? '#1e40af' : '#e2e8f0'; ?>;border-radius:8px;padding:12px;display:flex;align-items:center;gap:8px;">
+                <label style="cursor:pointer;border:2px solid <?php echo $active ? '#2E3B4E' : '#e2e8f0'; ?>;border-radius:8px;padding:12px;display:flex;align-items:center;gap:8px;">
                     <input type="radio" name="header_type" value="<?php echo $k; ?>"<?php echo $active ? ' checked' : ''; ?>>
                     <span><?php echo $v['name']; ?></span>
                 </label>
@@ -63,7 +63,7 @@ $client_area_types = [
             <?php foreach($client_area_types as $k => $v):
                 $active = (int)($settings["clientArea_type"] ?? 1) === $k;
             ?>
-                <label style="cursor:pointer;border:2px solid <?php echo $active ? '#1e40af' : '#e2e8f0'; ?>;border-radius:8px;padding:12px;display:flex;align-items:center;gap:8px;">
+                <label style="cursor:pointer;border:2px solid <?php echo $active ? '#2E3B4E' : '#e2e8f0'; ?>;border-radius:8px;padding:12px;display:flex;align-items:center;gap:8px;">
                     <input type="radio" name="clientArea_type" value="<?php echo $k; ?>"<?php echo $active ? ' checked' : ''; ?>>
                     <span><?php echo $v['name']; ?></span>
                 </label>

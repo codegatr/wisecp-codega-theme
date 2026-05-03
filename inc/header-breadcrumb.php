@@ -69,7 +69,7 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
     padding: 3px 6px;
     border-radius: 5px;
 }
-.cdg-bc-item a:hover { color: #1e40af; background: rgba(30,64,175,0.06); }
+.cdg-bc-item a:hover { color: #2E3B4E; background: rgba(46,59,78,0.06); }
 .cdg-bc-item.cdg-bc-current span {
     color: #0f172a;
     font-weight: 700;

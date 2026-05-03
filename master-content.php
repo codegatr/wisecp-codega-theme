@@ -7,7 +7,7 @@ if(!isset($hoptions) || !is_array($hoptions))     $hoptions = [];
 if(!isset($meta) || !is_array($meta))             $meta = ['title'=>'CODEGA','description'=>'','keywords'=>'','robots'=>''];
 if(!isset($canonical_link)) $canonical_link = '';
 if(!isset($favicon_link))   $favicon_link   = '';
-if(!isset($meta_color))     $meta_color     = '#1e40af';
+if(!isset($meta_color))     $meta_color     = '#2E3B4E';
 if(!isset($lang_list))      $lang_list      = [];
 
 $_cdg_page = isset($hoptions["page"]) ? $hoptions["page"] : '';

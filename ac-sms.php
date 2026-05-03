@@ -103,7 +103,7 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
 
 <style>
 .cdg-sms {
-    --s-primary: #06b6d4;
+    --s-primary: #00D3E5;
     --s-primary-2: #0891b2;
     --s-success: #10b981;
     --s-warning: #f59e0b;
@@ -127,14 +127,14 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
 .cdg-sms-wrap { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
 
 .cdg-sms-hero {
-    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #1e40af 100%);
+    background: linear-gradient(135deg, #00D3E5 0%, #0891b2 50%, #2E3B4E 100%);
     border-radius: 18px;
     padding: 28px 32px;
     color: #fff;
     margin-bottom: 22px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(6,182,212,0.22);
+    box-shadow: 0 16px 40px rgba(0,211,229,0.22);
 }
 .cdg-sms-hero::before {
     content: '';
@@ -233,7 +233,7 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
 .cdg-sms-tab.active {
     background: var(--s-primary);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(6,182,212,0.25);
+    box-shadow: 0 4px 12px rgba(0,211,229,0.25);
 }
 
 .cdg-sms-pane { display: none; }
@@ -306,7 +306,7 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
 .cdg-sms-select:focus,
 .cdg-sms-textarea:focus {
     border-color: var(--s-primary);
-    box-shadow: 0 0 0 3px rgba(6,182,212,0.10);
+    box-shadow: 0 0 0 3px rgba(0,211,229,0.10);
 }
 .cdg-sms-textarea { min-height: 140px; resize: vertical; line-height: 1.6; }
 
@@ -332,9 +332,9 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
     text-decoration: none;
 }
 .cdg-sms-btn-primary {
-    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    background: linear-gradient(135deg, #00D3E5, #0891b2);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(6,182,212,0.25);
+    box-shadow: 0 6px 18px rgba(0,211,229,0.25);
 }
 .cdg-sms-btn-primary:hover { transform: translateY(-1px); color: #fff; }
 .cdg-sms-btn-success {
@@ -493,7 +493,7 @@ $credit_pct = $credit_total > 0 ? round(($credit_used / $credit_total) * 100) : 
                 </div>
 
                 <?php if(!empty($last)): ?>
-                <div style="margin-top:18px;padding:14px 18px;background:#dbeafe;border:1px solid #93c5fd;border-radius:10px;color:#1e3a8a;font-size:13px;">
+                <div style="margin-top:18px;padding:14px 18px;background:#CFFAFE;border:1px solid #67E8F9;border-radius:10px;color:#1A2332;font-size:13px;">
                     <strong><i class="bi bi-clock-history"></i> Son Gönderim:</strong>
                     <?php echo htmlspecialchars($last['part'] ?? '-', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> -
                     <?php echo htmlspecialchars($last['end'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>

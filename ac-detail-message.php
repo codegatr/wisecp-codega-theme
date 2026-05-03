@@ -94,7 +94,7 @@ $messages_url = cdg_link('messages');
 
 <style>
 .cdg-msg {
-    --m-primary: #1e40af;
+    --m-primary: #2E3B4E;
     --m-bg: #f8fafc;
     --m-card: #fff;
     --m-text: #0f172a;
@@ -139,8 +139,8 @@ $messages_url = cdg_link('messages');
 .cdg-msg-eyebrow {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 4px 12px;
-    background: #dbeafe;
-    color: #1e40af;
+    background: #CFFAFE;
+    color: #2E3B4E;
     border-radius: 99px;
     font-size: 11px; font-weight: 700;
     text-transform: uppercase;

@@ -80,7 +80,7 @@ if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) {
     box-shadow: 0 20px 60px rgba(0,0,0,0.2);
 }
 .cdg-vrf-head {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     padding: 16px 22px;
     display: flex;
@@ -105,7 +105,7 @@ if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) {
 .cdg-vrf-icon i {
     width: 70px; height: 70px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     display: inline-grid;
     place-items: center;

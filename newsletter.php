@@ -22,7 +22,7 @@ $nl_message = isset($message) ? $message : '';
     <div class="cdg-container" style="max-width:520px;">
         <div class="cdg-card" style="padding:36px;">
             <div style="text-align:center;margin-bottom:24px;">
-                <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;display:inline-grid;place-items:center;font-size:32px;margin-bottom:12px;box-shadow:0 8px 24px rgba(30,64,175,0.20);">
+                <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#2E3B4E,#00D3E5);color:#fff;display:inline-grid;place-items:center;font-size:32px;margin-bottom:12px;box-shadow:0 8px 24px rgba(30,64,175,0.20);">
                     <i class="bi bi-envelope-heart"></i>
                 </div>
                 <h2 style="margin:0 0 8px;font-size:22px;font-weight:800;">Yeniliklerden Haberdar Olun</h2>
@@ -73,7 +73,7 @@ $nl_message = isset($message) ? $message : '';
             </form>
 
             <div style="margin-top:18px;padding-top:18px;border-top:1px solid #e2e8f0;text-align:center;font-size:12px;color:#64748b;">
-                Aboneliginizi iptal etmek icin <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('newsletter-unsubscribe') : '/newsletter-unsubscribe'); ?>" style="color:#1e40af;font-weight:700;text-decoration:none;">tiklayin</a>.
+                Aboneliginizi iptal etmek icin <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('newsletter-unsubscribe') : '/newsletter-unsubscribe'); ?>" style="color:#2E3B4E;font-weight:700;text-decoration:none;">tiklayin</a>.
             </div>
         </div>
     </div>

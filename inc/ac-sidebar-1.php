@@ -89,9 +89,13 @@ if(!function_exists('cdg_link')) {
 ?>
 <aside class="cdg-ac-sidebar">
 
-    <a href="<?php echo $home_link; ?>" class="cdg-ac-brand">
+    <a href="<?php echo $home_link; ?>" class="cdg-ac-brand cdg-ac-brand-v2" aria-label="CODEGA Anasayfa">
+        <?php if(function_exists('cdg_logo_svg')) {
+            echo cdg_logo_svg('full', 36);
+        } else { ?>
         <span class="cdg-logo-mark">C</span>
         CODEGA
+        <?php } ?>
     </a>
 
     <ul class="cdg-ac-menu">

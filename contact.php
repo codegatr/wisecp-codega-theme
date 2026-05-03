@@ -158,7 +158,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
                 <div class="cdg-channel-cta">Mesaj Gonder <i class="bi bi-arrow-right"></i></div>
             </a>
             <a href="tel:<?php echo str_replace(' ', '', $company_phone); ?>" class="cdg-channel-card">
-                <div class="cdg-channel-icon" style="background:linear-gradient(135deg,#1e40af,#3b82f6);"><i class="bi bi-telephone-fill"></i></div>
+                <div class="cdg-channel-icon" style="background:linear-gradient(135deg,#2E3B4E,#00D3E5);"><i class="bi bi-telephone-fill"></i></div>
                 <h3>Telefon</h3>
                 <p>Hemen aramak için tıkla.</p>
                 <div class="cdg-channel-meta"><?php echo htmlspecialchars($company_hours, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>

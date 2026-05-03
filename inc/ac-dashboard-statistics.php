@@ -67,7 +67,7 @@ $url_create_ticket = $links['create-ticket-request'] ?? '#';
     pointer-events: none;
 }
 .cdg-ds-card-services::before { background: #10b981; }
-.cdg-ds-card-domains::before  { background: #1e40af; }
+.cdg-ds-card-domains::before  { background: #2E3B4E; }
 .cdg-ds-card-invoices::before { background: #ef4444; }
 .cdg-ds-card-tickets::before  { background: #64748b; }
 
@@ -82,7 +82,7 @@ $url_create_ticket = $links['create-ticket-request'] ?? '#';
     z-index: 1;
 }
 .cdg-ds-card-services .cdg-ds-icon { background: linear-gradient(135deg, #10b981, #34d399); }
-.cdg-ds-card-domains .cdg-ds-icon  { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+.cdg-ds-card-domains .cdg-ds-icon  { background: linear-gradient(135deg, #2E3B4E, #00D3E5); }
 .cdg-ds-card-invoices .cdg-ds-icon { background: linear-gradient(135deg, #ef4444, #f87171); }
 .cdg-ds-card-tickets .cdg-ds-icon  { background: linear-gradient(135deg, #64748b, #94a3b8); }
 
@@ -116,14 +116,14 @@ $url_create_ticket = $links['create-ticket-request'] ?? '#';
     position: relative; z-index: 1;
 }
 .cdg-ds-card-services .cdg-ds-action { background: linear-gradient(135deg, #10b981, #34d399); }
-.cdg-ds-card-domains .cdg-ds-action  { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+.cdg-ds-card-domains .cdg-ds-action  { background: linear-gradient(135deg, #2E3B4E, #00D3E5); }
 .cdg-ds-card-invoices .cdg-ds-action { background: linear-gradient(135deg, #ef4444, #f87171); }
 .cdg-ds-card-tickets .cdg-ds-action  { background: linear-gradient(135deg, #64748b, #94a3b8); }
 .cdg-ds-card:hover .cdg-ds-action { transform: translateX(2px); }
 
 .cdg-ds-secondary {
     margin-left: 8px;
-    color: #1e40af;
+    color: #2E3B4E;
     font-size: 12px;
     font-weight: 700;
     text-decoration: none;

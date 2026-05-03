@@ -73,14 +73,14 @@ $action_url = $domain_check_post ?? '#';
 
 <style>
 .cdg-ddp {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #06b6d4 100%);
+    background: linear-gradient(135deg, #2E3B4E 0%, #00D3E5 50%, #00D3E5 100%);
     border-radius: 18px;
     padding: 28px 32px;
     color: #fff;
     margin-bottom: 22px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(30,64,175,0.20);
+    box-shadow: 0 16px 40px rgba(46,59,78,0.20);
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     box-sizing: border-box;
 }
@@ -119,7 +119,7 @@ $action_url = $domain_check_post ?? '#';
 .cdg-ddp-title .price-badge {
     display: inline-flex; align-items: center;
     background: linear-gradient(135deg, #fde047, #facc15);
-    color: #1e3a8a;
+    color: #1A2332;
     padding: 4px 12px;
     border-radius: 99px;
     font-size: 14px;
@@ -161,7 +161,7 @@ $action_url = $domain_check_post ?? '#';
 .cdg-ddp-form button {
     padding: 12px 22px;
     background: linear-gradient(135deg, #fde047, #facc15);
-    color: #1e3a8a;
+    color: #1A2332;
     border: 0;
     font-size: 13px;
     font-weight: 700;

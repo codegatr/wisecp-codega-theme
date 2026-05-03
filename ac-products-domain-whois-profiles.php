@@ -91,7 +91,7 @@ $back_url = cdg_link('products-domain');
 
 <style>
 .cdg-wp {
-    --wp-primary: #1e40af;
+    --wp-primary: #2E3B4E;
     --wp-bg: #f8fafc;
     --wp-card: #fff;
     --wp-text: #0f172a;
@@ -158,10 +158,10 @@ $back_url = cdg_link('products-domain');
 }
 .cdg-wp-btn-gold {
     background: linear-gradient(135deg, #fde047, #facc15);
-    color: #1e3a8a;
+    color: #1A2332;
     box-shadow: 0 6px 18px rgba(252,211,77,0.30);
 }
-.cdg-wp-btn-gold:hover { transform: translateY(-1px); color: #1e3a8a; }
+.cdg-wp-btn-gold:hover { transform: translateY(-1px); color: #1A2332; }
 .cdg-wp-btn-outline {
     background: #fff;
     border: 1px solid var(--wp-border);

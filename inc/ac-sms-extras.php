@@ -38,7 +38,7 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
 .cdg-sms *, .cdg-sms *::before, .cdg-sms *::after { box-sizing: border-box; }
 
 .cdg-sms-credit-bar {
-    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    background: linear-gradient(135deg, #00D3E5, #0891b2);
     color: #fff;
     border-radius: 14px;
     padding: 16px 22px;
@@ -73,13 +73,13 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
     display: inline-flex; align-items: center; gap: 6px;
     transition: all 0.15s;
 }
-.cdg-sms-tab:hover { color: #06b6d4; }
-.cdg-sms-tab.active { color: #06b6d4; border-bottom-color: #06b6d4; }
+.cdg-sms-tab:hover { color: #00D3E5; }
+.cdg-sms-tab.active { color: #00D3E5; border-bottom-color: #00D3E5; }
 .cdg-sms-tab .badge {
     padding: 2px 8px; background: #e2e8f0; color: #475569;
     border-radius: 99px; font-size: 11px; font-weight: 700;
 }
-.cdg-sms-tab.active .badge { background: #06b6d4; color: #fff; }
+.cdg-sms-tab.active .badge { background: #00D3E5; color: #fff; }
 
 .cdg-sms-pane { display: none; }
 .cdg-sms-pane.active { display: block; }
@@ -94,7 +94,7 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
 }
 .cdg-sms-card-title {
     font-size: 13px; font-weight: 800;
-    color: #06b6d4;
+    color: #00D3E5;
     margin-bottom: 14px;
     text-transform: uppercase; letter-spacing: 0.5px;
     display: inline-flex; align-items: center; gap: 6px;
@@ -117,7 +117,7 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
     transition: border 0.15s;
 }
 .cdg-sms-input:focus, .cdg-sms-select:focus, .cdg-sms-textarea:focus {
-    border-color: #06b6d4; box-shadow: 0 0 0 3px rgba(6,182,212,0.10);
+    border-color: #00D3E5; box-shadow: 0 0 0 3px rgba(0,211,229,0.10);
 }
 .cdg-sms-textarea { resize: vertical; min-height: 100px; font-family: 'JetBrains Mono', 'Courier New', monospace; }
 
@@ -131,7 +131,7 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
     font-size: 12px; color: #64748b;
     margin-top: 4px;
 }
-.cdg-sms-meta strong { color: #06b6d4; font-weight: 800; }
+.cdg-sms-meta strong { color: #00D3E5; font-weight: 800; }
 
 .cdg-sms-btn {
     display: inline-flex; align-items: center; gap: 6px;
@@ -143,14 +143,14 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
     transition: transform 0.15s;
 }
 .cdg-sms-btn:hover { transform: translateY(-1px); color: #fff; }
-.cdg-sms-btn-primary { background: linear-gradient(135deg, #06b6d4, #0891b2); box-shadow: 0 4px 10px rgba(6,182,212,0.22); }
+.cdg-sms-btn-primary { background: linear-gradient(135deg, #00D3E5, #0891b2); box-shadow: 0 4px 10px rgba(0,211,229,0.22); }
 .cdg-sms-btn-success { background: linear-gradient(135deg, #10b981, #34d399); box-shadow: 0 4px 10px rgba(16,185,129,0.22); }
 .cdg-sms-btn-danger  { background: linear-gradient(135deg, #ef4444, #f87171); box-shadow: 0 4px 10px rgba(239,68,68,0.22); }
 .cdg-sms-btn-outline {
     background: #fff; color: #475569 !important;
     border: 1.5px solid #e2e8f0; box-shadow: none;
 }
-.cdg-sms-btn-outline:hover { border-color: #06b6d4; color: #06b6d4 !important; }
+.cdg-sms-btn-outline:hover { border-color: #00D3E5; color: #00D3E5 !important; }
 
 .cdg-sms-group-list {
     display: flex; flex-direction: column; gap: 8px; margin-top: 14px;
@@ -175,7 +175,7 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
     font-size: 13px; font-family: inherit;
     transition: all 0.15s;
 }
-.cdg-sms-group-action:hover { border-color: #06b6d4; color: #06b6d4; }
+.cdg-sms-group-action:hover { border-color: #00D3E5; color: #00D3E5; }
 .cdg-sms-group-action.danger:hover { border-color: #ef4444; color: #ef4444; }
 
 .cdg-sms-checkbox-list {
@@ -197,8 +197,8 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
     background: #fff;
     border: 1px solid #e2e8f0;
 }
-.cdg-sms-checkbox-item input { accent-color: #06b6d4; }
-.cdg-sms-checkbox-item:hover { border-color: #06b6d4; }
+.cdg-sms-checkbox-item input { accent-color: #00D3E5; }
+.cdg-sms-checkbox-item:hover { border-color: #00D3E5; }
 
 .cdg-sms-preview {
     background: linear-gradient(135deg, #ecfeff, #cffafe);
@@ -619,9 +619,9 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
                         $price_str = $price_amount . ' ' . $price_cid;
                     }
                 ?>
-                <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:18px;text-align:center;transition:all 0.2s;cursor:pointer;" onclick="cdgSmsBuyCredit(<?php echo $i_id; ?>)" onmouseenter="this.style.borderColor='#06b6d4';this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(6,182,212,0.15)';" onmouseleave="this.style.borderColor='#e2e8f0';this.style.transform='';this.style.boxShadow='';">
+                <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:18px;text-align:center;transition:all 0.2s;cursor:pointer;" onclick="cdgSmsBuyCredit(<?php echo $i_id; ?>)" onmouseenter="this.style.borderColor='#00D3E5';this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,211,229,0.15)';" onmouseleave="this.style.borderColor='#e2e8f0';this.style.transform='';this.style.boxShadow='';">
                     <div style="font-size:13px;font-weight:700;color:#475569;margin-bottom:6px;"><?php echo htmlspecialchars($i_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
-                    <div style="font-size:24px;font-weight:800;color:#06b6d4;margin-bottom:10px;"><?php echo htmlspecialchars($price_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                    <div style="font-size:24px;font-weight:800;color:#00D3E5;margin-bottom:10px;"><?php echo htmlspecialchars($price_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                     <button type="button" class="cdg-sms-btn cdg-sms-btn-primary" style="width:100%;justify-content:center;">
                         <i class="bi bi-cart-plus"></i> Satın Al
                     </button>

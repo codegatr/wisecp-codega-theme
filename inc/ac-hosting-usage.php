@@ -44,7 +44,7 @@ $d_id = (int)($proanse['id'] ?? 0);
     display: flex; align-items: center; gap: 8px;
     margin: 0;
 }
-.cdg-host-usage-head h3 i { color: #3b82f6; font-size: 18px; }
+.cdg-host-usage-head h3 i { color: #00D3E5; font-size: 18px; }
 .cdg-host-usage-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -66,7 +66,7 @@ $d_id = (int)($proanse['id'] ?? 0);
 }
 .cdg-host-usage-item-title i { margin-right: 6px; }
 .cdg-host-usage-percent {
-    font-size: 22px; font-weight: 900; color: #1e40af;
+    font-size: 22px; font-weight: 900; color: #2E3B4E;
     font-variant-numeric: tabular-nums;
 }
 .cdg-host-usage-percent.warning { color: #f59e0b; }
@@ -101,7 +101,7 @@ $d_id = (int)($proanse['id'] ?? 0);
     display: inline-flex; gap: 3px;
 }
 .cdg-host-usage-loading-dots span {
-    width: 6px; height: 6px; background: #3b82f6; border-radius: 50%;
+    width: 6px; height: 6px; background: #00D3E5; border-radius: 50%;
     animation: cdgUsageDot 1.4s infinite both;
 }
 .cdg-host-usage-loading-dots span:nth-child(2) { animation-delay: 0.2s; }

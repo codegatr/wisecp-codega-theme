@@ -27,13 +27,13 @@ if(!isset($ac_header_info_inc)) {
 ?>
 <style>
 .cdg-hi {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    background: linear-gradient(135deg, #2E3B4E 0%, #00D3E5 100%);
     border-radius: 14px;
     padding: 16px 20px;
     color: #fff;
     margin-bottom: 18px;
     display: flex; align-items: center; gap: 14px;
-    box-shadow: 0 8px 24px rgba(30,64,175,0.16);
+    box-shadow: 0 8px 24px rgba(46,59,78,0.16);
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     box-sizing: border-box;
     flex-wrap: wrap;
@@ -67,7 +67,7 @@ if(!isset($ac_header_info_inc)) {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 7px 14px;
     background: linear-gradient(135deg, #fde047, #facc15);
-    color: #1e3a8a;
+    color: #1A2332;
     border-radius: 99px;
     font-size: 12px;
     font-weight: 700;
@@ -76,7 +76,7 @@ if(!isset($ac_header_info_inc)) {
     transition: all 0.18s;
     flex-shrink: 0;
 }
-.cdg-hi-reseller:hover { transform: translateY(-1px); color: #1e3a8a; }
+.cdg-hi-reseller:hover { transform: translateY(-1px); color: #1A2332; }
 @media (max-width: 600px) {
     .cdg-hi { flex-direction: column; text-align: center; align-items: center; }
     .cdg-hi-meta { justify-content: center; }

@@ -118,7 +118,7 @@ $pricing_categories = [
         ],
     ],
     [
-        'id' => 'profesyonel', 'name' => 'Profesyonel SSD Hosting', 'icon' => 'bi-stars', 'color' => '#1e40af',
+        'id' => 'profesyonel', 'name' => 'Profesyonel SSD Hosting', 'icon' => 'bi-stars', 'color' => '#2E3B4E',
         'desc' => 'Yüksek trafikli siteler ve kurumsal çözümler için',
         'packages' => [
             ['name' => 'Profesyonel 1', 'subtitle' => 'Kurumsal başlangıç', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', '2 Core CPU', '2 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise']],
@@ -130,9 +130,9 @@ $pricing_categories = [
         'id' => 'bayi', 'name' => 'Bayi (Reseller) Hosting', 'icon' => 'bi-people-fill', 'color' => '#8b5cf6',
         'desc' => 'Web tasarımcıları ve ajanslar için bayilik çözümleri',
         'packages' => [
-            ['name' => 'S BAYİ', 'subtitle' => 'Küçük bayilik', 'price' => '14', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'features' => ['10 cPanel Hesabı', '20 GB NVMe SSD', '200 GB Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label']],
-            ['name' => 'M BAYİ', 'subtitle' => 'Orta bayilik', 'price' => '24', 'currency' => '$', 'period' => 'aylık', 'highlight' => true, 'features' => ['25 cPanel Hesabı', '50 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'cPanel Lisansı']],
-            ['name' => 'L BAYİ', 'subtitle' => 'Büyük bayilik', 'price' => '39', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'features' => ['50 cPanel Hesabı', '100 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'Marka Çözümleri']],
+            ['name' => 'S BAYİ', 'subtitle' => 'Küçük bayilik', 'price' => '14', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'features' => ['10 DirectAdmin Hesabı', '20 GB NVMe SSD', '200 GB Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label']],
+            ['name' => 'M BAYİ', 'subtitle' => 'Orta bayilik', 'price' => '24', 'currency' => '$', 'period' => 'aylık', 'highlight' => true, 'features' => ['25 DirectAdmin Hesabı', '50 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'DirectAdmin Lisansı']],
+            ['name' => 'L BAYİ', 'subtitle' => 'Büyük bayilik', 'price' => '39', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'features' => ['50 DirectAdmin Hesabı', '100 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'Marka Çözümleri']],
         ],
     ],
 ];
@@ -283,8 +283,8 @@ if($mod_domain) {
 $tech_stack = [
     ['name' => 'NVMe SSD',     'icon' => 'bi-hdd-fill',         'color' => '#10b981'],
     ['name' => 'LiteSpeed',    'icon' => 'bi-lightning-fill',   'color' => '#f59e0b'],
-    ['name' => 'Cloudflare',   'icon' => 'bi-cloud-fill',       'color' => '#06b6d4'],
-    ['name' => 'cPanel',       'icon' => 'bi-grid-1x2-fill',    'color' => '#1e40af'],
+    ['name' => 'Cloudflare',   'icon' => 'bi-cloud-fill',       'color' => '#00D3E5'],
+    ['name' => 'DirectAdmin',       'icon' => 'bi-grid-1x2-fill',    'color' => '#2E3B4E'],
     ['name' => 'PHP 8.3',      'icon' => 'bi-filetype-php',     'color' => '#8b5cf6'],
     ['name' => 'MariaDB',      'icon' => 'bi-database-fill',    'color' => '#ec4899'],
     ['name' => 'Redis',        'icon' => 'bi-memory',           'color' => '#ef4444'],
@@ -322,13 +322,13 @@ $solutions = [
     ['icon' => 'bi-buildings',       'title' => 'Kurumsal',      'desc' => 'Yüksek trafik + dedicated kaynak + SLA',         'color' => '#8b5cf6'],
     ['icon' => 'bi-mortarboard-fill','title' => 'Eğitim',        'desc' => 'Moodle, Open edX, BBB optimize',                 'color' => '#f59e0b'],
     ['icon' => 'bi-newspaper',       'title' => 'Haber/Blog',    'desc' => 'Yüksek trafik + CDN + cache layer',              'color' => '#ec4899'],
-    ['icon' => 'bi-stack-overflow',  'title' => 'Yazılımcı',     'desc' => 'Git, Composer, Node, SSH erişimi',               'color' => '#06b6d4'],
+    ['icon' => 'bi-stack-overflow',  'title' => 'Yazılımcı',     'desc' => 'Git, Composer, Node, SSH erişimi',               'color' => '#00D3E5'],
 ];
 
 $faqs = [
     ['q' => 'Hosting hizmetinde performans nasıl sağlanır?', 'a' => 'Tüm sunucularımızda NVMe SSD diskler, LiteSpeed Enterprise web server, son nesil Intel/AMD işlemciler ve ECC RAM kullanılıyor. Bu altyapı ile siteleriniz Apache\'ye göre 9 kat daha hızlı yüklenir.'],
-    ['q' => 'Mevcut sitemi CODEGA\'ya nasıl taşırım?', 'a' => 'Hosting paketinizi aldıktan sonra panel üzerinden taşıma talebi oluşturabilirsiniz. Uzman ekibimiz cPanel veya hosting backup\'ınızı alır, veri kaybı olmadan taşır. 5 adete kadar ÜCRETSİZ taşırız.'],
-    ['q' => 'Ücretsiz SSL sertifikası nasıl aktif olur?', 'a' => 'Tüm hosting paketlerinde Let\'s Encrypt SSL otomatik kurulur. Domain\'inizi ekledikten sonra cPanel\'de SSL sekmesinden tek tıkla aktif edebilirsiniz. SSL 90 günde bir otomatik yenilenir.'],
+    ['q' => 'Mevcut sitemi CODEGA\'ya nasıl taşırım?', 'a' => 'Hosting paketinizi aldıktan sonra panel üzerinden taşıma talebi oluşturabilirsiniz. Uzman ekibimiz DirectAdmin veya hosting backup\'ınızı alır, veri kaybı olmadan taşır. 5 adete kadar ÜCRETSİZ taşırız.'],
+    ['q' => 'Ücretsiz SSL sertifikası nasıl aktif olur?', 'a' => 'Tüm hosting paketlerinde Let\'s Encrypt SSL otomatik kurulur. Domain\'inizi ekledikten sonra DirectAdmin\'de SSL sekmesinden tek tıkla aktif edebilirsiniz. SSL 90 günde bir otomatik yenilenir.'],
     ['q' => '7/24 destek hangi kanallardan sağlanıyor?', 'a' => 'WhatsApp, telefon, e-posta ve panel üzerinden destek talebi açabilirsiniz. Ortalama yanıt süresi 5 dakikanın altındadır.'],
     ['q' => 'İade garantisi nasıl işliyor?', 'a' => 'Hosting hizmetinden memnun kalmamanız halinde 30 gün içerisinde koşulsuz iade talebinde bulunabilirsiniz.'],
     ['q' => 'Domain transferi ücretsiz mi?', 'a' => 'Evet, .com .net .org gibi gTLD\'ler için transfer işlemi ÜCRETSİZdir, ayrıca 1 yıl süresine ekleme yapılır.'],
@@ -411,10 +411,14 @@ $faqs = [
                     <div class="cdg-hero-ring cdg-hero-ring-1"></div>
                     <div class="cdg-hero-ring cdg-hero-ring-2"></div>
                     <div class="cdg-hero-ring cdg-hero-ring-3"></div>
+                    <!-- CODEGA LOGO - HERO MERKEZİ -->
+                    <div class="cdg-hero-logo-center">
+                        <?php if(function_exists('cdg_logo_svg')) echo cdg_logo_svg('icon', 180); ?>
+                    </div>
                 </div>
                 <div class="cdg-float-card cdg-float-card-1 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#10b981,#34d399);"><i class="bi bi-hdd-network"></i></div><div class="body"><div class="title">Hosting</div><div class="meta">NVMe SSD</div></div></div>
-                <div class="cdg-float-card cdg-float-card-2 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);"><i class="bi bi-globe2"></i></div><div class="body"><div class="title">Domain</div><div class="meta">500+ uzantı</div></div></div>
-                <div class="cdg-float-card cdg-float-card-3 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#1e40af,#3b82f6);"><i class="bi bi-shield-fill-check"></i></div><div class="body"><div class="title">SSL</div><div class="meta">Ücretsiz</div></div></div>
+                <div class="cdg-float-card cdg-float-card-2 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#00D3E5,#00E5FF);"><i class="bi bi-globe2"></i></div><div class="body"><div class="title">Domain</div><div class="meta">500+ uzantı</div></div></div>
+                <div class="cdg-float-card cdg-float-card-3 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#2E3B4E,#485A75);"><i class="bi bi-shield-fill-check"></i></div><div class="body"><div class="title">SSL</div><div class="meta">Ücretsiz</div></div></div>
                 <div class="cdg-float-card cdg-float-card-4 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);"><i class="bi bi-cpu-fill"></i></div><div class="body"><div class="title">AI</div><div class="meta">Otomatik tune</div></div></div>
                 <div class="cdg-float-stat cdg-glass"><div class="num">%99.99</div><div class="lbl">Uptime</div></div>
             </div>
@@ -599,7 +603,7 @@ $faqs = [
                 <p>Sitenizin trafik örüntüsünü öğrenen AI sistemi, kaynaklarınızı gerçek zamanlı olarak optimize eder. Daha hızlı, daha verimli, daha akıllı hosting.</p>
                 <div class="cdg-ai-features">
                     <div class="cdg-ai-feat">
-                        <div class="cdg-ai-feat-icon" style="background:linear-gradient(135deg,#06b6d4,#0891b2);"><i class="bi bi-graph-up-arrow"></i></div>
+                        <div class="cdg-ai-feat-icon" style="background:linear-gradient(135deg,#00D3E5,#0891b2);"><i class="bi bi-graph-up-arrow"></i></div>
                         <div><strong>Akıllı Cache Yönetimi</strong><span>AI, hangi sayfaların cache\'de kalacağını öğrenir.</span></div>
                     </div>
                     <div class="cdg-ai-feat">
@@ -761,7 +765,7 @@ $faqs = [
         <div class="cdg-migration-steps">
             <div class="cdg-mig-step">
                 <div class="cdg-mig-step-num">01</div>
-                <div class="cdg-mig-step-icon" style="background:linear-gradient(135deg,#1e40af,#3b82f6);"><i class="bi bi-cart-check"></i></div>
+                <div class="cdg-mig-step-icon" style="background:linear-gradient(135deg,#2E3B4E,#00D3E5);"><i class="bi bi-cart-check"></i></div>
                 <h3>Paket Seçin</h3>
                 <p>İhtiyacınıza uygun hosting paketini seçin ve sipariş verin. Hesabınız dakikalar içinde aktif olur.</p>
             </div>

@@ -38,7 +38,7 @@ if(class_exists('Validation') && method_exists('Validation', 'get_csrf_token')) 
 .cdg-cards-head .icon {
     width: 38px; height: 38px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     display: grid; place-items: center;
     font-size: 18px;
@@ -63,8 +63,8 @@ if(class_exists('Validation') && method_exists('Validation', 'get_csrf_token')) 
     display: flex; flex-direction: column;
 }
 .cdg-credit-card.is-default {
-    background: linear-gradient(135deg, #0f172a, #1e3a8a);
-    box-shadow: 0 8px 24px rgba(30,64,175,0.30);
+    background: linear-gradient(135deg, #0f172a, #1A2332);
+    box-shadow: 0 8px 24px rgba(46,59,78,0.30);
 }
 .cdg-credit-card:hover { transform: translateY(-2px); }
 .cdg-credit-card::before {

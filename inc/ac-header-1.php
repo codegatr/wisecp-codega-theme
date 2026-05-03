@@ -132,7 +132,7 @@ if(!$cdg_notif_url) $cdg_notif_url = cdg_link('my-account');
     transition: all 0.15s;
     position: relative;
 }
-.cdg-notif-btn:hover { border-color: #1e40af; color: #1e40af; }
+.cdg-notif-btn:hover { border-color: #2E3B4E; color: #2E3B4E; }
 .cdg-notif-bubble {
     position: absolute;
     top: -4px; right: -4px;
@@ -164,7 +164,7 @@ if(!$cdg_notif_url) $cdg_notif_url = cdg_link('my-account');
 @keyframes cdgNotifSlide { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 .cdg-notif-head {
     padding: 14px 18px;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     display: flex; justify-content: space-between; align-items: center;
 }
@@ -180,12 +180,12 @@ if(!$cdg_notif_url) $cdg_notif_url = cdg_link('my-account');
 }
 .cdg-notif-item:hover { background: #f8fafc; }
 .cdg-notif-item.unread { background: #eff6ff; }
-.cdg-notif-item.unread:hover { background: #dbeafe; }
+.cdg-notif-item.unread:hover { background: #CFFAFE; }
 .cdg-notif-icon {
     width: 36px; height: 36px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #dbeafe, #93c5fd);
-    color: #1e40af;
+    background: linear-gradient(135deg, #CFFAFE, #67E8F9);
+    color: #2E3B4E;
     display: grid; place-items: center;
     flex-shrink: 0;
     font-size: 14px;
@@ -218,14 +218,14 @@ if(!$cdg_notif_url) $cdg_notif_url = cdg_link('my-account');
 .cdg-notif-foot button {
     background: none; border: 0;
     font-size: 12px; font-weight: 700;
-    color: #1e40af;
+    color: #2E3B4E;
     cursor: pointer;
     font-family: inherit;
     padding: 4px 10px;
     border-radius: 6px;
     transition: background 0.15s;
 }
-.cdg-notif-foot button:hover { background: #dbeafe; }
+.cdg-notif-foot button:hover { background: #CFFAFE; }
 </style>
 
 <div class="cdg-ac-topbar">

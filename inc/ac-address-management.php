@@ -34,7 +34,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
     transition: all 0.15s;
     position: relative;
 }
-.cdg-addr-card:hover { border-color: #1e40af; box-shadow: 0 4px 12px rgba(30,64,175,0.08); }
+.cdg-addr-card:hover { border-color: #2E3B4E; box-shadow: 0 4px 12px rgba(46,59,78,0.08); }
 .cdg-addr-card.is-default { border-color: #10b981; background: linear-gradient(180deg, #f0fdf4 0%, #fff 30%); }
 .cdg-addr-card.is-default::before {
     content: 'VARSAYILAN';
@@ -56,7 +56,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
     padding: 2px 7px;
     border-radius: 4px;
     background: #eff6ff;
-    color: #1e40af;
+    color: #2E3B4E;
     text-transform: uppercase;
     letter-spacing: 0.4px;
 }
@@ -79,7 +79,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
     transition: all 0.15s;
     font-family: inherit;
 }
-.cdg-addr-card-btn:hover { border-color: #1e40af; color: #1e40af; }
+.cdg-addr-card-btn:hover { border-color: #2E3B4E; color: #2E3B4E; }
 .cdg-addr-card-btn.danger { color: #ef4444; border-color: #fecaca; }
 .cdg-addr-card-btn.danger:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
 .cdg-addr-card-btn.success { color: #10b981; border-color: #bbf7d0; }
@@ -109,7 +109,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
     margin: auto;
 }
 .cdg-addr-modal-head {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     padding: 16px 22px;
     display: flex;
@@ -282,7 +282,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
                 <div class="cdg-form-group">
                     <label class="cdg-form-label">Tur <span style="color:#ef4444;">*</span></label>
                     <div style="display:flex;gap:8px;">
-                        <label style="flex:1;padding:8px 12px;border:2px solid #1e40af;border-radius:8px;background:#eff6ff;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;">
+                        <label style="flex:1;padding:8px 12px;border:2px solid #2E3B4E;border-radius:8px;background:#eff6ff;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;">
                             <input type="radio" name="kind" value="individual" id="cdg-addr-kind-ind" checked onchange="cdgAddrKind(this.value)">
                             <i class="bi bi-person"></i> Bireysel
                         </label>
@@ -454,7 +454,7 @@ window.cdgAddrKind = function(kind) {
         var label = r.closest('label');
         if(!label) return;
         if(r.checked) {
-            label.style.borderColor = '#1e40af';
+            label.style.borderColor = '#2E3B4E';
             label.style.background = '#eff6ff';
         } else {
             label.style.borderColor = '#e2e8f0';

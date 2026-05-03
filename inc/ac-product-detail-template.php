@@ -276,11 +276,11 @@ foreach($options as $opt_k => $opt_v) {
 
 <style>
 .cdg-pd2 {
-    --p-primary: #1e40af;
+    --p-primary: #2E3B4E;
     --p-success: #10b981;
     --p-warning: #f59e0b;
     --p-danger: #ef4444;
-    --p-info: #06b6d4;
+    --p-info: #00D3E5;
     --p-bg: #f8fafc;
     --p-card: #fff;
     --p-text: #0f172a;
@@ -325,7 +325,7 @@ foreach($options as $opt_k => $opt_v) {
 }
 .cdg-pd2-shell-icon {
     width: 52px; height: 52px;
-    background: linear-gradient(135deg, var(--p-primary), #2563eb);
+    background: linear-gradient(135deg, var(--p-primary), #485A75);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -333,7 +333,7 @@ foreach($options as $opt_k => $opt_v) {
     color: #fff;
     font-size: 24px;
     flex-shrink: 0;
-    box-shadow: 0 6px 16px rgba(30,64,175,0.20);
+    box-shadow: 0 6px 16px rgba(46,59,78,0.20);
 }
 .cdg-pd2-shell-title {
     margin: 0 0 3px;
@@ -375,14 +375,14 @@ foreach($options as $opt_k => $opt_v) {
     box-shadow: 0 4px 10px rgba(15,23,42,0.06);
 }
 .cdg-pd2-shell-btn-primary {
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    border-color: #1e3a8a;
+    background: linear-gradient(135deg, #1A2332, #485A75);
+    border-color: #1A2332;
     color: #fff;
 }
 .cdg-pd2-shell-btn-primary:hover {
     color: #fff;
-    border-color: #1e3a8a;
-    box-shadow: 0 6px 16px rgba(30,64,175,0.30);
+    border-color: #1A2332;
+    box-shadow: 0 6px 16px rgba(46,59,78,0.30);
 }
 .cdg-pd2-shell-btn-primary i { color: #fde047; }
 .cdg-pd2-shell-body { padding: 24px; }
@@ -419,14 +419,14 @@ foreach($options as $opt_k => $opt_v) {
 .cdg-pd2-back:hover { border-color: var(--p-primary); color: var(--p-primary); }
 
 .cdg-pd2-hero {
-    background: linear-gradient(135deg, <?php echo $cdg_pd_color; ?> 0%, #3b82f6 100%);
+    background: linear-gradient(135deg, <?php echo $cdg_pd_color; ?> 0%, #00D3E5 100%);
     border-radius: 18px;
     padding: 28px 32px;
     color: #fff;
     margin-bottom: 22px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(30,64,175,0.20);
+    box-shadow: 0 16px 40px rgba(46,59,78,0.20);
 }
 .cdg-pd2-hero::before {
     content: '';
@@ -514,7 +514,7 @@ foreach($options as $opt_k => $opt_v) {
     white-space: nowrap;
     transition: all 0.15s;
 }
-.cdg-pd2-tab:hover { color: var(--p-text); background: rgba(30,64,175,0.04); }
+.cdg-pd2-tab:hover { color: var(--p-text); background: rgba(46,59,78,0.04); }
 .cdg-pd2-tab.active {
     color: var(--p-primary);
     border-bottom-color: var(--p-primary);
@@ -577,7 +577,7 @@ foreach($options as $opt_k => $opt_v) {
 .cdg-pd2-badge-success { background: #d1fae5; color: #065f46; }
 .cdg-pd2-badge-warning { background: #fef3c7; color: #92400e; }
 .cdg-pd2-badge-danger  { background: #fee2e2; color: #991b1b; }
-.cdg-pd2-badge-info    { background: #dbeafe; color: #1e40af; }
+.cdg-pd2-badge-info    { background: #CFFAFE; color: #2E3B4E; }
 
 .cdg-pd2-alert {
     padding: 14px 18px;
@@ -588,8 +588,8 @@ foreach($options as $opt_k => $opt_v) {
     line-height: 1.5;
 }
 .cdg-pd2-alert i { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-.cdg-pd2-alert-info { background: #dbeafe; color: #1e3a8a; border: 1px solid #93c5fd; }
-.cdg-pd2-alert-info i { color: #1e40af; }
+.cdg-pd2-alert-info { background: #CFFAFE; color: #1A2332; border: 1px solid #67E8F9; }
+.cdg-pd2-alert-info i { color: #2E3B4E; }
 .cdg-pd2-alert-warning { background: #fef3c7; color: #78350f; border: 1px solid #fcd34d; }
 .cdg-pd2-alert-warning i { color: #f59e0b; }
 
@@ -605,9 +605,9 @@ foreach($options as $opt_k => $opt_v) {
     white-space: nowrap;
 }
 .cdg-pd2-btn-primary {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(30,64,175,0.22);
+    box-shadow: 0 6px 18px rgba(46,59,78,0.22);
 }
 .cdg-pd2-btn-primary:hover { transform: translateY(-1px); color: #fff; }
 .cdg-pd2-btn-success {
@@ -645,7 +645,7 @@ foreach($options as $opt_k => $opt_v) {
 }
 .cdg-pd2-input:focus {
     border-color: var(--p-primary);
-    box-shadow: 0 0 0 3px rgba(30,64,175,0.10);
+    box-shadow: 0 0 0 3px rgba(46,59,78,0.10);
 }
 .cdg-pd2-field { margin-bottom: 14px; }
 .cdg-pd2-label {
@@ -720,14 +720,14 @@ foreach($options as $opt_k => $opt_v) {
     margin-top: 2px;
 }
 .cdg-pd2-action-primary {
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    border-color: #1e3a8a;
+    background: linear-gradient(135deg, #1A2332, #485A75);
+    border-color: #1A2332;
     color: #fff;
 }
 .cdg-pd2-action-primary i { color: #fde047; }
 .cdg-pd2-action-primary strong { color: #fff; }
 .cdg-pd2-action-primary small { color: rgba(255,255,255,0.75); }
-.cdg-pd2-action-primary:hover { color: #fff; box-shadow: 0 10px 24px rgba(30,64,175,0.30); }
+.cdg-pd2-action-primary:hover { color: #fff; box-shadow: 0 10px 24px rgba(46,59,78,0.30); }
 
 /* === TABLE === */
 .cdg-pd2-table th { font-weight: 700; }
@@ -1308,7 +1308,7 @@ foreach($options as $opt_k => $opt_v) {
                     <?php if($server_hostname): ?>
                     <li>
                         <span class="cdg-pd2-info-label">Sunucu Hostname</span>
-                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#1e40af;">
+                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#2E3B4E;">
                             <?php echo htmlspecialchars($server_hostname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                             <button type="button" onclick="navigator.clipboard.writeText('<?php echo htmlspecialchars(addslashes($server_hostname), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>'); this.innerHTML='<i class=\'bi bi-check\'></i>';" style="margin-left:6px;background:#f1f5f9;border:0;padding:2px 6px;border-radius:4px;cursor:pointer;font-size:11px;color:#64748b;" title="Kopyala">
                                 <i class="bi bi-clipboard"></i>
@@ -1319,7 +1319,7 @@ foreach($options as $opt_k => $opt_v) {
                     <?php if($server_ip): ?>
                     <li>
                         <span class="cdg-pd2-info-label">Sunucu IP</span>
-                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#1e40af;">
+                        <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#2E3B4E;">
                             <?php echo htmlspecialchars($server_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                             <button type="button" onclick="navigator.clipboard.writeText('<?php echo htmlspecialchars(addslashes($server_ip), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>'); this.innerHTML='<i class=\'bi bi-check\'></i>';" style="margin-left:6px;background:#f1f5f9;border:0;padding:2px 6px;border-radius:4px;cursor:pointer;font-size:11px;color:#64748b;" title="Kopyala">
                                 <i class="bi bi-clipboard"></i>
@@ -1351,11 +1351,11 @@ foreach($options as $opt_k => $opt_v) {
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
                     <?php
                     $quotas = [
-                        'disk_limit'      => ['label' => 'Disk Alanı', 'icon' => 'hdd-fill', 'unit' => 'MB', 'color' => '#3b82f6'],
+                        'disk_limit'      => ['label' => 'Disk Alanı', 'icon' => 'hdd-fill', 'unit' => 'MB', 'color' => '#00D3E5'],
                         'bandwidth_limit' => ['label' => 'Aylık Trafik', 'icon' => 'arrow-down-up', 'unit' => 'MB', 'color' => '#7c3aed'],
                         'email_limit'     => ['label' => 'E-posta Hesabı', 'icon' => 'envelope-fill', 'unit' => 'adet', 'color' => '#f59e0b'],
                         'database_limit'  => ['label' => 'Veritabanı', 'icon' => 'database-fill', 'unit' => 'adet', 'color' => '#10b981'],
-                        'addons_limit'    => ['label' => 'Eklenti Domain', 'icon' => 'plus-square-fill', 'unit' => 'adet', 'color' => '#06b6d4'],
+                        'addons_limit'    => ['label' => 'Eklenti Domain', 'icon' => 'plus-square-fill', 'unit' => 'adet', 'color' => '#00D3E5'],
                         'subdomain_limit' => ['label' => 'Alt Alan Adı', 'icon' => 'diagram-3-fill', 'unit' => 'adet', 'color' => '#ec4899'],
                         'ftp_limit'       => ['label' => 'FTP Hesabı', 'icon' => 'cloud-arrow-up-fill', 'unit' => 'adet', 'color' => '#64748b'],
                         'park_limit'      => ['label' => 'Park Domain', 'icon' => 'p-square-fill', 'unit' => 'adet', 'color' => '#8b5cf6'],
@@ -1420,7 +1420,7 @@ foreach($options as $opt_k => $opt_v) {
                 $usage_items[] = [
                     'label' => 'Disk Kullanımı',
                     'icon'  => 'hdd-fill',
-                    'color' => '#3b82f6',
+                    'color' => '#00D3E5',
                     'percent' => (int)($d_usage['disk_used_percent'] ?? 0),
                     'used'  => $d_usage['disk_used_format'] ?? ($d_usage['disk_used'] ?? '0'),
                     'limit' => $d_usage['disk_limit_format'] ?? ($d_usage['disk_limit'] ?? '0'),
@@ -1517,7 +1517,7 @@ foreach($options as $opt_k => $opt_v) {
             $b_title = $block['title'] ?? '';
             $b_desc  = $block['description'] ?? '';
             $b_icon  = $block['icon'] ?? 'info-square';
-            $b_color = $block['color'] ?? '#1e40af';
+            $b_color = $block['color'] ?? '#2E3B4E';
             if(!$b_title && !$b_desc) continue;
         ?>
         <div class="cdg-pd2-card" style="margin-top:14px;border-left:4px solid <?php echo $b_color; ?>;">
@@ -1548,7 +1548,7 @@ foreach($options as $opt_k => $opt_v) {
                     ?>
                     <li style="font-family:'Courier New',monospace;">
                         <span class="cdg-pd2-info-label">NS<?php echo ($idx + 1); ?></span>
-                        <span class="cdg-pd2-info-value" style="font-weight:700;color:#1e40af;letter-spacing:0.3px;"><?php echo htmlspecialchars($ns, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                        <span class="cdg-pd2-info-value" style="font-weight:700;color:#2E3B4E;letter-spacing:0.3px;"><?php echo htmlspecialchars($ns, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </li>
                     <?php endforeach; ?>
                 </ul>
@@ -1567,7 +1567,7 @@ foreach($options as $opt_k => $opt_v) {
                     <li>
                         <span class="cdg-pd2-info-label">Kontrol Paneli</span>
                         <span class="cdg-pd2-info-value">
-                            <span style="display:inline-block;padding:3px 10px;background:#eff6ff;color:#1e40af;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;">
+                            <span style="display:inline-block;padding:3px 10px;background:#eff6ff;color:#2E3B4E;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;">
                                 <?php echo htmlspecialchars($panel_type, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                             </span>
                         </span>
@@ -1890,7 +1890,7 @@ foreach($options as $opt_k => $opt_v) {
             <div class="cdg-pd2-card-body" style="padding:16px;">
                 <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
                     <div style="display:flex;align-items:center;gap:14px;">
-                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#1e40af;flex-shrink:0;">
+                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#CFFAFE,#A5F3FC);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#2E3B4E;flex-shrink:0;">
                             <i class="bi bi-envelope-fill"></i>
                         </div>
                         <div>
@@ -1991,7 +1991,7 @@ foreach($options as $opt_k => $opt_v) {
                         ?>
                         <tr style="background:#fff;">
                             <td style="padding:10px 12px;border-radius:8px 0 0 8px;border:1px solid #e2e8f0;border-right:0;">
-                                <i class="bi bi-envelope" style="color:#1e40af;margin-right:6px;"></i>
+                                <i class="bi bi-envelope" style="color:#2E3B4E;margin-right:6px;"></i>
                                 <code style="font-size:13px;"><?php echo htmlspecialchars($em_addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
                             </td>
                             <td style="padding:10px 12px;text-align:right;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#64748b;">
@@ -2176,7 +2176,7 @@ foreach($options as $opt_k => $opt_v) {
                         ?>
                         <tr style="background:#fff;">
                             <td style="padding:10px 12px;border-radius:8px 0 0 8px;border:1px solid #e2e8f0;border-right:0;">
-                                <code style="color:#1e40af;font-weight:700;">#<?php echo htmlspecialchars((string)$b_id, ENT_QUOTES); ?></code>
+                                <code style="color:#2E3B4E;font-weight:700;">#<?php echo htmlspecialchars((string)$b_id, ENT_QUOTES); ?></code>
                             </td>
                             <td style="padding:10px 12px;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#0f172a;">
                                 <?php echo htmlspecialchars(cdg_pd_date($b_date), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
@@ -2525,7 +2525,7 @@ window.cdgPd2 = {
 
         // Fallback: kendi toast'umuz
         var t = document.createElement('div');
-        var clr = type === 'error' ? '#dc2626' : (type === 'success' ? '#10b981' : '#1e40af');
+        var clr = type === 'error' ? '#dc2626' : (type === 'success' ? '#10b981' : '#2E3B4E');
         t.style.cssText = 'position:fixed;top:20px;right:20px;background:'+clr+';color:#fff;padding:14px 20px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.20);z-index:99999;font-size:14px;font-weight:600;max-width:380px;animation:cdgToastIn 0.3s ease;';
         t.innerHTML = '<i class="bi bi-'+(type==='error'?'exclamation-circle':(type==='success'?'check-circle':'info-circle'))+'"></i> '+msg;
         document.body.appendChild(t);

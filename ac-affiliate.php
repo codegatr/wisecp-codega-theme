@@ -144,7 +144,7 @@ function cdg_aff_date($d) {
 
 <style>
 .cdg-aff {
-    --aff-primary: #1e40af;
+    --aff-primary: #2E3B4E;
     --aff-success: #10b981;
     --aff-warning: #f59e0b;
     --aff-danger: #ef4444;
@@ -167,14 +167,14 @@ function cdg_aff_date($d) {
 .cdg-aff-wrap { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
 
 .cdg-aff-hero {
-    background: linear-gradient(135deg, #1e40af 0%, #06b6d4 100%);
+    background: linear-gradient(135deg, #2E3B4E 0%, #00D3E5 100%);
     border-radius: 18px;
     padding: 28px 32px;
     color: #fff;
     margin-bottom: 22px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(30,64,175,0.20);
+    box-shadow: 0 16px 40px rgba(46,59,78,0.20);
 }
 .cdg-aff-hero::before {
     content: '';
@@ -215,10 +215,10 @@ function cdg_aff_date($d) {
 }
 .cdg-aff-btn-gold {
     background: linear-gradient(135deg, #fde047, #facc15);
-    color: #1e3a8a;
+    color: #1A2332;
     box-shadow: 0 6px 18px rgba(252,211,77,0.30);
 }
-.cdg-aff-btn-gold:hover { transform: translateY(-1px); color: #1e3a8a; }
+.cdg-aff-btn-gold:hover { transform: translateY(-1px); color: #1A2332; }
 .cdg-aff-btn-success {
     background: linear-gradient(135deg, #10b981, #34d399);
     color: #fff;
@@ -256,7 +256,7 @@ function cdg_aff_date($d) {
     flex-shrink: 0;
 }
 .cdg-aff-stat-card-balance .cdg-aff-stat-icon { background: linear-gradient(135deg, #10b981, #34d399); }
-.cdg-aff-stat-card-withdrawn .cdg-aff-stat-icon { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+.cdg-aff-stat-card-withdrawn .cdg-aff-stat-icon { background: linear-gradient(135deg, #2E3B4E, #00D3E5); }
 .cdg-aff-stat-card-rate .cdg-aff-stat-icon { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
 .cdg-aff-stat-card-clicks .cdg-aff-stat-icon { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
 .cdg-aff-stat-info { flex: 1; min-width: 0; }
@@ -339,7 +339,7 @@ function cdg_aff_date($d) {
 .cdg-aff-tab.active {
     background: var(--aff-primary);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(30,64,175,0.22);
+    box-shadow: 0 4px 12px rgba(46,59,78,0.22);
 }
 
 .cdg-aff-pane { display: none; }
@@ -412,7 +412,7 @@ function cdg_aff_date($d) {
 }
 .cdg-aff-badge-success { background: #d1fae5; color: #065f46; }
 .cdg-aff-badge-warning { background: #fef3c7; color: #92400e; }
-.cdg-aff-badge-info    { background: #dbeafe; color: #1e40af; }
+.cdg-aff-badge-info    { background: #CFFAFE; color: #2E3B4E; }
 .cdg-aff-badge-danger  { background: #fee2e2; color: #991b1b; }
 
 .cdg-aff-disabled {
@@ -713,14 +713,14 @@ function cdg_aff_date($d) {
                         <td><?php echo (int)$k + 1; ?></td>
                         <td>
                             <?php if($r_url): ?>
-                            <a href="<?php echo htmlspecialchars($r_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noreferrer noopener" style="color:#1e40af;text-decoration:none;word-break:break-all;">
+                            <a href="<?php echo htmlspecialchars($r_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noreferrer noopener" style="color:#2E3B4E;text-decoration:none;word-break:break-all;">
                                 <i class="bi bi-link-45deg"></i> <?php echo htmlspecialchars($r_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                             </a>
                             <?php else: ?>
                             <span style="color:#94a3b8;font-style:italic;">Doğrudan ziyaret</span>
                             <?php endif; ?>
                         </td>
-                        <td style="text-align:center;"><strong style="color:#1e40af;"><?php echo (int)$r_hits; ?></strong></td>
+                        <td style="text-align:center;"><strong style="color:#2E3B4E;"><?php echo (int)$r_hits; ?></strong></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

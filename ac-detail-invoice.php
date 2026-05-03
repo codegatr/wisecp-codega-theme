@@ -230,11 +230,11 @@ $discounted_total = $inv_subtotal - $total_discount;
 
 <style>
 .cdg-inv {
-    --inv-primary: #1e40af;
+    --inv-primary: #2E3B4E;
     --inv-success: #10b981;
     --inv-warning: #f59e0b;
     --inv-danger: #ef4444;
-    --inv-info: #06b6d4;
+    --inv-info: #00D3E5;
     --inv-bg: #f8fafc;
     --inv-card: #fff;
     --inv-text: #0f172a;
@@ -305,18 +305,18 @@ $discounted_total = $inv_subtotal - $total_discount;
     background: var(--inv-primary);
     color: #fff;
 }
-.cdg-inv-btn-primary:hover { background: #1e3a8a; color: #fff; }
+.cdg-inv-btn-primary:hover { background: #1A2332; color: #fff; }
 
 /* HERO BAR */
 .cdg-inv-hero {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 60%, #06b6d4 100%);
+    background: linear-gradient(135deg, #2E3B4E 0%, #00D3E5 60%, #00D3E5 100%);
     border-radius: 18px;
     padding: 28px 32px;
     color: #fff;
     margin-bottom: 22px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(30,64,175,0.20);
+    box-shadow: 0 16px 40px rgba(46,59,78,0.20);
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 24px;
@@ -383,7 +383,7 @@ $discounted_total = $inv_subtotal - $total_discount;
 .cdg-inv-badge-success { background: #d1fae5; color: #065f46; }
 .cdg-inv-badge-warning { background: #fef3c7; color: #92400e; }
 .cdg-inv-badge-danger  { background: #fee2e2; color: #991b1b; }
-.cdg-inv-badge-info    { background: #dbeafe; color: #1e40af; }
+.cdg-inv-badge-info    { background: #CFFAFE; color: #2E3B4E; }
 
 .cdg-inv-hero .cdg-inv-badge {
     background: rgba(255,255,255,0.18);
@@ -522,7 +522,7 @@ $discounted_total = $inv_subtotal - $total_discount;
 .cdg-inv-pm.selected {
     border-color: var(--inv-primary);
     background: #eff6ff;
-    box-shadow: 0 6px 18px rgba(30,64,175,0.18);
+    box-shadow: 0 6px 18px rgba(46,59,78,0.18);
 }
 .cdg-inv-pm input[type="radio"] { display: none; }
 .cdg-inv-pm i {
@@ -886,11 +886,11 @@ $discounted_total = $inv_subtotal - $total_discount;
 
             <?php if($cdg_payment_screen): ?>
             <!-- 2. AŞAMA: Ödeme Detayları (havale bilgisi, kredi karti formu vs.) -->
-            <div style="margin-bottom:16px;padding:14px;background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;">
+            <div style="margin-bottom:16px;padding:14px;background:#eff6ff;border-left:4px solid #00D3E5;border-radius:8px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
                     <div>
-                        <strong style="color:#1e3a8a;">Seçilen Yöntem:</strong>
-                        <span style="color:#1e40af;font-weight:700;"><?php echo htmlspecialchars($cdg_pmethod_name ?: 'Ödeme Yöntemi', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                        <strong style="color:#1A2332;">Seçilen Yöntem:</strong>
+                        <span style="color:#2E3B4E;font-weight:700;"><?php echo htmlspecialchars($cdg_pmethod_name ?: 'Ödeme Yöntemi', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </div>
                     <a href="<?php echo htmlspecialchars($links['controller'] ?? '#', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:#fff;border:1px solid #cbd5e1;border-radius:6px;color:#475569;text-decoration:none;font-size:13px;">
                         <i class="bi bi-arrow-left"></i> Yöntemi Değiştir
@@ -948,19 +948,19 @@ $discounted_total = $inv_subtotal - $total_discount;
                             $sc_last4 = $sc['last4'] ?? ($sc['number'] ?? '****');
                             $sc_default = !empty($sc['default']);
                         ?>
-                        <label style="display:flex;align-items:center;gap:8px;padding:10px;background:#f8fafc;border:2px solid <?php echo $sc_default ? '#1e40af' : '#e2e8f0'; ?>;border-radius:8px;cursor:pointer;transition:all 0.2s;" onclick="this.querySelector('input').checked=true;">
+                        <label style="display:flex;align-items:center;gap:8px;padding:10px;background:#f8fafc;border:2px solid <?php echo $sc_default ? '#2E3B4E' : '#e2e8f0'; ?>;border-radius:8px;cursor:pointer;transition:all 0.2s;" onclick="this.querySelector('input').checked=true;">
                             <input type="radio" name="stored_card_id" value="<?php echo (int)$sc_id; ?>" <?php echo $sc_default ? 'checked' : ''; ?>>
-                            <i class="bi bi-credit-card-fill" style="color:#1e40af;font-size:18px;"></i>
+                            <i class="bi bi-credit-card-fill" style="color:#2E3B4E;font-size:18px;"></i>
                             <div style="font-size:12px;">
                                 <div style="font-weight:700;text-transform:uppercase;"><?php echo htmlspecialchars($sc_brand, ENT_QUOTES); ?></div>
                                 <div style="font-family:monospace;color:#64748b;">•••• <?php echo htmlspecialchars(substr($sc_last4, -4), ENT_QUOTES); ?></div>
                             </div>
                             <?php if($sc_default): ?>
-                            <span style="margin-left:auto;font-size:10px;background:#1e40af;color:#fff;padding:2px 6px;border-radius:4px;font-weight:700;">VARSAYILAN</span>
+                            <span style="margin-left:auto;font-size:10px;background:#2E3B4E;color:#fff;padding:2px 6px;border-radius:4px;font-weight:700;">VARSAYILAN</span>
                             <?php endif; ?>
                         </label>
                         <?php endforeach; ?>
-                        <label style="display:flex;align-items:center;gap:8px;padding:10px;background:#f0f9ff;border:2px dashed #3b82f6;border-radius:8px;cursor:pointer;color:#1e40af;font-weight:600;font-size:12px;" onclick="this.querySelector('input').checked=true;">
+                        <label style="display:flex;align-items:center;gap:8px;padding:10px;background:#f0f9ff;border:2px dashed #00D3E5;border-radius:8px;cursor:pointer;color:#2E3B4E;font-weight:600;font-size:12px;" onclick="this.querySelector('input').checked=true;">
                             <input type="radio" name="stored_card_id" value="0">
                             <i class="bi bi-plus-circle"></i>
                             Yeni kart kullan
@@ -974,13 +974,13 @@ $discounted_total = $inv_subtotal - $total_discount;
                 <?php endif; ?>
 
                 <!-- DİNAMİK KOMİSYON BİLGİSİ (selection-result AJAX sonucu) -->
-                <div id="cdg-inv-pm-info" style="margin-top:14px;padding:12px 14px;background:#f0f9ff;border:1px solid #bfdbfe;border-radius:8px;font-size:13px;display:none;">
+                <div id="cdg-inv-pm-info" style="margin-top:14px;padding:12px 14px;background:#f0f9ff;border:1px solid #A5F3FC;border-radius:8px;font-size:13px;display:none;">
                     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
                         <div>
-                            <i class="bi bi-info-circle" style="color:#1e40af;"></i>
-                            <strong style="color:#1e3a8a;">Toplam Tutar (komisyon dahil):</strong>
+                            <i class="bi bi-info-circle" style="color:#2E3B4E;"></i>
+                            <strong style="color:#1A2332;">Toplam Tutar (komisyon dahil):</strong>
                         </div>
-                        <div style="font-size:16px;font-weight:800;color:#1e40af;" id="cdg-inv-total-with-fee">
+                        <div style="font-size:16px;font-weight:800;color:#2E3B4E;" id="cdg-inv-total-with-fee">
                             <?php echo htmlspecialchars(cdg_inv_money($inv_total, $inv_currency_id), ENT_QUOTES); ?>
                         </div>
                     </div>

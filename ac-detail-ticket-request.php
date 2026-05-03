@@ -140,11 +140,11 @@ function cdg_t_date($date) {
 
 <style>
 .cdg-td {
-    --td-primary: #1e40af;
+    --td-primary: #2E3B4E;
     --td-success: #10b981;
     --td-warning: #f59e0b;
     --td-danger: #ef4444;
-    --td-info: #06b6d4;
+    --td-info: #00D3E5;
     --td-purple: #8b5cf6;
     --td-bg: #f8fafc;
     --td-card: #fff;
@@ -183,7 +183,7 @@ function cdg_t_date($date) {
 
 /* HERO */
 .cdg-td-hero {
-    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #3b82f6 100%);
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #00D3E5 100%);
     border-radius: 18px;
     padding: 26px 30px;
     color: #fff;
@@ -307,7 +307,7 @@ function cdg_t_date($date) {
     flex-shrink: 0;
 }
 .cdg-td-msg.from-staff .cdg-td-msg-avatar {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
 }
 .cdg-td-msg.from-customer .cdg-td-msg-avatar {
     background: linear-gradient(135deg, #10b981, #34d399);
@@ -395,7 +395,7 @@ function cdg_t_date($date) {
 }
 .cdg-td-textarea:focus {
     border-color: var(--td-primary);
-    box-shadow: 0 0 0 3px rgba(30,64,175,0.10);
+    box-shadow: 0 0 0 3px rgba(46,59,78,0.10);
 }
 .cdg-td-reply-actions {
     display: flex; justify-content: space-between; align-items: center;
@@ -422,9 +422,9 @@ function cdg_t_date($date) {
     text-decoration: none;
 }
 .cdg-td-btn-send {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(30,64,175,0.25);
+    box-shadow: 0 6px 18px rgba(46,59,78,0.25);
 }
 .cdg-td-btn-send:hover { transform: translateY(-1px); color: #fff; }
 .cdg-td-btn-close {
@@ -622,7 +622,7 @@ function cdg_t_date($date) {
                 <!-- Dosya Eki -->
                 <div style="margin-top:14px;padding:14px;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;">
                     <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
-                        <i class="bi bi-paperclip" style="font-size:20px;color:#1e40af;"></i>
+                        <i class="bi bi-paperclip" style="font-size:20px;color:#2E3B4E;"></i>
                         <div style="flex:1;">
                             <div style="font-size:13px;font-weight:700;color:#0f172a;">Dosya Ekle (Opsiyonel)</div>
                             <div style="font-size:11px;color:#64748b;" id="cdg-td-attachments-info">Birden fazla dosya secebilirsiniz. Maks 5 MB.</div>
@@ -680,7 +680,7 @@ window.cdgTdShowFiles = function(input) {
         totalSize += f.size;
         var sizeStr = (f.size / 1024).toFixed(1) + ' KB';
         if(f.size > 1024 * 1024) sizeStr = (f.size / 1024 / 1024).toFixed(1) + ' MB';
-        html += '<span style="background:#eff6ff;color:#1e40af;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;">';
+        html += '<span style="background:#eff6ff;color:#2E3B4E;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;">';
         html += '<i class="bi bi-file-earmark"></i> ' + f.name + ' (' + sizeStr + ')</span>';
     }
     html += '</div>';

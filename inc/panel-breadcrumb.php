@@ -66,15 +66,15 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
     border-radius: 6px;
     font-weight: 600;
 }
-.cdg-pbc-item a:hover { color: #1e40af; background: rgba(30,64,175,0.06); }
+.cdg-pbc-item a:hover { color: #2E3B4E; background: rgba(46,59,78,0.06); }
 .cdg-pbc-item.cdg-pbc-current span {
-    color: #1e40af;
+    color: #2E3B4E;
     font-weight: 800;
     padding: 3px 8px;
-    background: rgba(30,64,175,0.08);
+    background: rgba(46,59,78,0.08);
     border-radius: 6px;
 }
-.cdg-pbc-home i { font-size: 13px; color: #1e40af; }
+.cdg-pbc-home i { font-size: 13px; color: #2E3B4E; }
 .cdg-pbc-sep {
     color: #cbd5e1;
     font-size: 10px;

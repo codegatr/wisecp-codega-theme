@@ -15,8 +15,8 @@ $pcats = isset($categories) && is_array($categories) ? $categories : [];
 
 $plabel = $cdg_list_label ?? 'Sayfa';
 $picon = $cdg_list_icon ?? 'file-earmark';
-$pcolor = $cdg_list_color ?? '#1e40af';
-$pgrad = $cdg_list_gradient ?? "linear-gradient(135deg,$pcolor,#3b82f6)";
+$pcolor = $cdg_list_color ?? '#2E3B4E';
+$pgrad = $cdg_list_gradient ?? "linear-gradient(135deg,$pcolor,#00D3E5)";
 $page_title = $pcat['title'] ?? $plabel;
 ?>
 

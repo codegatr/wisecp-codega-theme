@@ -47,7 +47,7 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
             <article class="cdg-card cdg-pd-content" style="padding:0;overflow:hidden;font-family:'Plus Jakarta Sans',sans-serif;">
 
                 <?php if($page_image): ?>
-                <div style="height:280px;overflow:hidden;background:linear-gradient(135deg,#1e40af,#3b82f6);">
+                <div style="height:280px;overflow:hidden;background:linear-gradient(135deg,#2E3B4E,#00D3E5);">
                     <img src="<?php echo htmlspecialchars($page_image, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($page_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="width:100%;height:100%;object-fit:cover;">
                 </div>
                 <?php endif; ?>
@@ -95,7 +95,7 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
             <aside class="cdg-pd-sidebar" style="display:flex;flex-direction:column;gap:16px;">
                 <div class="cdg-card" style="padding:20px;">
                     <h4 style="font-size:14px;font-weight:800;color:#0f172a;margin:0 0 14px;display:flex;align-items:center;gap:6px;">
-                        <i class="bi bi-list-ul" style="color:#1e40af;"></i> Diger <?php echo htmlspecialchars($pd_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                        <i class="bi bi-list-ul" style="color:#2E3B4E;"></i> Diger <?php echo htmlspecialchars($pd_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </h4>
                     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
                         <?php foreach($pd_sidebar_items as $side):
@@ -105,7 +105,7 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
                         ?>
                         <li>
                             <a href="<?php echo htmlspecialchars($s_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:flex;gap:8px;padding:8px 12px;text-decoration:none;color:#334155;font-size:13px;border-radius:6px;">
-                                <i class="bi bi-arrow-right-short" style="color:#1e40af;flex-shrink:0;font-size:16px;"></i>
+                                <i class="bi bi-arrow-right-short" style="color:#2E3B4E;flex-shrink:0;font-size:16px;"></i>
                                 <span><?php echo htmlspecialchars($s_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                             </a>
                         </li>
@@ -126,8 +126,8 @@ $pd_sidebar_items = isset($sidebar) && is_array($sidebar) ? $sidebar : [];
 .cdg-pd-content-body ul, .cdg-pd-content-body ol { padding-left: 24px; margin: 0 0 14px; }
 .cdg-pd-content-body ul li, .cdg-pd-content-body ol li { margin-bottom: 6px; }
 .cdg-pd-content-body img { max-width: 100%; height: auto; border-radius: 8px; }
-.cdg-pd-content-body blockquote { border-left: 3px solid #3b82f6; background: #eff6ff; padding: 12px 16px; margin: 14px 0; border-radius: 0 8px 8px 0; color: #1e40af; }
-.cdg-pd-content-body a { color: #1e40af; text-decoration: underline; }
+.cdg-pd-content-body blockquote { border-left: 3px solid #00D3E5; background: #eff6ff; padding: 12px 16px; margin: 14px 0; border-radius: 0 8px 8px 0; color: #2E3B4E; }
+.cdg-pd-content-body a { color: #2E3B4E; text-decoration: underline; }
 
 @media (max-width: 900px) {
     .cdg-pd-grid { grid-template-columns: 1fr !important; }

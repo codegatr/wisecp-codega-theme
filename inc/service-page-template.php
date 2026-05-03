@@ -19,8 +19,8 @@
 $svc_title       = $svc_title ?? 'Hizmet';
 $svc_subtitle    = $svc_subtitle ?? '';
 $svc_icon        = $svc_icon ?? 'box-seam';
-$svc_gradient    = $svc_gradient ?? 'linear-gradient(135deg,#1e40af,#3b82f6)';
-$svc_color       = $svc_color ?? '#1e40af';
+$svc_gradient    = $svc_gradient ?? 'linear-gradient(135deg,#2E3B4E,#00D3E5)';
+$svc_color       = $svc_color ?? '#2E3B4E';
 $svc_breadcrumb  = $svc_breadcrumb ?? $svc_title;
 $svc_features    = $svc_features ?? [];
 $svc_description = $svc_description ?? '';

@@ -3,8 +3,8 @@
 $svc_title = 'Kurumsal E-posta';
 $svc_subtitle = 'Kendi domaininizle profesyonel e-posta hizmeti';
 $svc_icon = 'envelope-at-fill';
-$svc_color = '#1e40af';
-$svc_gradient = 'linear-gradient(135deg,#1e40af,#3b82f6)';
+$svc_color = '#2E3B4E';
+$svc_gradient = 'linear-gradient(135deg,#2E3B4E,#00D3E5)';
 $svc_breadcrumb = 'Kurumsal E-posta';
 $svc_features = [
     ['icon' => 'shield-fill-check', 'title' => 'Yuksek Guvenlik', 'desc' => 'SPF, DKIM, DMARC ve TLS sifreleme ile e-postalariniz korunur.'],

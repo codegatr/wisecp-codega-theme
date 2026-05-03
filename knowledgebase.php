@@ -89,7 +89,7 @@ $kb_categories = [
     [
         'id' => 'hosting',
         'icon' => 'bi-hdd-network-fill',
-        'color' => '#1e40af',
+        'color' => '#2E3B4E',
         'name' => 'Hosting Hizmetleri',
         'desc' => 'Web hosting paketleri, kurulum, performans ve sorun giderme',
         'questions' => [
@@ -181,7 +181,7 @@ $kb_categories = [
     [
         'id' => 'billing',
         'icon' => 'bi-credit-card-fill',
-        'color' => '#06b6d4',
+        'color' => '#00D3E5',
         'name' => 'Fatura ve Odemeler',
         'desc' => 'Faturalandirma, odeme yöntemleri ve iade politikasi',
         'questions' => [

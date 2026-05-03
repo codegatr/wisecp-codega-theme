@@ -33,7 +33,7 @@ $canonical_link   = isset($canonical_link) ? $canonical_link : '';
 .cdg-lcm-head {
     padding: 18px 22px;
     border-bottom: 1px solid #e2e8f0;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     display: flex; justify-content: space-between; align-items: center;
 }
@@ -79,13 +79,13 @@ $canonical_link   = isset($canonical_link) ? $canonical_link : '';
     background: #fff;
 }
 .cdg-lcm-item:hover {
-    border-color: #1e40af;
+    border-color: #2E3B4E;
     background: #eff6ff;
-    color: #1e40af;
+    color: #2E3B4E;
 }
 .cdg-lcm-item.active {
-    border-color: #1e40af;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    border-color: #2E3B4E;
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     cursor: default;
 }
@@ -100,7 +100,7 @@ $canonical_link   = isset($canonical_link) ? $canonical_link : '';
     border-radius: 6px;
     display: grid; place-items: center;
     font-weight: 800;
-    color: #1e40af;
+    color: #2E3B4E;
     flex-shrink: 0;
 }
 .cdg-lcm-item.active .symbol { background: rgba(255,255,255,0.22); color: #fff; }

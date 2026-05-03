@@ -46,7 +46,7 @@ $cdg_domain_modals_loaded['css'] = true;
 .cdg-dm-head {
     display: flex; align-items: center; justify-content: space-between;
     padding: 18px 22px;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     flex-shrink: 0;
 }
@@ -77,13 +77,13 @@ $cdg_domain_modals_loaded['css'] = true;
     display: flex; align-items: flex-start; gap: 12px;
     padding: 12px 14px;
     background: #eff6ff;
-    border-left: 4px solid #3b82f6;
+    border-left: 4px solid #00D3E5;
     border-radius: 8px;
-    color: #1e3a8a;
+    color: #1A2332;
     font-size: 13px;
     margin-bottom: 18px;
 }
-.cdg-dm-info i { color: #3b82f6; font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+.cdg-dm-info i { color: #00D3E5; font-size: 18px; flex-shrink: 0; margin-top: 2px; }
 
 .cdg-dm-empty {
     padding: 30px 20px; text-align: center;
@@ -127,7 +127,7 @@ $cdg_domain_modals_loaded['css'] = true;
 }
 .cdg-dm-input:focus,
 .cdg-dm-select:focus {
-    border-color: #3b82f6;
+    border-color: #00D3E5;
     box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
     outline: none;
 }
@@ -135,7 +135,7 @@ $cdg_domain_modals_loaded['css'] = true;
 .cdg-dm-form-add-btn {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 8px 14px;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
     border: 0;
     border-radius: 7px;
@@ -172,7 +172,7 @@ $cdg_domain_modals_loaded['css'] = true;
 }
 
 .cdg-dm-btn-icon {
-    background: #3b82f6;
+    background: #00D3E5;
     color: #fff;
     border: 0;
     padding: 6px 10px;

@@ -17,7 +17,7 @@
 <section class="cdg-section">
     <div class="cdg-container" style="max-width:600px;">
         <div class="cdg-card" style="padding:40px 32px;text-align:center;">
-            <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#06b6d4,#06b6d499);color:#fff;display:inline-grid;place-items:center;font-size:36px;margin-bottom:18px;">
+            <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#00D3E5,#00D3E599);color:#fff;display:inline-grid;place-items:center;font-size:36px;margin-bottom:18px;">
                 <i class="bi bi-chat-dots"></i>
             </div>
             <h2 style="font-size:22px;font-weight:800;margin:0 0 10px;">SMS Hizmetlerimizi Inceleyin</h2>

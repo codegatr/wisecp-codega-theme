@@ -102,7 +102,7 @@ function cdg_res_money($a, $cid = 0) {
 
 <style>
 .cdg-res {
-    --r-primary: #1e40af;
+    --r-primary: #2E3B4E;
     --r-success: #10b981;
     --r-warning: #f59e0b;
     --r-bg: #f8fafc;
@@ -127,7 +127,7 @@ function cdg_res_money($a, $cid = 0) {
     background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #fde047 100%);
     border-radius: 18px;
     padding: 28px 32px;
-    color: #1e3a8a;
+    color: #1A2332;
     margin-bottom: 22px;
     position: relative;
     overflow: hidden;
@@ -149,21 +149,21 @@ function cdg_res_money($a, $cid = 0) {
 .cdg-res-hero-icon {
     width: 64px; height: 64px;
     border-radius: 16px;
-    background: #1e3a8a;
+    background: #1A2332;
     color: #fde047;
     display: grid; place-items: center;
     font-size: 30px;
     flex-shrink: 0;
-    box-shadow: 0 8px 20px rgba(30,58,138,0.30);
+    box-shadow: 0 8px 20px rgba(26,35,50,0.30);
 }
 .cdg-res-hero-text { flex: 1; min-width: 220px; }
 .cdg-res-hero h1 { font-size: 26px; font-weight: 800; margin: 0 0 4px; letter-spacing: -0.4px; }
 .cdg-res-hero p { font-size: 13px; opacity: 0.85; margin: 0; }
 
 .cdg-res-default-rate {
-    background: rgba(30,58,138,0.18);
+    background: rgba(26,35,50,0.18);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(30,58,138,0.20);
+    border: 1px solid rgba(26,35,50,0.20);
     padding: 10px 18px;
     border-radius: 12px;
     font-weight: 800;
@@ -190,9 +190,9 @@ function cdg_res_money($a, $cid = 0) {
     font-family: inherit;
 }
 .cdg-res-btn-primary {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(30,64,175,0.22);
+    box-shadow: 0 6px 18px rgba(46,59,78,0.22);
 }
 .cdg-res-btn-primary:hover { transform: translateY(-1px); color: #fff; }
 
@@ -220,7 +220,7 @@ function cdg_res_money($a, $cid = 0) {
     flex-shrink: 0;
 }
 .cdg-res-stat-card-1 .cdg-res-stat-icon { background: linear-gradient(135deg, #10b981, #34d399); }
-.cdg-res-stat-card-2 .cdg-res-stat-icon { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+.cdg-res-stat-card-2 .cdg-res-stat-icon { background: linear-gradient(135deg, #2E3B4E, #00D3E5); }
 .cdg-res-stat-card-3 .cdg-res-stat-icon { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
 .cdg-res-stat-info { flex: 1; }
 .cdg-res-stat-label {
@@ -261,11 +261,11 @@ function cdg_res_money($a, $cid = 0) {
 .cdg-res-card-body { padding: 22px; }
 
 .cdg-res-info-banner {
-    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-    border: 1px solid #93c5fd;
+    background: linear-gradient(135deg, #CFFAFE, #A5F3FC);
+    border: 1px solid #67E8F9;
     border-radius: var(--r-radius);
     padding: 18px 22px;
-    color: #1e3a8a;
+    color: #1A2332;
     display: flex; align-items: center; gap: 14px;
     margin-bottom: 18px;
 }
@@ -465,7 +465,7 @@ function cdg_res_money($a, $cid = 0) {
                     <label style="display:block;font-size:11px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">API Anahtarı (API Key)</label>
                     <div style="display:flex;gap:8px;align-items:center;">
                         <input type="text" readonly id="cdg-res-api-key-input" value="<?php echo htmlspecialchars($info['api_key'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="flex:1;padding:9px 12px;background:#020617;border:1px solid #334155;border-radius:6px;color:#fff;font-family:monospace;font-size:13px;">
-                        <button type="button" onclick="cdgResCopyApi()" style="padding:9px 14px;background:#3b82f6;color:#fff;border:0;border-radius:6px;cursor:pointer;font-size:13px;font-weight:700;">
+                        <button type="button" onclick="cdgResCopyApi()" style="padding:9px 14px;background:#00D3E5;color:#fff;border:0;border-radius:6px;cursor:pointer;font-size:13px;font-weight:700;">
                             <i class="bi bi-clipboard"></i> <span id="cdg-res-api-copy-text">Kopyala</span>
                         </button>
                     </div>

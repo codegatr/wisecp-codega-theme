@@ -32,13 +32,13 @@ $controller_url = $links['controller'] ?? '';
                 <i class="bi bi-info-circle-fill"></i>
                 <div>
                     Child Nameserver (özel NS), domain kayıt firmasında <strong><?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong> domaininize bağlı tanımladığınız kendi nameserver'larınızdır.<br>
-                    Örnek: <code style="background:rgba(30,64,175,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">ns1.<?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code> + IP adresi
+                    Örnek: <code style="background:rgba(46,59,78,0.10);padding:2px 6px;border-radius:4px;font-family:monospace;">ns1.<?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code> + IP adresi
                 </div>
             </div>
 
             <!-- Yeni CNS Ekleme -->
             <div class="cdg-dm-form" style="margin-bottom:16px;">
-                <div style="font-size:12px;font-weight:800;color:#1e40af;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">
+                <div style="font-size:12px;font-weight:800;color:#2E3B4E;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">
                     <i class="bi bi-plus-circle"></i> Yeni Child Nameserver Ekle
                 </div>
                 <div style="display:grid;grid-template-columns:1.5fr 1fr 80px;gap:8px;align-items:end;">
@@ -66,7 +66,7 @@ $controller_url = $links['controller'] ?? '';
             <div style="font-size:12px;font-weight:800;color:#475569;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">
                 <i class="bi bi-list-ul"></i> Mevcut Child Nameserver'lar
                 <?php if(!empty($cdg_cns_list)): ?>
-                <span style="background:#dbeafe;color:#1e40af;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:800;margin-left:6px;"><?php echo count($cdg_cns_list); ?></span>
+                <span style="background:#CFFAFE;color:#2E3B4E;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:800;margin-left:6px;"><?php echo count($cdg_cns_list); ?></span>
                 <?php endif; ?>
             </div>
 
@@ -99,7 +99,7 @@ $controller_url = $links['controller'] ?? '';
                                 <input type="text" id="cns-ip-<?php echo (int)$cns_id; ?>" value="<?php echo htmlspecialchars($row_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-dm-input" style="width:100%;font-family:monospace;font-size:13px;" placeholder="192.168.1.1">
                             </td>
                             <td style="text-align:center;">
-                                <button type="button" class="cdg-dm-btn-icon" onclick="cdgDomain.cnsModify(<?php echo (int)$cns_id; ?>)" title="Güncelle" style="background:#3b82f6;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;margin-right:4px;">
+                                <button type="button" class="cdg-dm-btn-icon" onclick="cdgDomain.cnsModify(<?php echo (int)$cns_id; ?>)" title="Güncelle" style="background:#00D3E5;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;margin-right:4px;">
                                     <i class="bi bi-check-lg"></i>
                                 </button>
                                 <button type="button" class="cdg-dm-btn-icon" onclick="cdgDomain.cnsDelete(<?php echo (int)$cns_id; ?>)" title="Sil" style="background:#ef4444;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;">

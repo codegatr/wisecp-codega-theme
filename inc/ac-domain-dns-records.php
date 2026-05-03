@@ -42,7 +42,7 @@ $ttl_options = [
 
             <!-- Yeni Kayıt Ekleme Formu -->
             <div class="cdg-dm-form">
-                <div style="font-size:12px;font-weight:800;color:#1e40af;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">
+                <div style="font-size:12px;font-weight:800;color:#2E3B4E;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">
                     <i class="bi bi-plus-circle"></i> Yeni Kayıt Ekle
                 </div>
                 <div class="cdg-dm-form-row">
@@ -121,14 +121,14 @@ $ttl_options = [
                                 elseif($r_ttl >= 60) $ttl_text = round($r_ttl / 60) . ' dk';
                         ?>
                         <tr id="DnsRecord_<?php echo (int)$k; ?>" data-record-key="<?php echo (int)$k; ?>">
-                            <td style="font-weight:700;color:#1e40af;"><?php echo htmlspecialchars($r_type, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                            <td style="font-weight:700;color:#2E3B4E;"><?php echo htmlspecialchars($r_type, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                             <td style="font-family:monospace;font-size:13px;"><?php echo htmlspecialchars($r_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                             <td style="font-family:monospace;font-size:13px;word-break:break-all;"><?php echo htmlspecialchars($r_value, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                             <td><?php echo htmlspecialchars($ttl_text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
                             <td style="text-align:center;">
                                 <button type="button" onclick="cdgDomain.dnsRecordEdit(<?php echo (int)$k; ?>, <?php echo htmlspecialchars(json_encode([
                                     'type' => $r_type, 'name' => $r_name, 'value' => $r_value, 'ttl' => $r_ttl, 'identity' => $r_identity
-                                ], JSON_UNESCAPED_UNICODE), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>)" title="Düzenle" style="background:#3b82f6;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;margin-right:4px;">
+                                ], JSON_UNESCAPED_UNICODE), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>)" title="Düzenle" style="background:#00D3E5;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;margin-right:4px;">
                                     <i class="bi bi-pencil"></i>
                                 </button>
                                 <button type="button" onclick="cdgDomain.dnsRecordDelete(<?php echo (int)$k; ?>, '<?php echo htmlspecialchars(addslashes($r_identity), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', '<?php echo htmlspecialchars(addslashes($r_type), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', '<?php echo htmlspecialchars(addslashes($r_name), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Sil" style="background:#ef4444;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;">

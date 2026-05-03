@@ -43,7 +43,7 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
                         $a_date = $row['cdate'] ?? ($row['date'] ?? '');
                     ?>
                     <article class="cdg-article-card cdg-card" style="overflow:hidden;display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.2s;">
-                        <a href="<?php echo htmlspecialchars($a_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:block;height:180px;overflow:hidden;background:linear-gradient(135deg,#1e40af,#3b82f6);position:relative;">
+                        <a href="<?php echo htmlspecialchars($a_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:block;height:180px;overflow:hidden;background:linear-gradient(135deg,#2E3B4E,#00D3E5);position:relative;">
                             <?php if($a_image): ?>
                             <img src="<?php echo htmlspecialchars($a_image, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($a_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="width:100%;height:100%;object-fit:cover;">
                             <?php else: ?>
@@ -54,7 +54,7 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
                         </a>
                         <div style="padding:18px;flex:1;display:flex;flex-direction:column;">
                             <?php if($a_cat_name): ?>
-                            <a href="<?php echo htmlspecialchars($a_cat_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:inline-block;margin-bottom:8px;font-size:11px;font-weight:700;color:#1e40af;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;">
+                            <a href="<?php echo htmlspecialchars($a_cat_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:inline-block;margin-bottom:8px;font-size:11px;font-weight:700;color:#2E3B4E;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;">
                                 <i class="bi bi-folder"></i> <?php echo htmlspecialchars($a_cat_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                             </a>
                             <?php endif; ?>
@@ -74,7 +74,7 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
                                 <?php else: ?>
                                 <span></span>
                                 <?php endif; ?>
-                                <a href="<?php echo htmlspecialchars($a_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="font-size:12px;font-weight:700;color:#1e40af;text-decoration:none;">
+                                <a href="<?php echo htmlspecialchars($a_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="font-size:12px;font-weight:700;color:#2E3B4E;text-decoration:none;">
                                     Devamini oku <i class="bi bi-arrow-right"></i>
                                 </a>
                             </div>
@@ -127,7 +127,7 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
                 <?php if(!empty($articles_categories)): ?>
                 <div class="cdg-card" style="padding:20px;margin-bottom:16px;">
                     <h4 style="font-size:14px;font-weight:800;color:#0f172a;margin:0 0 14px;">
-                        <i class="bi bi-folder2-open" style="color:#1e40af;"></i> Kategoriler
+                        <i class="bi bi-folder2-open" style="color:#2E3B4E;"></i> Kategoriler
                     </h4>
                     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
                         <?php foreach($articles_categories as $cat):
@@ -137,10 +137,10 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
                             $is_active = $articles_category && isset($articles_category['id']) && isset($cat['id']) && $articles_category['id'] == $cat['id'];
                         ?>
                         <li>
-                            <a href="<?php echo htmlspecialchars($c_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;text-decoration:none;color:<?php echo $is_active ? '#1e40af' : '#334155'; ?>;background:<?php echo $is_active ? '#eff6ff' : 'transparent'; ?>;font-size:13px;font-weight:<?php echo $is_active ? '700' : '500'; ?>;border-radius:6px;">
+                            <a href="<?php echo htmlspecialchars($c_route, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;text-decoration:none;color:<?php echo $is_active ? '#2E3B4E' : '#334155'; ?>;background:<?php echo $is_active ? '#eff6ff' : 'transparent'; ?>;font-size:13px;font-weight:<?php echo $is_active ? '700' : '500'; ?>;border-radius:6px;">
                                 <span><?php echo htmlspecialchars($c_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                                 <?php if($c_count): ?>
-                                <span style="font-size:11px;color:#94a3b8;background:<?php echo $is_active ? '#dbeafe' : '#f1f5f9'; ?>;padding:2px 8px;border-radius:99px;">
+                                <span style="font-size:11px;color:#94a3b8;background:<?php echo $is_active ? '#CFFAFE' : '#f1f5f9'; ?>;padding:2px 8px;border-radius:99px;">
                                     <?php echo (int)$c_count; ?>
                                 </span>
                                 <?php endif; ?>
@@ -151,11 +151,11 @@ $page_title = $articles_category['title'] ?? 'Makaleler';
                 </div>
                 <?php endif; ?>
 
-                <div class="cdg-card" style="padding:20px;background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;">
+                <div class="cdg-card" style="padding:20px;background:linear-gradient(135deg,#2E3B4E,#00D3E5);color:#fff;">
                     <i class="bi bi-life-preserver" style="font-size:32px;"></i>
                     <h4 style="font-size:14px;font-weight:800;margin:10px 0 6px;">Cevap aradığınız sorunuz mu var?</h4>
                     <p style="font-size:12px;opacity:0.9;margin:0 0 12px;">Destek ekibimiz size yardımcı olmak için hazır.</p>
-                    <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('knowledgebase') : '/knowledgebase'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;color:#1e40af;text-decoration:none;border-radius:6px;font-size:12px;font-weight:700;">
+                    <a href="<?php echo (class_exists('Controllers') && method_exists(Controllers::$init ?? null,'CRLink') ? Controllers::$init->CRLink('knowledgebase') : '/knowledgebase'); ?>" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;color:#2E3B4E;text-decoration:none;border-radius:6px;font-size:12px;font-weight:700;">
                         <i class="bi bi-book"></i> Bilgi Bankasi
                     </a>
                 </div>

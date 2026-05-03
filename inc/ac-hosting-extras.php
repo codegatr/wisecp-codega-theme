@@ -82,8 +82,8 @@ if(!$can_change_pw && !$has_buttons && !$can_manage_email) return; // Hiçbir ö
 }
 .cdg-host-btn:hover { transform: translateY(-1px); color: #fff !important; }
 .cdg-host-btn-primary {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
-    box-shadow: 0 4px 10px rgba(30,64,175,0.22);
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
+    box-shadow: 0 4px 10px rgba(46,59,78,0.22);
 }
 .cdg-host-pw-row {
     display: grid;
@@ -101,8 +101,8 @@ if(!$can_change_pw && !$has_buttons && !$can_manage_email) return; // Hiçbir ö
     transition: border 0.15s;
 }
 .cdg-host-pw-input:focus {
-    border-color: #1e40af;
-    box-shadow: 0 0 0 3px rgba(30,64,175,0.10);
+    border-color: #2E3B4E;
+    box-shadow: 0 0 0 3px rgba(46,59,78,0.10);
 }
 .cdg-host-pw-toggle, .cdg-host-pw-gen {
     width: 42px;
@@ -115,8 +115,8 @@ if(!$can_change_pw && !$has_buttons && !$can_manage_email) return; // Hiçbir ö
     transition: all 0.15s;
 }
 .cdg-host-pw-toggle:hover, .cdg-host-pw-gen:hover {
-    border-color: #1e40af;
-    color: #1e40af;
+    border-color: #2E3B4E;
+    color: #2E3B4E;
 }
 .cdg-host-pw-warning {
     margin: 12px 0;
@@ -202,13 +202,13 @@ if(!$can_change_pw && !$has_buttons && !$can_manage_email) return; // Hiçbir ö
     <!-- Email Hesapları Kartı -->
     <div class="cdg-host-card">
         <div class="cdg-host-card-head">
-            <div class="icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa);"><i class="bi bi-envelope-at"></i></div>
+            <div class="icon" style="background:linear-gradient(135deg,#00D3E5,#00E5FF);"><i class="bi bi-envelope-at"></i></div>
             <h3>E-Posta Hesapları</h3>
         </div>
         <p style="font-size:13px;color:#64748b;margin:0 0 14px;">
             Hosting paketinize bağlı e-posta hesaplarını yönetin. Yeni hesap oluşturun, şifre değiştirin veya yönlendirme tanımlayın.
         </p>
-        <button type="button" class="cdg-host-btn" style="background:linear-gradient(135deg,#3b82f6,#60a5fa);box-shadow:0 4px 10px rgba(59,130,246,0.22);" onclick="cdgHemOpen()">
+        <button type="button" class="cdg-host-btn" style="background:linear-gradient(135deg,#00D3E5,#00E5FF);box-shadow:0 4px 10px rgba(59,130,246,0.22);" onclick="cdgHemOpen()">
             <i class="bi bi-gear"></i> E-Posta Hesaplarını Yönet
         </button>
     </div>
