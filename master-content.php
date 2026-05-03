@@ -1,7 +1,17 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 
-// Flag: pages/X.php sayfaları master-content uygulanıp uygulanmadığını kontrol etmek için kullanır
-// Eğer false kalırsa pages sayfası kendi başına footer çağırır (defansif)
+// === SINGLETON GUARD ===
+// master-content.php aynı request içinde birden fazla kez include edilirse 2. çağrıda çık
+// Bu, çift footer/header sorununun kesin önlenmesi için gerekli
+if(defined('CDG_MASTER_CONTENT_RENDERED')) {
+    echo "
+<!-- CDG_MASTER_CONTENT_DUPLICATE_BLOCKED_v3.5.71 -->
+";
+    return;
+}
+define('CDG_MASTER_CONTENT_RENDERED', true);
+
+// Flag: pages/X.php sayfaları master-content uygulanıp uygulanmadığını kontrol etmek için
 $_cdg_in_master_content = true;
 
 // === SAVUNMA: WiseCP'nin tanımlamadığı her şey için fallback ===

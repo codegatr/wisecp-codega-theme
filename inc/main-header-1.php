@@ -1,5 +1,12 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 
+// === SINGLETON GUARD ===
+// main-header-1.php aynı sayfada birden fazla kez include edilirse 2. çağrıda çık
+if(defined('CDG_HEADER_RENDERED')) {
+    return;
+}
+define('CDG_HEADER_RENDERED', true);
+
 // Brand kimligi defansif yukle (logo SVG icin)
 if(!function_exists('cdg_logo_svg')) {
     $_brand_inc = __DIR__ . DIRECTORY_SEPARATOR . 'cdg-brand.php';

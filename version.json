@@ -1,18 +1,22 @@
 {
-    "version": "3.5.70",
+    "version": "3.5.71",
     "release_date": "2026-05-03",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.70-codega",
-    "tag": "v3.5.70-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.71-codega",
+    "tag": "v3.5.71-codega",
     "changelog": [
-        "v3.5.70 - DEBUG SURUMU: Cift Footer Tani Modu",
-        "v3.5.69 sonrasi Yunus hala cift footer goruyordu",
-        "Tani amacli HTML yorumlari eklendi:",
-        "  inc/main-footer.php => <!-- CDG_FOOTER_START_v3.5.70 -->",
-        "                         <!-- CDG_FOOTER_END_v3.5.70 -->",
-        "  master-content.php => <!-- CDG_MASTER_CONTENT_FOOTER_CALL_v3.5.70 -->",
-        "Yunus view-source ile bakinca:",
-        "  - 1 START + 1 END + 1 CALL = NORMAL (tek footer)",
-        "  - 2+ START veya 2+ END = SORUN (cift footer kaynagi tespit edilebilir)"
+        "v3.5.71 - KESIN COZUM: Singleton Guard (cift footer ihtimali sifir)",
+        "Yunus screenshot paylasti - acikca 2 footer goruluyordu",
+        "Tani: master-content.php veya main-footer.php birden fazla kez include ediliyor",
+        "  Sebep: WiseCP cache, auto-wrap, veya hook tarafından çift render",
+        "FIX KESIN: Singleton guard eklendi (3 dosyaya):",
+        "  1. master-content.php => CDG_MASTER_CONTENT_RENDERED constant ile kilit",
+        "  2. inc/main-footer.php => CDG_FOOTER_RENDERED constant ile kilit",
+        "  3. inc/main-header-1.php => CDG_HEADER_RENDERED constant ile kilit",
+        "  Eger 2. kez include edilirse otomatik return - SADECE 1 KEZ render edilir",
+        "  Ne kadar cagrilsa da: tek footer, tek header, tek master-content",
+        "Debug: HTML yorumu eklendi (Yunus view-source ile dogrulayabilir):",
+        "  <!-- CDG_MASTER_CONTENT_DUPLICATE_BLOCKED_v3.5.71 -->",
+        "  Bu yorum HTML'de gorunurse demek ki 2. cagri OLMUS ama BLOKLANMIS"
     ]
 }
