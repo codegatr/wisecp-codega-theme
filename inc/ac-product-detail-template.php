@@ -118,6 +118,57 @@ $d_hostname = $options['hostname'] ?? '';
 $d_ip      = $options['ip'] ?? '';
 $d_username = $options['username'] ?? '';
 
+// === EK BİLGİLER ===
+// Kontrol paneli giriş linki (cPanel/Plesk/DirectAdmin)
+$d_panel_url   = $options['panel_url'] ?? ($options['cp_url'] ?? ($options['login_url'] ?? ''));
+$d_panel_type  = $options['panel_type'] ?? '';
+$d_panel_link  = $options['panel_link'] ?? '';
+
+// FTP bilgileri
+$d_ftp_info = isset($options['ftp_info']) && is_array($options['ftp_info']) ? $options['ftp_info'] : [];
+$d_ftp_raw  = $options['ftp_raw'] ?? '';
+$d_ftp_host = $d_ftp_info['host'] ?? ($options['ftp_host'] ?? $d_ip);
+$d_ftp_user = $d_ftp_info['username'] ?? ($options['ftp_user'] ?? $d_username);
+$d_ftp_port = $d_ftp_info['port'] ?? ($options['ftp_port'] ?? '21');
+
+// DNS sunucuları
+$d_dns = isset($options['dns']) && is_array($options['dns']) ? $options['dns'] : [];
+if(empty($d_dns)) {
+    $tmp_dns = [];
+    for($i=1;$i<=4;$i++) {
+        if(!empty($options['ns'.$i])) $tmp_dns[] = $options['ns'.$i];
+    }
+    $d_dns = $tmp_dns;
+}
+
+// Server-spesifik (RDP, SSH)
+$d_root_pass = $options['root_password'] ?? ($options['password'] ?? '');
+$d_ssh_port  = $options['ssh_port'] ?? '22';
+$d_rdp_port  = $options['rdp_port'] ?? '3389';
+$d_os        = $options['os'] ?? ($options['operating_system'] ?? '');
+$d_cpu       = $options['cpu'] ?? ($options['vcpu'] ?? '');
+$d_ram       = $options['ram'] ?? ($options['memory'] ?? '');
+$d_disk      = $options['disk'] ?? ($options['storage'] ?? '');
+
+// Yenileme tarihi (eğer farklı geliyorsa)
+$d_renewal_date = $proanse['renewal_date'] ?? ($proanse['next_due_date'] ?? '');
+
+// Notlar (admin notes - genelde gizli, ama public notes varsa)
+$d_notes = $proanse['public_notes'] ?? ($options['notes'] ?? '');
+
+// Custom fields (admin tanımlı özel alanlar)
+$d_custom_fields = isset($proanse['custom_fields']) && is_array($proanse['custom_fields']) ? $proanse['custom_fields'] : [];
+
+// Bu hizmete ait faturalar
+$d_bills = [];
+if(isset($bills) && is_array($bills)) {
+    $d_bills = $bills;
+} elseif(isset($invoices) && is_array($invoices)) {
+    $d_bills = array_filter($invoices, function($inv) use ($d_id) {
+        return isset($inv['oid']) && $inv['oid'] == $d_id;
+    });
+}
+
 $controller_url = $links['controller'] ?? '';
 $back_url = cdg_link($cdg_pd_back_slug);
 
@@ -454,6 +505,117 @@ foreach($options as $opt_k => $opt_v) {
     .cdg-pd2-grid-2 { grid-template-columns: 1fr; }
     .cdg-pd2-hero-text h1 { font-size: 22px; }
 }
+/* === HIZLI EYLEMLER BARI === */
+.cdg-pd2-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.cdg-pd2-action {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px;
+    background: var(--p-card);
+    border: 1px solid var(--p-border);
+    border-radius: 12px;
+    color: var(--p-text);
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.cdg-pd2-action:hover {
+    border-color: var(--p-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(15,23,42,0.08);
+}
+.cdg-pd2-action i {
+    font-size: 22px;
+    color: var(--p-primary);
+    flex-shrink: 0;
+}
+.cdg-pd2-action span {
+    display: flex; flex-direction: column;
+    line-height: 1.2;
+    min-width: 0;
+}
+.cdg-pd2-action strong {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--p-text);
+}
+.cdg-pd2-action small {
+    font-size: 11px;
+    color: var(--p-muted);
+    margin-top: 2px;
+}
+.cdg-pd2-action-primary {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    border-color: #1e3a8a;
+    color: #fff;
+}
+.cdg-pd2-action-primary i { color: #fde047; }
+.cdg-pd2-action-primary strong { color: #fff; }
+.cdg-pd2-action-primary small { color: rgba(255,255,255,0.75); }
+.cdg-pd2-action-primary:hover { color: #fff; box-shadow: 0 10px 24px rgba(30,64,175,0.30); }
+
+/* === TABLE === */
+.cdg-pd2-table th { font-weight: 700; }
+.cdg-pd2-table tr:hover { background: #fafbfd !important; }
+
+/* === EMPTY STATE === */
+.cdg-pd2-empty {
+    text-align: center;
+    padding: 36px 18px;
+}
+.cdg-pd2-empty i {
+    font-size: 42px;
+    color: #cbd5e1;
+    display: block;
+    margin-bottom: 10px;
+}
+.cdg-pd2-empty h4 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--p-text);
+}
+.cdg-pd2-empty p {
+    margin: 0 0 14px;
+    font-size: 13px;
+    color: var(--p-muted);
+    line-height: 1.5;
+}
+
+/* === NOTE BOX === */
+.cdg-pd2-note {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--p-muted);
+    line-height: 1.5;
+}
+.cdg-pd2-note i {
+    color: var(--p-primary);
+    margin-right: 4px;
+}
+
+/* === BTN-SM, BTN-GHOST === */
+.cdg-pd2-btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+.cdg-pd2-btn-ghost {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--p-muted);
+}
+.cdg-pd2-btn-ghost:hover {
+    background: var(--p-bg);
+    color: var(--p-primary);
+}
+
 </style>
 
 <div class="cdg-pd2">
@@ -491,9 +653,53 @@ foreach($options as $opt_k => $opt_v) {
         </div>
     </section>
 
+    <!-- HIZLI EYLEMLER BARI -->
+    <div class="cdg-pd2-actions">
+        <?php $cp_url_hero = $options['cp_url'] ?? ($options['panel_url'] ?? $d_panel_link); if($cp_url_hero): ?>
+        <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-action cdg-pd2-action-primary">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <span>
+                <strong>Kontrol Paneline Git</strong>
+                <?php if($d_panel_type): ?><small><?php echo htmlspecialchars($d_panel_type, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></small><?php endif; ?>
+            </span>
+        </a>
+        <?php endif; ?>
+
+        <?php if($d_status === 'active' && $d_period && $d_period !== 'none'): ?>
+        <a href="javascript:void(0);" onclick="document.querySelector('.cdg-pd2-tab[data-pane=renewal]')?.click();" class="cdg-pd2-action">
+            <i class="bi bi-arrow-clockwise"></i>
+            <span>
+                <strong>Yenile</strong>
+                <small>Hizmeti uzat</small>
+            </span>
+        </a>
+        <?php endif; ?>
+
+        <?php if(!empty($upgrades)): ?>
+        <a href="javascript:void(0);" onclick="document.querySelector('.cdg-pd2-tab[data-pane=upgrade]')?.click();" class="cdg-pd2-action">
+            <i class="bi bi-arrow-up-circle"></i>
+            <span>
+                <strong>Yükselt</strong>
+                <small>Plan değiştir</small>
+            </span>
+        </a>
+        <?php endif; ?>
+
+        <a href="<?php echo cdg_link('ac-ps-create-ticket-request'); ?>?subject=%23<?php echo (int)$d_id; ?>+<?php echo urlencode($d_name); ?>" class="cdg-pd2-action">
+            <i class="bi bi-headset"></i>
+            <span>
+                <strong>Destek Al</strong>
+                <small>Talep oluştur</small>
+            </span>
+        </a>
+    </div>
+
     <!-- TAB NAV -->
     <div class="cdg-pd2-tabs">
         <button class="cdg-pd2-tab active" data-pane="summary"><i class="bi bi-info-circle"></i> Özet</button>
+        <?php if($cdg_pd_kind === 'hosting'): ?>
+        <button class="cdg-pd2-tab" data-pane="emails"><i class="bi bi-envelope"></i> E-posta</button>
+        <?php endif; ?>
         <?php if(!empty($addons)): ?>
         <button class="cdg-pd2-tab" data-pane="addons"><i class="bi bi-rocket-takeoff"></i> Ek Hizmetler</button>
         <?php endif; ?>
@@ -504,6 +710,12 @@ foreach($options as $opt_k => $opt_v) {
         <button class="cdg-pd2-tab" data-pane="password"><i class="bi bi-key"></i> Şifre</button>
         <?php endif; ?>
         <button class="cdg-pd2-tab" data-pane="renewal"><i class="bi bi-arrow-clockwise"></i> Yenileme</button>
+        <?php if(!empty($d_bills)): ?>
+        <button class="cdg-pd2-tab" data-pane="bills"><i class="bi bi-receipt"></i> Faturalar (<?php echo count($d_bills); ?>)</button>
+        <?php endif; ?>
+        <?php if(in_array($cdg_pd_kind, ['hosting','server'])): ?>
+        <button class="cdg-pd2-tab" data-pane="transfer"><i class="bi bi-arrow-left-right"></i> Transfer</button>
+        <?php endif; ?>
         <button class="cdg-pd2-tab" data-pane="cancel"><i class="bi bi-ban"></i> İptal</button>
     </div>
 
@@ -516,6 +728,9 @@ foreach($options as $opt_k => $opt_v) {
                 </div>
                 <div class="cdg-pd2-card-body">
                     <ul class="cdg-pd2-info">
+                        <?php if($d_id): ?>
+                        <li><span class="cdg-pd2-info-label">Sipariş No</span><span class="cdg-pd2-info-value">#<?php echo (int)$d_id; ?></span></li>
+                        <?php endif; ?>
                         <li><span class="cdg-pd2-info-label">Paket</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <li><span class="cdg-pd2-info-label">Durum</span><span class="cdg-pd2-info-value"><span class="cdg-pd2-badge <?php echo $st_meta['cls']; ?>"><?php echo htmlspecialchars($st_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></span></li>
                         <?php if($d_cdate): ?>
@@ -540,6 +755,19 @@ foreach($options as $opt_k => $opt_v) {
                         <?php endif; ?>
                         <?php if($d_amount): ?>
                         <li><span class="cdg-pd2-info-label">Ücret</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_money($d_amount, $d_amount_cid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
+                        <?php endif; ?>
+                        <li>
+                            <span class="cdg-pd2-info-label">Otomatik Ödeme</span>
+                            <span class="cdg-pd2-info-value">
+                                <?php if($d_autopay): ?>
+                                    <span class="cdg-pd2-badge cdg-pd2-badge-success"><i class="bi bi-check-circle-fill"></i> Açık</span>
+                                <?php else: ?>
+                                    <span class="cdg-pd2-badge cdg-pd2-badge-info"><i class="bi bi-x-circle"></i> Kapalı</span>
+                                <?php endif; ?>
+                            </span>
+                        </li>
+                        <?php if($d_renewal_date && $d_renewal_date !== $d_duedate): ?>
+                        <li><span class="cdg-pd2-info-label">Yenileme Tarihi</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_date($d_renewal_date), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                     </ul>
                 </div>
@@ -619,6 +847,143 @@ foreach($options as $opt_k => $opt_v) {
                 </div>
             </div>
         </div>
+
+        <?php if(!empty($d_ftp_info) || $d_ftp_raw || (!empty($d_dns) && count($d_dns) > 0)): ?>
+        <!-- FTP & DNS BILGILERI -->
+        <div class="cdg-pd2-grid-2" style="margin-top:14px;">
+            <?php if(!empty($d_ftp_info) || $d_ftp_raw || $d_ftp_host): ?>
+            <div class="cdg-pd2-card">
+                <div class="cdg-pd2-card-head">
+                    <h3><i class="bi bi-folder-symlink"></i> FTP Bilgileri</h3>
+                </div>
+                <div class="cdg-pd2-card-body">
+                    <ul class="cdg-pd2-info">
+                        <?php if($d_ftp_host): ?>
+                        <li><span class="cdg-pd2-info-label">Sunucu</span><span class="cdg-pd2-info-value"><code><?php echo htmlspecialchars($d_ftp_host, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></span></li>
+                        <?php endif; ?>
+                        <?php if($d_ftp_user): ?>
+                        <li><span class="cdg-pd2-info-label">Kullanıcı Adı</span><span class="cdg-pd2-info-value"><code><?php echo htmlspecialchars($d_ftp_user, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></span></li>
+                        <?php endif; ?>
+                        <li><span class="cdg-pd2-info-label">Port</span><span class="cdg-pd2-info-value"><code><?php echo htmlspecialchars($d_ftp_port, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></span></li>
+                        <?php if(!empty($d_ftp_info['protocol'])): ?>
+                        <li><span class="cdg-pd2-info-label">Protokol</span><span class="cdg-pd2-info-value"><code><?php echo htmlspecialchars($d_ftp_info['protocol'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></span></li>
+                        <?php endif; ?>
+                    </ul>
+                    <?php if($d_ftp_raw): ?>
+                    <div class="cdg-pd2-note" style="margin-top:10px;">
+                        <i class="bi bi-info-circle"></i> <?php echo nl2br(htmlspecialchars($d_ftp_raw, ENT_QUOTES | ENT_HTML5, 'UTF-8')); ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <?php if(!empty($d_dns) && count($d_dns) > 0): ?>
+            <div class="cdg-pd2-card">
+                <div class="cdg-pd2-card-head">
+                    <h3><i class="bi bi-globe"></i> DNS Sunucuları</h3>
+                </div>
+                <div class="cdg-pd2-card-body">
+                    <ul class="cdg-pd2-info">
+                        <?php foreach($d_dns as $i => $ns): ?>
+                        <li>
+                            <span class="cdg-pd2-info-label">NS<?php echo ($i+1); ?></span>
+                            <span class="cdg-pd2-info-value"><code><?php echo htmlspecialchars(is_array($ns) ? implode(' ', $ns) : (string)$ns, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></span>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <div class="cdg-pd2-note" style="margin-top:10px;">
+                        <i class="bi bi-info-circle"></i> Domaininizi bu sunuculara yönlendirin (alan adı kayıt firmanızdan).
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if($cdg_pd_kind === 'server'): ?>
+        <!-- SERVER ÖZEL BİLGİLER -->
+        <div class="cdg-pd2-grid-2" style="margin-top:14px;">
+            <?php if($d_os || $d_cpu || $d_ram || $d_disk): ?>
+            <div class="cdg-pd2-card">
+                <div class="cdg-pd2-card-head">
+                    <h3><i class="bi bi-cpu"></i> Sunucu Donanımı</h3>
+                </div>
+                <div class="cdg-pd2-card-body">
+                    <ul class="cdg-pd2-info">
+                        <?php if($d_os): ?>
+                        <li><span class="cdg-pd2-info-label">İşletim Sistemi</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_os, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
+                        <?php endif; ?>
+                        <?php if($d_cpu): ?>
+                        <li><span class="cdg-pd2-info-label">CPU / vCPU</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_cpu, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
+                        <?php endif; ?>
+                        <?php if($d_ram): ?>
+                        <li><span class="cdg-pd2-info-label">RAM</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_ram, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
+                        <?php endif; ?>
+                        <?php if($d_disk): ?>
+                        <li><span class="cdg-pd2-info-label">Disk</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_disk, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <div class="cdg-pd2-card">
+                <div class="cdg-pd2-card-head">
+                    <h3><i class="bi bi-shield-lock"></i> SSH / RDP Erişim</h3>
+                </div>
+                <div class="cdg-pd2-card-body">
+                    <ul class="cdg-pd2-info">
+                        <?php if($d_ip): ?>
+                        <li><span class="cdg-pd2-info-label">IP / Host</span><span class="cdg-pd2-info-value"><code><?php echo htmlspecialchars($d_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></span></li>
+                        <?php endif; ?>
+                        <li><span class="cdg-pd2-info-label">SSH Port (Linux)</span><span class="cdg-pd2-info-value"><code><?php echo htmlspecialchars($d_ssh_port, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></span></li>
+                        <li><span class="cdg-pd2-info-label">RDP Port (Windows)</span><span class="cdg-pd2-info-value"><code><?php echo htmlspecialchars($d_rdp_port, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></span></li>
+                        <?php if($d_username): ?>
+                        <li><span class="cdg-pd2-info-label">Kullanıcı</span><span class="cdg-pd2-info-value"><code><?php echo htmlspecialchars($d_username, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></span></li>
+                        <?php endif; ?>
+                    </ul>
+                    <div class="cdg-pd2-note" style="margin-top:10px;">
+                        <i class="bi bi-shield-exclamation"></i> Güvenlik nedeniyle root şifresi burada gösterilmez. <strong>"Şifre"</strong> sekmesinden değiştirebilirsiniz.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <?php if(!empty($d_custom_fields)): ?>
+        <!-- CUSTOM FIELDS -->
+        <div class="cdg-pd2-card" style="margin-top:14px;">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-card-list"></i> Ek Bilgiler</h3>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <ul class="cdg-pd2-info">
+                    <?php foreach($d_custom_fields as $cf):
+                        $cf_name = is_array($cf) ? ($cf['name'] ?? '') : '';
+                        $cf_value = is_array($cf) ? ($cf['value'] ?? '') : (string)$cf;
+                        if(!$cf_name || !$cf_value) continue;
+                    ?>
+                    <li><span class="cdg-pd2-info-label"><?php echo htmlspecialchars($cf_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($cf_value, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <?php if($d_notes): ?>
+        <!-- PUBLIC NOTES -->
+        <div class="cdg-pd2-card" style="margin-top:14px;">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-sticky"></i> Notlar</h3>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <div class="cdg-pd2-note" style="background:#fef3c7;border-color:#fcd34d;">
+                    <?php echo nl2br(htmlspecialchars($d_notes, ENT_QUOTES | ENT_HTML5, 'UTF-8')); ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
 
         <?php
         // === HOSTING PAKET DETAYLARI (kota bilgileri) ===
@@ -1090,6 +1455,247 @@ foreach($options as $opt_k => $opt_v) {
     </div>
 
     <!-- TAB: CANCEL -->
+    <!-- E-POSTA YÖNETİMİ -->
+    <?php if($cdg_pd_kind === 'hosting'): ?>
+    <div class="cdg-pd2-pane" id="cdg-pd2-pane-emails">
+        <div class="cdg-pd2-card">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-envelope-fill"></i> E-posta Yönetimi</h3>
+                <a href="<?php echo htmlspecialchars($d_panel_link ?: '#', ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-primary cdg-pd2-btn-sm">
+                    <i class="bi bi-plus-circle"></i> Yeni E-posta Ekle
+                </a>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <?php if(!empty($email_limit) || !empty($options['email_limit'])):
+                    $cur_emails = $options['used_email_count'] ?? null;
+                    $email_lim_val = $email_limit ?: ($options['email_limit'] ?? 0);
+                ?>
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin-bottom:14px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                        <div>
+                            <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">
+                                <i class="bi bi-envelope"></i> E-posta Kotanız
+                            </div>
+                            <div style="font-size:18px;font-weight:800;color:#0f172a;">
+                                <?php if($cur_emails !== null): ?>
+                                    <?php echo (int)$cur_emails; ?> / <?php echo $email_lim_val == 0 ? 'Sınırsız' : (int)$email_lim_val; ?> hesap
+                                <?php else: ?>
+                                    <?php echo $email_lim_val == 0 ? 'Sınırsız hesap' : (int)$email_lim_val . ' hesap kotanız var'; ?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <a href="<?php echo htmlspecialchars($d_panel_link ?: ($options['cp_url'] ?? '#'), ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm">
+                            <i class="bi bi-box-arrow-up-right"></i> cPanel'de Yönet
+                        </a>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <?php if(isset($mailaccs) && is_array($mailaccs) && !empty($mailaccs)): ?>
+                <table class="cdg-pd2-table" style="width:100%;border-collapse:separate;border-spacing:0 4px;">
+                    <thead>
+                        <tr style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#64748b;">
+                            <th style="text-align:left;padding:8px 12px;">E-posta Adresi</th>
+                            <th style="text-align:right;padding:8px 12px;">Kota</th>
+                            <th style="width:80px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($mailaccs as $em):
+                            $em_addr = is_array($em) ? ($em['email'] ?? ($em['address'] ?? '-')) : $em;
+                            $em_quota = is_array($em) ? ($em['quota'] ?? 0) : 0;
+                        ?>
+                        <tr style="background:#fff;">
+                            <td style="padding:10px 12px;border-radius:8px 0 0 8px;border:1px solid #e2e8f0;border-right:0;">
+                                <i class="bi bi-envelope" style="color:#1e40af;margin-right:6px;"></i>
+                                <code><?php echo htmlspecialchars($em_addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
+                            </td>
+                            <td style="padding:10px 12px;text-align:right;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#64748b;">
+                                <?php echo $em_quota == 0 ? 'Sınırsız' : (int)$em_quota . ' MB'; ?>
+                            </td>
+                            <td style="padding:10px 12px;border-radius:0 8px 8px 0;border:1px solid #e2e8f0;border-left:0;">
+                                <a href="<?php echo htmlspecialchars($d_panel_link ?: '#', ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" title="cPanel'de yönet">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                <div class="cdg-pd2-empty">
+                    <i class="bi bi-envelope-paper"></i>
+                    <h4>E-posta Hesabı Listesi cPanel'den Yönetilir</h4>
+                    <p>E-posta hesaplarınızı görüntülemek, eklemek veya silmek için <strong>Kontrol Paneli</strong> üzerinden işlem yapın.</p>
+                    <?php if($d_panel_link || !empty($options['cp_url'])): ?>
+                    <a href="<?php echo htmlspecialchars($d_panel_link ?: $options['cp_url'], ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-primary">
+                        <i class="bi bi-box-arrow-up-right"></i> cPanel / Kontrol Paneline Git
+                    </a>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="cdg-pd2-card" style="margin-top:14px;">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-arrow-right-circle"></i> E-posta Yönlendirme</h3>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <p style="color:#64748b;margin:0 0 10px;">
+                    Gelen e-postalarınızı başka bir adrese yönlendirmek için cPanel'in "Forwarders" bölümünü kullanın.
+                </p>
+                <?php if($d_panel_link || !empty($options['cp_url'])): ?>
+                <a href="<?php echo htmlspecialchars($d_panel_link ?: $options['cp_url'], ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm">
+                    <i class="bi bi-arrow-right"></i> Forwarders Yönetimi
+                </a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <!-- FATURALAR -->
+    <?php if(!empty($d_bills)): ?>
+    <div class="cdg-pd2-pane" id="cdg-pd2-pane-bills">
+        <div class="cdg-pd2-card">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-receipt"></i> Bu Hizmete Ait Faturalar</h3>
+                <a href="<?php echo cdg_link('invoices'); ?>" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm">
+                    Tüm Faturalar <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <table class="cdg-pd2-table" style="width:100%;border-collapse:separate;border-spacing:0 4px;">
+                    <thead>
+                        <tr style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#64748b;">
+                            <th style="text-align:left;padding:8px 12px;">Fatura No</th>
+                            <th style="text-align:left;padding:8px 12px;">Tarih</th>
+                            <th style="text-align:right;padding:8px 12px;">Tutar</th>
+                            <th style="text-align:center;padding:8px 12px;">Durum</th>
+                            <th style="width:120px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $bill_status_meta = [
+                            'paid'      => ['cls' => 'success', 'lbl' => 'Ödendi',     'icon' => 'check-circle-fill'],
+                            'unpaid'    => ['cls' => 'warning', 'lbl' => 'Bekliyor',   'icon' => 'hourglass-split'],
+                            'overdue'   => ['cls' => 'danger',  'lbl' => 'Gecikmiş',   'icon' => 'exclamation-circle-fill'],
+                            'cancelled' => ['cls' => 'info',    'lbl' => 'İptal',      'icon' => 'x-circle'],
+                        ];
+                        foreach(array_slice($d_bills, 0, 10) as $bill):
+                            $b_id = $bill['id'] ?? '';
+                            $b_status = strtolower($bill['status'] ?? 'unpaid');
+                            $b_meta = $bill_status_meta[$b_status] ?? ['cls' => 'info', 'lbl' => ucfirst($b_status), 'icon' => 'circle'];
+                            $b_date = $bill['cdate'] ?? ($bill['date'] ?? '');
+                            $b_amount = $bill['amount'] ?? 0;
+                            $b_amount_cid = $bill['amount_cid'] ?? $d_amount_cid;
+                            $b_link = $bill['detail_link'] ?? '#';
+                            $b_pay_link = $bill['pay_link'] ?? '#';
+                        ?>
+                        <tr style="background:#fff;">
+                            <td style="padding:10px 12px;border-radius:8px 0 0 8px;border:1px solid #e2e8f0;border-right:0;">
+                                <code style="color:#1e40af;font-weight:700;">#<?php echo htmlspecialchars((string)$b_id, ENT_QUOTES); ?></code>
+                            </td>
+                            <td style="padding:10px 12px;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#0f172a;">
+                                <?php echo htmlspecialchars(cdg_pd_date($b_date), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                            </td>
+                            <td style="padding:10px 12px;text-align:right;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-weight:700;color:#0f172a;">
+                                <?php echo htmlspecialchars(cdg_pd_money($b_amount, $b_amount_cid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                            </td>
+                            <td style="padding:10px 12px;text-align:center;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;">
+                                <span class="cdg-pd2-badge cdg-pd2-badge-<?php echo $b_meta['cls']; ?>">
+                                    <i class="bi bi-<?php echo $b_meta['icon']; ?>"></i> <?php echo $b_meta['lbl']; ?>
+                                </span>
+                            </td>
+                            <td style="padding:10px 12px;border-radius:0 8px 8px 0;border:1px solid #e2e8f0;border-left:0;text-align:right;">
+                                <?php if($b_status === 'unpaid' || $b_status === 'overdue'): ?>
+                                <a href="<?php echo htmlspecialchars($b_pay_link, ENT_QUOTES); ?>" class="cdg-pd2-btn cdg-pd2-btn-primary cdg-pd2-btn-sm">
+                                    <i class="bi bi-credit-card"></i> Öde
+                                </a>
+                                <?php else: ?>
+                                <a href="<?php echo htmlspecialchars($b_link, ENT_QUOTES); ?>" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php if(count($d_bills) > 10): ?>
+                <div style="text-align:center;margin-top:14px;">
+                    <a href="<?php echo cdg_link('invoices'); ?>" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm">
+                        <?php echo (count($d_bills) - 10); ?> fatura daha → Tümünü Gör
+                    </a>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <!-- TRANSFER -->
+    <?php if(in_array($cdg_pd_kind, ['hosting','server'])): ?>
+    <div class="cdg-pd2-pane" id="cdg-pd2-pane-transfer">
+        <div class="cdg-pd2-card">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-arrow-left-right"></i> Hizmet Taşıma</h3>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <div style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border:1px solid #93c5fd;border-radius:10px;padding:18px;margin-bottom:14px;">
+                    <div style="display:flex;align-items:flex-start;gap:14px;">
+                        <i class="bi bi-info-circle-fill" style="color:#1e40af;font-size:24px;flex-shrink:0;"></i>
+                        <div>
+                            <h4 style="margin:0 0 6px;color:#1e3a8a;">Ücretsiz Taşıma Hizmeti</h4>
+                            <p style="margin:0;color:#1e40af;font-size:13.5px;line-height:1.6;">
+                                Mevcut hosting/sunucu sağlayıcınızdan <strong>5 web sitesine kadar</strong> ücretsiz taşıma yapıyoruz.
+                                Standart taşıma süresi <strong>1-24 saat</strong> arasındadır.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 style="margin:18px 0 10px;font-size:14px;font-weight:700;">Taşıma için ihtiyacımız olanlar:</h4>
+                <ul style="margin:0 0 16px;padding-left:22px;color:#475569;line-height:1.8;">
+                    <li>Eski hosting/sunucu erişim bilgileri (cPanel/Plesk URL, kullanıcı adı, şifre)</li>
+                    <li>Veya FTP + veritabanı (MySQL) erişim bilgileri</li>
+                    <li>Domain'in NS sunucularını <strong><?php echo !empty($d_dns) ? htmlspecialchars(is_array($d_dns[0]) ? implode(' ', $d_dns[0]) : $d_dns[0], ENT_QUOTES) : 'CODEGA NS'; ?></strong> olarak güncelleyebileceğiniz erişim</li>
+                </ul>
+
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <a href="<?php echo cdg_link('ac-ps-create-ticket-request'); ?>?subject=Hizmet+Tasima+Talebi+%23<?php echo (int)$d_id; ?>" class="cdg-pd2-btn cdg-pd2-btn-primary">
+                        <i class="bi bi-send"></i> Taşıma Talebi Oluştur
+                    </a>
+                    <a href="https://wa.me/908508850707?text=Merhaba%2C+%23<?php echo (int)$d_id; ?>+numarali+hizmetimi+tasitmak+istiyorum." target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline">
+                        <i class="bi bi-whatsapp"></i> WhatsApp ile İletişim
+                    </a>
+                </div>
+
+                <?php if(isset($transfers) && is_array($transfers) && !empty($transfers)): ?>
+                <h4 style="margin:24px 0 10px;font-size:14px;font-weight:700;">Bekleyen Taşıma Talepleriniz</h4>
+                <ul class="cdg-pd2-info">
+                    <?php foreach($transfers as $tr):
+                        $tr_status = $tr['status'] ?? 'pending';
+                        $tr_subject = $tr['subject'] ?? 'Taşıma Talebi';
+                        $tr_date = $tr['cdate'] ?? '';
+                    ?>
+                    <li>
+                        <span class="cdg-pd2-info-label"><?php echo htmlspecialchars($tr_subject, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                        <span class="cdg-pd2-info-value">
+                            <span class="cdg-pd2-badge cdg-pd2-badge-warning"><?php echo htmlspecialchars(ucfirst($tr_status), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                            <small style="color:#94a3b8;margin-left:8px;"><?php echo cdg_pd_date($tr_date); ?></small>
+                        </span>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <div class="cdg-pd2-pane" id="cdg-pd2-pane-cancel">
         <?php
         // Mevcut iptal talebi var mı? WiseCP runtime: $p_cancellation
