@@ -878,7 +878,7 @@ window.cdgInfoKvkk = {
 <style>
 /* === KURUMSAL HESAP BİLGİLERİ SHELL === */
 .cdg-info-shell {
-    max-width: 1280px;
+    max-width: 100%;
     margin: 0 auto 24px;
     background: #ffffff;
     border: 1px solid #e2e8f0;

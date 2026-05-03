@@ -296,7 +296,7 @@ foreach($options as $opt_k => $opt_v) {
 }
 .cdg-pd2 *, .cdg-pd2 *::before, .cdg-pd2 *::after { box-sizing: border-box; }
 .cdg-pd2 a { text-decoration: none; color: inherit; }
-.cdg-pd2-wrap { max-width: 1280px; margin: 0 auto; padding: 0; }
+.cdg-pd2-wrap { max-width: 100%; margin: 0; padding: 0; }
 
 /* === PANEL SHELL - Kurumsal kart konteyner === */
 .cdg-pd2-shell {
@@ -564,6 +564,149 @@ foreach($options as $opt_k => $opt_v) {
 .cdg-pd2-info li:first-child { padding-top: 0; }
 .cdg-pd2-info-label { color: var(--p-muted); font-weight: 600; flex-shrink: 0; }
 .cdg-pd2-info-value { color: var(--p-text); font-weight: 700; text-align: right; word-break: break-word; }
+
+/* === DİREKADMIN ERİŞİM BİLGİLERİ === */
+.cdg-pd2-cred {
+    display: inline-block;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-right: 4px;
+}
+.cdg-pd2-cred-masked {
+    letter-spacing: 2px;
+    color: #475569;
+}
+.cdg-pd2-copy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-left: 2px;
+    padding: 0;
+}
+.cdg-pd2-copy:hover {
+    background: #00D3E5;
+    border-color: #00D3E5;
+    color: #fff;
+}
+.cdg-pd2-copy.copied {
+    background: #10b981;
+    border-color: #10b981;
+    color: #fff;
+}
+
+/* === PANEL GİRİŞİ KARTI === */
+.cdg-pd2-panel-login {
+    margin-top: 18px;
+    padding: 18px;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+.cdg-pd2-panel-login-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.cdg-pd2-panel-login-head i {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, #2E3B4E, #1A2332);
+    border-radius: 10px;
+    color: #00E5FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+.cdg-pd2-panel-login-head strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+.cdg-pd2-panel-login-head span {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 2px;
+}
+.cdg-pd2-panel-login-url {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 12.5px;
+}
+.cdg-pd2-panel-login-url > i {
+    color: #94a3b8;
+    flex-shrink: 0;
+}
+.cdg-pd2-panel-login-url code {
+    flex: 1;
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    color: #2E3B4E;
+    font-family: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cdg-pd2-panel-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 13px 20px;
+    background: linear-gradient(135deg, #2E3B4E, #1A2332);
+    color: #fff !important;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.18s;
+    box-shadow: 0 6px 16px rgba(46,59,78,0.25);
+}
+.cdg-pd2-panel-login-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(0,211,229,0.30);
+    background: linear-gradient(135deg, #1A2332, #2E3B4E);
+}
+.cdg-pd2-panel-login-btn i { color: #00E5FF; font-size: 16px; }
+.cdg-pd2-panel-login-note {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    background: rgba(0,211,229,0.06);
+    border-left: 3px solid #00D3E5;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+.cdg-pd2-panel-login-note i { color: #00D3E5; flex-shrink: 0; margin-top: 2px; }
 
 .cdg-pd2-badge {
     display: inline-flex; align-items: center; gap: 4px;
@@ -1064,7 +1207,29 @@ foreach($options as $opt_k => $opt_v) {
                         <li><span class="cdg-pd2-info-label">IP Adresi</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
                         <?php if($d_username): ?>
-                        <li><span class="cdg-pd2-info-label">Kullanıcı Adı</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars($d_username, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
+                        <li>
+                            <span class="cdg-pd2-info-label">Kullanıcı Adı</span>
+                            <span class="cdg-pd2-info-value">
+                                <code class="cdg-pd2-cred"><?php echo htmlspecialchars($d_username, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
+                                <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($d_username, ENT_QUOTES); ?>')" title="Kopyala">
+                                    <i class="bi bi-clipboard"></i>
+                                </button>
+                            </span>
+                        </li>
+                        <?php endif; ?>
+                        <?php if(!empty($d_root_pass)): ?>
+                        <li>
+                            <span class="cdg-pd2-info-label">Şifre</span>
+                            <span class="cdg-pd2-info-value">
+                                <code class="cdg-pd2-cred cdg-pd2-cred-masked" data-pw="<?php echo htmlspecialchars($d_root_pass, ENT_QUOTES); ?>">••••••••</code>
+                                <button type="button" class="cdg-pd2-copy cdg-pd2-toggle-pw" onclick="cdgTogglePw(this)" title="Göster/Gizle">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($d_root_pass, ENT_QUOTES); ?>')" title="Kopyala">
+                                    <i class="bi bi-clipboard"></i>
+                                </button>
+                            </span>
+                        </li>
                         <?php endif; ?>
                         <?php
                         // Extra option key'leri Turkce label'a cevir
@@ -1112,11 +1277,32 @@ foreach($options as $opt_k => $opt_v) {
                     </ul>
 
                     <?php if(!empty($options['cp_url']) || !empty($options['panel_url'])):
-                        $cp_url = $options['cp_url'] ?? $options['panel_url']; ?>
-                    <div style="margin-top:14px;">
-                        <a href="<?php echo htmlspecialchars($cp_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-primary" style="width:100%;justify-content:center;">
-                            <i class="bi bi-box-arrow-up-right"></i> Kontrol Paneline Git
+                        $cp_url = $options['cp_url'] ?? $options['panel_url'];
+                        $panel_lbl = $panel_brand ?? ($d_panel_type ?? 'DirectAdmin');
+                        ?>
+                    <div class="cdg-pd2-panel-login">
+                        <div class="cdg-pd2-panel-login-head">
+                            <i class="bi bi-shield-lock-fill"></i>
+                            <div>
+                                <strong>Panel Girişi</strong>
+                                <span><?php echo htmlspecialchars($panel_lbl, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> kontrol paneline güvenli giriş</span>
+                            </div>
+                        </div>
+                        <div class="cdg-pd2-panel-login-url">
+                            <i class="bi bi-link-45deg"></i>
+                            <code><?php echo htmlspecialchars($cp_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
+                            <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($cp_url, ENT_QUOTES); ?>')" title="Kopyala">
+                                <i class="bi bi-clipboard"></i>
+                            </button>
+                        </div>
+                        <a href="<?php echo htmlspecialchars($cp_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-pd2-panel-login-btn">
+                            <i class="bi bi-box-arrow-up-right"></i>
+                            <span><?php echo htmlspecialchars($panel_lbl, ENT_QUOTES); ?> Paneline Giriş Yap</span>
                         </a>
+                        <p class="cdg-pd2-panel-login-note">
+                            <i class="bi bi-info-circle"></i>
+                            Yukarıdaki kullanıcı adı ve şifre ile giriş yapabilirsiniz. Güvenliğiniz için panel girişinden sonra şifrenizi değiştirmenizi öneririz.
+                        </p>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -2486,6 +2672,57 @@ foreach($options as $opt_k => $opt_v) {
 </div>
 </div>
 
+<script>
+// === DİREKADMIN ERİŞİM BİLGİLERİ - JS Helpers ===
+window.cdgCopyCred = function(btn, text){
+    if(!text) return;
+    var done = function(){
+        var orig = btn.innerHTML;
+        btn.innerHTML = '<i class="bi bi-check2"></i>';
+        btn.classList.add('copied');
+        setTimeout(function(){
+            btn.innerHTML = orig;
+            btn.classList.remove('copied');
+        }, 1400);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function(){
+            // Fallback
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); done(); } catch(e) {}
+            document.body.removeChild(ta);
+        });
+    } else {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch(e) {}
+        document.body.removeChild(ta);
+    }
+};
+window.cdgTogglePw = function(btn){
+    var code = btn.previousElementSibling;
+    if(!code || !code.dataset.pw) return;
+    var icon = btn.querySelector('i');
+    if(code.classList.contains('cdg-pd2-cred-masked')) {
+        code.textContent = code.dataset.pw;
+        code.classList.remove('cdg-pd2-cred-masked');
+        if(icon) { icon.classList.remove('bi-eye'); icon.classList.add('bi-eye-slash'); }
+    } else {
+        code.textContent = '••••••••';
+        code.classList.add('cdg-pd2-cred-masked');
+        if(icon) { icon.classList.remove('bi-eye-slash'); icon.classList.add('bi-eye'); }
+    }
+};
+</script>
 <script>
 (function(){
     document.querySelectorAll('.cdg-pd2-tab').forEach(function(tab){

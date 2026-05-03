@@ -367,7 +367,7 @@ if(!empty($transactions) && is_array($transactions)) {
 <style>
 /* === BAKIYE KURUMSAL SHELL === */
 .cdg-bal-shell {
-    max-width: 1280px;
+    max-width: 100%;
     margin: 0 auto 24px;
     background: #ffffff;
     border: 1px solid #e2e8f0;

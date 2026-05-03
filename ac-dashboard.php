@@ -291,7 +291,7 @@ $balance_url   = cdg_link('ac-ps-balance');
 
 /* === KURUMSAL SHELL - Tüm dashboard panel içinde === */
 .cdg-d-shell {
-    max-width: 1280px;
+    max-width: 100%;
     margin: 0 auto;
     width: 100%;
     background: #ffffff;
