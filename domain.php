@@ -510,56 +510,75 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
 }
 .cdg-search-alt-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 10px;
 }
 .cdg-search-alt-card {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
     gap: 10px;
     background: #fff;
     border: 1px solid #cffafe;
-    border-radius: 10px;
-    padding: 12px 14px;
+    border-radius: 12px;
+    padding: 14px 16px;
     cursor: pointer;
     transition: all 0.18s ease;
     text-align: left;
     font-family: inherit;
+    min-width: 0;
 }
 .cdg-search-alt-card:hover {
     border-color: #00D3E5;
-    background: #f0fdff;
+    background: linear-gradient(180deg, #f0fdff 0%, #ecfeff 100%);
     transform: translateY(-2px);
     box-shadow: 0 8px 18px rgba(0,211,229,0.18);
 }
-.cdg-search-alt-card > i {
+.cdg-search-alt-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+.cdg-search-alt-top > i {
     color: #00D3E5;
     font-size: 16px;
     flex-shrink: 0;
 }
 .cdg-search-alt-domain {
-    flex: 1;
+    flex: 1 1 auto;
     font-weight: 700;
     color: #0f172a;
-    font-size: 13.5px;
+    font-size: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    min-width: 0;
 }
 .cdg-search-alt-cta {
     color: #00D3E5;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 4px;
-    flex-shrink: 0;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(0,211,229,0.25);
+}
+.cdg-search-alt-cta i {
+    font-size: 14px;
+    transition: transform 0.18s;
 }
 .cdg-search-alt-card:hover .cdg-search-alt-cta { color: #2E3B4E; }
-@media (max-width: 640px) {
+.cdg-search-alt-card:hover .cdg-search-alt-cta i { transform: translateX(3px); color: #00D3E5; }
+@media (max-width: 768px) {
     .cdg-search-alt-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 420px) {
+    .cdg-search-alt-grid { grid-template-columns: 1fr; }
 }
 </style>
 
@@ -1157,9 +1176,14 @@ function handleResponse(result, query) {
             popularTLDs.forEach(function(tld){
                 var altDomain = sld + '.' + tld;
                 altHTML += '<button type="button" class="cdg-search-alt-card" onclick="cdgQueryAlternative(\'' + escHTML(altDomain) + '\')">' +
-                    '<i class="bi bi-search"></i>' +
-                    '<span class="cdg-search-alt-domain">' + escHTML(altDomain) + '</span>' +
-                    '<span class="cdg-search-alt-cta">Sorgula <i class="bi bi-arrow-right"></i></span>' +
+                    '<span class="cdg-search-alt-top">' +
+                        '<i class="bi bi-search"></i>' +
+                        '<span class="cdg-search-alt-domain">' + escHTML(altDomain) + '</span>' +
+                    '</span>' +
+                    '<span class="cdg-search-alt-cta">' +
+                        '<span>Sorgula</span>' +
+                        '<i class="bi bi-arrow-right"></i>' +
+                    '</span>' +
                 '</button>';
             });
 
