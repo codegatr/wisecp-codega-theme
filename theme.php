@@ -33,6 +33,22 @@ Class Codega_Theme
         elseif($page && file_exists(__DIR__ . DS . "pages" . DS . $page . ".php")) {
             return ['include_file' => __DIR__ . DS . "pages" . DS . $page . ".php"];
         }
+        // Codega corporate sayfalar - kök dizinde
+        // Migration sonrası eski codega.com.tr/erp-yazilimi.html, /hakkimizda.html, vb.
+        // bu URL'ler .htaccess ile .php'ye rewrite ediliyor, theme router buna izin vermeli
+        elseif($page && file_exists(__DIR__ . DS . $page . ".php")) {
+            // Beyaz liste - sadece corporate sayfalar (güvenlik için)
+            $cdg_corporate_pages = [
+                'erp', 'hakkimizda', 'kvkk', 'cerez-politikasi', 'gizlilik-politikasi',
+                'hizmet-sozlesmesi', 'kariyer', 'sosyal-sorumluluk', 'surdurulebilirlik',
+                'system-status', 'references', 'contact', 'vision',
+                'hosting-products', 'softwares', 'server-products', 'sms-products',
+                'knowledgebase', 'news', 'articles', 'license', 'domain'
+            ];
+            if(in_array($page, $cdg_corporate_pages)) {
+                return ['include_file' => __DIR__ . DS . $page . ".php"];
+            }
+        }
         return false;
     }
 

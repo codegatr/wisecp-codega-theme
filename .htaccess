@@ -81,86 +81,86 @@ RewriteRule ^pages/surdurulebilirlik\.php$ /surdurulebilirlik.html [R=301,L]
 RewriteRule ^pages/vizyon\.php$ /vizyon.html [R=301,L]
 
 # =====================================================================
-# CORPORATE SAYFALAR: .html URL'leri → gercek .php dosyalara INTERNAL rewrite
-# (Header/Footer linklerinde .html kullaniliyor, ama dosyalar .php uzantili)
-# Bu kurallar subdomain'den bagimsiz - hem ca'da hem migrationda calisir
+# CORPORATE SAYFALAR: .html URL'leri → WiseCP slug formatina internal rewrite
+# Bu URL'ler eski codega.com.tr sitesinde vardi, simdi WiseCP slug'lariyla servis edilir
+# WiseCP'nin core router'i .php uzantili dosyalari otomatik handle eder
 # =====================================================================
 
-# Vizyon - Codega'da dosya yok, hakkimizda.php'ye yonlendir (icerik orada birlikte)
-RewriteRule ^vizyon\.html$ hakkimizda.php [L]
+# Vizyon - vision.php (kök dizinde)
+RewriteRule ^vizyon\.html$ vision [L]
 
 # Hakkimizda
-RewriteRule ^hakkimizda\.html$ hakkimizda.php [L]
+RewriteRule ^hakkimizda\.html$ hakkimizda [L]
 
-# Referanslar
-RewriteRule ^referanslarimiz\.html$ references.php [L]
-RewriteRule ^referanslar\.html$ references.php [L]
+# Referanslar - references.php
+RewriteRule ^referanslarimiz\.html$ references [L]
+RewriteRule ^referanslar\.html$ references [L]
 
 # Kariyer
-RewriteRule ^kariyer\.html$ kariyer.php [L]
+RewriteRule ^kariyer\.html$ kariyer [L]
 
 # Sosyal Sorumluluk
-RewriteRule ^sosyal-sorumluluk\.html$ sosyal-sorumluluk.php [L]
+RewriteRule ^sosyal-sorumluluk\.html$ sosyal-sorumluluk [L]
 
 # Surdurulebilirlik
-RewriteRule ^surdurulebilirlik\.html$ surdurulebilirlik.php [L]
+RewriteRule ^surdurulebilirlik\.html$ surdurulebilirlik [L]
 
-# Sistem Durumu
-RewriteRule ^sistem-durumu\.html$ system-status.php [L]
+# Sistem Durumu - system-status.php
+RewriteRule ^sistem-durumu\.html$ system-status [L]
 
 # KVKK Aydinlatma
-RewriteRule ^kvkk-aydinlatma-metni\.html$ kvkk.php [L]
-RewriteRule ^kvkk\.html$ kvkk.php [L]
+RewriteRule ^kvkk-aydinlatma-metni\.html$ kvkk [L]
+RewriteRule ^kvkk\.html$ kvkk [L]
 
 # Cerez Politikasi
-RewriteRule ^cerez-politikasi\.html$ cerez-politikasi.php [L]
+RewriteRule ^cerez-politikasi\.html$ cerez-politikasi [L]
 
 # Gizlilik Politikasi
-RewriteRule ^gizlilik-politikasi\.html$ gizlilik-politikasi.php [L]
+RewriteRule ^gizlilik-politikasi\.html$ gizlilik-politikasi [L]
 
 # Hizmet Sozlesmesi
-RewriteRule ^hizmet-sozlesmesi\.html$ hizmet-sozlesmesi.php [L]
+RewriteRule ^hizmet-sozlesmesi\.html$ hizmet-sozlesmesi [L]
 
 # CODEGA ERP
-RewriteRule ^erp-yazilimi\.html$ erp.php [L]
-RewriteRule ^erp\.html$ erp.php [L]
+RewriteRule ^erp-yazilimi\.html$ erp [L]
+RewriteRule ^erp\.html$ erp [L]
 
 # Hosting
-RewriteRule ^hosting-products\.html$ hosting-products.php [L]
-RewriteRule ^hosting\.html$ hosting-products.php [L]
+RewriteRule ^hosting-products\.html$ hosting-products [L]
+RewriteRule ^hosting\.html$ hosting-products [L]
 
 # Domain
-RewriteRule ^domain-checker\.html$ domain.php [L]
-RewriteRule ^domain\.html$ domain.php [L]
+RewriteRule ^domain-checker\.html$ domain [L]
+RewriteRule ^domain\.html$ domain [L]
 
 # Iletisim / Contact
-RewriteRule ^contact\.html$ contact.php [L]
-RewriteRule ^iletisim\.html$ contact.php [L]
+RewriteRule ^contact\.html$ contact [L]
+RewriteRule ^iletisim\.html$ contact [L]
 
 # Bilgi Bankasi
-RewriteRule ^knowledgebase\.html$ knowledgebase.php [L]
-RewriteRule ^bilgi-bankasi\.html$ knowledgebase.php [L]
+RewriteRule ^knowledgebase\.html$ knowledgebase [L]
+RewriteRule ^bilgi-bankasi\.html$ knowledgebase [L]
 
 # Yazilimlar
-RewriteRule ^softwares\.html$ softwares.php [L]
-RewriteRule ^yazilimlar\.html$ softwares.php [L]
+RewriteRule ^softwares\.html$ softwares [L]
+RewriteRule ^yazilimlar\.html$ softwares [L]
 
 # Sunucular
-RewriteRule ^server-products\.html$ server-products.php [L]
+RewriteRule ^server-products\.html$ server-products [L]
 
 # SMS
-RewriteRule ^sms-products\.html$ sms-products.php [L]
+RewriteRule ^sms-products\.html$ sms-products [L]
 
 # News
-RewriteRule ^news\.html$ news.php [L]
-RewriteRule ^haberler\.html$ news.php [L]
+RewriteRule ^news\.html$ news [L]
+RewriteRule ^haberler\.html$ news [L]
 
 # Articles
-RewriteRule ^articles\.html$ articles.php [L]
-RewriteRule ^makaleler\.html$ articles.php [L]
+RewriteRule ^articles\.html$ articles [L]
+RewriteRule ^makaleler\.html$ articles [L]
 
 # Lisans
-RewriteRule ^license\.html$ license.php [L]
+RewriteRule ^license\.html$ license [L]
 
 # =====================================================================
 # CA.CODEGA.COM.TR → CODEGA.COM.TR (Cutover sonrası subdomain redirect)
