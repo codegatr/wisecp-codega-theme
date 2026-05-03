@@ -1,11 +1,19 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 /**
- * CODEGA - Hosting Ürün Detay (v3.5.82+) - SIFIRDAN YAZILDI
+ * CODEGA - Hosting Ürün Detay (v3.5.83+)
  *
- * - JavaScript YOK (CSS-only tab sistemi - radio button + sibling selector)
- * - SES, MetaMask, ad blocker hiçbir şey bozamaz
- * - WiseCP variable'lar defansif kontrolde
- * - Mutlak minimum kod
+ * - JavaScript YOK (CSS-only tab sistemi)
+ * - WiseCP panel API entegre ($buttons → DirectAdmin/cPanel auto-login)
+ * - $panel_name, $panel_logo, $supported runtime variable'larını kullanır
+ *
+ * WiseCP Runtime Variables:
+ *   $proanse  - hizmet detayı (id, name, status, duedate, options, vs)
+ *   $options  - hosting opsiyonları (domain, username, ip, panel_url, ns1-4, vs)
+ *   $buttons  - panel auto-login butonları: ['cpanel' => ['url'=>..., 'name'=>...]]
+ *   $panel_name - 'DirectAdmin', 'cPanel', 'Plesk'
+ *   $panel_logo - panel logo URL'i
+ *   $supported - ['change-password', 'manage-email-account', ...]
+ *   $bills    - bu hizmete ait faturalar
  */
 
 // === WiseCP variables (defansif) ===
@@ -13,7 +21,8 @@ $product   = isset($product) && is_array($product) ? $product : [];
 $proanse   = isset($proanse) && is_array($proanse) ? $proanse : $product;
 $options   = isset($options) && is_array($options) ? $options : (isset($proanse['options']) && is_array($proanse['options']) ? $proanse['options'] : []);
 $bills     = isset($bills) && is_array($bills) ? $bills : [];
-$links     = isset($links) && is_array($links) ? $links : [];
+$buttons   = isset($buttons) && is_array($buttons) ? $buttons : [];
+$supported = isset($supported) && is_array($supported) ? $supported : [];
 
 $d_id        = (int)($proanse['id'] ?? 0);
 $d_name      = $proanse['name'] ?? 'Hosting';
@@ -39,14 +48,31 @@ for($i=1; $i<=4; $i++) {
     if(!empty($options['ns'.$i])) $d_dns[] = $options['ns'.$i];
 }
 
-// Panel girişi
+// Panel adı/logosu/manuel URL
+$panel_name  = $proanse['panel_name'] ?? ($panel_name ?? 'Kontrol Paneli');
+$panel_logo  = $panel_logo ?? '';
 $d_panel_url = $options['panel_url'] ?? ($options['cp_url'] ?? ($options['login_url'] ?? ''));
 
-// Hosting limitler
+// Hosting limit bilgileri
 $d_quota     = $options['disk'] ?? ($options['disk_space'] ?? '');
 $d_bandwidth = $options['bandwidth'] ?? ($options['traffic'] ?? '');
 $d_emails    = $options['emails'] ?? '';
 $d_databases = $options['databases'] ?? '';
+
+// Aktif/destek flagleri
+$is_active = ($d_status === 'active');
+$has_buttons = ($is_active && !empty($buttons));
+$can_change_pw = ($is_active && in_array('change-password', $supported));
+$can_manage_email = ($is_active && in_array('manage-email-account', $supported));
+
+// $buttons'tan webmail varsa direkt URL al
+$webmail_url = '';
+foreach($buttons as $b_type => $b_value) {
+    if(stripos((string)$b_type, 'webmail') !== false || stripos((string)($b_value['name'] ?? ''), 'webmail') !== false) {
+        $webmail_url = $b_value['url'] ?? '';
+        break;
+    }
+}
 
 // Status meta
 $status_meta = [
@@ -74,6 +100,18 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
         if($tmp) $back_url = $tmp;
     } catch(\Throwable $e) {}
 }
+
+// Panel butonu için ikon eşleştir
+$cdg_panel_icon = function($type, $name) {
+    $key = strtolower($type . ' ' . $name);
+    if(strpos($key, 'webmail') !== false || strpos($key, 'mail') !== false) return 'bi-envelope-fill';
+    if(strpos($key, 'cpanel') !== false) return 'bi-server';
+    if(strpos($key, 'directadmin') !== false || strpos($key, 'direct') !== false) return 'bi-shield-lock-fill';
+    if(strpos($key, 'plesk') !== false) return 'bi-grid-3x3-gap-fill';
+    if(strpos($key, 'phpmyadmin') !== false || strpos($key, 'mysql') !== false) return 'bi-database-fill';
+    if(strpos($key, 'file') !== false || strpos($key, 'dosya') !== false) return 'bi-folder-fill';
+    return 'bi-box-arrow-up-right';
+};
 ?>
 
 <style>
@@ -97,7 +135,6 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
 .cdg-h *, .cdg-h *::before, .cdg-h *::after { box-sizing: border-box; }
 .cdg-h a { text-decoration: none; color: inherit; }
 
-/* CSS-ONLY TAB: Radio button'lar gizli */
 .cdg-h-tab-radio {
     position: absolute !important;
     opacity: 0 !important;
@@ -107,7 +144,6 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
     margin: 0 !important;
 }
 
-/* Geri butonu */
 .cdg-h-back {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 10px 16px;
@@ -121,7 +157,6 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
 }
 .cdg-h-back:hover { border-color: var(--c-primary); color: var(--c-primary); }
 
-/* Shell */
 .cdg-h-shell {
     background: var(--c-card);
     border: 1px solid var(--c-border);
@@ -158,10 +193,9 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
     letter-spacing: 0.5px;
 }
 
-/* Tab nav (label'lar) */
+/* Tab nav */
 .cdg-h-tabs {
-    display: flex;
-    gap: 2px;
+    display: flex; gap: 2px;
     padding: 0 24px;
     border-bottom: 1px solid var(--c-border);
     background: #fff;
@@ -182,7 +216,6 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
 }
 .cdg-h-tab:hover { color: var(--c-text); background: rgba(46,59,78,0.04); }
 
-/* AKTİF TAB STYLİNG - radio:checked + sibling label */
 #cdg-h-r-summary:checked  ~ .cdg-h-tabs label[for="cdg-h-r-summary"],
 #cdg-h-r-emails:checked   ~ .cdg-h-tabs label[for="cdg-h-r-emails"],
 #cdg-h-r-password:checked ~ .cdg-h-tabs label[for="cdg-h-r-password"],
@@ -195,7 +228,6 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
     font-weight: 700;
 }
 
-/* Pane'ler default gizli, checked olan radio kardeş seçici ile gösterilir */
 .cdg-h-pane { display: none; padding: 24px; }
 
 #cdg-h-r-summary:checked  ~ .cdg-h-body .cdg-h-pane[data-pane="summary"]  { display: block; }
@@ -248,13 +280,12 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
     font-size: 12px; font-weight: 600;
 }
 
-/* Grid */
 .cdg-h-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media (max-width: 768px) { .cdg-h-grid-2 { grid-template-columns: 1fr; } }
 
 /* Button */
 .cdg-h-btn {
-    display: inline-flex; align-items: center; gap: 8px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     padding: 11px 20px;
     border-radius: 10px;
     font-size: 13px; font-weight: 700;
@@ -318,25 +349,117 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
     box-shadow: 0 0 0 3px rgba(46,59,78,0.10);
 }
 
-/* DirectAdmin panel kartı */
-.cdg-h-panel-card {
-    background: linear-gradient(135deg, var(--c-primary-deep), var(--c-primary));
-    border-radius: 12px;
-    padding: 20px;
+/* === PANEL ERIŞIM KARTI === */
+.cdg-h-panel-hero {
+    background: linear-gradient(135deg, var(--c-primary-deep) 0%, var(--c-primary) 100%);
+    border-radius: 16px;
+    padding: 24px;
     color: #fff;
-    margin: 14px 0;
+    margin: 0 0 14px;
+    position: relative;
+    overflow: hidden;
 }
-.cdg-h-panel-card h4 { margin: 0 0 6px; font-size: 16px; font-weight: 800; color: #fff; }
-.cdg-h-panel-card p { margin: 0 0 14px; opacity: 0.85; font-size: 13px; }
-.cdg-h-panel-card a {
+.cdg-h-panel-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(0,229,255,0.18), transparent 70%);
+    pointer-events: none;
+}
+.cdg-h-panel-hero-head {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 16px;
+    position: relative; z-index: 1;
+}
+.cdg-h-panel-hero-icon {
+    width: 56px; height: 56px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.cdg-h-panel-hero-icon img {
+    max-width: 36px;
+    max-height: 36px;
+    object-fit: contain;
+}
+.cdg-h-panel-hero-icon i {
+    color: var(--c-info);
+    font-size: 28px;
+}
+.cdg-h-panel-hero-title h4 {
+    margin: 0 0 3px;
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+}
+.cdg-h-panel-hero-title p {
+    margin: 0;
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+}
+
+/* Panel buton listesi */
+.cdg-h-panel-btns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+}
+.cdg-h-panel-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.20);
+    border-radius: 12px;
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+.cdg-h-panel-btn:hover {
+    background: var(--c-info);
+    border-color: var(--c-info);
+    color: #0f172a !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0,229,255,0.30);
+}
+.cdg-h-panel-btn i {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+.cdg-h-panel-btn .cdg-h-panel-btn-text {
+    display: flex; flex-direction: column;
+    gap: 2px;
+    line-height: 1.2;
+}
+.cdg-h-panel-btn .cdg-h-panel-btn-text strong {
+    font-size: 13px;
+    font-weight: 700;
+}
+.cdg-h-panel-btn .cdg-h-panel-btn-text small {
+    font-size: 10px;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Boş durumda manuel link */
+.cdg-h-panel-manual {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 11px 20px;
-    background: var(--c-info); color: #0f172a !important;
+    background: var(--c-info);
+    color: #0f172a !important;
     border-radius: 10px;
     font-weight: 700; font-size: 13px;
     transition: transform 0.15s;
 }
-.cdg-h-panel-card a:hover { transform: translateY(-1px); }
+.cdg-h-panel-manual:hover { transform: translateY(-1px); }
 </style>
 
 <div class="cdg-h">
@@ -345,14 +468,9 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
         <i class="bi bi-arrow-left"></i> Listeye Dön
     </a>
 
-    <!-- ============================================
-         CSS-ONLY TAB SİSTEMİ (HİÇ JS YOK)
-         Radio inputlar shell'in DOĞRUDAN ÇOCUĞU
-         Label[for]'lar bu input'lara bağlanır
-         ============================================ -->
     <div class="cdg-h-shell">
 
-        <!-- Radio button'lar (gizli) - tab seçimi için -->
+        <!-- Radio button'lar - tab seçimi için -->
         <input type="radio" name="cdg-h-tab" id="cdg-h-r-summary" class="cdg-h-tab-radio" checked>
         <input type="radio" name="cdg-h-tab" id="cdg-h-r-emails" class="cdg-h-tab-radio">
         <input type="radio" name="cdg-h-tab" id="cdg-h-r-password" class="cdg-h-tab-radio">
@@ -404,6 +522,59 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
 
             <!-- ÖZET -->
             <div class="cdg-h-pane" data-pane="summary">
+
+                <!-- ============================================
+                     PANEL ERIŞIM HERO KARTI - WiseCP $buttons API
+                     ============================================ -->
+                <?php if($has_buttons): ?>
+                <div class="cdg-h-panel-hero">
+                    <div class="cdg-h-panel-hero-head">
+                        <div class="cdg-h-panel-hero-icon">
+                            <?php if($panel_logo): ?>
+                                <img src="<?php echo htmlspecialchars($panel_logo, ENT_QUOTES); ?>" alt="<?php echo htmlspecialchars($panel_name, ENT_QUOTES); ?>">
+                            <?php else: ?>
+                                <i class="bi bi-key-fill"></i>
+                            <?php endif; ?>
+                        </div>
+                        <div class="cdg-h-panel-hero-title">
+                            <h4><?php echo htmlspecialchars($panel_name, ENT_QUOTES); ?> Erişim</h4>
+                            <p>Şifre girmeden tek tıkla panellere giriş yapın</p>
+                        </div>
+                    </div>
+                    <div class="cdg-h-panel-btns">
+                        <?php foreach($buttons as $b_type => $b_value):
+                            $url = $b_value['url'] ?? '';
+                            $name = $b_value['name'] ?? ucfirst((string)$b_type);
+                            if(!$url) continue;
+                            $icon = $cdg_panel_icon($b_type, $name);
+                        ?>
+                        <a href="<?php echo htmlspecialchars($url, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-h-panel-btn">
+                            <i class="bi <?php echo $icon; ?>"></i>
+                            <span class="cdg-h-panel-btn-text">
+                                <strong><?php echo htmlspecialchars($name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
+                                <small>Tek tıkla giriş</small>
+                            </span>
+                        </a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php elseif($d_panel_url): ?>
+                <!-- Auto-login yoksa manuel URL -->
+                <div class="cdg-h-panel-hero">
+                    <div class="cdg-h-panel-hero-head">
+                        <div class="cdg-h-panel-hero-icon"><i class="bi bi-key-fill"></i></div>
+                        <div class="cdg-h-panel-hero-title">
+                            <h4><?php echo htmlspecialchars($panel_name, ENT_QUOTES); ?></h4>
+                            <p>Hosting yönetimi için panele giriş yapın</p>
+                        </div>
+                    </div>
+                    <a href="<?php echo htmlspecialchars($d_panel_url, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-h-panel-manual">
+                        <i class="bi bi-box-arrow-up-right"></i> <?php echo htmlspecialchars($panel_name, ENT_QUOTES); ?>'e Git
+                    </a>
+                </div>
+                <?php endif; ?>
+
+                <!-- Hizmet bilgileri grid -->
                 <div class="cdg-h-grid-2">
                     <div class="cdg-h-card">
                         <div class="cdg-h-card-head">
@@ -454,21 +625,13 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
                                 <?php if($d_databases): ?>
                                 <li><span class="cdg-h-info-l">Veritabanı</span><span class="cdg-h-info-v"><?php echo htmlspecialchars((string)$d_databases, ENT_QUOTES); ?></span></li>
                                 <?php endif; ?>
+                                <li><span class="cdg-h-info-l">Kontrol Paneli</span><span class="cdg-h-info-v"><?php echo htmlspecialchars($panel_name, ENT_QUOTES); ?></span></li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <?php if($d_panel_url): ?>
-                <div class="cdg-h-panel-card">
-                    <h4><i class="bi bi-key-fill"></i> Kontrol Paneli</h4>
-                    <p>Hosting yönetimi için DirectAdmin paneline giriş yapın</p>
-                    <a href="<?php echo htmlspecialchars($d_panel_url, ENT_QUOTES); ?>" target="_blank" rel="noopener">
-                        <i class="bi bi-box-arrow-up-right"></i> Panele Git
-                    </a>
-                </div>
-                <?php endif; ?>
-
+                <!-- FTP & DNS -->
                 <div class="cdg-h-grid-2">
                     <?php if($d_ftp_host || $d_ftp_user): ?>
                     <div class="cdg-h-card">
@@ -507,18 +670,39 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
                 <div class="cdg-h-alert cdg-h-alert-info">
                     <i class="bi bi-info-circle"></i>
                     <div>
-                        <strong>E-posta Yönetimi</strong><br>
-                        E-posta hesaplarınızı oluşturmak ve yönetmek için DirectAdmin paneline giriş yapın.
-                        <?php if($d_emails): ?>Paketinizde toplam <strong><?php echo (int)$d_emails; ?> e-posta hesabı</strong> hakkı vardır.<?php endif; ?>
+                        <strong>E-posta Hesabı Yönetimi</strong><br>
+                        E-posta hesaplarınızı oluşturmak ve yönetmek için <strong><?php echo htmlspecialchars($panel_name, ENT_QUOTES); ?></strong> paneline giriş yapın.
+                        <?php if($d_emails): ?>Paketinizde <strong><?php echo (int)$d_emails; ?> e-posta hesabı</strong> hakkı vardır.<?php endif; ?>
                     </div>
                 </div>
-                <?php if($d_panel_url): ?>
-                <div style="text-align:center;padding:20px;">
-                    <a href="<?php echo htmlspecialchars($d_panel_url, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-h-btn cdg-h-btn-primary">
-                        <i class="bi bi-envelope-plus"></i> E-posta Hesabı Oluştur (Panele Git)
+
+                <div class="cdg-h-grid-2">
+                    <?php if($webmail_url): ?>
+                    <a href="<?php echo htmlspecialchars($webmail_url, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-h-btn cdg-h-btn-success">
+                        <i class="bi bi-envelope-fill"></i> Webmail'e Tek Tıkla Gir
                     </a>
+                    <?php endif; ?>
+
+                    <?php
+                    // İlk panel butonu (cPanel/DirectAdmin) - email'e değil
+                    $primary_panel_btn = null;
+                    foreach($buttons as $b_type => $b_value) {
+                        if(stripos((string)$b_type, 'webmail') === false && stripos((string)($b_value['name'] ?? ''), 'webmail') === false) {
+                            $primary_panel_btn = $b_value;
+                            break;
+                        }
+                    }
+                    ?>
+                    <?php if($primary_panel_btn && !empty($primary_panel_btn['url'])): ?>
+                    <a href="<?php echo htmlspecialchars($primary_panel_btn['url'], ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-h-btn cdg-h-btn-primary">
+                        <i class="bi bi-box-arrow-up-right"></i> <?php echo htmlspecialchars($panel_name, ENT_QUOTES); ?>'de E-posta Yönet
+                    </a>
+                    <?php elseif($d_panel_url): ?>
+                    <a href="<?php echo htmlspecialchars($d_panel_url, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-h-btn cdg-h-btn-primary">
+                        <i class="bi bi-box-arrow-up-right"></i> <?php echo htmlspecialchars($panel_name, ENT_QUOTES); ?>'e Git
+                    </a>
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
             </div>
 
             <!-- ŞİFRE -->
@@ -526,17 +710,37 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
                 <div class="cdg-h-alert cdg-h-alert-warn">
                     <i class="bi bi-exclamation-triangle"></i>
                     <div>
-                        <strong>Şifre Değişikliği</strong><br>
-                        Hosting şifrenizi değiştirmek için DirectAdmin paneline giriş yapın. Yeni şifreyi paneldeki "Hesap Yönetimi" bölümünden değiştirebilirsiniz.
+                        <strong>Hosting Şifresi Değiştirme</strong><br>
+                        Hosting şifrenizi değiştirmek için <strong><?php echo htmlspecialchars($panel_name, ENT_QUOTES); ?></strong> paneline giriş yapın. Yeni şifreyi paneldeki "Hesap Yönetimi → Şifre Değiştir" bölümünden değiştirebilirsiniz.
                     </div>
                 </div>
-                <?php if($d_panel_url): ?>
-                <div style="text-align:center;padding:20px;">
-                    <a href="<?php echo htmlspecialchars($d_panel_url, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-h-btn cdg-h-btn-primary">
-                        <i class="bi bi-key"></i> Şifre Değiştir (Panele Git)
+
+                <?php if($has_buttons || $d_panel_url): ?>
+                <div style="text-align:center;padding:14px 0;">
+                    <?php
+                    $login_url = '';
+                    foreach($buttons as $b_type => $b_value) {
+                        if(stripos((string)$b_type, 'webmail') === false) {
+                            $login_url = $b_value['url'] ?? '';
+                            break;
+                        }
+                    }
+                    if(!$login_url) $login_url = $d_panel_url;
+                    ?>
+                    <?php if($login_url): ?>
+                    <a href="<?php echo htmlspecialchars($login_url, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-h-btn cdg-h-btn-primary">
+                        <i class="bi bi-key-fill"></i> Şifre Değiştirmek İçin Panele Git
                     </a>
+                    <?php endif; ?>
                 </div>
                 <?php endif; ?>
+
+                <div class="cdg-h-alert cdg-h-alert-info" style="margin-top:14px;">
+                    <i class="bi bi-info-circle"></i>
+                    <div style="font-size:12px;">
+                        <strong>Önemli:</strong> Şifrenizi değiştirdikten sonra FTP, e-posta yapılandırmalarınızı yeni şifre ile güncellemeyi unutmayın.
+                    </div>
+                </div>
             </div>
 
             <!-- YENİLEME -->
