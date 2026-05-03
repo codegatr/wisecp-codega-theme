@@ -14,62 +14,249 @@ $contact_url = cdg_link('contact');
 $basket_url  = cdg_link('basket');
 $domain_url  = cdg_link('domain');
 
-// === Gerçek paket çekimi (anasayfa ile aynı sistem) ===
-$pricing_categories = [];
-$wisecp_loaded = false;
+// === WiseCP Runtime'dan paketleri al (Classic temasi gibi) ===
+// Runtime variable'lar (WiseCP setler): $showCategory, $category, $category2,
+// $get_list, $get_categories, $category_route, $category_tab_route, $columns
 
-if(class_exists('Products') && method_exists('Products', 'getList')) {
+// Paket render helper - WiseCP $product structure'ini standart formata cevirir
+$cdg_format_package = function($product) use (&$columns) {
+    $popular = !empty($product['options']['popular']);
+
+    $price_text = '';
+    $period_text = '';
+    $amount_symbol = '';
+    $amount_value = '';
+
+    $prices = $product['prices'] ?? [];
+    if(isset($prices[0]) && is_array($prices[0])) {
+        $amount = $prices[0]['amount'] ?? 0;
+        $cid    = $prices[0]['cid'] ?? 0;
+        $override = !empty($product['override_usrcurrency']);
+
+        if(class_exists('Money') && method_exists('Money', 'formatter_symbol') && $cid) {
+            try {
+                $price_text = Money::formatter_symbol($amount, $cid, !$override);
+            } catch(\Throwable $e) {
+                $price_text = number_format((float)$amount, 2, ',', '.');
+            }
+        } else {
+            $price_text = number_format((float)$amount, 2, ',', '.');
+        }
+
+        // Currency symbol ayikla
+        global $currency_symbols;
+        if(is_array($currency_symbols ?? null) && $price_text) {
+            $parts = explode(' ', $price_text);
+            if(count($parts) >= 2) {
+                if(in_array(reset($parts), $currency_symbols)) {
+                    $amount_symbol = array_shift($parts);
+                    $amount_value = implode(' ', $parts);
+                } elseif(in_array(end($parts), $currency_symbols)) {
+                    $amount_symbol = array_pop($parts);
+                    $amount_value = implode(' ', $parts);
+                } else {
+                    $amount_value = $price_text;
+                }
+            } else {
+                $amount_value = $price_text;
+            }
+        } else {
+            $amount_value = $price_text;
+        }
+
+        // Periyot
+        if(class_exists('View') && method_exists('View', 'period')) {
+            try {
+                $period_text = View::period($prices[0]['time'] ?? 1, $prices[0]['period'] ?? 'year');
+            } catch(\Throwable $e) {
+                $period_text = ($prices[0]['time'] ?? 1) . ' ' . ($prices[0]['period'] ?? 'year');
+            }
+        }
+    }
+
+    // Features parse
+    $features = [];
+    $raw_features = $product['features'] ?? '';
+    $json_features = null;
+    if(class_exists('Utility') && method_exists('Utility', 'jdecode')) {
+        try { $json_features = Utility::jdecode($raw_features, true); } catch(\Throwable $e) {}
+    }
+    if(!$json_features && is_string($raw_features) && trim($raw_features)) {
+        $decoded = json_decode($raw_features, true);
+        if(is_array($decoded)) $json_features = $decoded;
+    }
+
+    if(is_array($json_features) && isset($columns) && is_array($columns)) {
+        foreach($columns as $col) {
+            $col_id = $col['id'] ?? null;
+            $col_name = $col['name'] ?? '';
+            if($col_id !== null && isset($json_features[$col_id])) {
+                $val = $json_features[$col_id];
+                if($val !== null && $val !== '') {
+                    $features[] = $col_name . ': ' . $val;
+                }
+            }
+        }
+    } elseif(is_array($json_features)) {
+        foreach($json_features as $k => $v) {
+            if($v !== null && $v !== '') {
+                $features[] = (is_string($k) ? $k . ': ' : '') . (is_array($v) ? json_encode($v) : (string)$v);
+            }
+        }
+    } elseif(is_string($raw_features) && trim($raw_features)) {
+        $lines = preg_split('/\r\n|\r|\n/', $raw_features);
+        foreach($lines as $line) {
+            $line = trim($line);
+            if($line !== '') $features[] = $line;
+        }
+    }
+
+    return [
+        'name'          => $product['title'] ?? ($product['name'] ?? 'Paket'),
+        'subtitle'      => $product['sub_title'] ?? ($product['description'] ?? ''),
+        'amount_value'  => $amount_value,
+        'amount_symbol' => $amount_symbol,
+        'amount_pos'    => $amount_symbol ? 'left' : '',
+        'period'        => $period_text ?: 'aylık',
+        'features'      => $features,
+        'highlight'     => $popular,
+        'buy_link'      => $product['buy_link'] ?? '',
+        'buy_label'     => $product['optionsl']['buy_button_name'] ?? 'Sepete Ekle',
+    ];
+};
+
+// === Kategorileri al ===
+$pricing_categories = [];
+$wisecp_used = false;
+
+$color_cycle = [
+    ['icon' => 'bi-rocket-takeoff', 'color' => '#10b981'],
+    ['icon' => 'bi-stars',          'color' => '#1e40af'],
+    ['icon' => 'bi-people-fill',    'color' => '#8b5cf6'],
+    ['icon' => 'bi-trophy-fill',    'color' => '#f59e0b'],
+    ['icon' => 'bi-shield-fill-check','color' => '#06b6d4'],
+];
+
+// Yontem 1: $get_categories + $get_list
+if(isset($get_categories) && is_callable($get_categories) && isset($category) && is_array($category)) {
+    try {
+        $cats = call_user_func($get_categories, $category['id'] ?? 0, $category['kind'] ?? 'hosting');
+        if($cats && is_array($cats) && count($cats) > 0) {
+            $i = 0;
+            foreach($cats as $cat) {
+                if(!is_array($cat)) continue;
+                $cat_id = $cat['id'] ?? 0;
+                $cat_kind = $cat['kind'] ?? 'hosting';
+
+                $list = [];
+                if(isset($get_list) && is_callable($get_list)) {
+                    try { $list = call_user_func($get_list, $cat_id, $cat_kind); } catch(\Throwable $e) { $list = []; }
+                }
+
+                if(!$list || !is_array($list) || count($list) === 0) continue;
+
+                $packages = [];
+                foreach($list as $product) {
+                    if(is_array($product)) $packages[] = $cdg_format_package($product);
+                }
+
+                if(count($packages) === 0) continue;
+
+                $style = $color_cycle[$i % count($color_cycle)];
+                $pricing_categories[] = [
+                    'id'       => 'cat_' . $cat_id,
+                    'name'     => $cat['title'] ?? ($cat['name'] ?? 'Kategori'),
+                    'desc'     => $cat['sub_title'] ?? ($cat['description'] ?? ''),
+                    'icon'     => $style['icon'],
+                    'color'    => $style['color'],
+                    'packages' => $packages,
+                ];
+                $i++;
+            }
+            if(count($pricing_categories) > 0) $wisecp_used = true;
+        }
+    } catch(\Throwable $e) {}
+}
+
+// Yontem 2: $showCategory + $get_list (tek kategori)
+if(!$wisecp_used && isset($showCategory) && is_array($showCategory) && isset($get_list) && is_callable($get_list)) {
+    try {
+        $list = call_user_func($get_list, $showCategory['id'] ?? 0, $showCategory['kind'] ?? 'hosting');
+        if($list && is_array($list) && count($list) > 0) {
+            $packages = [];
+            foreach($list as $product) {
+                if(is_array($product)) $packages[] = $cdg_format_package($product);
+            }
+            if(count($packages) > 0) {
+                $pricing_categories[] = [
+                    'id'       => 'main',
+                    'name'     => $showCategory['title'] ?? 'Hosting Paketleri',
+                    'desc'     => $showCategory['sub_title'] ?? '',
+                    'icon'     => 'bi-rocket-takeoff',
+                    'color'    => '#1e40af',
+                    'packages' => $packages,
+                ];
+                $wisecp_used = true;
+            }
+        }
+    } catch(\Throwable $e) {}
+}
+
+// Yontem 3: Products::getList API
+if(!$wisecp_used && class_exists('Products') && method_exists('Products', 'getList')) {
     try {
         $hosting_products = @Products::getList(['type' => 'hosting', 'status' => 'active']);
         if($hosting_products && is_array($hosting_products) && count($hosting_products) > 0) {
             $by_category = [];
             foreach($hosting_products as $p) {
-                $cat_id = $p['category_id'] ?? $p['cid'] ?? 0;
+                if(!is_array($p)) continue;
+                $cat_id = $p['category_id'] ?? ($p['cid'] ?? 0);
                 $cat_name = $p['category_name'] ?? 'Hosting Paketleri';
                 if(!isset($by_category[$cat_id])) {
-                    $by_category[$cat_id] = ['name' => $cat_name, 'packages' => []];
+                    $by_category[$cat_id] = ['name' => $cat_name, 'list' => []];
                 }
-                $by_category[$cat_id]['packages'][] = $p;
+                $by_category[$cat_id]['list'][] = $p;
             }
-            if(count($by_category) > 0) {
-                $pricing_categories = array_values($by_category);
-                $wisecp_loaded = true;
+            $i = 0;
+            foreach($by_category as $cat_id => $bucket) {
+                $packages = [];
+                foreach($bucket['list'] as $product) {
+                    $packages[] = $cdg_format_package($product);
+                }
+                if(count($packages) === 0) continue;
+                $style = $color_cycle[$i % count($color_cycle)];
+                $pricing_categories[] = [
+                    'id'       => 'cat_' . $cat_id,
+                    'name'     => $bucket['name'],
+                    'desc'     => '',
+                    'icon'     => $style['icon'],
+                    'color'    => $style['color'],
+                    'packages' => $packages,
+                ];
+                $i++;
             }
+            if(count($pricing_categories) > 0) $wisecp_used = true;
         }
-    } catch(Exception $e) { /* fallback */ }
+    } catch(\Throwable $e) {}
 }
 
-if(!$wisecp_loaded) {
+// Yontem 4: Hard-coded fallback (admin'e mesaj icin)
+if(empty($pricing_categories)) {
     $pricing_categories = [
         [
-            'id' => 'ekonomik', 'name' => 'Ekonomik SSD Hosting', 'icon' => 'bi-rocket-takeoff', 'color' => '#10b981',
-            'desc' => 'Bireysel ve küçük projeler için uygun fiyatlı paketler',
-            'packages' => [
-                ['name' => 'Linux Hosting 1', 'subtitle' => 'Bireysel siteler', 'price' => '150', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['1 Web Sitesi', '5 GB NVMe SSD', '50 GB Trafik', '5 E-posta', 'Ücretsiz SSL', 'Günlük Yedekleme']],
-                ['name' => 'Linux Hosting 2', 'subtitle' => 'Hobi siteleri', 'price' => '289', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true, 'features' => ['3 Web Sitesi', '20 GB NVMe SSD', 'Sınırsız Trafik', '20 E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Günlük Yedekleme']],
-                ['name' => 'Linux Hosting 3', 'subtitle' => 'Küçük işletme', 'price' => '389', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['5 Web Sitesi', '50 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Saatlik Yedek']],
-                ['name' => 'Linux Hosting 4', 'subtitle' => 'Geniş projeler', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Saatlik Yedek']],
-            ],
-        ],
-        [
-            'id' => 'profesyonel', 'name' => 'Profesyonel SSD Hosting', 'icon' => 'bi-stars', 'color' => '#1e40af',
-            'desc' => 'Yüksek trafikli siteler ve kurumsal çözümler için',
-            'packages' => [
-                ['name' => 'Profesyonel 1', 'subtitle' => 'Kurumsal başlangıç', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', '2 Core CPU', '2 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise']],
-                ['name' => 'Profesyonel 2', 'subtitle' => 'Büyük kurumsal', 'price' => '750', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true, 'features' => ['25 Web Sitesi', '250 GB NVMe SSD', 'Sınırsız Trafik', '4 Core CPU', '4 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Öncelikli Destek']],
-                ['name' => 'Profesyonel 3', 'subtitle' => 'Yüksek trafik', 'price' => '1.200', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'features' => ['Sınırsız Site', '500 GB NVMe SSD', 'Sınırsız Trafik', '8 Core CPU', '8 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Dedicated IP']],
-            ],
-        ],
-        [
-            'id' => 'bayi', 'name' => 'Bayi (Reseller) Hosting', 'icon' => 'bi-people-fill', 'color' => '#8b5cf6',
-            'desc' => 'Web tasarımcıları ve ajanslar için bayilik çözümleri',
-            'packages' => [
-                ['name' => 'S BAYİ', 'subtitle' => 'Küçük bayilik', 'price' => '14', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'features' => ['10 cPanel Hesabı', '20 GB NVMe SSD', '200 GB Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label']],
-                ['name' => 'M BAYİ', 'subtitle' => 'Orta bayilik', 'price' => '24', 'currency' => '$', 'period' => 'aylık', 'highlight' => true, 'features' => ['25 cPanel Hesabı', '50 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'cPanel Lisansı']],
-                ['name' => 'L BAYİ', 'subtitle' => 'Büyük bayilik', 'price' => '39', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'features' => ['50 cPanel Hesabı', '100 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'Marka Çözümleri']],
-            ],
+            'id' => 'demo', 'name' => 'Hosting Paketleri', 'icon' => 'bi-rocket-takeoff', 'color' => '#1e40af',
+            'desc' => 'WiseCP\'de henüz hosting paketi tanımlanmamış. Admin panelinden ekleyebilirsiniz.',
+            'packages' => [],
         ],
     ];
+}
+
+// Hero baslik
+$hero_title = 'Hosting Paketleri';
+$hero_subtitle = 'NVMe SSD, LiteSpeed Enterprise, %99.99 uptime, 7/24 destek.';
+if(isset($showCategory) && is_array($showCategory)) {
+    if(!empty($showCategory['title'])) $hero_title = $showCategory['title'];
+    if(!empty($showCategory['sub_title'])) $hero_subtitle = $showCategory['sub_title'];
 }
 ?>
 
@@ -85,8 +272,8 @@ if(!$wisecp_loaded) {
     <div class="cdg-container">
         <div class="cdg-page-hero-content">
             <div class="cdg-eyebrow cdg-eyebrow-glow"><i class="bi bi-hdd-network-fill"></i> Hosting Paketleri</div>
-            <h1>NVMe SSD <span class="cdg-text-gradient-light">hosting paketleri</span></h1>
-            <p>LiteSpeed Enterprise, %99.99 uptime, 7/24 destek. <strong>Tüm paketlerde ücretsiz SSL ve domain seçeneği.</strong></p>
+            <h1><?php echo htmlspecialchars($hero_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
+            <p><?php echo htmlspecialchars($hero_subtitle, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <strong>Tüm paketlerde ücretsiz SSL.</strong></p>
             <div class="cdg-page-hero-cta">
                 <a href="#packages" class="cdg-btn cdg-btn-primary cdg-btn-lg cdg-btn-glow"><i class="bi bi-arrow-down-circle-fill"></i> Paketleri Gör</a>
                 <a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-question-circle-fill"></i> Yardım Al</a>
@@ -107,7 +294,7 @@ if(!$wisecp_loaded) {
     </div>
 </section>
 
-<!-- PRICING (3 sekmeli) -->
+<!-- PRICING -->
 <section class="cdg-pricing-tabbed cdg-section" id="packages">
     <div class="cdg-container">
         <div class="cdg-section-head">
@@ -116,46 +303,79 @@ if(!$wisecp_loaded) {
             <p>Bireysel sitelerden bayilik çözümlerine, NVMe SSD + LiteSpeed altyapısı ile.</p>
         </div>
 
+        <?php if(count($pricing_categories) > 1): ?>
         <div class="cdg-pricing-tabs" role="tablist">
             <?php foreach($pricing_categories as $i => $cat): ?>
-            <button type="button" class="cdg-pricing-tab<?php echo $i === 0 ? ' active' : ''; ?>" data-tab="<?php echo $cat['id']; ?>" role="tab">
-                <i class="bi <?php echo $cat['icon']; ?>" style="color:<?php echo $cat['color']; ?>;"></i>
-                <span><?php echo htmlspecialchars($cat['name']); ?></span>
+            <button type="button" class="cdg-pricing-tab<?php echo $i === 0 ? ' active' : ''; ?>" data-tab="<?php echo htmlspecialchars($cat['id'], ENT_QUOTES); ?>" role="tab">
+                <i class="bi <?php echo htmlspecialchars($cat['icon'], ENT_QUOTES); ?>" style="color:<?php echo htmlspecialchars($cat['color'], ENT_QUOTES); ?>;"></i>
+                <span><?php echo htmlspecialchars($cat['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <small><?php echo count($cat['packages']); ?> paket</small>
             </button>
             <?php endforeach; ?>
         </div>
+        <?php endif; ?>
 
-        <?php foreach($pricing_categories as $i => $cat): ?>
-        <div class="cdg-pricing-pane<?php echo $i === 0 ? ' active' : ''; ?>" data-pane="<?php echo $cat['id']; ?>" role="tabpanel">
-            <div class="cdg-pricing-pane-desc"><?php echo htmlspecialchars($cat['desc']); ?></div>
-            <div class="cdg-pricing-grid cdg-pricing-grid-<?php echo count($cat['packages']); ?>">
+        <?php foreach($pricing_categories as $i => $cat):
+            $pkg_count = count($cat['packages']);
+            $grid_class = 'cdg-pricing-grid-' . min(4, max(1, $pkg_count ?: 1));
+        ?>
+        <div class="cdg-pricing-pane<?php echo $i === 0 ? ' active' : ''; ?>" data-pane="<?php echo htmlspecialchars($cat['id'], ENT_QUOTES); ?>" role="tabpanel">
+            <?php if(!empty($cat['desc'])): ?>
+            <div class="cdg-pricing-pane-desc"><?php echo htmlspecialchars($cat['desc'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+            <?php endif; ?>
+
+            <?php if($pkg_count === 0): ?>
+            <div style="text-align:center;padding:60px 20px;color:#64748b;">
+                <i class="bi bi-info-circle" style="font-size:48px;color:#cbd5e1;display:block;margin-bottom:16px;"></i>
+                <p style="font-size:15px;margin:0;">Bu kategoride henüz paket bulunmuyor.</p>
+            </div>
+            <?php else: ?>
+
+            <div class="cdg-pricing-grid <?php echo $grid_class; ?>">
                 <?php foreach($cat['packages'] as $pkg): ?>
                 <div class="cdg-price-card<?php echo !empty($pkg['highlight']) ? ' cdg-price-card-highlight' : ''; ?>">
-                    <?php if(!empty($pkg['highlight'])): ?><div class="cdg-price-ribbon">EN POPÜLER</div><?php endif; ?>
-                    <div class="cdg-price-cat-tag" style="color:<?php echo $cat['color']; ?>;background:<?php echo $cat['color']; ?>15;">
-                        <i class="bi <?php echo $cat['icon']; ?>"></i> <?php echo htmlspecialchars($cat['name']); ?>
+                    <?php if(!empty($pkg['highlight'])): ?>
+                    <div class="cdg-price-ribbon">EN POPÜLER</div>
+                    <?php endif; ?>
+                    <div class="cdg-price-cat-tag" style="color:<?php echo htmlspecialchars($cat['color'], ENT_QUOTES); ?>;background:<?php echo htmlspecialchars($cat['color'], ENT_QUOTES); ?>15;">
+                        <i class="bi <?php echo htmlspecialchars($cat['icon'], ENT_QUOTES); ?>"></i> <?php echo htmlspecialchars($cat['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </div>
-                    <h3 class="cdg-price-name"><?php echo htmlspecialchars($pkg['name']); ?></h3>
-                    <p class="cdg-price-subtitle"><?php echo htmlspecialchars($pkg['subtitle']); ?></p>
+                    <h3 class="cdg-price-name"><?php echo htmlspecialchars($pkg['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
+                    <?php if(!empty($pkg['subtitle'])): ?>
+                    <p class="cdg-price-subtitle"><?php echo htmlspecialchars($pkg['subtitle'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
+                    <?php endif; ?>
                     <div class="cdg-price-amount">
                         <div class="cdg-price-current">
-                            <span class="cdg-price-curr"><?php echo $pkg['currency']; ?></span>
-                            <span class="cdg-price-num"><?php echo $pkg['price']; ?></span>
+                            <?php if($pkg['amount_pos'] === 'left' && !empty($pkg['amount_symbol'])): ?>
+                            <span class="cdg-price-curr"><?php echo htmlspecialchars($pkg['amount_symbol'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                            <?php endif; ?>
+                            <span class="cdg-price-num"><?php echo htmlspecialchars($pkg['amount_value'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                            <?php if($pkg['amount_pos'] === 'right' && !empty($pkg['amount_symbol'])): ?>
+                            <span class="cdg-price-curr"><?php echo htmlspecialchars($pkg['amount_symbol'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                            <?php endif; ?>
                         </div>
-                        <span class="cdg-price-period">/<?php echo $pkg['period']; ?></span>
+                        <?php if(!empty($pkg['period'])): ?>
+                        <span class="cdg-price-period">/<?php echo htmlspecialchars($pkg['period'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                        <?php endif; ?>
                     </div>
+                    <?php if(!empty($pkg['features']) && is_array($pkg['features'])): ?>
                     <ul class="cdg-price-features">
                         <?php foreach($pkg['features'] as $feat): ?>
-                        <li><i class="bi bi-check-circle-fill"></i> <?php echo htmlspecialchars($feat); ?></li>
+                        <li><i class="bi bi-check-circle-fill"></i> <?php echo htmlspecialchars((string)$feat, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></li>
                         <?php endforeach; ?>
                     </ul>
-                    <a href="<?php echo cdg_link('products', ['hosting']); ?>" class="cdg-btn <?php echo !empty($pkg['highlight']) ? 'cdg-btn-primary cdg-btn-glow' : 'cdg-btn-outline'; ?> cdg-btn-block">
-                        <i class="bi bi-cart-plus"></i> Sepete Ekle
+                    <?php endif; ?>
+                    <?php
+                        $btn_link = !empty($pkg['buy_link']) && $pkg['buy_link'] !== '#' ? $pkg['buy_link'] : $basket_url;
+                        $btn_class = !empty($pkg['highlight']) ? 'cdg-btn-primary cdg-btn-glow' : 'cdg-btn-outline';
+                    ?>
+                    <a href="<?php echo htmlspecialchars($btn_link, ENT_QUOTES); ?>" class="cdg-btn <?php echo $btn_class; ?> cdg-btn-block">
+                        <i class="bi bi-cart-plus"></i> <?php echo htmlspecialchars($pkg['buy_label'] ?? 'Sepete Ekle', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </a>
                 </div>
                 <?php endforeach; ?>
             </div>
+            <?php endif; ?>
         </div>
         <?php endforeach; ?>
     </div>
@@ -207,7 +427,7 @@ if(!$wisecp_loaded) {
         <div class="cdg-faq-list" style="max-width:780px;margin:32px auto 0;">
             <details class="cdg-faq-item" open>
                 <summary><span>Hangi paketi seçmeliyim?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">Tek site / kişisel: <strong>Linux Hosting 1 (150 ₺/yıl)</strong>. Hobi/blog: <strong>Linux Hosting 2 (289 ₺/yıl)</strong>. Kurumsal: <strong>Profesyonel 1 (450 ₺/yıl)</strong>. Yüksek trafik: <strong>Profesyonel 2 (750 ₺/yıl)</strong>. Karar veremiyorsanız bize danışın!</div>
+                <div class="cdg-faq-answer">İhtiyacınıza göre yukarıdaki paket karşılaştırmasını inceleyin. Bireysel kullanıcılar için ekonomik paketler, kurumsal projeler için profesyonel paketler önerilir. Karar veremiyorsanız bize danışın!</div>
             </details>
             <details class="cdg-faq-item">
                 <summary><span>Mevcut sitemi taşımanız ücretli mi?</span><i class="bi bi-plus-lg"></i></summary>
@@ -215,7 +435,7 @@ if(!$wisecp_loaded) {
             </details>
             <details class="cdg-faq-item">
                 <summary><span>İade politikanız nasıl işliyor?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer"><strong>30 gün koşulsuz iade garantisi.</strong> Beğenmezseniz panelden talep oluşturun, 1 iş günü içinde tam iade. Domain ücreti hariç (kayıt yapıldıysa iade edilemez).</div>
+                <div class="cdg-faq-answer"><strong>30 gün koşulsuz iade garantisi.</strong> Beğenmezseniz panelden talep oluşturun, 1 iş günü içinde tam iade. Domain ücreti hariç.</div>
             </details>
             <details class="cdg-faq-item">
                 <summary><span>Paketimi sonradan yükseltebilir miyim?</span><i class="bi bi-plus-lg"></i></summary>
