@@ -713,9 +713,12 @@ body#codegapanel {
 .cdg-ac-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 100px; }
 .cdg-ac-content::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-/* Hesabım sayfaları - büyük HERO başlıkları KALDIRILDI */
-.cdg-ac-pagehead,
-.cdg-ac-content > .cdg-ac-pagehead,
+/* Hesabım sayfaları - HERO başlık/icon/açıklama GİZLE, butonlar kalır */
+.cdg-ac-pagehead {
+    display: none !important;
+}
+
+/* Hero parent'ları sade strip'e dönüştür (yer kapsamaz, butonlar kalır) */
 .cdg-pl-hero,
 .cdg-aff-hero,
 .cdg-msl-hero,
@@ -736,16 +739,49 @@ body#codegapanel {
 .cdg-cards-hero,
 .cdg-host-hero,
 .cdg-hem-hero {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 0 8px !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    min-height: 0 !important;
+    color: inherit !important;
+}
+/* Hero içindeki başlık/açıklama/icon gizle */
+.cdg-pl-hero h1, .cdg-pl-hero p, .cdg-pl-hero-icon, .cdg-pl-hero-eyebrow, .cdg-pl-hero-text,
+.cdg-aff-hero h1, .cdg-aff-hero p, .cdg-aff-hero-icon, .cdg-aff-hero-text,
+.cdg-msl-hero h1, .cdg-msl-hero p, .cdg-msl-hero-icon,
+.cdg-tk-hero h1, .cdg-tk-hero p, .cdg-tk-hero-icon, .cdg-tk-hero-text,
+.cdg-rst-hero h1, .cdg-rst-hero p, .cdg-rst-hero-icon,
+.cdg-bal-hero h1, .cdg-bal-hero p, .cdg-bal-hero-icon, .cdg-bal-hero-text,
+.cdg-info-hero h1, .cdg-info-hero p, .cdg-info-hero-icon, .cdg-info-hero-text,
+.cdg-vrf-hero h1, .cdg-vrf-hero p,
+.cdg-docvrf-hero h1, .cdg-docvrf-hero p,
+.cdg-pd2-hero h1, .cdg-pd2-hero p, .cdg-pd2-hero-eyebrow, .cdg-pd2-hero-icon, .cdg-pd2-hero-text {
     display: none !important;
 }
+/* Hero satırı - butonları sağa al */
+.cdg-pl-hero-row, .cdg-aff-hero-row, .cdg-tk-hero-row, .cdg-pd2-hero-row {
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+/* Pd2 status/back butonu vs - geri dönüş butonları görünür kalır */
+.cdg-pd2-hero-status, .cdg-pd2-back, .cdg-tk-back, .cdg-aff-btn,
+.cdg-pl-hero-action, .cdg-aff-btn-gold, .cdg-aff-btn-outline {
+    /* doğal akışla görünür kalır */
+}
 
-/* H1 başlıkları herşeye karşı gizle (içerik h1'leri olabilir, ama ac- altında istemiyoruz) */
+/* H1 başlıkları herşeye karşı gizle */
 body#codegapanel .cdg-ac-content > div > h1:first-child,
 body#codegapanel .cdg-ac-content > section > h1:first-child {
     display: none;
 }
 
-/* Wide content desteği - bazı sayfalar geniş istiyor (mevcut $wide_content) */
+/* Wide content desteği */
 body#codegapanel .cdg-ac-content { max-width: 100%; }
 
 /* Footer - sabit alt, kompakt */

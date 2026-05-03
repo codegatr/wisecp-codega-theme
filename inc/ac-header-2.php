@@ -85,7 +85,7 @@ if(!$user_name) $user_name = 'Müşteri';
         <a href="<?php echo (isset($basket_link) && $basket_link && $basket_link != '#') ? $basket_link : cdg_link('basket'); ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm" title="Sepetim">
             <i class="bi bi-cart"></i>
         </a>
-        <a href="<?php echo cdg_link('products', ['hosting']); ?>" class="cdg-btn cdg-btn-primary cdg-btn-sm">
+        <a href="<?php echo cdg_link('hosting-products'); ?>" class="cdg-btn cdg-btn-primary cdg-btn-sm">
             <i class="bi bi-plus-lg"></i> Yeni Siparis
         </a>
         <div style="width:38px;height:38px;border-radius:50%;background:var(--cdg-gradient);color:white;display:grid;place-items:center;font-weight:700;font-size:14px;">
