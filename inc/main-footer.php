@@ -169,6 +169,7 @@ footer.cdg-footer .cdg-footer-aksoy span { color: rgba(255,255,255,0.85); font-w
 }
 </style>
 
+<!-- CDG_FOOTER_START_v3.5.70 (inc/main-footer.php) -->
 <footer class="cdg-footer">
     <div class="cdg-container">
         <div class="cdg-footer-grid">
@@ -299,6 +300,7 @@ footer.cdg-footer .cdg-footer-aksoy span { color: rgba(255,255,255,0.85); font-w
         </div>
     </div>
 </footer>
+<!-- CDG_FOOTER_END_v3.5.70 (inc/main-footer.php) -->
 
 <!-- CODEGA Frontend JS - mobile menu, scroll, smooth scroll, mega menu accordion -->
 <script src="<?php echo isset($tadress) ? $tadress : ''; ?>js/script.js?v=<?php echo file_exists(__DIR__ . '/../js/script.js') ? filemtime(__DIR__ . '/../js/script.js') : 1; ?>" defer></script>

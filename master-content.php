@@ -45,6 +45,9 @@ $_cdg_page = isset($hoptions["page"]) ? $hoptions["page"] : '';
 
 <?php
     $_footer_file = __DIR__.DS."inc".DS."main-footer.php";
+    echo "
+<!-- CDG_MASTER_CONTENT_FOOTER_CALL_v3.5.70 -->
+";
     if(file_exists($_footer_file)) include $_footer_file;
 
     if(class_exists('View') && method_exists('View', 'footer_codes')) View::footer_codes();

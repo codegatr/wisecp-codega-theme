@@ -1,24 +1,18 @@
 {
-    "version": "3.5.69",
+    "version": "3.5.70",
     "release_date": "2026-05-03",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.69-codega",
-    "tag": "v3.5.69-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.70-codega",
+    "tag": "v3.5.70-codega",
     "changelog": [
-        "v3.5.69 - BONKORLUK TEMIZLIGI (Cift footer + duplicate dosya)",
-        "FIX KRITIK: vizyon.html ve diger 11 corporate sayfada CIFT FOOTER vardi",
-        "  Sebep: v3.5.63'te eklenen defansif footer mantigi WiseCP'nin scope izolasyonu nedeniyle calismiyordu",
-        "  $_cdg_in_master_content flag pages/'e ulasmadigi icin fallback hep tetikleniyordu",
-        "  Sonuc: master-content footer ekliyor + corporate sayfa kendi footer ekliyor = 2 footer",
-        "  Cozum: 24 sayfadan defansif footer block tamamen kaldirildi",
-        "FIX: 12 corporate sayfa root'tan silindi (90 KB dead code)",
-        "  cerez-politikasi.php, erp.php, gizlilik-politikasi.php, hakkimizda.php",
-        "  hizmet-sozlesmesi.php, kariyer.php, kvkk.php, references.php",
-        "  sosyal-sorumluluk.php, surdurulebilirlik.php, system-status.php, vision.php",
-        "  Sebep: theme.php router 'pages/PAGE.php' kontrolu ONCE yapiyor",
-        "  pages/ icinde aynisi vardi (birebir MD5 ayni) - root versiyonlari hicbir zaman calismiyor",
-        "FIX: _ac-product-detail.php silindi (19 KB dead code)",
-        "  Hicbir yerden include edilmiyor, eski gelistirme artigi",
-        "TOPLAM: ~110 KB temizlendi, 25+ dosya simplifiye edildi"
+        "v3.5.70 - DEBUG SURUMU: Cift Footer Tani Modu",
+        "v3.5.69 sonrasi Yunus hala cift footer goruyordu",
+        "Tani amacli HTML yorumlari eklendi:",
+        "  inc/main-footer.php => <!-- CDG_FOOTER_START_v3.5.70 -->",
+        "                         <!-- CDG_FOOTER_END_v3.5.70 -->",
+        "  master-content.php => <!-- CDG_MASTER_CONTENT_FOOTER_CALL_v3.5.70 -->",
+        "Yunus view-source ile bakinca:",
+        "  - 1 START + 1 END + 1 CALL = NORMAL (tek footer)",
+        "  - 2+ START veya 2+ END = SORUN (cift footer kaynagi tespit edilebilir)"
     ]
 }
