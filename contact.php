@@ -101,9 +101,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
     $message = trim($_POST['message'] ?? '');
 
     if(!$name || !$email || !$message) {
-        $form_msg = 'Lütfen ad, e-posta ve mesaj alanlarini doldurun.';
+        $form_msg = 'Lütfen ad, e-posta ve mesaj alanlarını doldurun.';
     } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $form_msg = 'Gecerli bir e-posta adresi girin.';
+        $form_msg = 'Geçerli bir e-posta adresi girin.';
     } else {
         // WiseCP destek talebi olarak kayıt (Tickets sinifi varsa)
         if(class_exists('Tickets')) {
@@ -113,15 +113,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
                     'subject' => $subject ?: 'İletişim Formu', 'message' => $message,
                     'department' => 1, 'priority' => 'normal'
                 ]);
-                if($r) { $form_success = true; $form_msg = 'Mesajiniz alindi. En kisa sürede size dönüş yapacagiz.'; }
-            } catch(Exception $e) { $form_msg = 'Mesaj gonderilemedi: ' . $e->getMessage(); }
+                if($r) { $form_success = true; $form_msg = 'Mesajınız alındı. En kısa sürede size dönüş yapacağız.'; }
+            } catch(Exception $e) { $form_msg = 'Mesaj gönderilemedi: ' . $e->getMessage(); }
         }
         if(!$form_success) {
             // Email fallback
             $body = "İletişim Formu\n\nAd: {$name}\nE-posta: {$email}\nTelefon: {$phone}\nKonu: {$subject}\n\nMesaj:\n{$message}";
             @mail($company_email, '[CODEGA İletişim] ' . ($subject ?: 'Yeni Mesaj'), $body, "From: noreply@codega.com.tr\r\nReply-To: {$email}");
             $form_success = true;
-            $form_msg = 'Mesajiniz alindi. En kisa sürede size dönüş yapacagiz.';
+            $form_msg = 'Mesajınız alındı. En kısa sürede size dönüş yapacağız.';
         }
     }
 }
@@ -136,7 +136,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
     <div class="cdg-container">
         <div class="cdg-page-hero-content">
             <div class="cdg-eyebrow cdg-eyebrow-glow"><i class="bi bi-chat-heart-fill"></i> İletişim</div>
-            <h1>Sizinle <span class="cdg-text-gradient">tanışmaktan</span> mutluluk duyariz</h1>
+            <h1>Sizinle <span class="cdg-text-gradient">tanışmaktan</span> mutluluk duyarız</h1>
             <p>Hosting, domain, yazılım çözümlerimiz veya destek hakkında her konuda bize ulaşabilirsiniz. Ortalama yanıt süremiz <strong>5 dakikadan az</strong>.</p>
             <div class="cdg-page-hero-cta">
                 <a href="https://wa.me/<?php echo $company_wa; ?>" target="_blank" rel="noopener" class="cdg-btn cdg-btn-success cdg-btn-lg cdg-btn-glow"><i class="bi bi-whatsapp"></i> WhatsApp Destek</a>
@@ -153,28 +153,28 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
             <a href="https://wa.me/<?php echo $company_wa; ?>" target="_blank" rel="noopener" class="cdg-channel-card">
                 <div class="cdg-channel-icon" style="background:linear-gradient(135deg,#25d366,#128c7e);"><i class="bi bi-whatsapp"></i></div>
                 <h3>WhatsApp</h3>
-                <p>Anlık mesajlasma, dosya paylasimi.</p>
+                <p>Anlık mesajlaşma, dosya paylaşımı.</p>
                 <div class="cdg-channel-meta">7/24 aktif <i class="bi bi-circle-fill" style="color:#10b981;font-size:8px;"></i></div>
-                <div class="cdg-channel-cta">Mesaj Gonder <i class="bi bi-arrow-right"></i></div>
+                <div class="cdg-channel-cta">Mesaj Gönder <i class="bi bi-arrow-right"></i></div>
             </a>
             <a href="tel:<?php echo str_replace(' ', '', $company_phone); ?>" class="cdg-channel-card">
                 <div class="cdg-channel-icon" style="background:linear-gradient(135deg,#2E3B4E,#00D3E5);"><i class="bi bi-telephone-fill"></i></div>
                 <h3>Telefon</h3>
-                <p>Hemen aramak için tıkla.</p>
+                <p>Hemen aramak için tıklayın.</p>
                 <div class="cdg-channel-meta"><?php echo htmlspecialchars($company_hours, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                 <div class="cdg-channel-cta">Ara <i class="bi bi-arrow-right"></i></div>
             </a>
             <a href="mailto:<?php echo $company_email; ?>" class="cdg-channel-card">
-                <div class="cdg-channel-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);"><i class="bi bi-envelope-fill"></i></div>
+                <div class="cdg-channel-icon" style="background:linear-gradient(135deg,#00D3E5,#00E5FF);"><i class="bi bi-envelope-fill"></i></div>
                 <h3>E-posta</h3>
-                <p>Detaylı sorular ve dokumanlar için.</p>
+                <p>Detaylı sorular ve dökümanlar için.</p>
                 <div class="cdg-channel-meta"><?php echo htmlspecialchars($company_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
-                <div class="cdg-channel-cta">E-posta At <i class="bi bi-arrow-right"></i></div>
+                <div class="cdg-channel-cta">E-posta Gönder <i class="bi bi-arrow-right"></i></div>
             </a>
             <a href="<?php echo cdg_link('contact'); ?>#cdg-form" class="cdg-channel-card">
                 <div class="cdg-channel-icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);"><i class="bi bi-headset"></i></div>
                 <h3>Destek Talebi</h3>
-                <p>Teknik konular için bilet acin.</p>
+                <p>Teknik konular için bilet açın.</p>
                 <div class="cdg-channel-meta">Ortalama yanıt: 5 dk</div>
                 <div class="cdg-channel-cta">Talep Oluştur <i class="bi bi-arrow-right"></i></div>
             </a>
@@ -188,8 +188,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
         <div class="cdg-contact-grid">
             <div class="cdg-contact-form-wrap">
                 <div class="cdg-eyebrow">İletişim Formu</div>
-                <h2>Bize <span class="cdg-text-gradient">mesaj gonderin</span></h2>
-                <p>Formu doldurun, ekibimiz <strong>en gec 1 saat içinde</strong> size dönüş yapsin.</p>
+                <h2>Bize <span class="cdg-text-gradient">mesaj gönderin</span></h2>
+                <p>Formu doldurun, ekibimiz <strong>en geç 1 saat içinde</strong> size dönüş yapsın.</p>
 
                 <?php if($form_msg): ?>
                 <div class="cdg-form-alert <?php echo $form_success ? 'success' : 'error'; ?>">
@@ -202,8 +202,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
                     <input type="hidden" name="cdg_contact_form" value="1">
                     <div class="cdg-form-row">
                         <div class="cdg-form-group">
-                            <label>Adiniz Soyadiniz <span class="req">*</span></label>
-                            <input type="text" name="name" required placeholder="Ornek Yilmaz">
+                            <label>Adınız Soyadınız <span class="req">*</span></label>
+                            <input type="text" name="name" required placeholder="Örn. Ahmet Yılmaz">
                         </div>
                         <div class="cdg-form-group">
                             <label>E-posta <span class="req">*</span></label>
@@ -218,25 +218,25 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
                         <div class="cdg-form-group">
                             <label>Konu</label>
                             <select name="subject">
-                                <option value="">Konu secin...</option>
+                                <option value="">Konu seçin...</option>
                                 <option>Hosting Hakkında</option>
                                 <option>Domain Hakkında</option>
                                 <option>Yazılım Hizmetleri</option>
                                 <option>Teknik Destek</option>
                                 <option>Faturalama</option>
                                 <option>Bayilik / Reseller</option>
-                                <option>Diger</option>
+                                <option>Diğer</option>
                             </select>
                         </div>
                     </div>
                     <div class="cdg-form-group">
-                        <label>Mesajiniz <span class="req">*</span></label>
-                        <textarea name="message" required rows="5" placeholder="Bize nasil yardımci olabilecegimizi yazin..."></textarea>
+                        <label>Mesajınız <span class="req">*</span></label>
+                        <textarea name="message" required rows="5" placeholder="Size nasıl yardımcı olabileceğimizi yazın..."></textarea>
                     </div>
                     <button type="submit" class="cdg-btn cdg-btn-primary cdg-btn-lg cdg-btn-glow">
-                        <i class="bi bi-send-fill"></i> Mesaji Gonder
+                        <i class="bi bi-send-fill"></i> Mesajı Gönder
                     </button>
-                    <p class="cdg-form-privacy"><i class="bi bi-shield-check"></i> Bilgileriniz KVKK kapsaminda korunmaktadir, ucuncu sahislarla paylasilmaz.</p>
+                    <p class="cdg-form-privacy"><i class="bi bi-shield-check"></i> Bilgileriniz KVKK kapsamında korunur, üçüncü kişilerle paylaşılmaz.</p>
                 </form>
             </div>
 
@@ -271,14 +271,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
                         <i class="bi bi-headset"></i>
                         <h3>7/24 Teknik Destek</h3>
                     </div>
-                    <p>Hosting ve sunucu sorunlariniz için destek ekibimiz <strong>haftanin 7 gunu, gunun 24 saati</strong> hazir.</p>
+                    <p>Hosting ve sunucu sorunlarınız için destek ekibimiz <strong>haftanın 7 günü, günün 24 saati</strong> hazır.</p>
                     <div class="cdg-stats-mini">
                         <div><span class="num">5dk</span><span class="lbl">Ortalama yanıt</span></div>
                         <div><span class="num">%99</span><span class="lbl">Memnuniyet</span></div>
                         <div><span class="num">24/7</span><span class="lbl">Aktif destek</span></div>
                     </div>
                     <a href="https://wa.me/<?php echo $company_wa; ?>" target="_blank" rel="noopener" class="cdg-btn cdg-btn-white cdg-btn-block">
-                        <i class="bi bi-whatsapp"></i> WhatsApp Destek Hatti
+                        <i class="bi bi-whatsapp"></i> WhatsApp Destek Hattı
                     </a>
                 </div>
             </div>
@@ -309,25 +309,33 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
 <section class="cdg-section">
     <div class="cdg-container">
         <div class="cdg-section-head">
-            <div class="cdg-eyebrow">Sik Sorulan</div>
+            <div class="cdg-eyebrow">Sık Sorulan</div>
             <h2>İletişim hakkında <span class="cdg-text-gradient">sık sorulan sorular</span></h2>
         </div>
         <div class="cdg-faq-list" style="max-width:780px;margin:32px auto 0;">
             <details class="cdg-faq-item" open>
-                <summary><span>Mesajima ne zaman dönüş yapılir?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">İletişim formundan gelen mesajlar 1 saat içinde, WhatsApp uzerinden gelen mesajlar 5-15 dakika içinde yanıtlanir. Açıl durumlarda telefonla aramaniz önerilir.</div>
+                <summary><span>Mesajıma ne zaman dönüş yapılır?</span><i class="bi bi-plus-lg"></i></summary>
+                <div class="cdg-faq-answer">İletişim formundan gelen mesajlar <strong>en geç 1 saat içinde</strong>, WhatsApp üzerinden gelen mesajlar <strong>5-15 dakika içinde</strong> yanıtlanır. Acil durumlarda telefonla aramanızı öneririz.</div>
             </details>
             <details class="cdg-faq-item">
-                <summary><span>Ofişinizi ziyaret edebilir miyim?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">Tabii ki! Konya'daki ofisimizi önceden randevu alarak ziyaret edebilirsiniz. Telefon veya e-posta ile randevu oluşturabilirsiniz.</div>
+                <summary><span>Ofisinizi ziyaret edebilir miyim?</span><i class="bi bi-plus-lg"></i></summary>
+                <div class="cdg-faq-answer">Tabii ki! Konya'daki ofisimizi <strong>önceden randevu alarak</strong> ziyaret edebilirsiniz. Telefon veya e-posta ile randevu oluşturabilirsiniz. Çalışma saatlerimiz: Pazartesi - Cuma 09:00 - 18:00.</div>
             </details>
             <details class="cdg-faq-item">
-                <summary><span>Yazılım projeleri için nasil teklif alabilirim?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">İletişim formunda "Yazılım Hizmetleri" konusunu secin, projenizin ozetini yazin. 24 saat içinde detaylı teklif gonderiyoruz. Büyük projeler için yuz yuze gorusme ayarlanabilir.</div>
+                <summary><span>Yazılım projeleri için nasıl teklif alabilirim?</span><i class="bi bi-plus-lg"></i></summary>
+                <div class="cdg-faq-answer">İletişim formunda <strong>"Yazılım Hizmetleri"</strong> konusunu seçin, projenizin özetini yazın. <strong>24 saat içinde</strong> detaylı teklif gönderiyoruz. Büyük projeler için yüz yüze görüşme ayarlanabilir.</div>
             </details>
             <details class="cdg-faq-item">
-                <summary><span>Hosting taşımasi için ne yapmaliyim?</span><i class="bi bi-plus-lg"></i></summary>
-                <div class="cdg-faq-answer">Hosting paketinizi aldiktan sonra "Taşıma Talebi" formunu doldurun. Mevcut hosting bilgilerinizi paylasin, ekibimiz veri kaybi olmadan taşımayi yapsin. 5 siteye kadar UCRETSIZ taşıriz.</div>
+                <summary><span>Hosting taşıması için ne yapmalıyım?</span><i class="bi bi-plus-lg"></i></summary>
+                <div class="cdg-faq-answer">Hosting paketinizi aldıktan sonra panel üzerinden <strong>"Taşıma Talebi"</strong> formunu doldurun. Mevcut hosting bilgilerinizi (DirectAdmin/cPanel kullanıcı adı ve şifre) paylaşın, ekibimiz veri kaybı olmadan taşımayı yapsın. <strong>5 siteye kadar ÜCRETSİZ</strong> taşırız.</div>
+            </details>
+            <details class="cdg-faq-item">
+                <summary><span>Hangi ödeme yöntemlerini kabul ediyorsunuz?</span><i class="bi bi-plus-lg"></i></summary>
+                <div class="cdg-faq-answer">Kredi kartı (Visa, Mastercard, AMEX), banka havalesi/EFT (T.C. tüm bankalar), Papara, ininal ve kripto para (BTC, ETH, USDT) kabul ediyoruz. Kurumsal müşterilerimiz şirket kartı ile fatura ödemesi yapabilir.</div>
+            </details>
+            <details class="cdg-faq-item">
+                <summary><span>Faturamı nasıl alabilirim?</span><i class="bi bi-plus-lg"></i></summary>
+                <div class="cdg-faq-answer">Tüm siparişlerinizde otomatik <strong>e-Fatura veya e-Arşiv</strong> kesilir ve e-postanıza gönderilir. Geçmiş faturalarınızı her zaman <strong>Hesabım → Faturalarım</strong> sekmesinden PDF olarak indirebilirsiniz.</div>
             </details>
         </div>
     </div>

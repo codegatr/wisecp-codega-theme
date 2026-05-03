@@ -4057,19 +4057,20 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
 
 .cdg-hero-domain-captcha input,
 .cdg-domain-search-captcha input{
-    width:130px;flex:0 0 130px;
-    padding:10px 11px;border:1px solid #e2e8f0;border-radius:7px;
+    min-width:170px;flex:1 1 170px;width:auto;
+    padding:10px 14px;border:1px solid #e2e8f0;border-radius:7px;
     background:#fff;color:#0f172a;
     font-size:13px;font-family:inherit;font-weight:600;letter-spacing:0.3px;
     outline:none;transition:all 0.2s;box-sizing:border-box;
+    text-overflow:ellipsis;
 }
 .cdg-hero-domain-captcha input:focus,
 .cdg-domain-search-captcha input:focus{
-    border-color:#2E3B4E;box-shadow:0 0 0 3px rgba(46,59,78,0.10);
+    border-color:#00D3E5;box-shadow:0 0 0 3px rgba(0,211,229,0.15);
 }
 .cdg-hero-domain-captcha input::placeholder,
 .cdg-domain-search-captcha input::placeholder{
-    color:#94a3b8;font-weight:500;letter-spacing:0;
+    color:#94a3b8;font-weight:500;letter-spacing:0;font-size:12.5px;
 }
 
 .cdg-hero-domain-with-captcha button,
