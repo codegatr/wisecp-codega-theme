@@ -99,3 +99,130 @@
 
     check();
 })();
+
+// ========== Product Detail Tab Switcher (cdg-pd2-*) ==========
+// Hosting/Server/SMS/Software/Special ürün detay sayfalarında tab değiştirme
+// Inline onclick yerine event delegation ile çalışır - daha güvenilir
+(function(){
+    'use strict';
+
+    // === HOSTING/SERVER/SMS PRODUCT DETAIL TABS ===
+    function switchPd2Tab(pane) {
+        if(!pane) return false;
+        try {
+            // Active class'ları sıfırla
+            var tabs = document.querySelectorAll('.cdg-pd2-tab');
+            var panes = document.querySelectorAll('.cdg-pd2-pane');
+            if(tabs.length === 0 || panes.length === 0) return false;
+
+            tabs.forEach(function(t){ t.classList.remove('active'); });
+            panes.forEach(function(p){ p.classList.remove('active'); });
+
+            // Hedef tab'ı aktif yap
+            var targetTab = document.querySelector('.cdg-pd2-tab[data-pane="' + pane + '"]');
+            if(targetTab) targetTab.classList.add('active');
+
+            // Hedef pane'i aktif yap
+            var targetPane = document.getElementById('cdg-pd2-pane-' + pane);
+            if(targetPane) {
+                targetPane.classList.add('active');
+            } else {
+                console.warn('[cdgPd2] Pane bulunamadı: cdg-pd2-pane-' + pane);
+            }
+
+            // URL hash güncelle
+            try { history.replaceState(null, '', '#' + pane); } catch(e) {}
+
+            // Custom event
+            try { document.dispatchEvent(new CustomEvent('cdgPd2TabChanged', { detail: { pane: pane } })); } catch(e) {}
+
+            return true;
+        } catch(err) {
+            console.error('[cdgPd2] Tab switch error:', err);
+            return false;
+        }
+    }
+
+    // Global olarak expose et (inline onclick'ler için geriye dönük uyumluluk)
+    window.cdgPd2Switch = function(btn, pane) {
+        switchPd2Tab(pane);
+    };
+
+    // Event delegation - daha güvenilir
+    document.addEventListener('click', function(ev){
+        var tab = ev.target.closest('.cdg-pd2-tab');
+        if(!tab) return;
+        ev.preventDefault();
+        var pane = tab.getAttribute('data-pane');
+        if(pane) switchPd2Tab(pane);
+    });
+
+    // Sayfa yüklendiğinde URL hash'le geldiyse o tab'ı aç
+    function activatePd2HashTab() {
+        if(!location.hash) return;
+        var hash = location.hash.substring(1);
+        if(!hash) return;
+        // Hash'in valid bir pane olup olmadığını kontrol et
+        var targetPane = document.getElementById('cdg-pd2-pane-' + hash);
+        if(targetPane) {
+            switchPd2Tab(hash);
+        }
+    }
+    if(document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', activatePd2HashTab);
+    } else {
+        activatePd2HashTab();
+    }
+
+    // === DOMAIN PRODUCT DETAIL TABS (cdg-pdm-*) ===
+    function switchPdmTab(pane) {
+        if(!pane) return false;
+        try {
+            var tabs = document.querySelectorAll('.cdg-pdm-tab');
+            var panes = document.querySelectorAll('.cdg-pdm-pane');
+            if(tabs.length === 0 || panes.length === 0) return false;
+
+            tabs.forEach(function(t){ t.classList.remove('active'); });
+            panes.forEach(function(p){ p.classList.remove('active'); });
+
+            var targetTab = document.querySelector('.cdg-pdm-tab[data-pane="' + pane + '"]');
+            if(targetTab) targetTab.classList.add('active');
+
+            var targetPane = document.getElementById('cdg-pdm-pane-' + pane);
+            if(targetPane) targetPane.classList.add('active');
+
+            try { history.replaceState(null, '', '#' + pane); } catch(e) {}
+            return true;
+        } catch(err) {
+            console.error('[cdgPdm] Tab switch error:', err);
+            return false;
+        }
+    }
+
+    window.cdgPdmSwitch = function(btn, pane) {
+        switchPdmTab(pane);
+    };
+
+    document.addEventListener('click', function(ev){
+        var tab = ev.target.closest('.cdg-pdm-tab');
+        if(!tab) return;
+        ev.preventDefault();
+        var pane = tab.getAttribute('data-pane');
+        if(pane) switchPdmTab(pane);
+    });
+
+    function activatePdmHashTab() {
+        if(!location.hash) return;
+        var hash = location.hash.substring(1);
+        if(!hash) return;
+        var targetPane = document.getElementById('cdg-pdm-pane-' + hash);
+        if(targetPane) {
+            switchPdmTab(hash);
+        }
+    }
+    if(document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', activatePdmHashTab);
+    } else {
+        activatePdmHashTab();
+    }
+})();

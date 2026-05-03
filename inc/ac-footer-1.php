@@ -154,3 +154,6 @@ $cdg_year = date('Y');
         <?php if(class_exists('View') && method_exists('View', 'show_brand')) View::show_brand(); ?>
     </div>
 </footer>
+
+<!-- Tema JS - tab switcher, scroll handler, vb. (panel sayfalarda da gerekli) -->
+<script src="<?php echo isset($tadress) ? $tadress : ''; ?>js/script.js?v=<?php echo file_exists(__DIR__ . '/../js/script.js') ? filemtime(__DIR__ . '/../js/script.js') : 1; ?>" defer></script>
