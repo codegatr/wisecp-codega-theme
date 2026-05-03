@@ -393,22 +393,59 @@ $status_meta_map = [
     margin-top: 1px;
 }
 
-/* Tarih */
+/* Tarih + Kalan Gün */
 .cdg-pl-date {
     text-align: center;
     color: var(--pl-text);
     font-size: 13px;
     font-weight: 600;
 }
-.cdg-pl-date-soon {
-    color: #b45309;
-    background: linear-gradient(135deg, #fef3c7, #fde68a);
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 3px 10px;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 700;
+.cdg-pl-date-empty {
+    color: var(--pl-muted);
+    font-weight: 400;
 }
+.cdg-pl-due {
+    display: inline-block;
+    min-width: 110px;
+    text-align: center;
+    line-height: 1.2;
+}
+.cdg-pl-due-date {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--pl-text);
+    margin-bottom: 5px;
+}
+.cdg-pl-due-bar {
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+.cdg-pl-due-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 0.4s ease;
+}
+.cdg-pl-due-normal   .cdg-pl-due-fill { background: linear-gradient(90deg, #10b981, #059669); }
+.cdg-pl-due-soon     .cdg-pl-due-fill { background: linear-gradient(90deg, #f59e0b, #d97706); }
+.cdg-pl-due-critical .cdg-pl-due-fill { background: linear-gradient(90deg, #ef4444, #dc2626); animation: cdgPlPulse 1.6s ease-in-out infinite; }
+.cdg-pl-due-expired  .cdg-pl-due-fill { background: linear-gradient(90deg, #991b1b, #7f1d1d); }
+@keyframes cdgPlPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+.cdg-pl-due-lbl {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 100px;
+    line-height: 1.4;
+}
+.cdg-pl-due-lbl i { font-size: 11px; }
+.cdg-pl-due-normal   .cdg-pl-due-lbl { color: #065f46; background: linear-gradient(135deg,#d1fae5,#a7f3d0); }
+.cdg-pl-due-soon     .cdg-pl-due-lbl { color: #92400e; background: linear-gradient(135deg,#fef3c7,#fde68a); }
+.cdg-pl-due-critical .cdg-pl-due-lbl { color: #991b1b; background: linear-gradient(135deg,#fee2e2,#fecaca); }
+.cdg-pl-due-expired  .cdg-pl-due-lbl { color: #fff;    background: linear-gradient(135deg,#dc2626,#991b1b); }
 
 /* Status badge */
 .cdg-pl-badge {
@@ -598,7 +635,7 @@ $status_meta_map = [
                     <th style="width:80px;">#</th>
                     <th>Hizmet</th>
                     <th style="text-align:right;width:120px;">Tutar</th>
-                    <th style="text-align:center;width:130px;">Bitiş Tarihi</th>
+                    <th style="text-align:center;width:160px;">Kalan Süre</th>
                     <th style="text-align:center;width:140px;">Durum</th>
                     <th style="width:120px;">İşlem</th>
                 </tr>
@@ -620,16 +657,36 @@ $status_meta_map = [
 
                 $duedate = $row['duedate'] ?? '';
                 $duedate_format = '-';
-                $is_soon = false;
+                $days_left = null;       // null = bilinmiyor
+                $days_status = 'normal'; // normal | soon | critical | expired
+                $days_lbl = '';
+                $progress_pct = 0;       // 30 günlük progress için (0-100)
                 if($duedate && !in_array(substr($duedate,0,4), ['1881','1970','0000'])) {
                     if(class_exists('DateManager') && method_exists('DateManager', 'format') && class_exists('Config')) {
                         $duedate_format = DateManager::format(Config::get("options/date-format"), $duedate);
                     } else {
                         $duedate_format = date('d.m.Y', strtotime($duedate));
                     }
-                    // 30 gün içinde bitiyorsa "yaklaşıyor"
-                    $diff_days = (strtotime($duedate) - time()) / 86400;
-                    if($diff_days >= 0 && $diff_days <= 30) $is_soon = true;
+                    $diff_seconds = strtotime($duedate) - time();
+                    $days_left = (int)floor($diff_seconds / 86400);
+
+                    if($days_left < 0) {
+                        $days_status = 'expired';
+                        $days_lbl = abs($days_left) . ' gün geçti';
+                        $progress_pct = 100;
+                    } elseif($days_left <= 7) {
+                        $days_status = 'critical';
+                        $days_lbl = $days_left . ' gün kaldı';
+                        $progress_pct = max(0, min(100, ($days_left / 30) * 100));
+                    } elseif($days_left <= 30) {
+                        $days_status = 'soon';
+                        $days_lbl = $days_left . ' gün kaldı';
+                        $progress_pct = ($days_left / 30) * 100;
+                    } else {
+                        $days_status = 'normal';
+                        $days_lbl = $days_left . ' gün kaldı';
+                        $progress_pct = 100;
+                    }
                 }
 
                 $status = $row['status'] ?? 'unknown';
@@ -674,10 +731,19 @@ $status_meta_map = [
                         <?php if($period): ?><div class="cdg-pl-amount-period"><?php echo htmlspecialchars($period, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div><?php endif; ?>
                     </td>
                     <td data-lbl="Bitiş" class="cdg-pl-date">
-                        <?php if($is_soon): ?>
-                            <span class="cdg-pl-date-soon"><i class="bi bi-clock-history"></i> <?php echo $duedate_format; ?></span>
+                        <?php if($days_left === null): ?>
+                            <span class="cdg-pl-date-empty">—</span>
                         <?php else: ?>
-                            <?php echo $duedate_format; ?>
+                            <div class="cdg-pl-due cdg-pl-due-<?php echo $days_status; ?>">
+                                <div class="cdg-pl-due-date"><?php echo htmlspecialchars($duedate_format, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                                <div class="cdg-pl-due-bar">
+                                    <div class="cdg-pl-due-fill" style="width:<?php echo $progress_pct; ?>%;"></div>
+                                </div>
+                                <div class="cdg-pl-due-lbl">
+                                    <i class="bi bi-<?php echo $days_status === 'expired' ? 'exclamation-triangle-fill' : ($days_status === 'critical' ? 'exclamation-circle-fill' : ($days_status === 'soon' ? 'clock-history' : 'check-circle-fill')); ?>"></i>
+                                    <?php echo htmlspecialchars($days_lbl, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </td>
                     <td data-lbl="Durum" style="text-align:center;">
