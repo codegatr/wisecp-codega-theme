@@ -987,7 +987,7 @@ foreach($options as $opt_k => $opt_v) {
     <div class="cdg-pd2-shell">
         <div class="cdg-pd2-shell-head">
             <div class="cdg-pd2-shell-head-left">
-                <div class="cdg-pd2-shell-icon" style="background:linear-gradient(135deg, <?php echo htmlspecialchars($cdg_pd_color, ENT_QUOTES); ?>, <?php echo htmlspecialchars($cdg_pd_color, ENT_QUOTES); ?>cc);">
+                <div class="cdg-pd2-shell-icon" style="background:linear-gradient(135deg, <?php echo htmlspecialchars($cdg_pd_color, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>, <?php echo htmlspecialchars($cdg_pd_color, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>cc);">
                     <i class="bi bi-<?php echo htmlspecialchars($cdg_pd_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
                 </div>
                 <div style="min-width:0;">
@@ -995,7 +995,7 @@ foreach($options as $opt_k => $opt_v) {
                         <h1 class="cdg-pd2-shell-title">
                             <?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                         </h1>
-                        <span class="cdg-pd2-status-chip <?php echo htmlspecialchars($d_status, ENT_QUOTES); ?>">
+                        <span class="cdg-pd2-status-chip <?php echo htmlspecialchars($d_status, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                             <i class="bi bi-<?php echo htmlspecialchars($st_meta['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
                             <?php echo htmlspecialchars($st_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                         </span>
@@ -1043,8 +1043,8 @@ foreach($options as $opt_k => $opt_v) {
                 }
                 ?>
                 <?php if($cp_url_hero): ?>
-                <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-shell-btn cdg-pd2-shell-btn-primary">
-                    <i class="bi bi-box-arrow-up-right"></i> <?php echo htmlspecialchars($panel_label, ENT_QUOTES); ?>
+                <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-pd2-shell-btn cdg-pd2-shell-btn-primary">
+                    <i class="bi bi-box-arrow-up-right"></i> <?php echo htmlspecialchars($panel_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 </a>
                 <?php endif; ?>
                 <?php if($d_status === 'active' && $d_period && $d_period !== 'none'): ?>
@@ -1249,7 +1249,7 @@ foreach($options as $opt_k => $opt_v) {
                             <span class="cdg-pd2-info-label">Kullanıcı Adı</span>
                             <span class="cdg-pd2-info-value">
                                 <code class="cdg-pd2-cred"><?php echo htmlspecialchars($d_username, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
-                                <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($d_username, ENT_QUOTES); ?>')" title="Kopyala">
+                                <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($d_username, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Kopyala">
                                     <i class="bi bi-clipboard"></i>
                                 </button>
                             </span>
@@ -1259,11 +1259,11 @@ foreach($options as $opt_k => $opt_v) {
                         <li>
                             <span class="cdg-pd2-info-label">Şifre</span>
                             <span class="cdg-pd2-info-value">
-                                <code class="cdg-pd2-cred cdg-pd2-cred-masked" data-pw="<?php echo htmlspecialchars($d_root_pass, ENT_QUOTES); ?>">••••••••</code>
+                                <code class="cdg-pd2-cred cdg-pd2-cred-masked" data-pw="<?php echo htmlspecialchars($d_root_pass, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">••••••••</code>
                                 <button type="button" class="cdg-pd2-copy cdg-pd2-toggle-pw" onclick="cdgTogglePw(this)" title="Göster/Gizle">
                                     <i class="bi bi-eye"></i>
                                 </button>
-                                <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($d_root_pass, ENT_QUOTES); ?>')" title="Kopyala">
+                                <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($d_root_pass, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Kopyala">
                                     <i class="bi bi-clipboard"></i>
                                 </button>
                             </span>
@@ -1329,13 +1329,13 @@ foreach($options as $opt_k => $opt_v) {
                         <div class="cdg-pd2-panel-login-url">
                             <i class="bi bi-link-45deg"></i>
                             <code><?php echo htmlspecialchars($cp_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
-                            <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($cp_url, ENT_QUOTES); ?>')" title="Kopyala">
+                            <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($cp_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Kopyala">
                                 <i class="bi bi-clipboard"></i>
                             </button>
                         </div>
                         <a href="<?php echo htmlspecialchars($cp_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-pd2-panel-login-btn">
                             <i class="bi bi-box-arrow-up-right"></i>
-                            <span><?php echo htmlspecialchars($panel_lbl, ENT_QUOTES); ?> Paneline Giriş Yap</span>
+                            <span><?php echo htmlspecialchars($panel_lbl, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> Paneline Giriş Yap</span>
                         </a>
                         <p class="cdg-pd2-panel-login-note">
                             <i class="bi bi-info-circle"></i>
@@ -2130,7 +2130,7 @@ foreach($options as $opt_k => $opt_v) {
                         </div>
                     </div>
                     <?php if($cp_url_hero): ?>
-                    <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm">
+                    <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm">
                         <i class="bi bi-box-arrow-up-right"></i> DirectAdmin'de Detaylı Yönet
                     </a>
                     <?php endif; ?>
@@ -2155,7 +2155,7 @@ foreach($options as $opt_k => $opt_v) {
                                 <span style="display:flex;align-items:center;padding:0 10px;background:#f8fafc;border:1px solid var(--p-border);font-size:14px;font-weight:600;color:#64748b;">@</span>
                                 <select id="cdg-pd2-email-domain" class="cdg-pd2-input" style="border-radius:0 10px 10px 0;border-left:0;flex:1;">
                                     <?php foreach($email_domains as $ed): ?>
-                                    <option value="<?php echo htmlspecialchars($ed, ENT_QUOTES); ?>"><?php echo htmlspecialchars($ed, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
+                                    <option value="<?php echo htmlspecialchars($ed, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($ed, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -2229,12 +2229,12 @@ foreach($options as $opt_k => $opt_v) {
                             </td>
                             <td style="padding:10px 12px;border-radius:0 8px 8px 0;border:1px solid #e2e8f0;border-left:0;text-align:right;">
                                 <?php if($cp_url_hero): ?>
-                                <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" title="DirectAdmin'de yönet">
+                                <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" title="DirectAdmin'de yönet">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                                 <?php endif; ?>
                                 <?php if($supports_email_delete): ?>
-                                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" onclick="cdgPd2.deleteEmail('<?php echo htmlspecialchars($em_addr, ENT_QUOTES); ?>')" title="Sil" style="color:#dc2626;">
+                                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" onclick="cdgPd2.deleteEmail('<?php echo htmlspecialchars($em_addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Sil" style="color:#dc2626;">
                                     <i class="bi bi-trash"></i>
                                 </button>
                                 <?php endif; ?>
@@ -2252,7 +2252,7 @@ foreach($options as $opt_k => $opt_v) {
                     <?php else: ?>
                     <p>E-posta hesaplarınızı görüntülemek ve yönetmek için <strong>Kontrol Paneli</strong> üzerinden işlem yapın.</p>
                     <?php if($cp_url_hero): ?>
-                    <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-primary">
+                    <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-primary">
                         <i class="bi bi-box-arrow-up-right"></i> DirectAdmin Paneline Git
                     </a>
                     <?php endif; ?>
@@ -2337,7 +2337,7 @@ foreach($options as $opt_k => $opt_v) {
                             <?php if($req_type === 'file' && !empty($req_response_decoded)): ?>
                                 <?php foreach($req_response_decoded as $k => $f):
                                     $file_name = is_array($f) ? ($f['file_name'] ?? 'dosya') : $f;
-                                    $dl_link = $controller_url . '?operation=requirement-file-download&rid=' . (int)$req_id . '&key=' . htmlspecialchars($k, ENT_QUOTES);
+                                    $dl_link = $controller_url . '?operation=requirement-file-download&rid=' . (int)$req_id . '&key=' . htmlspecialchars($k, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                                 ?>
                                 <a href="<?php echo $dl_link; ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm" style="margin-right:6px;">
                                     <i class="bi bi-file-earmark-arrow-down"></i> <?php echo htmlspecialchars($file_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
@@ -2400,7 +2400,7 @@ foreach($options as $opt_k => $opt_v) {
                         ?>
                         <tr style="background:#fff;">
                             <td style="padding:10px 12px;border-radius:8px 0 0 8px;border:1px solid #e2e8f0;border-right:0;">
-                                <code style="color:#2E3B4E;font-weight:700;">#<?php echo htmlspecialchars((string)$b_id, ENT_QUOTES); ?></code>
+                                <code style="color:#2E3B4E;font-weight:700;">#<?php echo htmlspecialchars((string)$b_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
                             </td>
                             <td style="padding:10px 12px;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#0f172a;">
                                 <?php echo htmlspecialchars(cdg_pd_date($b_date), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
@@ -2415,11 +2415,11 @@ foreach($options as $opt_k => $opt_v) {
                             </td>
                             <td style="padding:10px 12px;border-radius:0 8px 8px 0;border:1px solid #e2e8f0;border-left:0;text-align:right;">
                                 <?php if($b_status === 'unpaid' || $b_status === 'overdue'): ?>
-                                <a href="<?php echo htmlspecialchars($b_pay_link, ENT_QUOTES); ?>" class="cdg-pd2-btn cdg-pd2-btn-primary cdg-pd2-btn-sm">
+                                <a href="<?php echo htmlspecialchars($b_pay_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd2-btn cdg-pd2-btn-primary cdg-pd2-btn-sm">
                                     <i class="bi bi-credit-card"></i> Öde
                                 </a>
                                 <?php else: ?>
-                                <a href="<?php echo htmlspecialchars($b_link, ENT_QUOTES); ?>" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm">
+                                <a href="<?php echo htmlspecialchars($b_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm">
                                     <i class="bi bi-eye"></i>
                                 </a>
                                 <?php endif; ?>
@@ -2476,7 +2476,7 @@ foreach($options as $opt_k => $opt_v) {
                     <ul style="margin:0 0 16px;padding-left:22px;color:#475569;line-height:1.8;font-size:13.5px;">
                         <li>Eski hosting/sunucu erişim bilgileri (DirectAdmin/Plesk URL, kullanıcı adı, şifre)</li>
                         <li>Veya FTP + veritabanı (MySQL) erişim bilgileri</li>
-                        <li>Domain'in NS sunucularını <strong><?php echo !empty($d_dns) ? htmlspecialchars(is_array($d_dns[0]) ? implode(' ', $d_dns[0]) : $d_dns[0], ENT_QUOTES) : 'CODEGA NS'; ?></strong> olarak güncelleme erişiminiz</li>
+                        <li>Domain'in NS sunucularını <strong><?php echo !empty($d_dns) ? htmlspecialchars(is_array($d_dns[0]) ? implode(' ', $d_dns[0]) : $d_dns[0], ENT_QUOTES | ENT_HTML5, 'UTF-8') : 'CODEGA NS'; ?></strong> olarak güncelleme erişiminiz</li>
                     </ul>
                     <div style="display:flex;gap:10px;flex-wrap:wrap;">
                         <a href="<?php echo cdg_link('ac-ps-create-ticket-request'); ?>?subject=Sunucu+Tasima+Talebi+%23<?php echo (int)$d_id; ?>" class="cdg-pd2-btn cdg-pd2-btn-primary">

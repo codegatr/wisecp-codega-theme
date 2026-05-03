@@ -255,7 +255,7 @@ function cdgHostPwChange(btn) {
     }
     if(!confirm('Hosting şifrenizi değiştirmek istediğinize emin misiniz?')) return;
 
-    var url = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES); ?>';
+    var url = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
     var pid = <?php echo (int)($proanse['id'] ?? 0); ?>;
 
     if(typeof MioAjax !== 'function') {

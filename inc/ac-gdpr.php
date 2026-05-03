@@ -184,8 +184,8 @@ if(class_exists('Validation') && method_exists('Validation', 'get_csrf_token')) 
 
 <script>
 (function(){
-    var cdgGdprUrl = '<?php echo htmlspecialchars($operation_link, ENT_QUOTES); ?>';
-    var cdgGdprCsrf = '<?php echo htmlspecialchars($csrf_token, ENT_QUOTES); ?>';
+    var cdgGdprUrl = '<?php echo htmlspecialchars($operation_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
+    var cdgGdprCsrf = '<?php echo htmlspecialchars($csrf_token, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
 
     window.cdgGdprRequest = function(btn, action) {
         var msg = '';

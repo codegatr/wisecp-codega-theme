@@ -229,7 +229,7 @@ if(!empty($transactions) && is_array($transactions)) {
                     </div>
 
                     <div class="cdg-bal-amount-input">
-                        <label>Yüklenecek Tutar (<?php echo htmlspecialchars($user_curr, ENT_QUOTES); ?>)
+                        <label>Yüklenecek Tutar (<?php echo htmlspecialchars($user_curr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>)
                             <?php if($min_buy || $max_buy): ?>
                             <small>
                                 <?php if($min_buy): ?>· Min: <?php echo $min_buy; ?><?php endif; ?>
@@ -238,7 +238,7 @@ if(!empty($transactions) && is_array($transactions)) {
                             <?php endif; ?>
                         </label>
                         <div class="cdg-bal-amount-row">
-                            <span class="cdg-bal-currency-prefix"><?php echo htmlspecialchars($user_curr === 'TRY' ? '₺' : $user_curr, ENT_QUOTES); ?></span>
+                            <span class="cdg-bal-currency-prefix"><?php echo htmlspecialchars($user_curr === 'TRY' ? '₺' : $user_curr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                             <input type="number" id="cdg-bal-amount" min="<?php echo $min_buy ?: 1; ?>" <?php if($max_buy) echo 'max="' . $max_buy . '"'; ?> step="1" placeholder="100">
                         </div>
                         <button type="button" class="cdg-bal-load-btn" onclick="cdgBalanceBuy(this)">
@@ -290,7 +290,7 @@ if(!empty($transactions) && is_array($transactions)) {
                             <div class="cdg-bal-amount-row">
                                 <span class="cdg-bal-currency-prefix">₺</span>
                                 <input type="number" min="0" step="1" name="balance_min"
-                                    value="<?php echo htmlspecialchars($balance_min_threshold, ENT_QUOTES); ?>"
+                                    value="<?php echo htmlspecialchars($balance_min_threshold, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"
                                     placeholder="100">
                             </div>
                             <small><i class="bi bi-info-circle"></i> Bakiyeniz bu tutarın altına düştüğünde e-posta uyarısı gönderilir.</small>
@@ -813,7 +813,7 @@ if(!empty($transactions) && is_array($transactions)) {
 
 <script>
 (function(){
-    var cdgBalUrl = '<?php echo htmlspecialchars($controller_url_bal, ENT_QUOTES); ?>';
+    var cdgBalUrl = '<?php echo htmlspecialchars($controller_url_bal, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
 
     window.cdgBalSet = function(amt){
         var inp = document.getElementById('cdg-bal-amount');
@@ -829,7 +829,7 @@ if(!empty($transactions) && is_array($transactions)) {
             alert('Lütfen geçerli bir tutar girin');
             return;
         }
-        if(!confirm(amt.toLocaleString('tr-TR') + ' <?php echo htmlspecialchars($user_curr, ENT_QUOTES); ?> bakiye yüklemek için sepete eklenecek. Devam edilsin mi?')) return;
+        if(!confirm(amt.toLocaleString('tr-TR') + ' <?php echo htmlspecialchars($user_curr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> bakiye yüklemek için sepete eklenecek. Devam edilsin mi?')) return;
 
         btn.disabled = true;
         var orig = btn.innerHTML;

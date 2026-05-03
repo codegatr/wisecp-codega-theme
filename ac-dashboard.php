@@ -807,7 +807,7 @@ $balance_url   = cdg_link('ac-ps-balance');
                             <div class="cdg-d-progress-num"><?php echo $item['days']; ?></div>
                             <div class="cdg-d-progress-lbl">gün</div>
                         </div>
-                        <a href="<?php echo htmlspecialchars($item['link'], ENT_QUOTES); ?>" class="cdg-d-renew">
+                        <a href="<?php echo htmlspecialchars($item['link'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-renew">
                             <i class="bi bi-arrow-clockwise"></i> Yenile
                         </a>
                     </li>
@@ -843,7 +843,7 @@ $balance_url   = cdg_link('ac-ps-balance');
                             <i class="bi bi-chat-left-text"></i>
                         </div>
                         <div class="cdg-d-list-text">
-                            <div class="cdg-d-list-title"><a href="<?php echo htmlspecialchars($tk_link, ENT_QUOTES); ?>" style="color:inherit;"><?php echo htmlspecialchars($tk_subject, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a></div>
+                            <div class="cdg-d-list-title"><a href="<?php echo htmlspecialchars($tk_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="color:inherit;"><?php echo htmlspecialchars($tk_subject, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a></div>
                             <?php if($tk_date): ?>
                             <div class="cdg-d-list-sub"><i class="bi bi-clock"></i> <?php echo $cdg_date_fmt($tk_date); ?></div>
                             <?php endif; ?>
@@ -881,10 +881,10 @@ $balance_url   = cdg_link('ac-ps-balance');
                             <i class="bi bi-shield"></i>
                         </div>
                         <div class="cdg-d-list-text">
-                            <div class="cdg-d-list-title"><a href="<?php echo htmlspecialchars($dv_link, ENT_QUOTES); ?>" style="color:inherit;"><?php echo htmlspecialchars($dv_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a></div>
+                            <div class="cdg-d-list-title"><a href="<?php echo htmlspecialchars($dv_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="color:inherit;"><?php echo htmlspecialchars($dv_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a></div>
                             <div class="cdg-d-list-sub" style="color:#92400e;"><i class="bi bi-exclamation-triangle"></i> Belge yüklemeniz gerekiyor</div>
                         </div>
-                        <a href="<?php echo htmlspecialchars($dv_link, ENT_QUOTES); ?>" class="cdg-d-tk-badge warning" style="text-decoration:none;">
+                        <a href="<?php echo htmlspecialchars($dv_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-tk-badge warning" style="text-decoration:none;">
                             <i class="bi bi-arrow-right"></i> Doğrula
                         </a>
                     </li>
@@ -907,7 +907,7 @@ $balance_url   = cdg_link('ac-ps-balance');
                         $news_date  = $news_item['cdate'] ?? ($news_item['date'] ?? '');
                         $news_link  = $news_item['link'] ?? ($news_item['detail_link'] ?? '#');
                     ?>
-                    <a href="<?php echo htmlspecialchars($news_link, ENT_QUOTES); ?>" class="cdg-d-news-item" style="text-decoration:none;color:inherit;">
+                    <a href="<?php echo htmlspecialchars($news_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-news-item" style="text-decoration:none;color:inherit;">
                         <div class="cdg-d-news-item-title"><?php echo htmlspecialchars($news_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         <?php if($news_date): ?>
                         <div class="cdg-d-news-item-date"><i class="bi bi-calendar3"></i> <?php echo $cdg_date_fmt($news_date); ?></div>

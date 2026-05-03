@@ -157,8 +157,8 @@ if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) {
 
 <script>
 (function(){
-    var cdgKbCanonical = '<?php echo htmlspecialchars($kb_canonical, ENT_QUOTES); ?>';
-    var cdgKbCsrf = '<?php echo htmlspecialchars($kb_csrf, ENT_QUOTES); ?>';
+    var cdgKbCanonical = '<?php echo htmlspecialchars($kb_canonical, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
+    var cdgKbCsrf = '<?php echo htmlspecialchars($kb_csrf, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
 
     window.cdgKbVote = function(type, btn) {
         if(!cdgKbCanonical) return;

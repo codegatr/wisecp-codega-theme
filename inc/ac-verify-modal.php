@@ -174,7 +174,7 @@ window.cdgVrfSend = function() {
     btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Gonderiliyor...';
 
     MioAjax({
-        url: '<?php echo htmlspecialchars($op_link, ENT_QUOTES); ?>',
+        url: '<?php echo htmlspecialchars($op_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
         type: 'post',
         data: { operation: op, send: '1' },
         result: function(r) {
@@ -207,7 +207,7 @@ window.cdgVrfCheck = function() {
     btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Dogrulaniyor...';
 
     MioAjax({
-        url: '<?php echo htmlspecialchars($op_link, ENT_QUOTES); ?>',
+        url: '<?php echo htmlspecialchars($op_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
         type: 'post',
         data: { operation: op, send: '0', code: code },
         result: function(r) {

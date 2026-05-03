@@ -98,7 +98,7 @@ if(!empty($udata['gsm'])) {
                 if(!$initial && !empty($udata['email'])) $initial = mb_strtoupper(mb_substr($udata['email'], 0, 1));
                 if(!$initial) $initial = '?';
                 ?>
-                <span><?php echo htmlspecialchars($initial, ENT_QUOTES); ?></span>
+                <span><?php echo htmlspecialchars($initial, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
             </div>
             <div style="min-width:0;">
                 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
@@ -115,7 +115,7 @@ if(!empty($udata['gsm'])) {
                     <i class="bi bi-envelope"></i> <?php echo htmlspecialchars($udata['email'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     <?php if($gsm_full): ?>
                     <span style="margin:0 6px;color:#cbd5e1;">·</span>
-                    <i class="bi bi-telephone"></i> <?php echo htmlspecialchars($gsm_full, ENT_QUOTES); ?>
+                    <i class="bi bi-telephone"></i> <?php echo htmlspecialchars($gsm_full, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     <?php endif; ?>
                     <?php if($is_corporate && !empty($udata['company_name'])): ?>
                     <span style="margin:0 6px;color:#cbd5e1;">·</span>
@@ -600,7 +600,7 @@ if(!empty($udata['gsm'])) {
                     ?>
                 </span></li>
                 <li><span class="cdg-pd2-info-label">Aktivasyon Tarihi</span><span class="cdg-pd2-info-value">
-                    <?php echo isset($udata['two_factor_date']) ? htmlspecialchars(date('d.m.Y', strtotime($udata['two_factor_date'])), ENT_QUOTES) : '-'; ?>
+                    <?php echo isset($udata['two_factor_date']) ? htmlspecialchars(date('d.m.Y', strtotime($udata['two_factor_date'])), ENT_QUOTES | ENT_HTML5, 'UTF-8') : '-'; ?>
                 </span></li>
             </ul>
             <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
@@ -650,11 +650,11 @@ if(!empty($udata['gsm'])) {
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
                         <i class="bi bi-credit-card-2-front" style="font-size:28px;color:#fde047;"></i>
                         <span style="font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.80);">
-                            <?php echo htmlspecialchars(ucfirst($card_brand), ENT_QUOTES); ?>
+                            <?php echo htmlspecialchars(ucfirst($card_brand), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                         </span>
                     </div>
                     <div style="font-size:18px;font-weight:700;letter-spacing:2px;margin-bottom:14px;font-family:monospace;">
-                        •••• •••• •••• <?php echo htmlspecialchars(substr((string)$card_last4, -4), ENT_QUOTES); ?>
+                        •••• •••• •••• <?php echo htmlspecialchars(substr((string)$card_last4, -4), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </div>
                     <div style="display:flex;justify-content:space-between;align-items:flex-end;">
                         <div>
@@ -664,7 +664,7 @@ if(!empty($udata['gsm'])) {
                         <?php if($card_exp): ?>
                         <div>
                             <div style="font-size:10px;color:rgba(255,255,255,0.50);text-transform:uppercase;letter-spacing:0.5px;">SKT</div>
-                            <div style="font-size:13px;font-weight:600;"><?php echo htmlspecialchars($card_exp, ENT_QUOTES); ?></div>
+                            <div style="font-size:13px;font-weight:600;"><?php echo htmlspecialchars($card_exp, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         </div>
                         <?php endif; ?>
                     </div>
@@ -809,7 +809,7 @@ window.cdgInfo2FA = {
         var fd = new FormData();
         fd.append('operation', op);
         if(data) Object.keys(data).forEach(function(k){ fd.append(k, data[k]); });
-        return fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES); ?>', { method: 'POST', body: fd, credentials: 'same-origin' }).then(function(r){ return r.text(); }).then(function(t){ try { return JSON.parse(t); } catch(e) { return null; } });
+        return fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', { method: 'POST', body: fd, credentials: 'same-origin' }).then(function(r){ return r.text(); }).then(function(t){ try { return JSON.parse(t); } catch(e) { return null; } });
     },
     enable: function(){
         if(!confirm('2 Adımlı Doğrulama (2FA) etkinleştirilsin mi? Aktif olduktan sonra her girişte uygulamadan kod gireceksiniz.')) return;
@@ -840,7 +840,7 @@ window.cdgInfoCard = {
         var fd = new FormData();
         fd.append('operation', op);
         fd.append('card_id', cardId);
-        return fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES); ?>', { method: 'POST', body: fd, credentials: 'same-origin' }).then(function(r){ return r.text(); });
+        return fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', { method: 'POST', body: fd, credentials: 'same-origin' }).then(function(r){ return r.text(); });
     },
     setDefault: function(id){
         if(!confirm('Bu kart varsayılan ödeme kartı olarak ayarlansın mı?')) return;
@@ -861,7 +861,7 @@ window.cdgInfoKvkk = {
         var fd = new FormData();
         fd.append('operation', 'gdpr_request');
         fd.append('type', type);
-        return fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES); ?>', { method: 'POST', body: fd, credentials: 'same-origin' }).then(function(r){ return r.text(); });
+        return fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', { method: 'POST', body: fd, credentials: 'same-origin' }).then(function(r){ return r.text(); });
     },
     export: function(){
         if(!confirm('Tüm verilerinizin ZIP arşivinin oluşturulması için talep gönderilsin mi? Hazırlandığında e-posta ile bildirilecek.')) return;
@@ -874,7 +874,7 @@ window.cdgInfoKvkk = {
         fd.append('operation', 'gdpr_request');
         fd.append('type', 'correction');
         fd.append('note', note);
-        fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES); ?>', { method: 'POST', body: fd, credentials: 'same-origin' })
+        fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', { method: 'POST', body: fd, credentials: 'same-origin' })
             .then(function(){ alert('Düzeltme talebiniz alındı. 30 iş günü içinde işleme alınacak.'); });
     },
     deleteAccount: function(){
@@ -1235,7 +1235,7 @@ window.cdgInfoPwMatch = function() {
 window.cdgInfoLoadCities = function(country_id) {
     if(!country_id || typeof MioAjax !== 'function') return;
     MioAjax({
-        url: '<?php echo htmlspecialchars($op_link, ENT_QUOTES); ?>',
+        url: '<?php echo htmlspecialchars($op_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
         type: 'post',
         data: { operation: 'getCities', country: country_id },
         result: function(r) {

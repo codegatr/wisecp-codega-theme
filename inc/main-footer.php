@@ -204,10 +204,10 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
                 }
                 ?>
                 <?php if($cdg_theme_version): ?>
-                <span class="cdg-footer-version">v<?php echo htmlspecialchars($cdg_theme_version, ENT_QUOTES); ?></span>
+                <span class="cdg-footer-version">v<?php echo htmlspecialchars($cdg_theme_version, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <?php endif; ?>
                 <?php if($cdg_theme_date): ?>
-                <span class="cdg-footer-version-meta">&middot; Güncelleme: <?php echo htmlspecialchars(date('d.m.Y', strtotime($cdg_theme_date)), ENT_QUOTES); ?></span>
+                <span class="cdg-footer-version-meta">&middot; Güncelleme: <?php echo htmlspecialchars(date('d.m.Y', strtotime($cdg_theme_date)), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <?php endif; ?>
             </div>
 

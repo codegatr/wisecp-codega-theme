@@ -306,8 +306,8 @@ if(isset($showCategory) && is_array($showCategory)) {
         <?php if(count($pricing_categories) > 1): ?>
         <div class="cdg-pricing-tabs" role="tablist">
             <?php foreach($pricing_categories as $i => $cat): ?>
-            <button type="button" class="cdg-pricing-tab<?php echo $i === 0 ? ' active' : ''; ?>" data-tab="<?php echo htmlspecialchars($cat['id'], ENT_QUOTES); ?>" role="tab">
-                <i class="bi <?php echo htmlspecialchars($cat['icon'], ENT_QUOTES); ?>" style="color:<?php echo htmlspecialchars($cat['color'], ENT_QUOTES); ?>;"></i>
+            <button type="button" class="cdg-pricing-tab<?php echo $i === 0 ? ' active' : ''; ?>" data-tab="<?php echo htmlspecialchars($cat['id'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" role="tab">
+                <i class="bi <?php echo htmlspecialchars($cat['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="color:<?php echo htmlspecialchars($cat['color'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>;"></i>
                 <span><?php echo htmlspecialchars($cat['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 <small><?php echo count($cat['packages']); ?> paket</small>
             </button>
@@ -319,7 +319,7 @@ if(isset($showCategory) && is_array($showCategory)) {
             $pkg_count = count($cat['packages']);
             $grid_class = 'cdg-pricing-grid-' . min(4, max(1, $pkg_count ?: 1));
         ?>
-        <div class="cdg-pricing-pane<?php echo $i === 0 ? ' active' : ''; ?>" data-pane="<?php echo htmlspecialchars($cat['id'], ENT_QUOTES); ?>" role="tabpanel">
+        <div class="cdg-pricing-pane<?php echo $i === 0 ? ' active' : ''; ?>" data-pane="<?php echo htmlspecialchars($cat['id'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" role="tabpanel">
             <?php if(!empty($cat['desc'])): ?>
             <div class="cdg-pricing-pane-desc"><?php echo htmlspecialchars($cat['desc'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
             <?php endif; ?>
@@ -337,8 +337,8 @@ if(isset($showCategory) && is_array($showCategory)) {
                     <?php if(!empty($pkg['highlight'])): ?>
                     <div class="cdg-price-ribbon">EN POPÜLER</div>
                     <?php endif; ?>
-                    <div class="cdg-price-cat-tag" style="color:<?php echo htmlspecialchars($cat['color'], ENT_QUOTES); ?>;background:<?php echo htmlspecialchars($cat['color'], ENT_QUOTES); ?>15;">
-                        <i class="bi <?php echo htmlspecialchars($cat['icon'], ENT_QUOTES); ?>"></i> <?php echo htmlspecialchars($cat['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                    <div class="cdg-price-cat-tag" style="color:<?php echo htmlspecialchars($cat['color'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>;background:<?php echo htmlspecialchars($cat['color'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>15;">
+                        <i class="bi <?php echo htmlspecialchars($cat['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i> <?php echo htmlspecialchars($cat['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </div>
                     <h3 class="cdg-price-name"><?php echo htmlspecialchars($pkg['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
                     <?php if(!empty($pkg['subtitle'])): ?>
@@ -369,7 +369,7 @@ if(isset($showCategory) && is_array($showCategory)) {
                         $btn_link = !empty($pkg['buy_link']) && $pkg['buy_link'] !== '#' ? $pkg['buy_link'] : $basket_url;
                         $btn_class = !empty($pkg['highlight']) ? 'cdg-btn-primary cdg-btn-glow' : 'cdg-btn-outline';
                     ?>
-                    <a href="<?php echo htmlspecialchars($btn_link, ENT_QUOTES); ?>" class="cdg-btn <?php echo $btn_class; ?> cdg-btn-block">
+                    <a href="<?php echo htmlspecialchars($btn_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-btn <?php echo $btn_class; ?> cdg-btn-block">
                         <i class="bi bi-cart-plus"></i> <?php echo htmlspecialchars($pkg['buy_label'] ?? 'Sepete Ekle', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                     </a>
                 </div>

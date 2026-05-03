@@ -309,7 +309,7 @@ if(!$has_available && !$has_active) return;
 <?php if($has_available): ?>
 <script>
 (function(){
-    var cdgAddonUrl = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES); ?>';
+    var cdgAddonUrl = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
     var cdgAddonPid = <?php echo (int)($proanse['id'] ?? 0); ?>;
 
     window.cdgAddonRecalc = function() {

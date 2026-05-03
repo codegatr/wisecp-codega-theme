@@ -167,7 +167,7 @@ if(class_exists('Hook') && method_exists('Hook', 'run')) {
                         }
                     }
                 ?>
-                    <tr data-search="<?php echo htmlspecialchars(strtolower($tid . ' ' . $title . ' ' . ($row['service'] ?? '') . ' ' . ($row['department'] ?? '')), ENT_QUOTES); ?>" data-status="<?php echo htmlspecialchars(strtolower($row['status'] ?? ''), ENT_QUOTES); ?>">
+                    <tr data-search="<?php echo htmlspecialchars(mb_strtolower($tid . ' ' . $title . ' ' . ($row['service'] ?? '') . ' ' . ($row['department'] ?? '')), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" data-status="<?php echo htmlspecialchars(strtolower($row['status'] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                         <td><span style="font-family:monospace;color:var(--cdg-muted);font-size:12px;">#<?php echo $tid; ?></span></td>
                         <td>
                             <?php if(isset($row['detail_link'])): ?>

@@ -96,7 +96,7 @@
             var contract2   = $("#contract2").prop("checked");
 
             if(contract1 == undefined || !contract1 || contract2 == undefined || !contract2){
-                alert_error('<?php echo htmlentities(__("website/basket/error16"),ENT_QUOTES); ?>',{timer:3000});
+                alert_error('<?php echo htmlentities(__("website/basket/error16"), ENT_QUOTES | ENT_HTML5, "UTF-8"); ?>',{timer:3000});
                 return false;
             }
 
@@ -1147,13 +1147,13 @@
 </div>
 
 
-<div id="contract1_modal" style="display: none;" data-izimodal-title="<?php echo htmlentities(__("website/sign/contract1-title"),ENT_QUOTES); ?>">
+<div id="contract1_modal" style="display: none;" data-izimodal-title="<?php echo htmlentities(__("website/sign/contract1-title"), ENT_QUOTES | ENT_HTML5, "UTF-8"); ?>">
     <div class="padding20">
         <?php echo ___("constants/contract1"); ?>
     </div>
 </div>
 
-<div id="contract2_modal" style="display: none;" data-izimodal-title="<?php echo htmlentities(__("website/sign/contract2-title"),ENT_QUOTES); ?>">
+<div id="contract2_modal" style="display: none;" data-izimodal-title="<?php echo htmlentities(__("website/sign/contract2-title"), ENT_QUOTES | ENT_HTML5, "UTF-8"); ?>">
     <div class="padding20">
         <?php echo ___("constants/contract2"); ?>
     </div>

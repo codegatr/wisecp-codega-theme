@@ -132,10 +132,10 @@ $cdg_year = date('Y');
     <div class="cdg-ac-footer-left">
         <span>&copy; <?php echo $cdg_year; ?> <strong>CODEGA</strong></span>
         <?php if($cdg_theme_version): ?>
-        <span class="cdg-ac-footer-version"><i class="bi bi-tag-fill" style="font-size:9px;"></i> v<?php echo htmlspecialchars($cdg_theme_version, ENT_QUOTES); ?></span>
+        <span class="cdg-ac-footer-version"><i class="bi bi-tag-fill" style="font-size:9px;"></i> v<?php echo htmlspecialchars($cdg_theme_version, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
         <?php endif; ?>
         <?php if($cdg_theme_date): ?>
-        <span class="cdg-ac-footer-meta">&middot; <?php echo htmlspecialchars(date('d.m.Y', strtotime($cdg_theme_date)), ENT_QUOTES); ?></span>
+        <span class="cdg-ac-footer-meta">&middot; <?php echo htmlspecialchars(date('d.m.Y', strtotime($cdg_theme_date)), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
         <?php endif; ?>
     </div>
 

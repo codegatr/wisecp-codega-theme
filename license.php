@@ -117,7 +117,7 @@ window.cdgLicenseCheck = function() {
     formData.forEach(function(v, k){ data[k] = v; });
 
     MioAjax({
-        url: '<?php echo htmlspecialchars($controller_link, ENT_QUOTES); ?>',
+        url: '<?php echo htmlspecialchars($controller_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
         type: 'post',
         data: data,
         result: function(r) {

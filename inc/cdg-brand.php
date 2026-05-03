@@ -83,7 +83,7 @@ if(!function_exists('cdg_logo_svg')) {
 
         if($variant === 'icon' || $variant === 'mark') {
             $h = (int)$size;
-            return '<span class="cdg-brand-mark ' . htmlspecialchars($extra, ENT_QUOTES) . '" style="display:inline-flex;align-items:center;justify-content:center;width:' . $h . 'px;height:' . $h . 'px;flex-shrink:0;">' . $iconSvg . '</span>';
+            return '<span class="cdg-brand-mark ' . htmlspecialchars($extra, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '" style="display:inline-flex;align-items:center;justify-content:center;width:' . $h . 'px;height:' . $h . 'px;flex-shrink:0;">' . $iconSvg . '</span>';
         }
 
         // FULL (icon + wordmark)
@@ -92,7 +92,7 @@ if(!function_exists('cdg_logo_svg')) {
         $sub = $variant === 'mono' ? '' : '<span class="cdg-brand-sub" style="display:block;font-size:' . ($size * 0.22) . 'px;font-weight:500;color:' . $color_sub . ';letter-spacing:0.5px;line-height:1;margin-top:2px;">Software &amp; Hosting</span>';
 
         $h = (int)$size;
-        return '<span class="cdg-brand-logo ' . htmlspecialchars($extra, ENT_QUOTES) . '" style="display:inline-flex;align-items:center;gap:' . ($size * 0.22) . 'px;height:' . $h . 'px;flex-shrink:0;line-height:1;">'
+        return '<span class="cdg-brand-logo ' . htmlspecialchars($extra, ENT_QUOTES | ENT_HTML5, 'UTF-8') . '" style="display:inline-flex;align-items:center;gap:' . ($size * 0.22) . 'px;height:' . $h . 'px;flex-shrink:0;line-height:1;">'
             . '<span class="cdg-brand-mark" style="display:inline-flex;align-items:center;justify-content:center;width:' . $h . 'px;height:' . $h . 'px;flex-shrink:0;">' . $iconSvg . '</span>'
             . '<span class="cdg-brand-text" style="display:inline-flex;flex-direction:column;justify-content:center;line-height:1;">'
             . '<span class="cdg-brand-name" style="display:block;font-family:\'Plus Jakarta Sans\',sans-serif;font-size:' . ($size * 0.55) . 'px;font-weight:800;color:' . $color_word . ';letter-spacing:-0.01em;line-height:1;">CODEGA</span>'

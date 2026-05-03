@@ -310,7 +310,7 @@ window.cdgSwCopy = function(elemId, btn) {
 
 <script>
 (function(){
-    var cdgSwUrl = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES); ?>';
+    var cdgSwUrl = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
     var cdgSwPid = <?php echo (int)($proanse['id'] ?? 0); ?>;
 
     window.cdgSwChangeDomain = function(btn) {

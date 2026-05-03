@@ -216,7 +216,7 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
                         $status_html = '<span class="cdg-badge cdg-badge-' . $st_info['cls'] . '">' . htmlspecialchars($st_info['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</span>';
                     }
                 ?>
-                    <tr data-search="<?php echo htmlspecialchars(strtolower($num . ' ' . ($row['description'] ?? '') . ' ' . ($row['title'] ?? '')), ENT_QUOTES); ?>" data-status="<?php echo htmlspecialchars(strtolower($row['status'] ?? ''), ENT_QUOTES); ?>">
+                    <tr data-search="<?php echo htmlspecialchars(mb_strtolower($num . ' ' . ($row['description'] ?? '') . ' ' . ($row['title'] ?? '')), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" data-status="<?php echo htmlspecialchars(strtolower($row['status'] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                         <td><span style="font-family:monospace;font-size:13px;">#<?php echo htmlspecialchars($num, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></td>
                         <td style="text-align:center;font-size:13px;"><?php echo $ctime_fmt; ?></td>
                         <td style="text-align:center;font-size:13px;"><?php echo $duedate_fmt ?: '-'; ?></td>

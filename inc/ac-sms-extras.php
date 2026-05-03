@@ -453,13 +453,13 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
                     $g_name = $g['name'] ?? '';
                     $g_numbers = is_array($g['numbers'] ?? null) ? $g['numbers'] : [];
                 ?>
-                <div class="cdg-sms-group-item" id="cdg-sms-group-<?php echo $g_id; ?>" data-numbers="<?php echo htmlspecialchars(implode("\n", $g_numbers), ENT_QUOTES); ?>">
+                <div class="cdg-sms-group-item" id="cdg-sms-group-<?php echo $g_id; ?>" data-numbers="<?php echo htmlspecialchars(implode("\n", $g_numbers), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                     <div>
                         <div class="cdg-sms-group-name"><?php echo htmlspecialchars($g_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         <div class="cdg-sms-group-count"><?php echo count($g_numbers); ?> numara</div>
                     </div>
                     <div class="cdg-sms-group-actions">
-                        <button type="button" class="cdg-sms-group-action" onclick="cdgSmsEditGroup(<?php echo $g_id; ?>, '<?php echo htmlspecialchars($g_name, ENT_QUOTES); ?>')" title="Numaraları Düzenle">
+                        <button type="button" class="cdg-sms-group-action" onclick="cdgSmsEditGroup(<?php echo $g_id; ?>, '<?php echo htmlspecialchars($g_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Numaraları Düzenle">
                             <i class="bi bi-pencil"></i>
                         </button>
                         <button type="button" class="cdg-sms-group-action danger" onclick="cdgSmsDeleteGroup(<?php echo $g_id; ?>)" title="Sil">
@@ -654,7 +654,7 @@ $active_origins = array_filter($origins, function($o){ return ($o['status'] ?? '
 
 <script>
 (function(){
-    var cdgSmsUrl = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES); ?>';
+    var cdgSmsUrl = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
     var cdgSmsPid = <?php echo (int)($proanse['id'] ?? 0); ?>;
     var cdgSmsDimensions = <?php echo json_encode(array_values($dimensions), JSON_UNESCAPED_UNICODE); ?>;
 

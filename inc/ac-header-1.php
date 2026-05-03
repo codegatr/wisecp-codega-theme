@@ -296,7 +296,7 @@ if(!$cdg_notif_url) $cdg_notif_url = cdg_link('my-account');
 
 <script>
 (function(){
-    var cdgNotifUrl = '<?php echo htmlspecialchars($cdg_notif_url, ENT_QUOTES); ?>';
+    var cdgNotifUrl = '<?php echo htmlspecialchars($cdg_notif_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
 
     window.cdgNotifToggle = function(e) {
         if(e) { e.stopPropagation(); }

@@ -304,10 +304,10 @@ $no_unlimited = in_array('no-unlimited-email-account', $supported ?? []);
                             </div>
                             <?php endif; ?>
                         </div>
-                        <button type="button" class="cdg-hem-list-action" onclick="cdgHemUpdatePw('<?php echo htmlspecialchars($addr, ENT_QUOTES); ?>')" title="Şifre değiştir">
+                        <button type="button" class="cdg-hem-list-action" onclick="cdgHemUpdatePw('<?php echo htmlspecialchars($addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Şifre değiştir">
                             <i class="bi bi-key"></i>
                         </button>
-                        <button type="button" class="cdg-hem-list-action danger" onclick="cdgHemDelete('<?php echo htmlspecialchars($addr, ENT_QUOTES); ?>')" title="Sil">
+                        <button type="button" class="cdg-hem-list-action danger" onclick="cdgHemDelete('<?php echo htmlspecialchars($addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Sil">
                             <i class="bi bi-trash"></i>
                         </button>
                     </div>
@@ -364,7 +364,7 @@ $no_unlimited = in_array('no-unlimited-email-account', $supported ?? []);
                         <div>
                             <div class="cdg-hem-list-addr"><?php echo htmlspecialchars($dest, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> <i class="bi bi-arrow-right" style="color:#94a3b8;font-size:11px;"></i> <?php echo htmlspecialchars($forward, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         </div>
-                        <button type="button" class="cdg-hem-list-action danger" onclick="cdgHemDeleteForward('<?php echo htmlspecialchars($dest, ENT_QUOTES); ?>', '<?php echo htmlspecialchars($forward, ENT_QUOTES); ?>')" title="Sil">
+                        <button type="button" class="cdg-hem-list-action danger" onclick="cdgHemDeleteForward('<?php echo htmlspecialchars($dest, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', '<?php echo htmlspecialchars($forward, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Sil">
                             <i class="bi bi-trash"></i>
                         </button>
                     </div>
@@ -382,7 +382,7 @@ $no_unlimited = in_array('no-unlimited-email-account', $supported ?? []);
 </div>
 
 <script>
-var cdgHemUrl = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES); ?>';
+var cdgHemUrl = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
 var cdgHemPid = <?php echo (int)($proanse['id'] ?? 0); ?>;
 
 function cdgHemOpen() {

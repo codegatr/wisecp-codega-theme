@@ -41,7 +41,7 @@ $baddress = isset($baddress) ? $baddress : '';
 
 <script type="text/javascript">
 // === Codega: Global JS Değişkenleri ===
-var update_online_link  = "<?php echo htmlspecialchars($update_online_link, ENT_QUOTES); ?>";
+var update_online_link  = "<?php echo htmlspecialchars($update_online_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>";
 var is_logged           = <?php echo $is_logged ? 'true' : 'false'; ?>;
 var warning_modal_title = "<?php echo $warning_title; ?>";
 var success_modal_title = "<?php echo $success_title; ?>";

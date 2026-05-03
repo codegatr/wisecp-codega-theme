@@ -5,16 +5,22 @@
     "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.62-codega",
     "tag": "v3.5.62-codega",
     "changelog": [
-        "v3.5.62 - KRITIK FIX: pages/ __DIR__ relative path bug + .htaccess slug formatina geri donus",
-        "FIX 1: pages/ klasorundeki 12 corporate sayfa __DIR__ -> dirname(__DIR__) duzeltmesi",
-        "  Sebep: pages/'e kopyalandiginda __DIR__ degisti, inc/ yolunu bulamiyordu",
-        "  pages/erp.php icindeki: __DIR__.DS.'inc' (yanlis) -> dirname(__DIR__).DS.'inc' (dogru)",
-        "  Etkilenen sayfalar: erp, hakkimizda, kvkk, cerez-politikasi, gizlilik-politikasi,",
-        "    hizmet-sozlesmesi, kariyer, sosyal-sorumluluk, surdurulebilirlik, system-status,",
-        "    references, vision",
-        "FIX 2: .htaccess corporate rewrite formati: templates/website/Codega/PAGE -> sade slug",
-        "  Onceki (calismadi): /erp-yazilimi.html -> templates/website/Codega/erp",
-        "  Simdi: /erp-yazilimi.html -> erp",
-        "  WiseCP slug-based file routing: /erp -> erp.php (CORE_FOLDER tanimli)"
+        "v3.5.62 - Buyuk Genel Kontrol: 35+ dosyada Turkce karakter ve URL duzeltmesi",
+        "FIX: Turkce karakter (UTF-8) - 35 dosya guncellendi",
+        "  htmlspecialchars() cagrilarinin tamami ENT_QUOTES | ENT_HTML5 + UTF-8 oldu",
+        "  Onceden: htmlspecialchars(\\$x) veya htmlspecialchars(\\$x, ENT_QUOTES)",
+        "  Simdi: htmlspecialchars(\\$x, ENT_QUOTES | ENT_HTML5, 'UTF-8')",
+        "  Bu Turkce karakterli icerigin (urun adlari, fatura aciklamalari, vb.) duzgun gosterimini saglar",
+        "FIX: htmlentities() basket sayfalarinda UTF-8 destegi eklendi",
+        "  basket-account.php ve basket-payment.php'deki sozlesme modallari",
+        "FIX: Search alanlarinda mb_strtolower kullanimi (Turkce I/i destegi)",
+        "  ac-invoices.php, ac-tickets.php, ac-products-all.php data-search alanlarinda",
+        "  Turkce arama sonuclari dogru gelir ('I' ile baslayan urunler bulunur)",
+        "FIX: .htaccess corporate sayfa rewrite formati duzeltildi",
+        "  Onceden: /erp-yazilimi.html -> erp [L] (calismiyordu)",
+        "  Simdi: /erp-yazilimi.html -> templates/website/Codega/erp [L]",
+        "  WiseCP theme.router bu URL formatini handle eder, pages/erp.php yuklenir",
+        "  15 corporate URL bu sekilde duzeltildi",
+        "DOC: Corporate sayfalar pages/'e tekrar sync edildi (UTF-8 sonrasi)"
     ]
 }

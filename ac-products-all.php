@@ -717,11 +717,11 @@ $status_meta_map = [
                 $can_manage = isset($row['detail_link']) && !in_array($status, ['waiting','inprocess','cancelled']);
 
                 // Search index için tüm aranabilir alanlar
-                $search_terms = strtolower($name . ' ' . $oid . ' ' . $sub_info . ' ' . $tm['lbl']);
+                $search_terms = mb_strtolower($name . ' ' . $oid . ' ' . $sub_info . ' ' . $tm['lbl']);
             ?>
-                <tr data-type="<?php echo htmlspecialchars($type, ENT_QUOTES); ?>" data-search="<?php echo htmlspecialchars($search_terms, ENT_QUOTES); ?>">
+                <tr data-type="<?php echo htmlspecialchars($type, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" data-search="<?php echo htmlspecialchars($search_terms, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                     <td data-lbl="ID">
-                        <span class="cdg-pl-id">#<?php echo htmlspecialchars((string)$oid, ENT_QUOTES); ?></span>
+                        <span class="cdg-pl-id">#<?php echo htmlspecialchars((string)$oid, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </td>
                     <td data-lbl="Hizmet">
                         <div class="cdg-pl-svc">

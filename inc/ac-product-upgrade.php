@@ -205,7 +205,7 @@ if(!$has_upgrade) return;
             </ul>
             <?php endif; ?>
 
-            <input type="hidden" id="product_<?php echo $up_id; ?>_name" value="<?php echo htmlspecialchars($up_name, ENT_QUOTES); ?>">
+            <input type="hidden" id="product_<?php echo $up_id; ?>_name" value="<?php echo htmlspecialchars($up_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
             <select class="cdg-upg-period-select" id="product_<?php echo $up_id; ?>_price">
                 <?php foreach($up_options as $opt):
                     $opt_id = $opt['id'] ?? 0;
@@ -226,7 +226,7 @@ if(!$has_upgrade) return;
                     }
                     $label = $opt_name . ' — ' . $opt_payable . ($period_label ? ' / ' . $period_label : '');
                 ?>
-                <option value="<?php echo (int)$opt_id; ?>" data-payable="<?php echo htmlspecialchars($opt_payable, ENT_QUOTES); ?>"><?php echo htmlspecialchars($label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
+                <option value="<?php echo (int)$opt_id; ?>" data-payable="<?php echo htmlspecialchars($opt_payable, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
                 <?php endforeach; ?>
             </select>
 
@@ -263,7 +263,7 @@ if(!$has_upgrade) return;
 
 <script>
 (function(){
-    var cdgUpgUrl = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES); ?>';
+    var cdgUpgUrl = '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
     var cdgUpgPid = <?php echo (int)($proanse['id'] ?? 0); ?>;
     var pendingId = null, pendingPrice = null;
 

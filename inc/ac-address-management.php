@@ -207,7 +207,7 @@ $ac_op_link = isset($operation_link) ? $operation_link : (isset($links['controll
             $a_phone = $addr['phone'] ?? ($addr['gsm'] ?? '');
         ?>
         <div class="cdg-addr-card<?php echo $a_default ? ' is-default' : ''; ?>" data-addr-id="<?php echo (int)$a_id; ?>"
-             data-addr-payload='<?php echo htmlspecialchars(json_encode($addr, JSON_UNESCAPED_UNICODE), ENT_QUOTES); ?>'>
+             data-addr-payload='<?php echo htmlspecialchars(json_encode($addr, JSON_UNESCAPED_UNICODE), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>'>
             <div class="cdg-addr-card-name">
                 <?php echo htmlspecialchars($a_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 <span class="cdg-addr-card-kind <?php echo $a_kind === 'corporate' ? 'corporate' : ''; ?>">
@@ -469,7 +469,7 @@ window.cdgAddrDelete = function(addrId) {
         // Fallback form submit
         var f = document.createElement('form');
         f.method = 'post';
-        f.action = '<?php echo htmlspecialchars($ac_op_link, ENT_QUOTES); ?>';
+        f.action = '<?php echo htmlspecialchars($ac_op_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
         f.innerHTML = '<input type="hidden" name="operation" value="DeleteAddress"><input type="hidden" name="id" value="'+addrId+'">';
         document.body.appendChild(f);
         f.submit();
@@ -477,7 +477,7 @@ window.cdgAddrDelete = function(addrId) {
     }
 
     MioAjax({
-        url: '<?php echo htmlspecialchars($ac_op_link, ENT_QUOTES); ?>',
+        url: '<?php echo htmlspecialchars($ac_op_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
         type: 'post',
         data: { operation: 'DeleteAddress', id: addrId },
         result: function(r) {

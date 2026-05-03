@@ -291,8 +291,8 @@ if(class_exists('Validation') && method_exists('Validation', 'get_csrf_token')) 
 
 <script>
 (function(){
-    var cdgCardUrl = '<?php echo htmlspecialchars($operation_link, ENT_QUOTES); ?>';
-    var cdgCardCsrf = '<?php echo htmlspecialchars($csrf_token, ENT_QUOTES); ?>';
+    var cdgCardUrl = '<?php echo htmlspecialchars($operation_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
+    var cdgCardCsrf = '<?php echo htmlspecialchars($csrf_token, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
 
     window.cdgCardSetDefault = function(cardId, btn) {
         if(typeof MioAjax !== 'function') return;

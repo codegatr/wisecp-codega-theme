@@ -876,7 +876,7 @@ $discounted_total = $inv_subtotal - $total_discount;
             btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Uygulaniyor...';
 
             MioAjax({
-                url: '<?php echo htmlspecialchars($form_action ?? '', ENT_QUOTES); ?>',
+                url: '<?php echo htmlspecialchars($form_action ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
                 type: 'post',
                 data: { operation: 'apply_coupon', code: code },
                 result: function(r) {
@@ -951,16 +951,16 @@ $discounted_total = $inv_subtotal - $total_discount;
                         $m_balance = is_array($m_data) ? ($m_data['balance'] ?? '') : '';
                         $is_selected = ($cdg_selected_pmethod && $cdg_selected_pmethod == $m_id) || ($first && !$cdg_selected_pmethod);
                     ?>
-                    <label class="cdg-inv-pm <?php echo $is_selected ? 'selected' : ''; ?>" data-pmethod="<?php echo htmlspecialchars($m_id, ENT_QUOTES); ?>" onclick="cdgInvSelectPM('<?php echo htmlspecialchars($m_id, ENT_QUOTES); ?>', this)">
+                    <label class="cdg-inv-pm <?php echo $is_selected ? 'selected' : ''; ?>" data-pmethod="<?php echo htmlspecialchars($m_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" onclick="cdgInvSelectPM('<?php echo htmlspecialchars($m_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', this)">
                         <input type="radio" name="pmethod_radio" value="<?php echo htmlspecialchars($m_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $is_selected ? 'checked' : ''; ?>>
                         <i class="bi bi-<?php echo htmlspecialchars($m_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
                         <div class="cdg-inv-pm-label">
                             <?php echo htmlspecialchars($m_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                             <?php if($m_commission): ?>
-                            <span style="display:block;font-size:11px;color:#dc2626;font-weight:500;margin-top:2px;">+<?php echo htmlspecialchars($m_commission, ENT_QUOTES); ?> komisyon</span>
+                            <span style="display:block;font-size:11px;color:#dc2626;font-weight:500;margin-top:2px;">+<?php echo htmlspecialchars($m_commission, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> komisyon</span>
                             <?php endif; ?>
                             <?php if($m_balance): ?>
-                            <span style="display:block;font-size:11px;color:#64748b;font-weight:500;margin-top:2px;"><?php echo htmlspecialchars($m_balance, ENT_QUOTES); ?></span>
+                            <span style="display:block;font-size:11px;color:#64748b;font-weight:500;margin-top:2px;"><?php echo htmlspecialchars($m_balance, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                             <?php endif; ?>
                         </div>
                     </label>
@@ -984,8 +984,8 @@ $discounted_total = $inv_subtotal - $total_discount;
                             <input type="radio" name="stored_card_id" value="<?php echo (int)$sc_id; ?>" <?php echo $sc_default ? 'checked' : ''; ?>>
                             <i class="bi bi-credit-card-fill" style="color:#2E3B4E;font-size:18px;"></i>
                             <div style="font-size:12px;">
-                                <div style="font-weight:700;text-transform:uppercase;"><?php echo htmlspecialchars($sc_brand, ENT_QUOTES); ?></div>
-                                <div style="font-family:monospace;color:#64748b;">•••• <?php echo htmlspecialchars(substr($sc_last4, -4), ENT_QUOTES); ?></div>
+                                <div style="font-weight:700;text-transform:uppercase;"><?php echo htmlspecialchars($sc_brand, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                                <div style="font-family:monospace;color:#64748b;">•••• <?php echo htmlspecialchars(substr($sc_last4, -4), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                             </div>
                             <?php if($sc_default): ?>
                             <span style="margin-left:auto;font-size:10px;background:#2E3B4E;color:#fff;padding:2px 6px;border-radius:4px;font-weight:700;">VARSAYILAN</span>
@@ -1013,7 +1013,7 @@ $discounted_total = $inv_subtotal - $total_discount;
                             <strong style="color:#1A2332;">Toplam Tutar (komisyon dahil):</strong>
                         </div>
                         <div style="font-size:16px;font-weight:800;color:#2E3B4E;" id="cdg-inv-total-with-fee">
-                            <?php echo htmlspecialchars(cdg_inv_money($inv_total, $inv_currency_id), ENT_QUOTES); ?>
+                            <?php echo htmlspecialchars(cdg_inv_money($inv_total, $inv_currency_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                         </div>
                     </div>
                 </div>
@@ -1059,7 +1059,7 @@ $discounted_total = $inv_subtotal - $total_discount;
                 fd.append('operation', 'selection-result');
                 fd.append('pmethod', pmethod);
                 fd.append('sendbta', document.getElementById('cdg-inv-sendbta-hidden').value);
-                fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES); ?>', { method: 'POST', body: fd, credentials: 'same-origin' })
+                fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>', { method: 'POST', body: fd, credentials: 'same-origin' })
                     .then(function(r){ return r.text(); })
                     .then(function(txt){
                         try {

@@ -1465,7 +1465,7 @@ window.cdgDomain = {
         // Mevcut durumu gösterir, değişiklik için kullanıcıyı destek talebine yönlendirir.
         if(!confirm('Transfer kilidi durumunu değiştirmek için destek ekibimize bilet açacağız. Devam edilsin mi?')) return;
         var ticketsUrl = '<?php echo htmlspecialchars(cdg_link("create-ticket-request"), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
-        var domainName = '<?php echo htmlspecialchars($d_name, ENT_QUOTES); ?>';
+        var domainName = '<?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
         var subjectParam = encodeURIComponent('Transfer kilidi değişiklik talebi: ' + domainName);
         if(ticketsUrl && ticketsUrl !== '#') {
             location.href = ticketsUrl + (ticketsUrl.indexOf('?') >= 0 ? '&' : '?') + 'subject=' + subjectParam;
@@ -1549,7 +1549,7 @@ window.cdgDomain = {
         // En iyi yaklaşım: Destek talebi oluşturmaya yönlendir
         if(!confirm('EPP / Auth Code talebi için destek ekibimize bir bilet açacağız. Devam edilsin mi?')) return;
         var ticketsUrl = '<?php echo htmlspecialchars(cdg_link("create-ticket-request"), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
-        var domainName = '<?php echo htmlspecialchars($d_name, ENT_QUOTES); ?>';
+        var domainName = '<?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
         var subjectParam = encodeURIComponent('EPP / Auth Code talebi: ' + domainName);
         // Ticket sayfasına yönlendir, başlığı önceden doldur
         if(ticketsUrl && ticketsUrl !== '#') {

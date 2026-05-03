@@ -57,7 +57,7 @@ $page_title_enc = urlencode((string)$page_title);
     </a>
 
     <button class="cdg-share-btn cdg-share-copy" type="button"
-            onclick="cdgShareCopy(this, '<?php echo htmlspecialchars($share_url, ENT_QUOTES); ?>')"
+            onclick="cdgShareCopy(this, '<?php echo htmlspecialchars($share_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')"
             title="Linki kopyala" aria-label="Linki kopyala">
         <i class="bi bi-link-45deg"></i>
     </button>

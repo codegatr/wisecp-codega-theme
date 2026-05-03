@@ -106,8 +106,8 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
                 Tümü <span class="count"><?php echo count($refs); ?></span>
             </button>
             <?php foreach ($sectors as $sector => $count): ?>
-            <button type="button" class="cdg-refs-chip" data-sector="<?php echo htmlspecialchars($sector, ENT_QUOTES); ?>">
-                <?php echo htmlspecialchars($sector); ?>
+            <button type="button" class="cdg-refs-chip" data-sector="<?php echo htmlspecialchars($sector, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
+                <?php echo htmlspecialchars($sector, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                 <span class="count"><?php echo $count; ?></span>
             </button>
             <?php endforeach; ?>
@@ -128,7 +128,7 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
             <?php foreach ($premium as $r):
                 $color = cdg_refs_logo_color($r['ad'], $logo_colors);
                 $initials = cdg_refs_initials($r['ad']);
-                $sector = htmlspecialchars($r['sektor'], ENT_QUOTES);
+                $sector = htmlspecialchars($r['sektor'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
             ?>
             <div class="cdg-refs-premium-card cdg-refs-item" data-sector="<?php echo $sector; ?>">
                 <span class="cdg-refs-premium-badge">Premium</span>
@@ -137,13 +137,13 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
                         <?php echo $initials; ?>
                     </div>
                     <div class="cdg-refs-premium-info">
-                        <h3 class="cdg-refs-premium-name"><?php echo htmlspecialchars($r['ad']); ?></h3>
+                        <h3 class="cdg-refs-premium-name"><?php echo htmlspecialchars($r['ad'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
                         <span class="cdg-refs-premium-sector"><?php echo $sector; ?></span>
                     </div>
                 </div>
                 <div class="cdg-refs-premium-service">
                     <i class="bi bi-check-circle-fill"></i>
-                    <span><?php echo htmlspecialchars($r['hizmet']); ?></span>
+                    <span><?php echo htmlspecialchars($r['hizmet'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -165,14 +165,14 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
             <?php foreach ($standard as $r):
                 $color = cdg_refs_logo_color($r['ad'], $logo_colors);
                 $initials = cdg_refs_initials($r['ad']);
-                $sector = htmlspecialchars($r['sektor'], ENT_QUOTES);
+                $sector = htmlspecialchars($r['sektor'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
             ?>
-            <div class="cdg-refs-card cdg-refs-item" data-sector="<?php echo $sector; ?>" title="<?php echo htmlspecialchars($r['hizmet'], ENT_QUOTES); ?>">
+            <div class="cdg-refs-card cdg-refs-item" data-sector="<?php echo $sector; ?>" title="<?php echo htmlspecialchars($r['hizmet'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">
                 <div class="cdg-refs-logo" style="background:linear-gradient(135deg,<?php echo $color[0]; ?>,<?php echo $color[1]; ?>);">
                     <?php echo $initials; ?>
                 </div>
                 <div class="cdg-refs-info">
-                    <h4 class="cdg-refs-name"><?php echo htmlspecialchars($r['ad']); ?></h4>
+                    <h4 class="cdg-refs-name"><?php echo htmlspecialchars($r['ad'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h4>
                     <div class="cdg-refs-sector"><?php echo $sector; ?></div>
                 </div>
             </div>
