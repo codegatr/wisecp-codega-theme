@@ -1,10 +1,8 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 
-// === CDG DEBUG PANEL (sadece ?debug=1 ile aktif) ===
-if(!empty($_GET['debug'])) {
-    $_dbg_inc = __DIR__ . DIRECTORY_SEPARATOR . 'cdg-debug-panel.php';
-    if(file_exists($_dbg_inc)) include $_dbg_inc;
-}
+// === CDG DEBUG PANEL (HER ZAMAN gomulu, console -> cdgDbg() ile acilir) ===
+$_dbg_inc = __DIR__ . DIRECTORY_SEPARATOR . 'cdg-debug-panel.php';
+if(file_exists($_dbg_inc)) include $_dbg_inc;
 ?>
 <?php /**
  * Codega - Ortak Ürün Yönetim Template
