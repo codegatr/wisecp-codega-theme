@@ -217,3 +217,6 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
         </div>
     </div>
 </footer>
+
+<!-- CODEGA Frontend JS - mobile menu, scroll, smooth scroll, mega menu accordion -->
+<script src="<?php echo isset($tadress) ? $tadress : ''; ?>js/script.js?v=<?php echo file_exists(__DIR__ . '/../js/script.js') ? filemtime(__DIR__ . '/../js/script.js') : 1; ?>" defer></script>

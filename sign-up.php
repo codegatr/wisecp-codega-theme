@@ -203,11 +203,11 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
                         <div class="cdg-form-row">
                             <div class="cdg-form-group">
                                 <label class="cdg-form-label"><?php echo __("website/sign/up-form-name"); ?></label>
-                                <input name="name" type="text" class="cdg-form-control" placeholder="Adiniz" required>
+                                <input name="name" type="text" class="cdg-form-control" placeholder="Adınız" required>
                             </div>
                             <div class="cdg-form-group">
                                 <label class="cdg-form-label"><?php echo __("website/sign/up-form-surname"); ?></label>
-                                <input name="surname" type="text" class="cdg-form-control" placeholder="Soyadiniz" required>
+                                <input name="surname" type="text" class="cdg-form-control" placeholder="Soyadınız" required>
                             </div>
                         </div>
 
@@ -222,8 +222,8 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
                         <?php if(isset($kind_status) && $kind_status): ?>
                         <div class="kind-content kind_2" style="display:none;">
                             <div class="cdg-form-group">
-                                <label class="cdg-form-label">Şirket Adi</label>
-                                <input name="company_name" type="text" class="cdg-form-control" placeholder="Şirket Adi">
+                                <label class="cdg-form-label">Şirket Adı</label>
+                                <input name="company_name" type="text" class="cdg-form-control" placeholder="Şirket Adı">
                             </div>
                             <div class="cdg-form-row">
                                 <div class="cdg-form-group">
@@ -231,7 +231,7 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
                                     <input name="company_tax_office" type="text" class="cdg-form-control">
                                 </div>
                                 <div class="cdg-form-group">
-                                    <label class="cdg-form-label">Vergi Numarasi</label>
+                                    <label class="cdg-form-label">Vergi Numarası</label>
                                     <input name="company_tax_number" type="text" class="cdg-form-control">
                                 </div>
                             </div>
