@@ -6,6 +6,43 @@ if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public
  * WiseCP runtime: $page (title, content), $sidebar_status, $sidebar
  */
 
+// === KURUMSAL SAYFA ROUTER (Codega) ===
+// Eğer URL slug bizim hazır kurumsal sayfalarımızdan biriyse, doğrudan tema dosyasını yükle
+$cdg_corp_pages = [
+    'hakkimizda'           => 'hakkimizda.php',
+    'hakkimda'             => 'hakkimizda.php',
+    'sosyal-sorumluluk'    => 'sosyal-sorumluluk.php',
+    'surdurulebilirlik'    => 'surdurulebilirlik.php',
+    'kariyer'              => 'kariyer.php',
+    'kvkk'                 => 'kvkk.php',
+    'kvkk-aydinlatma'      => 'kvkk.php',
+    'cerez-politikasi'     => 'cerez-politikasi.php',
+    'gizlilik-politikasi'  => 'gizlilik-politikasi.php',
+    'gizlilik-sozlesmesi'  => 'gizlilik-politikasi.php',
+    'hizmet-sozlesmesi'    => 'hizmet-sozlesmesi.php',
+];
+
+$cdg_corp_slug = '';
+// 1) WiseCP'nin $page['slug'] varsa al
+if(isset($page) && is_array($page) && !empty($page['slug'])) {
+    $cdg_corp_slug = strtolower(trim($page['slug']));
+}
+// 2) URL'den parse et (fallback)
+if(!$cdg_corp_slug && isset($_SERVER['REQUEST_URI'])) {
+    $cdg_uri_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+    $cdg_uri_segments = explode('/', $cdg_uri_path);
+    $cdg_corp_slug = strtolower(end($cdg_uri_segments));
+}
+
+if(isset($cdg_corp_pages[$cdg_corp_slug])) {
+    $cdg_corp_file = __DIR__ . DIRECTORY_SEPARATOR . $cdg_corp_pages[$cdg_corp_slug];
+    if(file_exists($cdg_corp_file)) {
+        include $cdg_corp_file;
+        return;
+    }
+}
+// === END KURUMSAL ROUTER ===
+
 $page_data = isset($page) && is_array($page) ? $page : [];
 $page_title = $page_data['title'] ?? 'Sayfa';
 $page_content = $page_data['content'] ?? '';
