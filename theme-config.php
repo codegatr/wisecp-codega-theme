@@ -3,7 +3,7 @@ return [
     'meta' => [
         'name'        => 'Codega',
         'description' => 'Modern, kurumsal CODEGA teması. Web yazılım, hosting, domain, SMS ve özel yazılım hizmetleri için tasarlanmıştır.',
-        'version'     => '3.5.86',
+        'version'     => '3.5.87',
         'provider'    => 'CODEGA',
         'website'     => 'https://codega.com.tr',
         'image'       => '',
@@ -12,6 +12,19 @@ return [
     'settings' => [
         'header-type'      => 1,
         'clientArea-type'  => 1,
+
+        // === HOSTING PANEL ERİŞİM AYARLARI ===
+        // WiseCP $buttons API auto-login token üretmediğinde fallback olarak kullanılır
+        // Müşteri "Panele Git" tıkladığında bu URL'lere yönlendirilir
+        'hosting_panels' => [
+            'directadmin_url' => 'https://codega.com.tr:2222',
+            'cpanel_url'      => '',
+            'plesk_url'       => '',
+            'webmail_url'     => 'https://webmail.codega.com.tr',
+            'phpmyadmin_url'  => 'https://codega.com.tr:2222/phpMyAdmin/',
+            'ftp_port'        => '21',
+            'show_panel_card' => 1,  // 1: Özet tab'ında panel kartı göster, 0: gizle
+        ],
 
         // Renkler — CODEGA klasik
         'color1'           => '1e40af',
