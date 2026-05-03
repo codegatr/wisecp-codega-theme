@@ -1122,3 +1122,53 @@ $cdg_panel_icon = function($type, $name) {
 })();
 </script>
 <?php endif; ?>
+
+<!-- ============================================================
+     DEBUG BLOK (gecici - v3.5.84)
+     WiseCP runtime variable'lari teshis icin
+     ============================================================ -->
+<details style="margin-top:20px;background:#1e293b;color:#e2e8f0;border-radius:12px;padding:14px 18px;font-family:'JetBrains Mono',Consolas,monospace;font-size:11px;line-height:1.6;">
+    <summary style="cursor:pointer;color:#00D3E5;font-weight:700;outline:none;user-select:none;">
+        🔍 Debug: WiseCP Runtime Variables (panel butonlari calismiyorsa burayi ac)
+    </summary>
+    <div style="margin-top:12px;border-top:1px solid #334155;padding-top:12px;">
+        <?php
+        $debug_vars = [
+            '$proanse[id]'        => $d_id,
+            '$proanse[name]'      => $d_name,
+            '$proanse[status]'    => $d_status,
+            '$proanse[panel_name]'=> $proanse['panel_name'] ?? '(YOK)',
+            '$panel_name'         => $panel_name,
+            '$panel_logo'         => $panel_logo ?: '(BOS)',
+            '$buttons'            => $buttons,
+            'count($buttons)'     => count($buttons),
+            '$has_buttons'        => $has_buttons ? 'TRUE' : 'FALSE',
+            '$supported'          => $supported,
+            '$can_change_pw'      => $can_change_pw ? 'TRUE' : 'FALSE',
+            '$webmail_url'        => $webmail_url ?: '(BOS)',
+            '$d_panel_url'        => $d_panel_url ?: '(BOS)',
+            '$options_keys'       => array_keys($options),
+            '$options[domain]'    => $options['domain'] ?? '(YOK)',
+            '$options[ip]'        => $options['ip'] ?? '(YOK)',
+            '$options[username]'  => $options['username'] ?? '(YOK)',
+            '$options[panel_url]' => $options['panel_url'] ?? '(YOK)',
+            '$options[cp_url]'    => $options['cp_url'] ?? '(YOK)',
+            '$options[login_url]' => $options['login_url'] ?? '(YOK)',
+            '$controller_url'     => $links['controller'] ?? '(YOK)',
+            '$links_keys'         => array_keys($links),
+        ];
+        foreach($debug_vars as $key => $val):
+            $val_display = is_array($val) ? json_encode($val, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : (string)$val;
+            $val_display = htmlspecialchars($val_display, ENT_QUOTES);
+        ?>
+        <div style="display:flex;gap:14px;padding:6px 0;border-bottom:1px dashed #334155;">
+            <code style="color:#fbbf24;flex-shrink:0;min-width:200px;"><?php echo htmlspecialchars($key, ENT_QUOTES); ?></code>
+            <code style="color:#a7f3d0;word-break:break-all;flex:1;white-space:pre-wrap;"><?php echo $val_display; ?></code>
+        </div>
+        <?php endforeach; ?>
+
+        <div style="margin-top:14px;padding:10px;background:#0f172a;border-radius:8px;color:#94a3b8;font-size:10px;">
+            💡 <strong style="color:#fbbf24;">Eger $buttons bos ise:</strong> WiseCP'nin DirectAdmin/cPanel modulu auto-login URL uretmiyor demektir. WiseCP admin > Sunucular > Hosting Sunucusu ayarlarina bakilmali.
+        </div>
+    </div>
+</details>
