@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <rect width="320" height="80" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="0" y="0" width="320" height="50" fill="#f8fafc"/>
+  <!-- Logo -->
+  <circle cx="25" cy="25" r="10" fill="#1e40af"/>
+  <text x="42" y="29" font-family="Arial" font-size="13" font-weight="800" fill="#0f172a">CODEGA</text>
+  <!-- Nav menu -->
+  <g font-family="Arial" font-size="10" fill="#64748b" font-weight="500">
+    <text x="115" y="29">Hosting</text>
+    <text x="155" y="29">Domain</text>
+    <text x="195" y="29">Yazılım</text>
+    <text x="235" y="29">Bilgi</text>
+  </g>
+  <!-- Buttons -->
+  <rect x="265" y="15" width="40" height="20" rx="4" fill="#1e40af"/>
+  <text x="285" y="29" font-family="Arial" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">Giriş</text>
+  <!-- Body indicator -->
+  <text x="160" y="68" font-family="Arial" font-size="11" font-weight="600" fill="#94a3b8" text-anchor="middle">Standart Menü</text>
+</svg>

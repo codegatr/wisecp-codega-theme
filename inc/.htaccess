@@ -1,0 +1,11 @@
+# Codega Theme - inc/ klasörü direkt erişim koruması
+# Bu dosyalar sadece include edilmek üzere yazılmış (defined CORE_FOLDER OR exit)
+# Yine de defansif olarak HTTP isteklerine kapatalım
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+</IfModule>

@@ -101,7 +101,7 @@ if(isset($hoptions["page"]) && $hoptions["page"] != "index" && isset($meta["titl
 <?php if(class_exists('View') && method_exists('View', 'main_style')) View::main_style(); ?>
 
 <!-- Codega CSS -->
-<link rel="stylesheet" href="<?php echo $tadress; ?>css/wisecp.css?v=<?php echo time(); ?>" />
+<link rel="stylesheet" href="<?php echo $tadress; ?>css/wisecp.css?v=<?php echo file_exists(__DIR__ . '/../css/wisecp.css') ? filemtime(__DIR__ . '/../css/wisecp.css') : (file_exists(__DIR__ . '/../css/wisecp.php') ? filemtime(__DIR__ . '/../css/wisecp.php') : 1); ?>" />
 <link rel="stylesheet" href="<?php echo $tadress; ?>css/style.css?v=<?php echo file_exists(__DIR__ . '/../css/style.css') ? filemtime(__DIR__ . '/../css/style.css') : 1; ?>" />
 
 <!-- CODEGA Kurumsal Kimlik (logo + palet + tipografi) -->

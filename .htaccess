@@ -188,6 +188,10 @@ RewriteRule ^index\.html$ / [R=301,L]
     Header set X-Frame-Options "SAMEORIGIN"
     # Referrer-Policy
     Header set Referrer-Policy "strict-origin-when-cross-origin"
+    # Permissions-Policy - tarayıcı API erişim kontrolü
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
+    # Strict-Transport-Security - sadece HTTPS (1 yıl)
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
 </IfModule>
 
 # =====================================================================

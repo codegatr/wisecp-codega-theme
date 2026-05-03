@@ -5,14 +5,14 @@ $banner   = $settings['banner'] ?? [];
 
 // Header tipleri
 $header_types = [
-    1 => ['name' => 'Standart Menü',   'preview' => 'images/header-1.png'],
-    2 => ['name' => 'Geniş / Kurumsal', 'preview' => 'images/header-2.png'],
+    1 => ['name' => 'Standart Menü',   'preview' => 'images/header-1.svg'],
+    2 => ['name' => 'Geniş / Kurumsal', 'preview' => 'images/header-2.svg'],
 ];
 
 // Müşteri panel tipleri
 $client_area_types = [
-    1 => ['name' => 'Sidebar Layout', 'preview' => 'images/sidebar-1.png'],
-    2 => ['name' => 'Top Nav Layout', 'preview' => 'images/sidebar-2.png'],
+    1 => ['name' => 'Sidebar Layout', 'preview' => 'images/sidebar-1.svg'],
+    2 => ['name' => 'Top Nav Layout', 'preview' => 'images/sidebar-2.svg'],
 ];
 ?>
 
