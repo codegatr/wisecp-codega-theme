@@ -1,11 +1,11 @@
 # Codega Theme CSS klasörü
-# wisecp.css istendiğinde wisecp.php'yi serve et (dinamik renkler için)
+# Eğer wisecp.css fiziksel olarak varsa (static), Apache direkt onu yükler.
+# Yoksa wisecp.php'ye internal rewrite yapılır.
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-# wisecp.css -> wisecp.php internal rewrite
+# Sadece dosya YOKSA rewrite yap (defansif fallback)
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^wisecp\.css$ wisecp.php [L]
 </IfModule>
-
-# .php uzantılı dosyaların çıktısı text/css olarak verilecek (wisecp.php zaten Content-Type set ediyor)

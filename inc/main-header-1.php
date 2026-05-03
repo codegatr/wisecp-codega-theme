@@ -232,6 +232,16 @@ if(!function_exists('cdg_link')) {
                 </li>
                 <li><a href="<?php echo cdg_link('knowledgebase'); ?>"         class="<?php echo cdg_active(['knowledgebase','articles','news'], $current_page); ?>">Bilgi</a></li>
                 <li><a href="<?php echo cdg_link('contact'); ?>"               class="<?php echo cdg_active('contact', $current_page); ?>">İletişim</a></li>
+
+                <!-- MOBİL MENÜ EKLERİ (sadece mobilde görünür, .cdg-nav.open içinde) -->
+                <li class="cdg-nav-mobile-only"><hr style="border:0;border-top:1px solid #e2e8f0;margin:8px 0;" /></li>
+                <?php if($sign_in): ?>
+                    <li class="cdg-nav-mobile-only"><a href="<?php echo (isset($my_account_link) && $my_account_link && $my_account_link != '#') ? $my_account_link : cdg_link('my-account'); ?>"><i class="bi bi-person-circle"></i> Hesabım</a></li>
+                    <li class="cdg-nav-mobile-only"><a href="<?php echo (isset($logout_link) && $logout_link && $logout_link != '#') ? $logout_link : cdg_link('logout'); ?>" style="color:#dc2626;"><i class="bi bi-box-arrow-right"></i> Çıkış Yap</a></li>
+                <?php else: ?>
+                    <li class="cdg-nav-mobile-only"><a href="<?php echo (isset($login_link) && $login_link && $login_link != '#') ? $login_link : cdg_link('sign-in'); ?>"><i class="bi bi-box-arrow-in-right"></i> Giriş Yap</a></li>
+                    <li class="cdg-nav-mobile-only"><a href="<?php echo (isset($register_link) && $register_link && $register_link != '#') ? $register_link : cdg_link('sign-up'); ?>" style="color:#1e40af;font-weight:700;"><i class="bi bi-person-plus"></i> Kayıt Ol</a></li>
+                <?php endif; ?>
             </ul>
 
             <div class="cdg-nav-actions">
@@ -261,14 +271,14 @@ if(!function_exists('cdg_link')) {
 
                 <?php if($sign_in): ?>
                     <a href="<?php echo (isset($my_account_link) && $my_account_link && $my_account_link != '#') ? $my_account_link : cdg_link('my-account'); ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">
-                        <i class="bi bi-person-circle"></i> Hesabım
+                        <i class="bi bi-person-circle"></i> <span>Hesabım</span>
                     </a>
                     <a href="<?php echo (isset($logout_link) && $logout_link && $logout_link != '#') ? $logout_link : cdg_link('logout'); ?>" class="cdg-btn cdg-btn-ghost cdg-btn-sm" title="Çıkış">
                         <i class="bi bi-box-arrow-right"></i>
                     </a>
                 <?php else: ?>
-                    <a href="<?php echo (isset($login_link) && $login_link && $login_link != '#') ? $login_link : cdg_link('sign-in'); ?>"    class="cdg-btn cdg-btn-ghost cdg-btn-sm">Giriş</a>
-                    <a href="<?php echo (isset($register_link) && $register_link && $register_link != '#') ? $register_link : cdg_link('sign-up'); ?>" class="cdg-btn cdg-btn-primary cdg-btn-sm">Kayıt Ol</a>
+                    <a href="<?php echo (isset($login_link) && $login_link && $login_link != '#') ? $login_link : cdg_link('sign-in'); ?>"    class="cdg-btn cdg-btn-ghost cdg-btn-sm"><i class="bi bi-box-arrow-in-right"></i> <span>Giriş</span></a>
+                    <a href="<?php echo (isset($register_link) && $register_link && $register_link != '#') ? $register_link : cdg_link('sign-up'); ?>" class="cdg-btn cdg-btn-primary cdg-btn-sm"><i class="bi bi-person-plus"></i> <span>Kayıt Ol</span></a>
                 <?php endif; ?>
             </div>
 

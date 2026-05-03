@@ -5098,3 +5098,25 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
     color: #1e40af !important;
     border-color: #1e40af !important;
 }
+
+/* ========== MOBILE MENU EKLERİ ==========
+ * Hesabım/Giriş/Kayıt Ol butonları normalde nav-actions'da
+ * mobilde nav listesi sonuna eklenenleri kontrol eder
+ */
+.cdg-nav-mobile-only { display: none; }
+@media (max-width: 992px) {
+    .cdg-nav-mobile-only { display: block; }
+    .cdg-nav-mobile-only a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 8px;
+    }
+    .cdg-nav-mobile-only a:hover {
+        background: rgba(30, 64, 175, 0.06);
+    }
+    .cdg-nav-mobile-only a i {
+        font-size: 18px;
+    }
+}

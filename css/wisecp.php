@@ -53,6 +53,7 @@ function cdg_hex2rgb($hex) {
 $color1_rgb = cdg_hex2rgb($color1);
 $color2_rgb = cdg_hex2rgb($color2);
 ?>
+:root {
     --cdg-primary: <?php echo $color1; ?>;
     --cdg-primary-rgb: <?php echo $color1_rgb; ?>;
     --cdg-secondary: <?php echo $color2; ?>;
