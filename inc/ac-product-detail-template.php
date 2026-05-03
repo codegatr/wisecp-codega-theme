@@ -1065,30 +1065,30 @@ foreach($options as $opt_k => $opt_v) {
 
     <!-- TAB NAV - shell-head'in hemen altında (yapışık) -->
     <div class="cdg-pd2-tabs">
-        <button class="cdg-pd2-tab active" data-pane="summary"><i class="bi bi-info-circle"></i> Özet</button>
+        <button type="button" class="cdg-pd2-tab active" data-pane="summary" onclick="cdgPd2Switch(this,'summary')"><i class="bi bi-info-circle"></i> Özet</button>
         <?php if($cdg_pd_kind === 'hosting'): ?>
-        <button class="cdg-pd2-tab" data-pane="emails"><i class="bi bi-envelope"></i> E-posta</button>
+        <button type="button" class="cdg-pd2-tab" data-pane="emails" onclick="cdgPd2Switch(this,'emails')"><i class="bi bi-envelope"></i> E-posta</button>
         <?php endif; ?>
         <?php if(!empty($requirements) && is_array($requirements)): ?>
-        <button class="cdg-pd2-tab" data-pane="requirements"><i class="bi bi-check2-square"></i> Bilgi Formları</button>
+        <button type="button" class="cdg-pd2-tab" data-pane="requirements" onclick="cdgPd2Switch(this,'requirements')"><i class="bi bi-check2-square"></i> Bilgi Formları</button>
         <?php endif; ?>
         <?php if(!empty($addons)): ?>
-        <button class="cdg-pd2-tab" data-pane="addons"><i class="bi bi-rocket-takeoff"></i> Ek Hizmetler</button>
+        <button type="button" class="cdg-pd2-tab" data-pane="addons" onclick="cdgPd2Switch(this,'addons')"><i class="bi bi-rocket-takeoff"></i> Ek Hizmetler</button>
         <?php endif; ?>
         <?php if(!empty($upgrades)): ?>
-        <button class="cdg-pd2-tab" data-pane="upgrade"><i class="bi bi-arrow-up-circle"></i> Yükselt</button>
+        <button type="button" class="cdg-pd2-tab" data-pane="upgrade" onclick="cdgPd2Switch(this,'upgrade')"><i class="bi bi-arrow-up-circle"></i> Yükselt</button>
         <?php endif; ?>
         <?php if($cdg_pd_kind === 'hosting'): ?>
-        <button class="cdg-pd2-tab" data-pane="password"><i class="bi bi-key"></i> Şifre</button>
+        <button type="button" class="cdg-pd2-tab" data-pane="password" onclick="cdgPd2Switch(this,'password')"><i class="bi bi-key"></i> Şifre</button>
         <?php endif; ?>
-        <button class="cdg-pd2-tab" data-pane="renewal"><i class="bi bi-arrow-clockwise"></i> Yenileme</button>
+        <button type="button" class="cdg-pd2-tab" data-pane="renewal" onclick="cdgPd2Switch(this,'renewal')"><i class="bi bi-arrow-clockwise"></i> Yenileme</button>
         <?php if(!empty($d_bills)): ?>
-        <button class="cdg-pd2-tab" data-pane="bills"><i class="bi bi-receipt"></i> Faturalar (<?php echo count($d_bills); ?>)</button>
+        <button type="button" class="cdg-pd2-tab" data-pane="bills" onclick="cdgPd2Switch(this,'bills')"><i class="bi bi-receipt"></i> Faturalar (<?php echo count($d_bills); ?>)</button>
         <?php endif; ?>
         <?php if(in_array($cdg_pd_kind, ['hosting','server'])): ?>
-        <button class="cdg-pd2-tab" data-pane="transfer"><i class="bi bi-arrow-left-right"></i> Transfer</button>
+        <button type="button" class="cdg-pd2-tab" data-pane="transfer" onclick="cdgPd2Switch(this,'transfer')"><i class="bi bi-arrow-left-right"></i> Transfer</button>
         <?php endif; ?>
-        <button class="cdg-pd2-tab" data-pane="cancel"><i class="bi bi-ban"></i> İptal</button>
+        <button type="button" class="cdg-pd2-tab" data-pane="cancel" onclick="cdgPd2Switch(this,'cancel')"><i class="bi bi-ban"></i> İptal</button>
     </div>
 
         <div class="cdg-pd2-shell-body">
@@ -2673,6 +2673,28 @@ foreach($options as $opt_k => $opt_v) {
 </div>
 
 <script>
+// === CDGPD2 - TAB SWITCH (inline onclick için) ===
+window.cdgPd2Switch = function(btn, pane){
+    if(!pane) return;
+    try {
+        // Tüm tab'lardan active'i kaldır
+        document.querySelectorAll('.cdg-pd2-tab').forEach(function(t){ t.classList.remove('active'); });
+        // Tıklanan tab'ı aktif yap
+        if(btn) btn.classList.add('active');
+        // Tüm pane'lerden active'i kaldır
+        document.querySelectorAll('.cdg-pd2-pane').forEach(function(p){ p.classList.remove('active'); });
+        // Hedef pane'i aktif yap
+        var target = document.getElementById('cdg-pd2-pane-' + pane);
+        if(target) target.classList.add('active');
+        // URL hash güncelle
+        try { history.replaceState(null, '', '#' + pane); } catch(e) {}
+        // Custom event dispatch (eklenti kodu varsa dinlesin)
+        try { document.dispatchEvent(new CustomEvent('cdgPd2TabChanged', { detail: { pane: pane } })); } catch(e) {}
+    } catch(e) {
+        console.error('[cdgPd2] Tab switch error:', e);
+    }
+};
+
 // === DİREKADMIN ERİŞİM BİLGİLERİ - JS Helpers ===
 window.cdgCopyCred = function(btn, text){
     if(!text) return;

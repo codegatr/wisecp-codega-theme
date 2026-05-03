@@ -469,6 +469,98 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
         min-height: 52px;
     }
 }
+/* === ALTERNATİF UZANTI ÖNERİLERİ === */
+.cdg-search-alternatives {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #f0fdfa, #ecfeff);
+    border: 1px solid #99f6e4;
+    border-radius: 16px;
+    padding: 22px 24px;
+    display: none;
+}
+.cdg-search-alt-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed #99f6e4;
+}
+.cdg-search-alt-head i {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, #2E3B4E, #00D3E5);
+    color: #fff;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px rgba(0,211,229,0.30);
+}
+.cdg-search-alt-head strong {
+    display: block;
+    font-size: 15px;
+    color: #0f172a;
+    font-weight: 800;
+}
+.cdg-search-alt-head small {
+    display: block;
+    font-size: 12.5px;
+    color: #64748b;
+    margin-top: 2px;
+}
+.cdg-search-alt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px;
+}
+.cdg-search-alt-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid #cffafe;
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    text-align: left;
+    font-family: inherit;
+}
+.cdg-search-alt-card:hover {
+    border-color: #00D3E5;
+    background: #f0fdff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0,211,229,0.18);
+}
+.cdg-search-alt-card > i {
+    color: #00D3E5;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+.cdg-search-alt-domain {
+    flex: 1;
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 13.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cdg-search-alt-cta {
+    color: #00D3E5;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+.cdg-search-alt-card:hover .cdg-search-alt-cta { color: #2E3B4E; }
+@media (max-width: 640px) {
+    .cdg-search-alt-grid { grid-template-columns: 1fr 1fr; }
+}
 </style>
 
 <!-- HERO + DOMAIN SORGU -->
@@ -751,6 +843,19 @@ var epp_code_support = <?php echo class_exists("Utility") && method_exists("Util
 var tlds = <?php echo class_exists("Utility") && method_exists("Utility","jencode") ? Utility::jencode($tlds) : json_encode($tlds, JSON_UNESCAPED_UNICODE); ?>;
 var disabled_style = "background:none; color:#333; cursor:no-drop; opacity:0.3;";
 
+// Popüler TLD'ler - alternatif öneri için (sayfadaki tldList'ten ilk 8)
+window.cdgPopularTLDs = <?php
+    $popular_alts = [];
+    if(!empty($tldList) && is_array($tldList)) {
+        foreach($tldList as $row) {
+            if(!empty($row['name'])) $popular_alts[] = $row['name'];
+            if(count($popular_alts) >= 12) break;
+        }
+    }
+    if(empty($popular_alts)) $popular_alts = ['net', 'com.tr', 'org', 'net.tr', 'biz', 'info', 'co', 'io'];
+    echo json_encode($popular_alts);
+?>;
+
 // Transfer toggle + URL ?domain= auto-submit
 document.addEventListener('DOMContentLoaded', function(){
     var transferCb = document.getElementById('transferCheckbox');
@@ -1019,7 +1124,64 @@ function handleResponse(result, query) {
     });
 
     container.innerHTML = html;
+
+    // === ALTERNATİF UZANTI ÖNERİLERİ ===
+    // İlk sonuç müsait değilse, kullanıcıya popüler diğer TLD'leri öner
+    var firstItem = solve.data[0];
+    if(firstItem && firstItem.status === 'unavailable') {
+        var sld = firstItem.sld || (firstItem.domain ? firstItem.domain.split('.')[0] : '');
+        if(sld) {
+            var altContainer = document.getElementById('searchAlternatives');
+            if(!altContainer) {
+                altContainer = document.createElement('div');
+                altContainer.id = 'searchAlternatives';
+                altContainer.className = 'cdg-search-alternatives';
+                container.parentNode.appendChild(altContainer);
+            }
+
+            // Popüler TLD'leri al (sayfa içindeki tldList'ten)
+            var popularTLDs = window.cdgPopularTLDs || ['net', 'com.tr', 'org', 'net.tr', 'biz', 'info', 'co', 'io'];
+            // Sorgulanan TLD'yi listeden çıkar
+            var queriedTLD = (firstItem.tld || firstItem.name || '').toLowerCase();
+            popularTLDs = popularTLDs.filter(function(t){ return t.toLowerCase() !== queriedTLD; }).slice(0, 6);
+
+            var altHTML = '<div class="cdg-search-alt-head">' +
+                '<i class="bi bi-lightbulb-fill"></i>' +
+                '<div>' +
+                    '<strong>"' + escHTML(sld) + '" için alternatif uzantılar</strong>' +
+                    '<small>Aşağıdaki uzantılarla aynı isimi alabilirsiniz</small>' +
+                '</div>' +
+            '</div>' +
+            '<div class="cdg-search-alt-grid">';
+
+            popularTLDs.forEach(function(tld){
+                var altDomain = sld + '.' + tld;
+                altHTML += '<button type="button" class="cdg-search-alt-card" onclick="cdgQueryAlternative(\'' + escHTML(altDomain) + '\')">' +
+                    '<i class="bi bi-search"></i>' +
+                    '<span class="cdg-search-alt-domain">' + escHTML(altDomain) + '</span>' +
+                    '<span class="cdg-search-alt-cta">Sorgula <i class="bi bi-arrow-right"></i></span>' +
+                '</button>';
+            });
+
+            altHTML += '</div>';
+            altContainer.innerHTML = altHTML;
+            altContainer.style.display = 'block';
+        }
+    } else {
+        var altContainer = document.getElementById('searchAlternatives');
+        if(altContainer) altContainer.style.display = 'none';
+    }
 }
+
+// Alternatif uzantı tıklamasında yeni sorgu
+window.cdgQueryAlternative = function(altDomain){
+    var input = document.getElementById('domainInput');
+    if(input) {
+        input.value = altDomain;
+        var btn = document.getElementById('submitnow');
+        if(btn) submitnow(btn);
+    }
+};
 
 function showError(msg) {
     var loadingEl = document.getElementById('searchLoading');
