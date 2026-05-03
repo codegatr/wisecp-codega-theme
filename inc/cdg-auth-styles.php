@@ -911,3 +911,36 @@ window.cdgPwdToggle = function(inputId, btn){
     }
 };
 </script>
+
+<style>
+/* === FIX v3.5.74: Input icon - padding override === */
+/* Auth-card içindeki cdg-input-icon altında bulunan input'larda
+ * ikon (zarf, kilit) text ile çakışmaması için padding-left arttırılmalı.
+ * .cdg-auth-card input[type=email] kuralı !important ile padding'i 16px yapıyordu,
+ * cdg-input-icon'un padding-left:42px'i eziliyordu. Bu kural daha yüksek özgünlükte. */
+.cdg-auth-card .cdg-input-icon input[type=text],
+.cdg-auth-card .cdg-input-icon input[type=email],
+.cdg-auth-card .cdg-input-icon input[type=password],
+.cdg-auth-card .cdg-input-icon input[type=tel],
+.cdg-auth-card .cdg-input-icon input[type=number] {
+    padding-left: 46px !important;
+}
+
+/* Şifre toggle butonu için sağ padding (cdg-auth-pwd-toggle ile çakışmasın) */
+.cdg-auth-card .cdg-auth-pwd-wrap input[type=password],
+.cdg-auth-card .cdg-auth-pwd-wrap input[type=text] {
+    padding-right: 48px !important;
+}
+
+/* Input ikonun konumu net - daha sol kenarda olsun */
+.cdg-auth-card .cdg-input-icon > i:first-child {
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    color: #94a3b8 !important;
+    font-size: 16px !important;
+    pointer-events: none !important;
+    z-index: 2;
+}
+</style>
