@@ -904,29 +904,159 @@ $discounted_total = $inv_subtotal - $total_discount;
             <form method="post" action="<?php echo htmlspecialchars($form_action, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" id="cdg-pay-form">
                 <?php if(class_exists('Validation') && method_exists('Validation','get_csrf_token')) echo Validation::get_csrf_token('pay-invoice'); ?>
 
-                <div class="cdg-inv-pay-methods">
+                <!-- Sablonun selected pmethod ve sendbta hidden inputlari -->
+                <input type="hidden" name="pmethod" id="cdg-inv-pmethod-hidden" value="">
+                <input type="hidden" name="sendbta" id="cdg-inv-sendbta-hidden" value="0">
+
+                <div class="cdg-inv-pay-methods" id="cdg-inv-pmethods">
                     <?php
                     $cdg_selected_pmethod = isset($selected_pmethod) ? $selected_pmethod : '';
                     $first = true;
                     foreach($methods as $m_id => $m_data):
                         $m_name = is_array($m_data) ? ($m_data['name'] ?? $m_id) : $m_data;
                         $m_icon = (is_array($m_data) && isset($m_data['icon'])) ? $m_data['icon'] : 'bank2';
+                        $m_commission = is_array($m_data) ? ($m_data['commission_fee'] ?? '') : '';
+                        $m_balance = is_array($m_data) ? ($m_data['balance'] ?? '') : '';
                         $is_selected = ($cdg_selected_pmethod && $cdg_selected_pmethod == $m_id) || ($first && !$cdg_selected_pmethod);
                     ?>
-                    <label class="cdg-inv-pm <?php echo $is_selected ? 'selected' : ''; ?>">
-                        <input type="radio" name="pmethod" value="<?php echo htmlspecialchars($m_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $is_selected ? 'checked' : ''; ?>>
+                    <label class="cdg-inv-pm <?php echo $is_selected ? 'selected' : ''; ?>" data-pmethod="<?php echo htmlspecialchars($m_id, ENT_QUOTES); ?>" onclick="cdgInvSelectPM('<?php echo htmlspecialchars($m_id, ENT_QUOTES); ?>', this)">
+                        <input type="radio" name="pmethod_radio" value="<?php echo htmlspecialchars($m_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" <?php echo $is_selected ? 'checked' : ''; ?>>
                         <i class="bi bi-<?php echo htmlspecialchars($m_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
-                        <div class="cdg-inv-pm-label"><?php echo htmlspecialchars($m_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                        <div class="cdg-inv-pm-label">
+                            <?php echo htmlspecialchars($m_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                            <?php if($m_commission): ?>
+                            <span style="display:block;font-size:11px;color:#dc2626;font-weight:500;margin-top:2px;">+<?php echo htmlspecialchars($m_commission, ENT_QUOTES); ?> komisyon</span>
+                            <?php endif; ?>
+                            <?php if($m_balance): ?>
+                            <span style="display:block;font-size:11px;color:#64748b;font-weight:500;margin-top:2px;"><?php echo htmlspecialchars($m_balance, ENT_QUOTES); ?></span>
+                            <?php endif; ?>
+                        </div>
                     </label>
                     <?php $first = false; endforeach; ?>
                 </div>
 
-                <div style="display:flex;justify-content:flex-end;margin-top:20px;">
-                    <button type="submit" class="cdg-inv-btn cdg-inv-btn-pay">
-                        <i class="bi bi-shield-lock-fill"></i> Güvenli Öde · <?php echo htmlspecialchars(cdg_inv_money($inv_total, $inv_currency_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                <!-- KAYITLI KARTLAR (ödeme yöntemi seçildiğinde dinamik gösterilecek) -->
+                <?php if(isset($stored_cards) && is_array($stored_cards) && !empty($stored_cards)): ?>
+                <div id="cdg-inv-stored-cards" style="margin-top:16px;display:none;">
+                    <div style="font-size:12px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">
+                        <i class="bi bi-credit-card"></i> Kayıtlı Kartlarım
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;">
+                        <?php foreach($stored_cards as $sc):
+                            $sc_id = $sc['id'] ?? 0;
+                            $sc_brand = strtolower($sc['brand'] ?? 'card');
+                            $sc_last4 = $sc['last4'] ?? ($sc['number'] ?? '****');
+                            $sc_default = !empty($sc['default']);
+                        ?>
+                        <label style="display:flex;align-items:center;gap:8px;padding:10px;background:#f8fafc;border:2px solid <?php echo $sc_default ? '#1e40af' : '#e2e8f0'; ?>;border-radius:8px;cursor:pointer;transition:all 0.2s;" onclick="this.querySelector('input').checked=true;">
+                            <input type="radio" name="stored_card_id" value="<?php echo (int)$sc_id; ?>" <?php echo $sc_default ? 'checked' : ''; ?>>
+                            <i class="bi bi-credit-card-fill" style="color:#1e40af;font-size:18px;"></i>
+                            <div style="font-size:12px;">
+                                <div style="font-weight:700;text-transform:uppercase;"><?php echo htmlspecialchars($sc_brand, ENT_QUOTES); ?></div>
+                                <div style="font-family:monospace;color:#64748b;">•••• <?php echo htmlspecialchars(substr($sc_last4, -4), ENT_QUOTES); ?></div>
+                            </div>
+                            <?php if($sc_default): ?>
+                            <span style="margin-left:auto;font-size:10px;background:#1e40af;color:#fff;padding:2px 6px;border-radius:4px;font-weight:700;">VARSAYILAN</span>
+                            <?php endif; ?>
+                        </label>
+                        <?php endforeach; ?>
+                        <label style="display:flex;align-items:center;gap:8px;padding:10px;background:#f0f9ff;border:2px dashed #3b82f6;border-radius:8px;cursor:pointer;color:#1e40af;font-weight:600;font-size:12px;" onclick="this.querySelector('input').checked=true;">
+                            <input type="radio" name="stored_card_id" value="0">
+                            <i class="bi bi-plus-circle"></i>
+                            Yeni kart kullan
+                        </label>
+                    </div>
+                    <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;color:#64748b;">
+                        <input type="checkbox" name="save_card" value="1" id="cdg-inv-save-card">
+                        <span><i class="bi bi-bookmark-plus"></i> Bu kartı kaydet (sonraki ödemelerde tekrar girmek zorunda kalmazsın)</span>
+                    </label>
+                </div>
+                <?php endif; ?>
+
+                <!-- DİNAMİK KOMİSYON BİLGİSİ (selection-result AJAX sonucu) -->
+                <div id="cdg-inv-pm-info" style="margin-top:14px;padding:12px 14px;background:#f0f9ff;border:1px solid #bfdbfe;border-radius:8px;font-size:13px;display:none;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                        <div>
+                            <i class="bi bi-info-circle" style="color:#1e40af;"></i>
+                            <strong style="color:#1e3a8a;">Toplam Tutar (komisyon dahil):</strong>
+                        </div>
+                        <div style="font-size:16px;font-weight:800;color:#1e40af;" id="cdg-inv-total-with-fee">
+                            <?php echo htmlspecialchars(cdg_inv_money($inv_total, $inv_currency_id), ENT_QUOTES); ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BTA (Bireysel/Ticari Aşama) - Sendbta Checkbox -->
+                <?php if(!empty($invoice['sendbta_supported']) || true): ?>
+                <label style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12.5px;color:#475569;">
+                    <input type="checkbox" id="cdg-inv-sendbta" onchange="document.getElementById('cdg-inv-sendbta-hidden').value = this.checked ? 1 : 0;">
+                    <span><i class="bi bi-bank"></i> Banka transferi yaptıktan sonra dekont gönder</span>
+                </label>
+                <?php endif; ?>
+
+                <div style="display:flex;justify-content:flex-end;margin-top:20px;gap:10px;">
+                    <button type="submit" class="cdg-inv-btn cdg-inv-btn-pay" id="cdg-inv-submit-btn">
+                        <i class="bi bi-shield-lock-fill"></i> Güvenli Öde · <span id="cdg-inv-submit-amount"><?php echo htmlspecialchars(cdg_inv_money($inv_total, $inv_currency_id), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </button>
                 </div>
             </form>
+
+            <script>
+            // Ödeme yöntemi seçimi - hidden input güncelle + stored cards göster
+            window.cdgInvSelectPM = function(pmethod, el){
+                document.querySelectorAll('.cdg-inv-pm').forEach(function(p){ p.classList.remove('selected'); });
+                if(el) el.classList.add('selected');
+                document.getElementById('cdg-inv-pmethod-hidden').value = pmethod;
+                // Radio'yu işaretle
+                var radio = el && el.querySelector('input[type=radio]');
+                if(radio) radio.checked = true;
+                // Stored cards yalnız credit card method'larında gösterilsin
+                var sc = document.getElementById('cdg-inv-stored-cards');
+                if(sc) {
+                    var pml = (pmethod || '').toLowerCase();
+                    var isCard = pml.indexOf('iyzico') !== -1 || pml.indexOf('paytr') !== -1 || pml.indexOf('stripe') !== -1 || pml.indexOf('credit') !== -1 || pml.indexOf('card') !== -1 || pml.indexOf('virtual') !== -1;
+                    sc.style.display = isCard ? 'block' : 'none';
+                }
+                // selection-result AJAX (komisyon hesapla)
+                cdgInvSelectionResult(pmethod);
+            };
+
+            // selection-result AJAX (Classic uyumlu)
+            window.cdgInvSelectionResult = function(pmethod){
+                var fd = new FormData();
+                fd.append('operation', 'selection-result');
+                fd.append('pmethod', pmethod);
+                fd.append('sendbta', document.getElementById('cdg-inv-sendbta-hidden').value);
+                fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES); ?>', { method: 'POST', body: fd, credentials: 'same-origin' })
+                    .then(function(r){ return r.text(); })
+                    .then(function(txt){
+                        try {
+                            var solve = JSON.parse(txt);
+                            var box = document.getElementById('cdg-inv-pm-info');
+                            if(solve && solve.status === 'successful' && solve.total_with_fee) {
+                                if(box) box.style.display = 'block';
+                                var tw = document.getElementById('cdg-inv-total-with-fee');
+                                if(tw && solve.total_with_fee_format) tw.textContent = solve.total_with_fee_format;
+                                var sa = document.getElementById('cdg-inv-submit-amount');
+                                if(sa && solve.total_with_fee_format) sa.textContent = solve.total_with_fee_format;
+                            }
+                        } catch(e) {}
+                    })
+                    .catch(function(){ /* sessizce yut */ });
+            };
+
+            // Sayfa açıldığında ilk seçimin selection-result'ını çağır
+            document.addEventListener('DOMContentLoaded', function(){
+                var firstPM = document.querySelector('.cdg-inv-pm.selected');
+                if(firstPM) {
+                    var pm = firstPM.getAttribute('data-pmethod');
+                    if(pm) {
+                        document.getElementById('cdg-inv-pmethod-hidden').value = pm;
+                        cdgInvSelectionResult(pm);
+                    }
+                }
+            });
+            </script>
             <?php else: ?>
             <div style="text-align:center;padding:30px;color:var(--inv-muted);">
                 <i class="bi bi-info-circle" style="font-size:32px;display:block;margin-bottom:10px;"></i>
