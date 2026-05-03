@@ -10,7 +10,7 @@
  *   4) Email'e göre WiseCP kullanıcısı bulur ve oturum açar
  *   5) return parametresine yönlendirir (varsayılan: my-account)
  *
- * URL: https://ca.codega.com.tr/codega-sso.php?email=&ts=&nonce=&return=&sig=
+ * URL: https://codega.com.tr/codega-sso.php?email=&ts=&nonce=&return=&sig=
  *
  * Güvenlik:
  *  - Sadece HTTPS kabul (Origin header opsiyonel kontrol)

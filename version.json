@@ -1,20 +1,21 @@
 {
-    "version": "3.5.60",
+    "version": "3.5.61",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.60-codega",
-    "tag": "v3.5.60-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.61-codega",
+    "tag": "v3.5.61-codega",
     "changelog": [
-        "v3.5.60 - KRITIK FIX: Corporate sayfa icerik render sorunu (post-migration)",
-        "SORUN: Yunus erp-yazilimi.html'i actiginda header/footer goruluyor ama icerik bos",
-        "  Sebep: .htaccess'in .html -> .php direkt rewrite'i yapiyordu",
-        "  ANCAK erp.php basinda 'defined CORE_FOLDER OR exit' var",
-        "  Direkt .php cagrilinca exit eder -> bos sayfa",
-        "FIX 1: .htaccess corporate sayfa rewrite'i .php yerine WiseCP slug'a yonlendiriyor",
-        "  /erp-yazilimi.html -> /erp (WiseCP'nin theme.router'i bu slugi handle eder)",
-        "  Tum 22 corporate sayfa icin slug rewrite (vizyon, hakkimizda, kvkk, vb.)",
-        "FIX 2: theme.php router'a kok dizindeki corporate sayfalar icin handler eklendi",
-        "  Beyaz liste mantigi ile guvenlik (sadece 22 belirli sayfa)",
-        "  pages/ klasorunde olmayanlari kok dizinde arar"
+        "v3.5.61 - Genel Eksiklik Kontrolu + Migration Sonrasi Temizlik",
+        "FIX: Corporate sayfalar pages/ klasorune kopyalandi (12 sayfa)",
+        "  WiseCP theme.router pages/'i once kontrol eder, varsa oradan yukler",
+        "  Once routing pages/erp.php (yeni) > kok erp.php (eski)",
+        "  Sayfalar: erp, hakkimizda, kvkk, cerez-politikasi, gizlilik-politikasi,",
+        "  hizmet-sozlesmesi, kariyer, sosyal-sorumluluk, surdurulebilirlik,",
+        "  system-status, references, vision",
+        "FIX: .htaccess corporate rewrite formatinin duzeltilmesi",
+        "  /erp-yazilimi.html -> templates/website/Codega/erp (DOGRU format)",
+        "  WiseCP'nin theme.router bu URL formatini handle eder",
+        "FIX: sign-in.php login formundaki yer 'ca.codega.com.tr' gosterimi 'codega.com.tr' yapildi",
+        "FIX: codega-sso.php yorumundaki 'ca.codega.com.tr' referansi 'codega.com.tr' yapildi"
     ]
 }

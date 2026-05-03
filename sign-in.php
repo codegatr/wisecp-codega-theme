@@ -178,7 +178,7 @@ if(class_exists('Config') && Config::get("options/crtacwshop")) $sign_up = false
                         <div class="cdg-auth-preview-dots">
                             <span></span><span></span><span></span>
                         </div>
-                        <div class="cdg-auth-preview-url"><i class="bi bi-shield-lock-fill"></i> ca.codega.com.tr</div>
+                        <div class="cdg-auth-preview-url"><i class="bi bi-shield-lock-fill"></i> codega.com.tr</div>
                     </div>
                     <div class="cdg-auth-preview-body">
                         <!-- Stat row -->
