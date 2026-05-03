@@ -73,7 +73,7 @@ $erp_modules = [
         'bg' => '#f0fdf4',
         'baslik' => 'API & Entegrasyonlar',
         'aciklama' => 'e-Ticaret, muhasebe ve ödeme sistemleriyle tam entegrasyon.',
-        'ozellikler' => ['Trendyol / Hepsiburada', 'iyzico / PayTR ödeme', 'Logo / Mikro bağlantı', 'GİB e-Dönüşüm paketi', 'REST API & webhook'],
+        'ozellikler' => ['Trendyol / Hepsiburada', 'iyzico / PayTR ödeme', 'Pazaryeri entegrasyonları', 'GİB e-Dönüşüm paketi', 'REST API & webhook'],
     ],
     [
         'icon' => 'bi-phone-fill',
@@ -97,7 +97,7 @@ $erp_sectors = [
 
 // Avantajlar
 $erp_advantages = [
-    ['icon' => 'bi-cash-stack', 'baslik' => '%50 Daha Uygun', 'aciklama' => 'Logo, Mikro, Netsis gibi rakip ERP\'lerin yarı fiyatına aynı özellikler.'],
+    ['icon' => 'bi-cash-stack', 'baslik' => 'Uygun Fiyatlı', 'aciklama' => 'Yerli ve yabancı kurumsal ERP yazılımlarına göre çok daha uygun fiyatlı paketler ile aynı modüller.'],
     ['icon' => 'bi-cloud-check-fill', 'baslik' => 'Cloud Tabanlı', 'aciklama' => 'Sunucu yatırımı yok. Tarayıcıdan girin, her yerden çalışın.'],
     ['icon' => 'bi-puzzle-fill', 'baslik' => 'Modüler Yapı', 'aciklama' => 'Sadece ihtiyacınız olan modülleri seçin, gerektikçe ekleyin.'],
     ['icon' => 'bi-arrow-repeat', 'baslik' => 'Sürekli Güncelleme', 'aciklama' => 'Mevzuat değişiklikleri, yeni özellikler otomatik gelir.'],
@@ -123,7 +123,7 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
                 <span>KURUMSAL KAYNAK PLANLAMASI</span>
             </div>
             <h1>İşinizi tek panelden <span>akıllı yönetim</span> ile büyütün</h1>
-            <p>Finanstan üretime, satıştan İK'ya 9 entegre modül. Modüler yapı, %50 daha uygun fiyat, anlık destek. Logo veya Mikro yerine modern bulut çözümü.</p>
+            <p>Finanstan üretime, satıştan İK'ya 9 entegre modül. Modüler yapı, uygun fiyatlandırma, anlık destek. Klasik kurumsal ERP yazılımlarına alternatif modern bulut çözümü.</p>
             <div class="cdg-erp-hero-actions">
                 <a href="<?php echo $contact_url; ?>?subject=erp-demo" class="cdg-erp-btn cdg-erp-btn-primary">
                     <i class="bi bi-rocket-takeoff-fill"></i> 14 Gün Ücretsiz Dene
@@ -299,3 +299,17 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
         </div>
     </div>
 </section>
+
+
+<?php
+/* === DEFANSIVE FALLBACK ===
+ * Eğer WiseCP master-content uygulamadıysa, sayfa header/footer ile sarılmamış olur.
+ * $_cdg_in_master_content flag master-content.php tarafından set edilir.
+ */
+if(empty($_cdg_in_master_content) && !headers_sent()) {
+    if(file_exists(__DIR__ . "/inc/main-footer.php")) {
+        include __DIR__ . "/inc/main-footer.php";
+    }
+    if(class_exists("View") && method_exists("View", "footer_codes")) View::footer_codes();
+}
+?>
