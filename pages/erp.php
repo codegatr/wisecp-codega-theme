@@ -150,11 +150,11 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
                 <div class="cdg-erp-module-icon" style="background: <?php echo $m['bg']; ?>; color: <?php echo $m['color']; ?>;">
                     <i class="<?php echo $m['icon']; ?>"></i>
                 </div>
-                <h3><?php echo htmlspecialchars($m['baslik']); ?></h3>
-                <p class="cdg-erp-module-desc"><?php echo htmlspecialchars($m['aciklama']); ?></p>
+                <h3><?php echo htmlspecialchars($m['baslik'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
+                <p class="cdg-erp-module-desc"><?php echo htmlspecialchars($m['aciklama'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
                 <ul class="cdg-erp-module-features">
                     <?php foreach ($m['ozellikler'] as $oz): ?>
-                    <li><?php echo htmlspecialchars($oz); ?></li>
+                    <li><?php echo htmlspecialchars($oz, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -178,8 +178,8 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
                     <i class="<?php echo $a['icon']; ?>"></i>
                 </div>
                 <div class="cdg-erp-advantage-content">
-                    <h3><?php echo htmlspecialchars($a['baslik']); ?></h3>
-                    <p><?php echo htmlspecialchars($a['aciklama']); ?></p>
+                    <h3><?php echo htmlspecialchars($a['baslik'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
+                    <p><?php echo htmlspecialchars($a['aciklama'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -201,8 +201,8 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
                 <div class="cdg-erp-sector-icon">
                     <i class="<?php echo $s['icon']; ?>"></i>
                 </div>
-                <h3><?php echo htmlspecialchars($s['baslik']); ?></h3>
-                <p><?php echo htmlspecialchars($s['aciklama']); ?></p>
+                <h3><?php echo htmlspecialchars($s['baslik'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
+                <p><?php echo htmlspecialchars($s['aciklama'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
             </div>
             <?php endforeach; ?>
         </div>

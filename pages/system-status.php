@@ -133,13 +133,13 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
                     <div class="cdg-sys-category-icon">
                         <i class="<?php echo $cat['icon']; ?>"></i>
                     </div>
-                    <div class="cdg-sys-category-name"><?php echo htmlspecialchars($cat['kategori']); ?></div>
+                    <div class="cdg-sys-category-name"><?php echo htmlspecialchars($cat['kategori'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                 </div>
                 <div class="cdg-sys-category-services">
                     <?php foreach ($cat['servisler'] as $s): ?>
                     <div class="cdg-sys-service">
                         <div class="cdg-sys-service-status" style="background:<?php echo cdg_status_color($s['durum']); ?>;box-shadow:0 0 8px <?php echo cdg_status_color($s['durum']); ?>;"></div>
-                        <div class="cdg-sys-service-name"><?php echo htmlspecialchars($s['ad']); ?></div>
+                        <div class="cdg-sys-service-name"><?php echo htmlspecialchars($s['ad'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
                         <span class="cdg-sys-service-uptime"><?php echo $s['uptime']; ?> uptime</span>
                         <span class="cdg-sys-service-label"><?php echo cdg_status_label($s['durum']); ?></span>
                     </div>
@@ -164,16 +164,16 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
                 <div class="cdg-sys-incident">
                     <div class="cdg-sys-incident-head">
                         <span class="cdg-sys-incident-date">
-                            <i class="bi bi-calendar3"></i> <?php echo htmlspecialchars($inc['tarih']); ?>
+                            <i class="bi bi-calendar3"></i> <?php echo htmlspecialchars($inc['tarih'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
                         </span>
                         <span class="cdg-sys-incident-resolved">
                             <i class="bi bi-check-circle-fill"></i> <?php echo cdg_status_label($inc['durum']); ?>
                         </span>
                     </div>
-                    <h3><?php echo htmlspecialchars($inc['baslik']); ?></h3>
-                    <p><?php echo htmlspecialchars($inc['aciklama']); ?></p>
+                    <h3><?php echo htmlspecialchars($inc['baslik'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
+                    <p><?php echo htmlspecialchars($inc['aciklama'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
                     <div class="cdg-sys-incident-duration">
-                        <i class="bi bi-clock"></i> Süre: <strong><?php echo htmlspecialchars($inc['sure']); ?></strong>
+                        <i class="bi bi-clock"></i> Süre: <strong><?php echo htmlspecialchars($inc['sure'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
                     </div>
                 </div>
                 <?php endforeach; ?>

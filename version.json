@@ -1,21 +1,20 @@
 {
-    "version": "3.5.61",
+    "version": "3.5.62",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.61-codega",
-    "tag": "v3.5.61-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.62-codega",
+    "tag": "v3.5.62-codega",
     "changelog": [
-        "v3.5.61 - Genel Eksiklik Kontrolu + Migration Sonrasi Temizlik",
-        "FIX: Corporate sayfalar pages/ klasorune kopyalandi (12 sayfa)",
-        "  WiseCP theme.router pages/'i once kontrol eder, varsa oradan yukler",
-        "  Once routing pages/erp.php (yeni) > kok erp.php (eski)",
-        "  Sayfalar: erp, hakkimizda, kvkk, cerez-politikasi, gizlilik-politikasi,",
-        "  hizmet-sozlesmesi, kariyer, sosyal-sorumluluk, surdurulebilirlik,",
-        "  system-status, references, vision",
-        "FIX: .htaccess corporate rewrite formatinin duzeltilmesi",
-        "  /erp-yazilimi.html -> templates/website/Codega/erp (DOGRU format)",
-        "  WiseCP'nin theme.router bu URL formatini handle eder",
-        "FIX: sign-in.php login formundaki yer 'ca.codega.com.tr' gosterimi 'codega.com.tr' yapildi",
-        "FIX: codega-sso.php yorumundaki 'ca.codega.com.tr' referansi 'codega.com.tr' yapildi"
+        "v3.5.62 - KRITIK FIX: pages/ __DIR__ relative path bug + .htaccess slug formatina geri donus",
+        "FIX 1: pages/ klasorundeki 12 corporate sayfa __DIR__ -> dirname(__DIR__) duzeltmesi",
+        "  Sebep: pages/'e kopyalandiginda __DIR__ degisti, inc/ yolunu bulamiyordu",
+        "  pages/erp.php icindeki: __DIR__.DS.'inc' (yanlis) -> dirname(__DIR__).DS.'inc' (dogru)",
+        "  Etkilenen sayfalar: erp, hakkimizda, kvkk, cerez-politikasi, gizlilik-politikasi,",
+        "    hizmet-sozlesmesi, kariyer, sosyal-sorumluluk, surdurulebilirlik, system-status,",
+        "    references, vision",
+        "FIX 2: .htaccess corporate rewrite formati: templates/website/Codega/PAGE -> sade slug",
+        "  Onceki (calismadi): /erp-yazilimi.html -> templates/website/Codega/erp",
+        "  Simdi: /erp-yazilimi.html -> erp",
+        "  WiseCP slug-based file routing: /erp -> erp.php (CORE_FOLDER tanimli)"
     ]
 }

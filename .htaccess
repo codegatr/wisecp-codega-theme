@@ -81,19 +81,18 @@ RewriteRule ^pages/surdurulebilirlik\.php$ /surdurulebilirlik.html [R=301,L]
 RewriteRule ^pages/vizyon\.php$ /vizyon.html [R=301,L]
 
 # =====================================================================
-# CORPORATE SAYFALAR: .html URL'leri → WiseCP theme router URL'ine internal rewrite
-# Bu URL'ler eski codega.com.tr sitesinde vardi.
-# WiseCP'nin theme.router'i templates/website/Codega/PAGE formatini handle eder.
-# Internal rewrite oldugu icin kullaniciya hala /erp-yazilimi.html goruluyor.
+# CORPORATE SAYFALAR: .html URL'leri → WiseCP slug formatina internal rewrite
+# WiseCP /erp slug'ini erp.php dosyasiyla esler (file-based slug routing)
+# WiseCP'nin CORE_FOLDER tanimi yapilarak erp.php icindeki guvenlik koruması gecilir
 # =====================================================================
 
-# Vizyon - vision.php (kök dizinde)
+# Vizyon
 RewriteRule ^vizyon\.html$ templates/website/Codega/vision [L]
 
 # Hakkimizda
 RewriteRule ^hakkimizda\.html$ templates/website/Codega/hakkimizda [L]
 
-# Referanslar - references.php
+# Referanslar
 RewriteRule ^referanslarimiz\.html$ templates/website/Codega/references [L]
 RewriteRule ^referanslar\.html$ templates/website/Codega/references [L]
 
@@ -106,7 +105,7 @@ RewriteRule ^sosyal-sorumluluk\.html$ templates/website/Codega/sosyal-sorumluluk
 # Surdurulebilirlik
 RewriteRule ^surdurulebilirlik\.html$ templates/website/Codega/surdurulebilirlik [L]
 
-# Sistem Durumu - system-status.php
+# Sistem Durumu
 RewriteRule ^sistem-durumu\.html$ templates/website/Codega/system-status [L]
 
 # KVKK Aydinlatma
@@ -126,7 +125,7 @@ RewriteRule ^hizmet-sozlesmesi\.html$ templates/website/Codega/hizmet-sozlesmesi
 RewriteRule ^erp-yazilimi\.html$ templates/website/Codega/erp [L]
 RewriteRule ^erp\.html$ templates/website/Codega/erp [L]
 
-# Hosting (WiseCP slug, kök dizinde dosya cdg_link kullanır)
+# Hosting
 RewriteRule ^hosting-products\.html$ hosting-products [L]
 RewriteRule ^hosting\.html$ hosting-products [L]
 

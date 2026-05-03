@@ -69,8 +69,8 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
             <?php foreach ($values as $v): ?>
             <div class="cdg-vision-value">
                 <div class="cdg-vision-value-icon"><i class="<?php echo $v['icon']; ?>"></i></div>
-                <h3><?php echo htmlspecialchars($v['baslik']); ?></h3>
-                <p><?php echo htmlspecialchars($v['icerik']); ?></p>
+                <h3><?php echo htmlspecialchars($v['baslik'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
+                <p><?php echo htmlspecialchars($v['icerik'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
             </div>
             <?php endforeach; ?>
         </div>
@@ -91,8 +91,8 @@ $contact_url = class_exists('Controllers') ? Controllers::$init->CRLink('contact
                 <div class="cdg-vision-milestone-icon"><i class="<?php echo $m['icon']; ?>"></i></div>
                 <div class="cdg-vision-milestone-content">
                     <span class="cdg-vision-milestone-year"><?php echo $m['yil']; ?></span>
-                    <h3><?php echo htmlspecialchars($m['baslik']); ?></h3>
-                    <p><?php echo htmlspecialchars($m['aciklama']); ?></p>
+                    <h3><?php echo htmlspecialchars($m['baslik'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
+                    <p><?php echo htmlspecialchars($m['aciklama'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
                 </div>
             </div>
             <?php endforeach; ?>
