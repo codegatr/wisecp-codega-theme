@@ -209,14 +209,21 @@ if(!$cdg_used_dynamic && class_exists('Products') && method_exists('Products', '
                         } catch(\Throwable $e) {}
                     }
 
-                    // 2) buy_link MANUEL insa — WiseCP order-steps URL formati
-                    // CRLink('order-steps-p', [type, product_id, step])
+                    // 2) buy_link: Once CRLink dene, basarisizsa direkt URL insa et
+                    // (WiseCP gercek URL formati /order-steps/{type}/{id})
                     $p['buy_link'] = '';
+                    $buy_try = '';
                     if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Controllers::$init, 'CRLink')) {
                         try {
-                            $p['buy_link'] = Controllers::$init->CRLink('order-steps-p', [$cdg_pt['type'], (int)$p['id'], 1]);
-                        } catch(\Throwable $e) {}
+                            $buy_try = Controllers::$init->CRLink('order-steps-p', [$cdg_pt['type'], (int)$p['id'], 1]);
+                            if(!$buy_try || strpos($buy_try, 'order-steps-p') !== false) $buy_try = '';
+                        } catch(\Throwable $e) { $buy_try = ''; }
                     }
+                    if(!$buy_try) {
+                        $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
+                        $buy_try = $base . '/order-steps/' . $cdg_pt['type'] . '/' . (int)$p['id'];
+                    }
+                    $p['buy_link'] = $buy_try;
 
                     // 3) JSON alanlari decode et
                     if(isset($p['options']) && is_string($p['options'])) {
