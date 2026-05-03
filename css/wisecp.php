@@ -1,7 +1,47 @@
-<?php defined('CORE_FOLDER') OR exit('You can not get in here!');
-$color1 = "#" . ltrim(Config::get("theme/color1"), "#");
-$color2 = "#" . ltrim(Config::get("theme/color2"), "#");
-$tcolor = "#" . ltrim(Config::get("theme/text-color"), "#");
+<?php
+/**
+ * Codega Theme Dynamic CSS
+ *
+ * Bu dosya iki şekilde çağrılabilir:
+ * 1. WiseCP üzerinden: theme.php router'ı tarafından (CORE_FOLDER tanımlı)
+ * 2. Direkt URL: .htaccess ile wisecp.css->wisecp.php rewrite (standalone mod)
+ *
+ * Standalone modda theme-config.php'den varsayılan renkleri okur.
+ */
+
+// Standalone mod - WiseCP class'ları yok
+$is_standalone = !defined('CORE_FOLDER');
+
+if($is_standalone) {
+    // Theme config'ten renkleri oku
+    $theme_config_file = __DIR__ . '/../theme-config.php';
+    $color1 = '1e40af';
+    $color2 = '3b82f6';
+    $tcolor = '1e293b';
+
+    if(file_exists($theme_config_file)) {
+        $theme_config = include $theme_config_file;
+        if(isset($theme_config['settings'])) {
+            $s = $theme_config['settings'];
+            $color1 = ltrim($s['color1'] ?? $color1, '#');
+            $color2 = ltrim($s['color2'] ?? $color2, '#');
+            $tcolor = ltrim($s['text_color'] ?? $tcolor, '#');
+        }
+    }
+
+    $color1 = '#' . $color1;
+    $color2 = '#' . $color2;
+    $tcolor = '#' . $tcolor;
+
+    // CSS header
+    header("Content-Type: text/css; charset=UTF-8");
+    header('Cache-Control: public, max-age=3600');
+} else {
+    // WiseCP üzerinden çalışıyor
+    $color1 = "#" . ltrim(Config::get("theme/color1"), "#");
+    $color2 = "#" . ltrim(Config::get("theme/color2"), "#");
+    $tcolor = "#" . ltrim(Config::get("theme/text-color"), "#");
+}
 
 // HEX → rgb dönüştürücü (rgba kullanımı için)
 function cdg_hex2rgb($hex) {
@@ -13,7 +53,6 @@ function cdg_hex2rgb($hex) {
 $color1_rgb = cdg_hex2rgb($color1);
 $color2_rgb = cdg_hex2rgb($color2);
 ?>
-:root {
     --cdg-primary: <?php echo $color1; ?>;
     --cdg-primary-rgb: <?php echo $color1_rgb; ?>;
     --cdg-secondary: <?php echo $color2; ?>;

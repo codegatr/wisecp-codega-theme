@@ -1,25 +1,19 @@
 {
-    "version": "3.5.58",
+    "version": "3.5.59",
     "release_date": "2026-05-02",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.58-codega",
-    "tag": "v3.5.58-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.59-codega",
+    "tag": "v3.5.59-codega",
     "changelog": [
-        "v3.5.58 - Migration Hazirligi: .htaccess .html->.php Rewrite + Migration Plan",
-        "FIX: .htaccess - Corporate sayfa URL'lerinde .html -> .php internal rewrite",
-        "  Eskiden header/footer'da /vizyon.html, /kvkk-aydinlatma-metni.html linkleri vardi",
-        "  Ama gercek dosyalar .php uzantili (kvkk.php, references.php, vb.)",
-        "  Artik 19 corporate URL otomatik dogru .php dosyasina yonleniyor:",
-        "  - vizyon.html, hakkimizda.html, referanslarimiz.html, kariyer.html",
-        "  - sosyal-sorumluluk.html, surdurulebilirlik.html, sistem-durumu.html",
-        "  - kvkk-aydinlatma-metni.html, cerez-politikasi.html, gizlilik-politikasi.html",
-        "  - hizmet-sozlesmesi.html, erp-yazilimi.html, hosting-products.html",
-        "  - domain-checker.html, contact.html, knowledgebase.html, softwares.html",
-        "DOC: MIGRATION-PLAN.md - ca.codega.com.tr -> codega.com.tr migration plani",
-        "  10 adimli detayli migration prosesi",
-        "  DirectAdmin komutlari + DB SQL update'leri",
-        "  Geri donus plani (rollback)",
-        "  Test checklist (10 farkli sayfa)",
-        "  Hata cozumleri (lisans, SSL, mixed content, vb.)"
+        "v3.5.59 - KRITIK FIX: wisecp.css 404 sorunu cozuldu (post-migration)",
+        "FIX: css/wisecp.php standalone mod destegi eklendi",
+        "  Migration sonrasi WiseCP routing tetiklenmedigi durumda devreye girer",
+        "  CORE_FOLDER tanimliysa: WiseCP modunda calisir (Config::get ile renkler)",
+        "  CORE_FOLDER tanimsizsa: theme-config.php'den varsayilan renkleri okur",
+        "  Her iki modda da ayni CSS output uretilir",
+        "FIX: css/.htaccess yeni dosya - wisecp.css -> wisecp.php internal rewrite",
+        "  Tema CSS klasorunde wisecp.css istegine dogru cevap verilir",
+        "FIX: ana .htaccess - templates/website/Codega/css/wisecp.css rewrite eklendi",
+        "  Migration sonrasi public_html koku bu yolu yakaladiginda da calisir"
     ]
 }

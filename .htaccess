@@ -10,6 +10,14 @@
 RewriteEngine On
 
 # =====================================================================
+# DYNAMIC CSS: wisecp.css -> wisecp.php (renk değişkenleri PHP'den üretilir)
+# WiseCP normalde theme.php router'ı üzerinden bu URL'i handle ediyor.
+# Migration sonrası router tetiklenmediği durumda bu rewrite devreye girer.
+# =====================================================================
+RewriteRule ^templates/website/Codega/css/wisecp\.css$ templates/website/Codega/css/wisecp.php [L]
+RewriteRule ^css/wisecp\.css$ css/wisecp.php [L]
+
+# =====================================================================
 # SITEMAP.XML → sitemap.php (dinamik üretim)
 # =====================================================================
 RewriteRule ^sitemap\.xml$ sitemap.php [L]

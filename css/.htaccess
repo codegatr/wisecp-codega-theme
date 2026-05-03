@@ -1,0 +1,11 @@
+# Codega Theme CSS klasörü
+# wisecp.css istendiğinde wisecp.php'yi serve et (dinamik renkler için)
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# wisecp.css -> wisecp.php internal rewrite
+RewriteRule ^wisecp\.css$ wisecp.php [L]
+</IfModule>
+
+# .php uzantılı dosyaların çıktısı text/css olarak verilecek (wisecp.php zaten Content-Type set ediyor)
