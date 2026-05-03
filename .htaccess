@@ -10,6 +10,11 @@
 RewriteEngine On
 
 # =====================================================================
+# SITEMAP.XML → sitemap.php (dinamik üretim)
+# =====================================================================
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# =====================================================================
 # CODEGA.COM.TR ESKİ URL'LERİ → WiseCP YENİ SLUG'LAR (Cutover sonrası)
 # Bu kurallar codega.com.tr public_html'e taşındığında etkin olur.
 # Şu an ca.codega.com.tr'de duruyor, etkisiz.

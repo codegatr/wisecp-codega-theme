@@ -201,7 +201,35 @@ if(!function_exists('cdg_link')) {
                 </li>
                 <li><a href="<?php echo $cdg_hosting_url; ?>" class="<?php echo cdg_active(['products','hosting-products','products-hosting'], $current_page); ?>">Hosting</a></li>
                 <li><a href="<?php echo cdg_link('domain'); ?>"                class="<?php echo cdg_active('domain', $current_page); ?>">Domain</a></li>
-                <li><a href="<?php echo cdg_link('softwares'); ?>"             class="<?php echo cdg_active(['softwares','special-products'], $current_page); ?>">Yazılım</a></li>
+                <li class="cdg-nav-mega-parent">
+                    <a href="javascript:void(0);" class="cdg-nav-mega-toggle <?php echo cdg_active(['softwares','special-products','erp'], $current_page); ?>">Yazılım <i class="bi bi-chevron-down"></i></a>
+                    <div class="cdg-nav-mega">
+                        <div class="cdg-nav-mega-grid">
+                            <div class="cdg-nav-mega-col">
+                                <div class="cdg-nav-mega-title">Hazır Çözümler</div>
+                                <a href="/erp-yazilimi.html" class="cdg-nav-mega-link">
+                                    <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;"><i class="bi bi-grid-3x3-gap-fill"></i></span>
+                                    <span><strong>CODEGA ERP</strong><small>9 modül entegre kurumsal kaynak planlaması</small></span>
+                                </a>
+                                <a href="<?php echo cdg_link('softwares'); ?>" class="cdg-nav-mega-link">
+                                    <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#b45309;"><i class="bi bi-box-seam-fill"></i></span>
+                                    <span><strong>Tüm Yazılımlar</strong><small>Hazır yazılım ürün kataloğu</small></span>
+                                </a>
+                            </div>
+                            <div class="cdg-nav-mega-col">
+                                <div class="cdg-nav-mega-title">Özel Geliştirme</div>
+                                <a href="<?php echo cdg_link('softwares'); ?>" class="cdg-nav-mega-link">
+                                    <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe);color:#4338ca;"><i class="bi bi-code-slash"></i></span>
+                                    <span><strong>Özel PHP Yazılım</strong><small>İşletmenize özel yazılım geliştirme</small></span>
+                                </a>
+                                <a href="<?php echo cdg_link('contact'); ?>?subject=demo" class="cdg-nav-mega-link">
+                                    <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);color:#9d174d;"><i class="bi bi-rocket-takeoff-fill"></i></span>
+                                    <span><strong>Demo Talep Et</strong><small>14 gün ücretsiz deneme</small></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
                 <li><a href="<?php echo cdg_link('knowledgebase'); ?>"         class="<?php echo cdg_active(['knowledgebase','articles','news'], $current_page); ?>">Bilgi</a></li>
                 <li><a href="<?php echo cdg_link('contact'); ?>"               class="<?php echo cdg_active('contact', $current_page); ?>">İletişim</a></li>
             </ul>

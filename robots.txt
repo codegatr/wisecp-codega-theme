@@ -1,0 +1,23 @@
+# CODEGA - robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /admincp/
+Disallow: /clientarea/
+Disallow: /apps/
+Disallow: /tmp/
+Disallow: /data/
+Disallow: /inc/
+Disallow: /migration.sql
+Disallow: /theme-config.php
+Disallow: /manifest.json
+Disallow: /version.json
+Disallow: /*?print=1
+Disallow: /*?lang=*
+Disallow: /search?
+
+# Sitemap
+Sitemap: https://codega.com.tr/sitemap.xml
+
+# Yavaş crawl (bot'lar için)
+Crawl-delay: 1
