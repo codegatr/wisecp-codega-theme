@@ -184,626 +184,628 @@ $balance_url  = cdg_link('ac-ps-balance');
 $domains_url  = cdg_link('ac-products-domain');
 $shop_url     = cdg_link('products', ['hosting']);
 $contact_url  = cdg_link('contact');
+
+// === Yaklaşan ödemeler (en yakın 30 gün, max 5) ===
+$upcoming_items = [];
+$now_ts = time();
+$next30 = $now_ts + (30 * 86400);
+$all_orders_combined = [];
+if(isset($orders) && is_array($orders))         $all_orders_combined = array_merge($all_orders_combined, $orders);
+if(isset($domain_orders) && is_array($domain_orders)) $all_orders_combined = array_merge($all_orders_combined, $domain_orders);
+
+foreach($all_orders_combined as $o) {
+    if(!isset($o['duedate'])) continue;
+    $duedate = $o['duedate'];
+    if(in_array(substr((string)$duedate,0,4), ['1881','1970','0000'])) continue;
+    $ts = strtotime((string)$duedate);
+    if(!$ts || $ts > $next30) continue;
+    $status = $o['status'] ?? '';
+    if(!in_array($status, ['active', 'Active', 'aktif'])) continue;
+    $upcoming_items[] = [
+        'name'    => $o['name'] ?? '-',
+        'duedate' => $duedate,
+        'days'    => max(0, (int)(($ts - $now_ts) / 86400)),
+        'id'      => $o['id'] ?? 0,
+        'link'    => $o['detail_link'] ?? '#',
+        'type'    => $o['type'] ?? '',
+    ];
+}
+usort($upcoming_items, function($a,$b){ return $a['days'] - $b['days']; });
+$upcoming_items = array_slice($upcoming_items, 0, 5);
+
+// === Son destek talepleri (max 5) ===
+$recent_tickets = [];
+if(isset($tickets) && is_array($tickets)) {
+    $recent_tickets = array_slice($tickets, 0, 5);
+}
+
+// Ticket status meta
+$tk_meta = [
+    'Customer-Reply' => ['cls' => 'warning', 'lbl' => 'Yanıt Bekliyor', 'icon' => 'hourglass-split'],
+    'open'           => ['cls' => 'info',    'lbl' => 'Açık',           'icon' => 'circle-fill'],
+    'Open'           => ['cls' => 'info',    'lbl' => 'Açık',           'icon' => 'circle-fill'],
+    'Answered'       => ['cls' => 'info',    'lbl' => 'Yanıtlandı',     'icon' => 'reply-fill'],
+    'Closed'         => ['cls' => 'success', 'lbl' => 'Çözüldü',        'icon' => 'check-circle-fill'],
+    'closed'         => ['cls' => 'success', 'lbl' => 'Çözüldü',        'icon' => 'check-circle-fill'],
+    'cozuldu'        => ['cls' => 'success', 'lbl' => 'Çözüldü',        'icon' => 'check-circle-fill'],
+];
+
+// Date format helper
+$cdg_date_fmt = function($d) {
+    if(!$d || in_array(substr((string)$d,0,4), ['1881','1970','0000'])) return '-';
+    if(class_exists('DateManager') && method_exists('DateManager','format') && class_exists('Config')) {
+        return DateManager::format(Config::get("options/date-format") ?: 'd.m.Y', $d);
+    }
+    return date('d.m.Y', strtotime((string)$d));
+};
+
+$tickets_url   = cdg_link('ac-ps-tickets');
+$create_ticket_url = cdg_link('ac-ps-create-ticket-request');
+$invoices_url  = cdg_link('ac-ps-invoices');
+$balance_url   = cdg_link('ac-ps-balance');
 ?>
 
-<!-- ==================== INLINE CSS (self-contained) ==================== -->
 <style>
+/* === CODEGA DASHBOARD - Kurumsal LNW-Style === */
 .cdg-d {
     --d-primary: #1e40af;
-    --d-primary-2: #3b82f6;
+    --d-primary-deep: #0a1f44;
+    --d-gold: #f59e0b;
+    --d-gold-light: #fbbf24;
     --d-success: #10b981;
     --d-warning: #f59e0b;
     --d-danger: #ef4444;
     --d-info: #06b6d4;
     --d-purple: #8b5cf6;
-    --d-bg: #f8fafc;
+    --d-bg: #f5f7fb;
     --d-card: #ffffff;
     --d-text: #0f172a;
     --d-muted: #64748b;
     --d-border: #e2e8f0;
     --d-radius: 14px;
-    --d-shadow: 0 1px 3px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.04);
-    --d-shadow-lg: 0 8px 24px rgba(15,23,42,0.08);
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
     color: var(--d-text);
-    background: var(--d-bg);
-    padding: 28px 0;
-    min-height: 100vh;
+    padding: 0;
     box-sizing: border-box;
 }
 .cdg-d *, .cdg-d *::before, .cdg-d *::after { box-sizing: border-box; }
 .cdg-d a { text-decoration: none; color: inherit; }
 
-.cdg-d-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-/* === HERO === */
-.cdg-d-hero {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #06b6d4 100%);
+/* === GREETING (kompakt) === */
+.cdg-d-greet {
+    background: linear-gradient(135deg, #0a1f44 0%, #1e3a8a 50%, #2563eb 100%);
     border-radius: 18px;
-    padding: 32px 36px;
+    padding: 22px 28px;
     color: #fff;
-    margin-bottom: 24px;
-    position: relative;
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(30,64,175,0.20);
+    position: relative;
+    margin-bottom: 18px;
 }
-.cdg-d-hero::before {
+.cdg-d-greet::before {
     content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(252,211,77,0.20), transparent 70%);
+    position: absolute; top: -50%; right: -10%;
+    width: 50%; height: 200%;
+    background: radial-gradient(circle, rgba(251,191,36,0.20), transparent 60%);
+    filter: blur(60px);
     pointer-events: none;
 }
-.cdg-d-hero-row {
-    display: flex; align-items: center; gap: 24px;
-    flex-wrap: wrap;
-    position: relative; z-index: 1;
+.cdg-d-greet::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
 }
-.cdg-d-avatar {
-    width: 72px; height: 72px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #fde047, #facc15);
-    color: #1e3a8a;
-    display: grid; place-items: center;
-    font-size: 28px; font-weight: 800;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+.cdg-d-greet-row {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 18px;
+    flex-wrap: wrap;
+}
+.cdg-d-greet-avatar {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800;
+    color: #422006;
+    flex-shrink: 0;
+    box-shadow: 0 8px 20px rgba(251,191,36,0.30);
+}
+.cdg-d-greet-text { flex: 1; min-width: 200px; }
+.cdg-d-greet-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700;
+    color: #fde047;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 3px;
+}
+.cdg-d-greet h1 {
+    font-size: 22px; font-weight: 800;
+    margin: 0;
+    color: #fff; letter-spacing: -0.01em;
+}
+.cdg-d-greet h1 strong { color: #fde047; }
+.cdg-d-greet-meta {
+    font-size: 13px;
+    color: rgba(255,255,255,0.80);
+    margin-top: 4px;
+}
+.cdg-d-greet-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 20px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.30);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 13px; font-weight: 700;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s;
+}
+.cdg-d-greet-cta:hover { background: rgba(255,255,255,0.25); transform: translateY(-1px); color: #fde047; }
+
+/* === QUICK CARDS (3'lü grid) === */
+.cdg-d-quick {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.5fr;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+@media (max-width: 980px) { .cdg-d-quick { grid-template-columns: 1fr 1fr; } .cdg-d-quick > :last-child { grid-column: 1 / -1; } }
+@media (max-width: 540px) { .cdg-d-quick { grid-template-columns: 1fr; } }
+
+.cdg-d-quick-card {
+    background: var(--d-card);
+    border: 1px solid var(--d-border);
+    border-radius: var(--d-radius);
+    padding: 24px 22px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+.cdg-d-quick-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(15,23,42,0.08);
+    border-color: var(--d-primary);
+}
+.cdg-d-quick-card-text {
+    flex: 1; min-width: 0;
+}
+.cdg-d-quick-card-title {
+    font-size: 14px; font-weight: 800;
+    color: var(--d-text);
+    text-transform: uppercase; letter-spacing: 0.5px;
+    margin: 0 0 3px;
+}
+.cdg-d-quick-card-sub {
+    font-size: 12px;
+    color: var(--d-muted);
+    margin: 0;
+}
+.cdg-d-quick-card-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
     flex-shrink: 0;
     position: relative;
 }
-.cdg-d-avatar::after {
-    content: '';
+.cdg-d-quick-card-badge {
     position: absolute;
-    inset: -4px;
-    border: 2px solid rgba(255,255,255,0.30);
-    border-radius: 50%;
-}
-.cdg-d-greet {
-    flex: 1; min-width: 240px;
-}
-.cdg-d-greet-eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 5px 12px;
-    background: rgba(255,255,255,0.18);
-    border-radius: 99px;
-    font-size: 11px; font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    backdrop-filter: blur(10px);
-}
-.cdg-d-greet-eyebrow .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: #34d399;
-    box-shadow: 0 0 8px #10b981;
-    animation: cdgPulseDash 2s ease-in-out infinite;
-}
-@keyframes cdgPulseDash {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.85); }
-}
-.cdg-d-greet h1 {
-    font-size: 28px;
-    font-weight: 800;
-    margin: 0 0 4px;
-    letter-spacing: -0.5px;
-}
-.cdg-d-greet p {
-    font-size: 14px;
-    opacity: 0.85;
-    margin: 0;
-}
-.cdg-d-hero-actions {
-    display: flex; gap: 10px; flex-wrap: wrap;
-}
-.cdg-d-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 22px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer; border: 0;
-    transition: all 0.2s;
-    text-decoration: none;
-    white-space: nowrap;
-}
-.cdg-d-btn-gold {
-    background: linear-gradient(135deg, #fde047, #facc15);
-    color: #1e3a8a;
-    box-shadow: 0 6px 18px rgba(252,211,77,0.30);
-}
-.cdg-d-btn-gold:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 24px rgba(252,211,77,0.45);
-    color: #1e3a8a;
-}
-.cdg-d-btn-ghost {
-    background: rgba(255,255,255,0.15);
+    top: -4px; right: -4px;
+    min-width: 20px; height: 20px;
+    padding: 0 5px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
     color: #fff;
-    border: 1px solid rgba(255,255,255,0.30);
-    backdrop-filter: blur(10px);
-}
-.cdg-d-btn-ghost:hover {
-    background: rgba(255,255,255,0.25);
-    color: #fff;
+    font-size: 11px; font-weight: 800;
+    line-height: 20px; text-align: center;
+    border-radius: 100px;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(245,158,11,0.40);
 }
 
-/* === STATS GRID === */
-.cdg-d-stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 24px;
+/* Status (Gecikmiş ödeme) */
+.cdg-d-quick-status {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border-color: #6ee7b7;
 }
-.cdg-d-stat {
+.cdg-d-quick-status.warning {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-color: #fcd34d;
+}
+.cdg-d-quick-status.danger {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    border-color: #fca5a5;
+}
+.cdg-d-quick-status .cdg-d-quick-card-title { color: #065f46; font-size: 13px; }
+.cdg-d-quick-status.warning .cdg-d-quick-card-title { color: #92400e; }
+.cdg-d-quick-status.danger .cdg-d-quick-card-title { color: #991b1b; }
+.cdg-d-quick-status .cdg-d-quick-card-icon { background: rgba(255,255,255,0.60); }
+.cdg-d-quick-status .cdg-d-quick-card-icon i { color: #065f46; }
+.cdg-d-quick-status.warning .cdg-d-quick-card-icon i { color: #92400e; }
+.cdg-d-quick-status.danger .cdg-d-quick-card-icon i { color: #991b1b; }
+
+/* === ANA GRID (üst widget'lardan sonra) === */
+.cdg-d-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+@media (max-width: 880px) { .cdg-d-main { grid-template-columns: 1fr; } }
+
+.cdg-d-panel {
     background: var(--d-card);
     border: 1px solid var(--d-border);
     border-radius: var(--d-radius);
-    padding: 20px;
-    box-shadow: var(--d-shadow);
-    transition: all 0.2s;
-    display: flex; align-items: center; gap: 14px;
-}
-.cdg-d-stat:hover {
-    box-shadow: var(--d-shadow-lg);
-    transform: translateY(-2px);
-}
-.cdg-d-stat-icon {
-    width: 48px; height: 48px;
-    border-radius: 12px;
-    display: grid; place-items: center;
-    color: #fff;
-    font-size: 22px;
-    flex-shrink: 0;
-}
-.cdg-d-stat-body { flex: 1; min-width: 0; }
-.cdg-d-stat-label {
-    font-size: 11px;
-    color: var(--d-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
-.cdg-d-stat-value {
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--d-text);
-    line-height: 1;
-}
-.cdg-d-stat-link {
-    font-size: 12px;
-    color: var(--d-primary);
-    font-weight: 600;
-    margin-top: 6px;
-    display: inline-block;
-}
-.cdg-d-stat-link:hover { color: var(--d-primary-2); }
-
-/* === QUICK GRID === */
-.cdg-d-quick {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 12px;
-    margin-bottom: 24px;
-}
-.cdg-d-quick-item {
-    background: var(--d-card);
-    border: 1px solid var(--d-border);
-    border-radius: var(--d-radius);
-    padding: 18px 12px;
-    text-align: center;
-    transition: all 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-.cdg-d-quick-item:hover {
-    border-color: var(--d-primary);
-    transform: translateY(-2px);
-    box-shadow: var(--d-shadow-lg);
-    color: var(--d-primary);
-}
-.cdg-d-quick-icon {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    display: grid; place-items: center;
-    font-size: 20px;
-    color: #fff;
-}
-.cdg-d-quick-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--d-text);
-}
-
-/* === TWO-COL CARDS === */
-.cdg-d-grid-2 {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 20px;
-    margin-bottom: 24px;
-}
-.cdg-d-card {
-    background: var(--d-card);
-    border: 1px solid var(--d-border);
-    border-radius: var(--d-radius);
-    box-shadow: var(--d-shadow);
     overflow: hidden;
 }
-.cdg-d-card-head {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 18px 22px;
-    border-bottom: 1px solid var(--d-border);
+.cdg-d-panel-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    color: #fff;
+    background: linear-gradient(135deg, #1e3a8a, #1e40af);
 }
-.cdg-d-card-title {
-    font-size: 16px;
-    font-weight: 800;
-    color: var(--d-text);
+.cdg-d-panel-head.gold {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+.cdg-d-panel-head.deep {
+    background: linear-gradient(135deg, #0a1f44, #1e3a8a);
+}
+.cdg-d-panel-head h3 {
     margin: 0;
-    display: inline-flex; align-items: center; gap: 8px;
-}
-.cdg-d-card-title i { color: var(--d-primary); font-size: 18px; }
-.cdg-d-card-link {
-    font-size: 12px;
-    color: var(--d-primary);
-    font-weight: 600;
-}
-.cdg-d-card-body { padding: 18px 22px; }
-
-/* === LIST STYLE === */
-.cdg-d-list { list-style: none; padding: 0; margin: 0; }
-.cdg-d-list li {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--d-border);
-    font-size: 14px;
-}
-.cdg-d-list li:last-child { border-bottom: 0; padding-bottom: 0; }
-.cdg-d-list li:first-child { padding-top: 0; }
-.cdg-d-list-name {
-    color: var(--d-text);
-    font-weight: 600;
-}
-.cdg-d-list-meta {
-    color: var(--d-muted);
-    font-size: 12px;
-}
-.cdg-d-badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 99px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
+    font-size: 14px; font-weight: 800;
     letter-spacing: 0.3px;
+    display: flex; align-items: center; gap: 8px;
 }
-.cdg-d-badge-success { background: #d1fae5; color: #065f46; }
-.cdg-d-badge-warning { background: #fef3c7; color: #92400e; }
-.cdg-d-badge-danger  { background: #fee2e2; color: #991b1b; }
-.cdg-d-badge-info    { background: #dbeafe; color: #1e40af; }
+.cdg-d-panel-head h3 i { font-size: 18px; }
+.cdg-d-panel-head a {
+    color: #fff;
+    font-size: 12px; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 5px 11px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.18);
+    transition: all 0.2s;
+}
+.cdg-d-panel-head a:hover { background: rgba(255,255,255,0.30); }
 
-/* === EMPTY STATE === */
-.cdg-d-empty {
-    text-align: center;
-    padding: 32px 20px;
-    color: var(--d-muted);
+.cdg-d-panel-body {
+    padding: 0;
 }
-.cdg-d-empty i {
-    font-size: 36px;
-    color: var(--d-border);
-    margin-bottom: 10px;
-}
-.cdg-d-empty p { font-size: 14px; margin: 0; }
+.cdg-d-panel-body.padded { padding: 16px 20px; }
 
-/* === PROMO === */
-.cdg-d-promo {
-    background: linear-gradient(135deg, #fef3c7, #fde68a);
-    border: 1px solid #fcd34d;
-    border-radius: var(--d-radius);
-    padding: 20px 24px;
-    display: flex; align-items: center; gap: 16px;
-    margin-bottom: 24px;
+/* List items */
+.cdg-d-list { list-style: none; margin: 0; padding: 0; }
+.cdg-d-list li {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 20px;
 }
-.cdg-d-promo-icon {
-    font-size: 32px;
-    color: #b45309;
+.cdg-d-list li:not(:last-child) {
+    border-bottom: 1px solid #f1f5f9;
+}
+.cdg-d-list li:hover {
+    background: #fafbfd;
+}
+.cdg-d-list-icon {
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
     flex-shrink: 0;
 }
-.cdg-d-promo-text { flex: 1; }
-.cdg-d-promo-text h3 {
-    font-size: 16px;
-    font-weight: 800;
-    color: #78350f;
-    margin: 0 0 4px;
+.cdg-d-list-text {
+    flex: 1; min-width: 0;
 }
-.cdg-d-promo-text p {
-    font-size: 13px;
-    color: #92400e;
-    margin: 0;
+.cdg-d-list-title {
+    font-size: 14px; font-weight: 700;
+    color: var(--d-text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cdg-d-list-sub {
+    font-size: 11px;
+    color: var(--d-muted);
+    margin-top: 2px;
 }
 
-/* === RESPONSIVE === */
-@media (max-width: 992px) {
-    .cdg-d-stats { grid-template-columns: repeat(2, 1fr); }
-    .cdg-d-quick { grid-template-columns: repeat(3, 1fr); }
-    .cdg-d-grid-2 { grid-template-columns: 1fr; }
+/* Progress (kalan gün) */
+.cdg-d-progress {
+    flex-shrink: 0;
+    width: 90px;
+    text-align: center;
 }
-@media (max-width: 540px) {
-    .cdg-d-hero { padding: 24px 20px; }
-    .cdg-d-greet h1 { font-size: 22px; }
-    .cdg-d-stats { grid-template-columns: 1fr; }
-    .cdg-d-quick { grid-template-columns: repeat(2, 1fr); }
-    .cdg-d-promo { flex-direction: column; text-align: center; }
+.cdg-d-progress-bar {
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+.cdg-d-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #059669);
+    border-radius: 100px;
+    transition: width 0.4s ease;
+}
+.cdg-d-progress-fill.danger { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.cdg-d-progress-fill.warning { background: linear-gradient(90deg, #f59e0b, #d97706); }
+.cdg-d-progress-num {
+    font-size: 14px; font-weight: 800;
+    color: var(--d-text);
+}
+.cdg-d-progress-lbl {
+    font-size: 10px;
+    color: var(--d-muted);
+    text-transform: uppercase;
+}
+
+.cdg-d-renew {
+    flex-shrink: 0;
+    padding: 7px 16px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff !important;
+    border-radius: 8px;
+    font-size: 12px; font-weight: 700;
+    transition: all 0.2s;
+}
+.cdg-d-renew:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(16,185,129,0.30); color: #fff !important; }
+
+/* Ticket badge */
+.cdg-d-tk-badge {
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 11px;
+    border-radius: 100px;
+    font-size: 11px; font-weight: 700;
+}
+.cdg-d-tk-badge.success { background: linear-gradient(135deg,#d1fae5,#a7f3d0); color: #065f46; }
+.cdg-d-tk-badge.warning { background: linear-gradient(135deg,#fef3c7,#fde68a); color: #92400e; }
+.cdg-d-tk-badge.info    { background: linear-gradient(135deg,#dbeafe,#bfdbfe); color: #1e40af; }
+.cdg-d-tk-badge.danger  { background: linear-gradient(135deg,#fee2e2,#fecaca); color: #991b1b; }
+.cdg-d-tk-badge i { font-size: 10px; }
+
+/* Empty state */
+.cdg-d-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--d-muted);
+}
+.cdg-d-empty i { font-size: 36px; color: #cbd5e1; display: block; margin-bottom: 8px; }
+.cdg-d-empty-text { font-size: 13px; }
+
+/* News mini section */
+.cdg-d-news-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+@media (max-width: 640px) { .cdg-d-news-grid { grid-template-columns: 1fr; } }
+.cdg-d-news-item {
+    padding: 14px 16px;
+    border: 1px solid var(--d-border);
+    border-radius: 10px;
+    transition: all 0.2s;
+    background: #fff;
+}
+.cdg-d-news-item:hover {
+    border-color: var(--d-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(30,64,175,0.10);
+}
+.cdg-d-news-item-title {
+    font-size: 13px; font-weight: 700;
+    color: var(--d-text);
+    line-height: 1.4;
+}
+.cdg-d-news-item-date {
+    font-size: 11px;
+    color: var(--d-muted);
+    margin-top: 4px;
+    display: flex; align-items: center; gap: 4px;
 }
 </style>
 
-<!-- ==================== HTML ==================== -->
 <div class="cdg-d">
-<div class="cdg-d-wrap">
 
-    <!-- HERO -->
-    <section class="cdg-d-hero">
-        <div class="cdg-d-hero-row">
-            <div class="cdg-d-avatar"><?php echo htmlspecialchars($user_initial, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
-            <div class="cdg-d-greet">
-                <span class="cdg-d-greet-eyebrow">
-                    <span class="dot"></span>
-                    <span><?php echo $count_active_products > 0 ? 'Aktif Üye' : 'Hoş Geldiniz'; ?></span>
-                </span>
-                <h1><?php echo $greeting; ?>, <?php echo htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>!</h1>
-                <p>Hizmetlerinizi ve faturalarınızı tek panelden yönetin.</p>
-            </div>
-            <div class="cdg-d-hero-actions">
-                <a href="<?php echo htmlspecialchars($shop_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-btn cdg-d-btn-gold">
-                    <i class="bi bi-bag-plus-fill"></i> Yeni Hizmet Al
-                </a>
-                <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-btn cdg-d-btn-ghost">
-                    <i class="bi bi-headset"></i> Destek Al
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- STATS -->
-    <section class="cdg-d-stats">
-        <div class="cdg-d-stat">
-            <div class="cdg-d-stat-icon" style="background:linear-gradient(135deg,#10b981,#34d399);">
-                <i class="bi bi-hdd-network-fill"></i>
-            </div>
-            <div class="cdg-d-stat-body">
-                <div class="cdg-d-stat-label">Aktif Hizmet</div>
-                <div class="cdg-d-stat-value"><?php echo (int)$count_active_products; ?></div>
-                <a href="<?php echo htmlspecialchars($products_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-stat-link">Tümünü Gör →</a>
-            </div>
-        </div>
-
-        <div class="cdg-d-stat">
-            <div class="cdg-d-stat-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">
-                <i class="bi bi-receipt"></i>
-            </div>
-            <div class="cdg-d-stat-body">
-                <div class="cdg-d-stat-label">Bekleyen Fatura</div>
-                <div class="cdg-d-stat-value"><?php echo (int)$count_unpaid_invoices; ?></div>
-                <a href="<?php echo htmlspecialchars($invoices_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-stat-link">Faturalarım →</a>
-            </div>
-        </div>
-
-        <div class="cdg-d-stat">
-            <div class="cdg-d-stat-icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);">
-                <i class="bi bi-chat-dots-fill"></i>
-            </div>
-            <div class="cdg-d-stat-body">
-                <div class="cdg-d-stat-label">Açık Talep</div>
-                <div class="cdg-d-stat-value"><?php echo (int)$count_open_tickets; ?></div>
-                <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-stat-link">Destek Talepleri →</a>
-            </div>
-        </div>
-
-        <div class="cdg-d-stat">
-            <div class="cdg-d-stat-icon" style="background:linear-gradient(135deg,#06b6d4,#22d3ee);">
-                <i class="bi bi-wallet2"></i>
-            </div>
-            <div class="cdg-d-stat-body">
-                <div class="cdg-d-stat-label">Bakiyem</div>
-                <div class="cdg-d-stat-value" style="font-size:20px;"><?php echo htmlspecialchars($user_balance, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
-                <a href="<?php echo htmlspecialchars($balance_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-stat-link">Yükleme Yap →</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- QUICK ACTIONS -->
-    <section class="cdg-d-quick">
-        <a href="<?php echo htmlspecialchars($products_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
-            <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#10b981,#34d399);"><i class="bi bi-hdd-stack"></i></div>
-            <span class="cdg-d-quick-label">Hizmetlerim</span>
-        </a>
-        <a href="<?php echo htmlspecialchars($domains_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
-            <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#1e40af,#3b82f6);"><i class="bi bi-globe2"></i></div>
-            <span class="cdg-d-quick-label">Domainlerim</span>
-        </a>
-        <a href="<?php echo htmlspecialchars($invoices_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
-            <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);"><i class="bi bi-receipt-cutoff"></i></div>
-            <span class="cdg-d-quick-label">Faturalar</span>
-        </a>
-        <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
-            <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);"><i class="bi bi-chat-dots"></i></div>
-            <span class="cdg-d-quick-label">Destek</span>
-        </a>
-        <a href="<?php echo htmlspecialchars($balance_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
-            <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#06b6d4,#22d3ee);"><i class="bi bi-wallet"></i></div>
-            <span class="cdg-d-quick-label">Bakiye</span>
-        </a>
-        <a href="<?php echo htmlspecialchars($shop_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-quick-item">
-            <div class="cdg-d-quick-icon" style="background:linear-gradient(135deg,#ef4444,#f87171);"><i class="bi bi-bag-plus"></i></div>
-            <span class="cdg-d-quick-label">Yeni Sipariş</span>
-        </a>
-    </section>
-
-    <!-- IKI SUTUNLU: Aktif Hizmetler + Son Aktiviteler -->
-    <section class="cdg-d-grid-2">
-
-        <!-- Aktif Hizmetler -->
-        <div class="cdg-d-card">
-            <div class="cdg-d-card-head">
-                <h3 class="cdg-d-card-title"><i class="bi bi-hdd-network-fill"></i> Aktif Hizmetlerim</h3>
-                <a href="<?php echo htmlspecialchars($products_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-card-link">Tümünü Gör →</a>
-            </div>
-            <div class="cdg-d-card-body">
+    <!-- GREETING -->
+    <section class="cdg-d-greet">
+        <div class="cdg-d-greet-row">
+            <div class="cdg-d-greet-avatar">
                 <?php
-                $shown_orders = 0;
-                if(isset($orders) && is_array($orders) && count($orders) > 0):
+                $first_letter = '?';
+                if(isset($cdg_uname) && $cdg_uname) $first_letter = mb_strtoupper(mb_substr($cdg_uname, 0, 1, 'UTF-8'), 'UTF-8');
+                elseif(isset($cdg_uinfo['firstname']) && $cdg_uinfo['firstname']) $first_letter = mb_strtoupper(mb_substr($cdg_uinfo['firstname'], 0, 1, 'UTF-8'), 'UTF-8');
+                echo htmlspecialchars($first_letter, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                 ?>
+            </div>
+            <div class="cdg-d-greet-text">
+                <div class="cdg-d-greet-eyebrow"><i class="bi bi-sun-fill"></i> <?php echo $greeting; ?></div>
+                <h1>Hoş geldin, <strong><?php echo htmlspecialchars(isset($cdg_uname) ? $cdg_uname : 'Müşteri', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong></h1>
+                <div class="cdg-d-greet-meta">
+                    <i class="bi bi-calendar-check"></i> <?php echo date('d.m.Y'); ?>
+                    <?php if(isset($cdg_uinfo['id'])): ?>
+                    &nbsp;·&nbsp; <i class="bi bi-person-badge"></i> Müşteri No: <strong><?php echo (int)$cdg_uinfo['id']; ?></strong>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <a href="<?php echo $create_ticket_url; ?>" class="cdg-d-greet-cta">
+                <i class="bi bi-plus-circle-fill"></i> Yeni Talep Aç
+            </a>
+        </div>
+    </section>
+
+    <!-- QUICK CARDS -->
+    <div class="cdg-d-quick">
+        <a href="<?php echo $invoices_url; ?>" class="cdg-d-quick-card" style="text-decoration:none;">
+            <div class="cdg-d-quick-card-text">
+                <div class="cdg-d-quick-card-title">Faturalarım</div>
+                <p class="cdg-d-quick-card-sub">Bekleyen ve geçmiş ödemeler</p>
+            </div>
+            <div class="cdg-d-quick-card-icon" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;">
+                <i class="bi bi-receipt"></i>
+                <?php if($count_unpaid_invoices > 0): ?>
+                <span class="cdg-d-quick-card-badge"><?php echo $count_unpaid_invoices; ?></span>
+                <?php endif; ?>
+            </div>
+        </a>
+
+        <a href="<?php echo $create_ticket_url; ?>" class="cdg-d-quick-card" style="text-decoration:none;">
+            <div class="cdg-d-quick-card-text">
+                <div class="cdg-d-quick-card-title">Yeni Destek Talebi</div>
+                <p class="cdg-d-quick-card-sub">Sorunlarınızı paylaşın</p>
+            </div>
+            <div class="cdg-d-quick-card-icon" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;">
+                <i class="bi bi-headset"></i>
+            </div>
+        </a>
+
+        <?php
+        $status_class = 'cdg-d-quick-status';
+        $status_icon  = 'check-circle-fill';
+        $status_title = 'Gecikmiş ödemeniz bulunmamaktadır';
+        $status_sub   = 'Tüm faturalarınız zamanında ödenmiş';
+        if($count_unpaid_invoices > 0) {
+            $status_class .= ' warning';
+            $status_icon = 'exclamation-circle-fill';
+            $status_title = $count_unpaid_invoices . ' bekleyen fatura';
+            $status_sub = 'Lütfen vadesi geçmeden ödeyin';
+        }
+        ?>
+        <div class="cdg-d-quick-card <?php echo $status_class; ?>">
+            <div class="cdg-d-quick-card-text">
+                <div class="cdg-d-quick-card-title"><?php echo $status_title; ?></div>
+                <p class="cdg-d-quick-card-sub"><?php echo $status_sub; ?></p>
+            </div>
+            <div class="cdg-d-quick-card-icon">
+                <i class="bi bi-<?php echo $status_icon; ?>"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- ANA GRID: Yaklaşan Ödemeler + Son Talepler -->
+    <div class="cdg-d-main">
+
+        <!-- Ödemesi Yaklaşan Ürünleriniz -->
+        <div class="cdg-d-panel">
+            <div class="cdg-d-panel-head deep">
+                <h3><i class="bi bi-clock-history"></i> Ödemesi Yaklaşan Hizmetler</h3>
+                <a href="<?php echo $products_url; ?>">Tümü <i class="bi bi-arrow-right"></i></a>
+            </div>
+            <div class="cdg-d-panel-body">
+                <?php if(!empty($upcoming_items)): ?>
                 <ul class="cdg-d-list">
-                    <?php foreach($orders as $order):
-                        if($shown_orders >= 5) break;
-                        $shown_orders++;
-
-                        $order_name = isset($order['name']) ? $order['name'] : (isset($order['title']) ? $order['title'] : 'Hizmet #' . ($order['id'] ?? '?'));
-                        $order_status = $order['status'] ?? 'unknown';
-
-                        $badge_class = 'cdg-d-badge-info';
-                        $status_text = $order_status;
-                        if(in_array($order_status, ['active', 'Active', 'aktif'])) {
-                            $badge_class = 'cdg-d-badge-success';
-                            $status_text = 'Aktif';
-                        } elseif(in_array($order_status, ['suspended', 'Suspended'])) {
-                            $badge_class = 'cdg-d-badge-warning';
-                            $status_text = 'Askıda';
-                        } elseif(in_array($order_status, ['cancelled', 'Cancelled', 'expired'])) {
-                            $badge_class = 'cdg-d-badge-danger';
-                            $status_text = 'İptal';
-                        } elseif(in_array($order_status, ['inprocess', 'pending'])) {
-                            $badge_class = 'cdg-d-badge-warning';
-                            $status_text = 'Onay Bekliyor';
-                        }
-
-                        $detail_link = $order['detail_link'] ?? '#';
+                    <?php foreach($upcoming_items as $item):
+                        $type = $item['type'];
+                        $type_icons = [
+                            'hosting' => ['hdd-network-fill', '#10b981'],
+                            'server'  => ['server', '#8b5cf6'],
+                            'domain'  => ['globe2', '#06b6d4'],
+                            'sms'     => ['chat-dots-fill', '#f59e0b'],
+                            'software'=> ['code-square', '#ec4899'],
+                            'special' => ['star-fill', '#1e40af'],
+                        ];
+                        $ti = $type_icons[$type] ?? ['box-seam', '#64748b'];
+                        $progress_pct = max(0, min(100, ($item['days'] / 30) * 100));
+                        $progress_cls = $item['days'] <= 7 ? 'danger' : ($item['days'] <= 14 ? 'warning' : '');
                     ?>
                     <li>
-                        <div>
-                            <a href="<?php echo htmlspecialchars($detail_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-list-name"><?php echo htmlspecialchars($order_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
-                            <?php if(!empty($order['duedate'])): ?>
-                            <div class="cdg-d-list-meta">Bitiş: <?php echo htmlspecialchars($order['duedate'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                        <div class="cdg-d-list-icon" style="background:<?php echo $ti[1]; ?>15;color:<?php echo $ti[1]; ?>;">
+                            <i class="bi bi-<?php echo $ti[0]; ?>"></i>
+                        </div>
+                        <div class="cdg-d-list-text">
+                            <div class="cdg-d-list-title"><?php echo htmlspecialchars($item['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                            <div class="cdg-d-list-sub"><i class="bi bi-calendar-check"></i> <?php echo $cdg_date_fmt($item['duedate']); ?></div>
+                        </div>
+                        <div class="cdg-d-progress">
+                            <div class="cdg-d-progress-bar">
+                                <div class="cdg-d-progress-fill <?php echo $progress_cls; ?>" style="width:<?php echo $progress_pct; ?>%;"></div>
+                            </div>
+                            <div class="cdg-d-progress-num"><?php echo $item['days']; ?></div>
+                            <div class="cdg-d-progress-lbl">gün</div>
+                        </div>
+                        <a href="<?php echo htmlspecialchars($item['link'], ENT_QUOTES); ?>" class="cdg-d-renew">
+                            <i class="bi bi-arrow-clockwise"></i> Yenile
+                        </a>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+                <?php else: ?>
+                <div class="cdg-d-empty">
+                    <i class="bi bi-calendar-check"></i>
+                    <div class="cdg-d-empty-text">Yaklaşan ödemesi olan hizmet bulunmuyor.</div>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Destek Taleplerim -->
+        <div class="cdg-d-panel">
+            <div class="cdg-d-panel-head gold">
+                <h3><i class="bi bi-chat-square-text-fill"></i> Destek Taleplerim</h3>
+                <a href="<?php echo $tickets_url; ?>">Tümü <i class="bi bi-arrow-right"></i></a>
+            </div>
+            <div class="cdg-d-panel-body">
+                <?php if(!empty($recent_tickets)): ?>
+                <ul class="cdg-d-list">
+                    <?php foreach($recent_tickets as $tk):
+                        $tk_status = $tk['status'] ?? '';
+                        $tkm = $tk_meta[$tk_status] ?? ['cls' => 'info', 'lbl' => 'İşleniyor', 'icon' => 'circle'];
+                        $tk_subject = $tk['subject'] ?? ($tk['title'] ?? '-');
+                        $tk_link = $tk['detail_link'] ?? ($tk['link'] ?? '#');
+                        $tk_date = $tk['cdate'] ?? ($tk['date'] ?? '');
+                    ?>
+                    <li>
+                        <div class="cdg-d-list-icon" style="background:rgba(245,158,11,0.10);color:#f59e0b;">
+                            <i class="bi bi-chat-left-text"></i>
+                        </div>
+                        <div class="cdg-d-list-text">
+                            <div class="cdg-d-list-title"><a href="<?php echo htmlspecialchars($tk_link, ENT_QUOTES); ?>" style="color:inherit;"><?php echo htmlspecialchars($tk_subject, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a></div>
+                            <?php if($tk_date): ?>
+                            <div class="cdg-d-list-sub"><i class="bi bi-clock"></i> <?php echo $cdg_date_fmt($tk_date); ?></div>
                             <?php endif; ?>
                         </div>
-                        <span class="cdg-d-badge <?php echo $badge_class; ?>"><?php echo htmlspecialchars($status_text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                        <span class="cdg-d-tk-badge <?php echo $tkm['cls']; ?>">
+                            <i class="bi bi-<?php echo $tkm['icon']; ?>"></i> <?php echo htmlspecialchars($tkm['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                        </span>
                     </li>
                     <?php endforeach; ?>
                 </ul>
                 <?php else: ?>
                 <div class="cdg-d-empty">
-                    <i class="bi bi-inbox"></i>
-                    <p>Henüz aktif hizmetiniz yok.</p>
-                    <a href="<?php echo htmlspecialchars($shop_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-btn cdg-d-btn-gold" style="margin-top:14px;color:#1e3a8a;">
-                        <i class="bi bi-bag-plus"></i> İlk Hizmetinizi Alın
-                    </a>
+                    <i class="bi bi-headset"></i>
+                    <div class="cdg-d-empty-text">Henüz destek talebiniz yok.<br><a href="<?php echo $create_ticket_url; ?>" style="color:#1e40af;font-weight:700;">İlk talebinizi oluşturun</a></div>
                 </div>
                 <?php endif; ?>
             </div>
         </div>
 
-        <!-- Son Talepler -->
-        <div class="cdg-d-card">
-            <div class="cdg-d-card-head">
-                <h3 class="cdg-d-card-title"><i class="bi bi-chat-dots-fill"></i> Son Talepler</h3>
-                <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-card-link">Tümü →</a>
-            </div>
-            <div class="cdg-d-card-body">
-                <?php
-                $shown_tickets = 0;
-                if(isset($tickets) && is_array($tickets) && count($tickets) > 0):
-                ?>
-                <ul class="cdg-d-list">
-                    <?php foreach($tickets as $ticket):
-                        if($shown_tickets >= 4) break;
-                        $shown_tickets++;
+    </div>
 
-                        $ticket_subject = $ticket['subject'] ?? $ticket['title'] ?? 'Talep #' . ($ticket['id'] ?? '?');
-                        $ticket_status = $ticket['status'] ?? 'unknown';
-
-                        $tbadge = 'cdg-d-badge-info';
-                        $tstatus_text = $ticket_status;
-                        if($ticket_status === 'Customer-Reply') { $tbadge = 'cdg-d-badge-warning'; $tstatus_text = 'Yanıt Bekliyor'; }
-                        elseif($ticket_status === 'Answered')   { $tbadge = 'cdg-d-badge-success'; $tstatus_text = 'Yanıtlandı'; }
-                        elseif($ticket_status === 'Closed')     { $tbadge = 'cdg-d-badge-info'; $tstatus_text = 'Kapalı'; }
-
-                        $tdetail = $ticket['detail_link'] ?? '#';
-                    ?>
-                    <li>
-                        <div>
-                            <a href="<?php echo htmlspecialchars($tdetail, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-list-name"><?php echo htmlspecialchars($ticket_subject, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
-                        </div>
-                        <span class="cdg-d-badge <?php echo $tbadge; ?>"><?php echo htmlspecialchars($tstatus_text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
-                <?php else: ?>
-                <div class="cdg-d-empty">
-                    <i class="bi bi-chat-square-text"></i>
-                    <p>Açık destek talebiniz yok.</p>
-                </div>
-                <?php endif; ?>
-            </div>
+    <!-- HABERLER -->
+    <?php if(isset($news) && is_array($news) && !empty($news)): ?>
+    <div class="cdg-d-panel">
+        <div class="cdg-d-panel-head">
+            <h3><i class="bi bi-megaphone-fill"></i> Haberler ve Duyurular</h3>
+            <a href="<?php echo cdg_link('news'); ?>">Tümü <i class="bi bi-arrow-right"></i></a>
         </div>
-
-    </section>
-
-    <!-- DUYURU PROMO -->
-    <?php
-    // WiseCP'de farkli sürümler farkli variable adlari kullanabilir
-    $cdg_dashboard_news = [];
-    if(isset($dashboard_news) && is_array($dashboard_news)) {
-        $cdg_dashboard_news = $dashboard_news;
-    } elseif(isset($news) && is_array($news)) {
-        $cdg_dashboard_news = $news;
-    }
-    ?>
-    <?php if(!empty($cdg_dashboard_news) && count($cdg_dashboard_news) > 0): ?>
-    <section class="cdg-d-card" style="margin-bottom:24px;">
-        <div class="cdg-d-card-head">
-            <h3 class="cdg-d-card-title"><i class="bi bi-megaphone-fill"></i> Duyurular</h3>
-        </div>
-        <div class="cdg-d-card-body">
-            <ul class="cdg-d-list">
-                <?php $shown_news = 0; foreach($cdg_dashboard_news as $n):
-                    if($shown_news >= 3) break;
-                    $shown_news++;
-                    $n_title = $n['title'] ?? 'Duyuru';
-                    $n_date  = $n['date'] ?? $n['created_at'] ?? '';
-                    $n_link  = $n['link'] ?? $n['detail_link'] ?? '#';
+        <div class="cdg-d-panel-body padded">
+            <div class="cdg-d-news-grid">
+                <?php foreach(array_slice($news, 0, 4) as $nw):
+                    $nw_title = $nw['title'] ?? ($nw['name'] ?? '-');
+                    $nw_link = $nw['link'] ?? ($nw['detail_link'] ?? '#');
+                    $nw_date = $nw['cdate'] ?? ($nw['date'] ?? '');
                 ?>
-                <li>
-                    <div>
-                        <a href="<?php echo htmlspecialchars($n_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-d-list-name"><?php echo htmlspecialchars($n_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a>
-                        <?php if($n_date): ?><div class="cdg-d-list-meta"><?php echo htmlspecialchars($n_date, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div><?php endif; ?>
-                    </div>
-                </li>
+                <a href="<?php echo htmlspecialchars($nw_link, ENT_QUOTES); ?>" class="cdg-d-news-item">
+                    <div class="cdg-d-news-item-title"><?php echo htmlspecialchars($nw_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                    <?php if($nw_date): ?>
+                    <div class="cdg-d-news-item-date"><i class="bi bi-calendar"></i> <?php echo $cdg_date_fmt($nw_date); ?></div>
+                    <?php endif; ?>
+                </a>
                 <?php endforeach; ?>
-            </ul>
+            </div>
         </div>
-    </section>
+    </div>
     <?php endif; ?>
 
-    <!-- DESTEK PROMO -->
-    <section class="cdg-d-promo">
-        <div class="cdg-d-promo-icon"><i class="bi bi-headset"></i></div>
-        <div class="cdg-d-promo-text">
-            <h3>Yardıma mı ihtiyacınız var?</h3>
-            <p>Uzman ekibimiz 7/24 destek sağlıyor. WhatsApp veya telefon ile hemen ulaşın.</p>
-        </div>
-        <div style="display:flex;gap:8px;flex-shrink:0;">
-            <a href="https://wa.me/905102204206" target="_blank" rel="noopener" class="cdg-d-btn" style="background:#25d366;color:#fff;">
-                <i class="bi bi-whatsapp"></i> WhatsApp
-            </a>
-            <a href="tel:+905102204206" class="cdg-d-btn" style="background:#1e40af;color:#fff;">
-                <i class="bi bi-telephone-fill"></i> Ara
-            </a>
-        </div>
-    </section>
-
-</div>
 </div>
