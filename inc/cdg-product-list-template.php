@@ -179,44 +179,7 @@ if(isset($get_list) && is_callable($get_list) && isset($showCategory)) {
     } catch(\Throwable $e) {}
 }
 
-// Yontem 2: Products::getList API (her kategori icin)
-if(!$cdg_used_dynamic && class_exists('Products') && method_exists('Products', 'getList')) {
-    try {
-        $all_packs = @Products::getList(['type' => $cdg_pt['type'], 'status' => 'active']);
-        if(is_array($all_packs) && !empty($all_packs)) {
-            foreach($all_packs as $product) {
-                if(!is_array($product)) continue;
-                $cat_id = $product['category'] ?? 0;
-                $cat_name = '';
-
-                if($cat_id && method_exists('Products', 'getCategory')) {
-                    try {
-                        $_cat = @Products::getCategory($cat_id);
-                        if($_cat && isset($_cat['title'])) $cat_name = $_cat['title'];
-                    } catch(\Throwable $e) {}
-                }
-                if(!$cat_name) $cat_name = $cdg_pt['page_title'];
-                if(!$cat_id)   $cat_id = 'general';
-
-                if(!isset($cdg_categories[$cat_id])) {
-                    $cdg_categories[$cat_id] = [
-                        'id'       => 'cat_' . $cat_id,
-                        'name'     => $cat_name,
-                        'packages' => [],
-                    ];
-                }
-
-                $f = $cdg_format_pkg($product);
-                if($f['buy_link']) {
-                    $cdg_categories[$cat_id]['packages'][] = $f;
-                }
-            }
-            $cdg_used_dynamic = !empty($cdg_categories);
-        }
-    } catch(\Throwable $e) {}
-}
-
-// Yontem 3: Products::get_products_with_category fallback
+// Yontem 2: get_products_with_category + manuel prices + buy_link (Products::getList YOK)
 if(!$cdg_used_dynamic && class_exists('Products') && method_exists('Products', 'get_products_with_category') && method_exists('Products', 'get_select_categories')) {
     try {
         $cats = @Products::get_select_categories($cdg_pt['type'], 0);
@@ -225,20 +188,58 @@ if(!$cdg_used_dynamic && class_exists('Products') && method_exists('Products', '
                 $cat_id = $hc['id'] ?? 0;
                 if(!$cat_id) continue;
                 $pks = @Products::get_products_with_category($cdg_pt['type'], $cat_id);
-                if(is_array($pks)) {
-                    $cdg_categories[$cat_id] = [
-                        'id'       => 'cat_' . $cat_id,
-                        'name'     => $hc['title'] ?? ('Kategori #' . $cat_id),
-                        'packages' => [],
-                    ];
-                    foreach($pks as $p) {
-                        if(!is_array($p)) continue;
-                        $f = $cdg_format_pkg($p);
-                        if($f['buy_link']) $cdg_categories[$cat_id]['packages'][] = $f;
+                if(!is_array($pks) || empty($pks)) continue;
+
+                $cdg_categories[$cat_id] = [
+                    'id'       => 'cat_' . $cat_id,
+                    'name'     => $hc['title'] ?? ('Kategori #' . $cat_id),
+                    'packages' => [],
+                ];
+
+                foreach($pks as $p) {
+                    if(!is_array($p)) continue;
+                    $p['category'] = $cat_id;
+
+                    // 1) Prices ayri sorgu
+                    $p['prices'] = [];
+                    if(method_exists('Products', 'get_prices')) {
+                        try {
+                            $pr = @Products::get_prices('periodicals', 'products', $p['id']);
+                            if(is_array($pr)) $p['prices'] = $pr;
+                        } catch(\Throwable $e) {}
                     }
-                    if(empty($cdg_categories[$cat_id]['packages'])) {
-                        unset($cdg_categories[$cat_id]);
+
+                    // 2) buy_link MANUEL insa — WiseCP order-steps URL formati
+                    // CRLink('order-steps-p', [type, product_id, step])
+                    $p['buy_link'] = '';
+                    if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Controllers::$init, 'CRLink')) {
+                        try {
+                            $p['buy_link'] = Controllers::$init->CRLink('order-steps-p', [$cdg_pt['type'], (int)$p['id'], 1]);
+                        } catch(\Throwable $e) {}
                     }
+
+                    // 3) JSON alanlari decode et
+                    if(isset($p['options']) && is_string($p['options'])) {
+                        $dec = @json_decode($p['options'], true);
+                        if(class_exists('Utility') && method_exists('Utility', 'jdecode')) {
+                            try { $dec = Utility::jdecode($p['options'], true); } catch(\Throwable $e) {}
+                        }
+                        $p['options'] = is_array($dec) ? $dec : [];
+                    }
+                    if(isset($p['options_lang']) && is_string($p['options_lang'])) {
+                        $dec = @json_decode($p['options_lang'], true);
+                        if(class_exists('Utility') && method_exists('Utility', 'jdecode')) {
+                            try { $dec = Utility::jdecode($p['options_lang'], true); } catch(\Throwable $e) {}
+                        }
+                        $p['optionsl'] = is_array($dec) ? $dec : [];
+                    }
+
+                    $f = $cdg_format_pkg($p);
+                    if($f['buy_link']) $cdg_categories[$cat_id]['packages'][] = $f;
+                }
+
+                if(empty($cdg_categories[$cat_id]['packages'])) {
+                    unset($cdg_categories[$cat_id]);
                 }
             }
             if(!empty($cdg_categories)) $cdg_used_dynamic = true;
