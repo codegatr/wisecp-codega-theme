@@ -3197,4 +3197,9 @@ if(in_array($cdg_pd_kind ?? '', ['hosting','server','software','special'])) {
     if(file_exists($upgrade_inc)) include $upgrade_inc;
     $addon_inc = __DIR__ . DS . "ac-product-addons.php";
     if(file_exists($addon_inc)) include $addon_inc;
+
+    // === MODÜL ENTEGRASYONU (dev.wisecp.com'a göre) ===
+    // Cok Amacli Musteri Alani Butonlari + Ozel Sayfa + Universal SSO
+    $module_extras_inc = __DIR__ . DS . 'ac-product-module-extras.php';
+    if(file_exists($module_extras_inc)) include $module_extras_inc;
 }
