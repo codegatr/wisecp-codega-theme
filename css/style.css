@@ -2033,20 +2033,68 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
 /* 10. SON CTA */
 .cdg-final-cta{padding:80px 0 100px;background:#fff;}
 .cdg-final-cta-content{
-    text-align:center;max-width:680px;margin:0 auto;
-    padding:60px 40px;border-radius:24px;
-    background:linear-gradient(180deg,#f8fafc,#fff);
-    border:1px solid #e2e8f0;
-    box-shadow:0 20px 60px rgba(46,59,78,0.08);
+    position:relative;
+    text-align:center;max-width:780px;margin:0 auto;
+    padding:0;border-radius:28px;
+    background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#2E3B4E 100%);
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 30px 80px rgba(15,23,42,0.30), 0 0 0 1px rgba(0,229,255,0.05);
+    overflow:hidden;
 }
-.cdg-final-cta-content h2{
-    font-size:38px;font-weight:800;color:#0f172a;
-    letter-spacing:-1px;margin-bottom:14px;line-height:1.15;
+.cdg-final-cta-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:28px;}
+.cdg-final-cta-blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.5;}
+.cdg-final-cta-blob-1{top:-80px;right:-80px;width:340px;height:340px;background:radial-gradient(circle,rgba(0,229,255,0.35) 0%,transparent 70%);}
+.cdg-final-cta-blob-2{bottom:-80px;left:-80px;width:380px;height:380px;background:radial-gradient(circle,rgba(0,211,229,0.25) 0%,transparent 70%);}
+.cdg-final-cta-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:48px 48px;}
+.cdg-final-cta-inner{position:relative;z-index:1;padding:60px 48px;}
+.cdg-eyebrow-light{color:#00E5FF;background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.25);}
+.cdg-final-cta-title{
+    font-size:clamp(28px,3.6vw,40px);font-weight:800;color:#fff;
+    letter-spacing:-0.02em;margin:0 0 16px;line-height:1.2;
 }
-.cdg-final-cta-content > p{
-    font-size:16px;color:#475569;margin-bottom:32px;line-height:1.5;
+.cdg-final-cta-title span{
+    background:linear-gradient(135deg,#00D3E5 0%,#00E5FF 50%,#67E8F9 100%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent;
 }
-.cdg-final-cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.cdg-final-cta-lead{
+    font-size:16px;color:rgba(255,255,255,0.75);
+    margin:0 0 32px;line-height:1.65;max-width:580px;margin-left:auto;margin-right:auto;
+}
+.cdg-final-cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:32px;}
+.cdg-btn-cta-primary{
+    background:linear-gradient(135deg,#00D3E5 0%,#00E5FF 100%);
+    color:#0f172a !important;border:0;
+    box-shadow:0 12px 28px rgba(0,229,255,0.35);
+    font-weight:700;
+}
+.cdg-btn-cta-primary:hover{
+    background:linear-gradient(135deg,#00E5FF 0%,#67E8F9 100%);
+    transform:translateY(-2px);
+    box-shadow:0 16px 36px rgba(0,229,255,0.50);
+    color:#0f172a !important;
+}
+.cdg-btn-cta-secondary{
+    background:rgba(255,255,255,0.10);
+    color:#fff !important;
+    border:2px solid rgba(255,255,255,0.20);
+    backdrop-filter:blur(8px);
+    font-weight:700;
+}
+.cdg-btn-cta-secondary:hover{
+    background:rgba(255,255,255,0.15);
+    border-color:rgba(255,255,255,0.40);
+    transform:translateY(-2px);
+    color:#fff !important;
+}
+.cdg-final-trust{
+    display:flex;justify-content:center;flex-wrap:wrap;gap:8px 20px;
+    padding-top:24px;border-top:1px solid rgba(255,255,255,0.10);
+    font-size:13px;color:rgba(255,255,255,0.65);
+}
+.cdg-final-trust span{display:inline-flex;align-items:center;gap:6px;}
+.cdg-final-trust i{color:#00E5FF;font-size:15px;}
+.cdg-final-cta-content > p{font-size:0;}
 .cdg-btn-lg{padding:14px 28px;font-size:15px;}
 
 /* RESPONSIVE */
@@ -2074,7 +2122,11 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
     .cdg-adv-grid{grid-template-columns:1fr;}
     .cdg-stats-head h2,.cdg-faq-intro h2,.cdg-final-cta-content h2{font-size:26px;}
     .cdg-stat-banner-num{font-size:32px;}
-    .cdg-final-cta-content{padding:40px 20px;}
+    .cdg-final-cta-content{padding:0;}
+    .cdg-final-cta-inner{padding:40px 24px;}
+    .cdg-final-cta-title{font-size:24px;}
+    .cdg-final-cta-actions{flex-direction:column;width:100%;}
+    .cdg-final-cta-actions .cdg-btn{width:100%;justify-content:center;}
 }
 
 /* ==================== PREMIUM LANDING v2 - Yeni Bölümler ==================== */

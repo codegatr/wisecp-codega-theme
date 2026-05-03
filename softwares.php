@@ -4,7 +4,7 @@ if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
         // NOT: $links global'i bazen yanlis URL doner ($links['products']=/products-hosting gibi)
-        // Bu yuzden once alias+CRLink, $links sadece bilinmeyen slug'lar icin son fallback
+        // Bu yuzden once alias+CRLink, $links sadece bilinmeyen slug'lar için son fallback
         global $links;
 
         // CDG_LINK_HARDCODED - Yunus'un sitesinde KESIN dogru URL'ler (CRLink bypass)
@@ -69,7 +69,7 @@ if(!function_exists('cdg_link')) {
         }
 
         // 4) Son çare: APP_URI base + slug
-        // Son care: $links bakilirsa kullan (sadece bilinmeyen slug'lar icin)
+        // Son care: $links bakilirsa kullan (sadece bilinmeyen slug'lar için)
         if(isset($links) && is_array($links) && isset($links[$slug]) && $links[$slug]) {
             return $links[$slug];
         }
@@ -210,7 +210,7 @@ $products = [
         'id' => 'minya3d',
         'name' => 'Minya 3D',
         'tagline' => '3D Yazici E-Ticaret',
-        'desc' => '3D yazici urunleri ve filament satisi yapan e-ticaret platformu. Gram tabanli fiyatlandirma, 81 il SEO, Schema.org markup.',
+        'desc' => '3D yazici urunleri ve filament satışı yapan e-ticaret platformu. Gram tabanli fiyatlandirma, 81 il SEO, Schema.org markup.',
         'icon' => 'bi-printer-fill',
         'color' => '#ef4444',
         'features' => [
@@ -246,7 +246,7 @@ $service_categories = [
     ['icon' => 'bi-code-slash',     'title' => 'Web Uygulamalari',      'desc' => 'PHP, MySQL, Laravel ile ozel web uygulamalari.'],
     ['icon' => 'bi-phone-fill',     'title' => 'Mobil Uygulamalar',     'desc' => 'iOS ve Android için native + cross-platform.'],
     ['icon' => 'bi-cart-check',     'title' => 'E-Ticaret Siştemleri',  'desc' => 'Multi-vendor, B2B, B2C tüm e-ticaret çözümleri.'],
-    ['icon' => 'bi-bar-chart-fill', 'title' => 'ERP / CRM',             'desc' => 'Kurumsal kaynak planlama ve musteri iliskileri.'],
+    ['icon' => 'bi-bar-chart-fill', 'title' => 'ERP / CRM',             'desc' => 'Kurumsal kaynak planlama ve müşteri iliskileri.'],
     ['icon' => 'bi-cpu-fill',       'title' => 'API Entegrasyonlari',   'desc' => 'GIB, banka, kargo, SMS API entegrasyonlari.'],
     ['icon' => 'bi-shield-shaded',  'title' => 'Güvenlik Çözümleri',    'desc' => 'AES-256-GCM, 2FA, audit log, KVKK uyumlu.'],
 ];
@@ -293,7 +293,7 @@ $service_categories = [
         <div class="cdg-section-head">
             <div class="cdg-eyebrow">Hizmet Alanlarimiz</div>
             <h2>Her ihtiyaça yonelik <span class="cdg-text-gradient">yazılım çözümleri</span></h2>
-            <p>Web, mobil, e-ticaret, ERP — projenizi sifirdan veya hazir altyapılarimiz uzerinden gelistiriyoruz.</p>
+            <p>Web, mobil, e-ticaret, ERP — projenizi sıfırdan veya hazir altyapılarimiz uzerinden gelistiriyoruz.</p>
         </div>
         <div class="cdg-solutions-grid">
             <?php foreach($service_categories as $cat): ?>
@@ -373,7 +373,7 @@ $service_categories = [
             <div class="cdg-soft-step">
                 <div class="cdg-soft-step-num">02</div>
                 <h3>Tasarım & Prototype</h3>
-                <p>UI/UX tasarımi, wireframe, etkileskili prototipler. Onay sonrasi gelistirmeye geciyoruz.</p>
+                <p>UI/UX tasarımi, wireframe, etkileskili prototipler. Onay sonrasi geliştirmeye geciyoruz.</p>
             </div>
             <div class="cdg-soft-step">
                 <div class="cdg-soft-step-num">03</div>
@@ -409,7 +409,7 @@ $service_categories = [
             <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-arrow-repeat"></i></div><h3>Sürekli Güncelleme</h3><p>Yeni özellikler, performans iyilestirmeleri.</p></div>
             <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-flag-fill"></i></div><h3>%100 Yerli</h3><p>Turkce arayuz, Turkiye yasal mevzuatina uygun.</p></div>
             <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-gear-fill"></i></div><h3>Ozellestirilebilir</h3><p>Şirketinize ozel modül ve raporlar gelistiriyoruz.</p></div>
-            <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-rocket-takeoff-fill"></i></div><h3>Hızlı Teslim</h3><p>Standart projeler 2-4 hafta, ozel projeler 1-3 ay.</p></div>
+            <div class="cdg-adv-card"><div class="cdg-adv-icon"><i class="bi bi-rocket-takeoff-fill"></i></div><h3>Hızlı Teslim</h3><p>Standart projeler 2-4 hafta, özel projeler 1-3 ay.</p></div>
         </div>
     </div>
 </section>
@@ -418,18 +418,25 @@ $service_categories = [
 <section class="cdg-final-cta">
     <div class="cdg-container">
         <div class="cdg-final-cta-content">
-            <div class="cdg-eyebrow">Hemen Başlayin</div>
-            <h2>Yazılım projeniz için <span class="cdg-text-gradient">ücretsiz teklif</span> alin</h2>
-            <p>24 saat içinde detaylı teklif gonderiyoruz. İşter hazir urunlerimizden, işter sifirdan ozel gelistirme.</p>
-            <div class="cdg-final-cta-actions">
-                <a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-primary cdg-btn-lg cdg-btn-glow"><i class="bi bi-envelope-paper-fill"></i> Teklif İşte</a>
-                <a href="https://wa.me/905102204206" target="_blank" rel="noopener" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            <div class="cdg-final-cta-bg">
+                <div class="cdg-final-cta-blob cdg-final-cta-blob-1"></div>
+                <div class="cdg-final-cta-blob cdg-final-cta-blob-2"></div>
+                <div class="cdg-final-cta-grid"></div>
             </div>
-            <div class="cdg-final-trust">
-                <span><i class="bi bi-shield-check"></i> KVKK Uyumlu</span>
-                <span><i class="bi bi-arrow-counterclockwise"></i> 1 Yil Bakım</span>
-                <span><i class="bi bi-headset"></i> 7/24 Destek</span>
-                <span><i class="bi bi-flag-fill"></i> %100 Yerli</span>
+            <div class="cdg-final-cta-inner">
+                <div class="cdg-eyebrow cdg-eyebrow-light">Hemen Başlayın</div>
+                <h2 class="cdg-final-cta-title">Yazılım projeniz için <span>ücretsiz teklif</span> alın</h2>
+                <p class="cdg-final-cta-lead">24 saat içinde detaylı teklif gönderiyoruz. İster hazır ürünlerimizden, ister sıfırdan özel geliştirme.</p>
+                <div class="cdg-final-cta-actions">
+                    <a href="<?php echo $contact_url; ?>" class="cdg-btn cdg-btn-cta-primary cdg-btn-lg"><i class="bi bi-envelope-paper-fill"></i> Teklif İste</a>
+                    <a href="https://wa.me/905102204206" target="_blank" rel="noopener" class="cdg-btn cdg-btn-cta-secondary cdg-btn-lg"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+                </div>
+                <div class="cdg-final-trust">
+                    <span><i class="bi bi-shield-check"></i> KVKK Uyumlu</span>
+                    <span><i class="bi bi-arrow-counterclockwise"></i> 1 Yıl Bakım</span>
+                    <span><i class="bi bi-headset"></i> 7/24 Destek</span>
+                    <span><i class="bi bi-flag-fill"></i> %100 Yerli</span>
+                </div>
             </div>
         </div>
     </div>

@@ -797,11 +797,12 @@
     }
 
 
+
     /* ====================================================
-       v3.5.50 - SIGN-UP / FORM ELEMENTS - eksik CSS
+       v3.5.51 - GERCEKTEN EKSIK CSS (duplicate yok)
        ==================================================== */
 
-    /* Sign-up: Avantajlar grid */
+    /* Sign-up: Avantajlar grid (sign-up'a ozel - css/style.css'te yok) */
     .cdg-auth-benefits {
         display: grid;
         grid-template-columns: 1fr;
@@ -848,9 +849,7 @@
         line-height: 1.5;
     }
     @media (max-width: 980px) {
-        .cdg-auth-benefits {
-            grid-template-columns: 1fr 1fr;
-        }
+        .cdg-auth-benefits { grid-template-columns: 1fr 1fr; }
         .cdg-auth-benefit { padding: 12px; }
         .cdg-auth-benefit-icon { width: 38px; height: 38px; font-size: 17px; }
     }
@@ -858,214 +857,43 @@
         .cdg-auth-benefits { grid-template-columns: 1fr; }
     }
 
-    /* Sign-up: Geniş card */
-    .cdg-auth-card-wide { max-width: 100%; }
-
-    /* Form elemanları - cdg-form-* class\'leri */
-    .cdg-form-group { margin-bottom: 16px; }
-    .cdg-form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
-    }
-    @media (max-width: 480px) {
-        .cdg-form-row { grid-template-columns: 1fr; gap: 0; }
-    }
-    .cdg-form-label {
-        display: block;
-        font-size: 12px !important;
-        font-weight: 700;
-        color: #475569 !important;
-        margin-bottom: 6px;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    .cdg-form-label-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 6px;
-    }
-    .cdg-form-link {
-        font-size: 12px;
-        color: #00D3E5;
-        font-weight: 600;
-        text-transform: none;
-        letter-spacing: 0;
-    }
-    .cdg-form-link:hover { color: #2E3B4E; }
-    .cdg-form-control {
-        width: 100%;
-        padding: 14px 16px;
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
-        font-size: 15px;
-        background: #f8fafc;
-        color: #0f172a;
-        transition: all 0.2s;
-        font-family: inherit;
-        box-sizing: border-box;
-        outline: none;
-    }
-    .cdg-form-control:focus {
-        border-color: #00D3E5;
-        background: #fff;
-        box-shadow: 0 0 0 4px rgba(0,211,229,0.10);
-    }
-    .cdg-form-control::placeholder { color: #94a3b8; }
-
-    /* Icon\'lu input wrapper */
-    .cdg-input-icon { position: relative; }
-    .cdg-input-icon > i:first-child {
-        position: absolute;
-        top: 50%; left: 14px;
-        transform: translateY(-50%);
-        color: #94a3b8;
+    /* Password goster/gizle toggle - css/style.css'te yok */
+    /* CRITICAL: cdg-input-icon i selector\'ı butonun icindeki ikonu da yakaliyor, RESET sart */
+    .cdg-auth-pwd-wrap { position: relative; }
+    .cdg-auth-pwd-wrap .cdg-form-control,
+    .cdg-auth-pwd-wrap input { padding-right: 44px !important; }
+    .cdg-auth-pwd-toggle {
+        position: absolute !important;
+        top: 50% !important;
+        right: 8px !important;
+        left: auto !important;
+        transform: translateY(-50%) !important;
+        background: transparent !important;
+        border: 0 !important;
+        cursor: pointer;
+        color: #64748b !important;
+        padding: 6px 8px !important;
+        border-radius: 6px;
         font-size: 16px;
-        pointer-events: none;
-        z-index: 1;
+        line-height: 1;
+        z-index: 2;
+        width: auto !important;
+        height: auto !important;
     }
-    .cdg-input-icon .cdg-form-control { padding-left: 42px; }
-    .cdg-input-icon.cdg-auth-pwd-wrap .cdg-form-control { padding-right: 44px; }
-
-    /* Radio kartları - Bireysel/Kurumsal */
-    .cdg-radio-group {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
+    .cdg-auth-pwd-toggle:hover {
+        color: #2E3B4E !important;
+        background: #f1f5f9 !important;
     }
-    .cdg-radio-card {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center;
-        gap: 8px;
-        padding: 16px 12px !important;
-        background: #f8fafc;
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
-        cursor: pointer;
-        text-align: center;
-        transition: all 0.2s;
-        text-transform: none !important;
-        letter-spacing: 0 !important;
-        font-weight: 600 !important;
+    /* Mevcut .cdg-input-icon i kuralini buton icindeki ikon icin RESET et */
+    .cdg-input-icon .cdg-auth-pwd-toggle i {
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
+        color: inherit !important;
+        font-size: 16px !important;
     }
-    .cdg-radio-card input[type=radio] {
-        position: absolute;
-        opacity: 0;
-        pointer-events: none;
-    }
-    .cdg-radio-card i {
-        font-size: 24px;
-        color: #64748b;
-        transition: color 0.2s;
-    }
-    .cdg-radio-card span {
-        font-size: 13px !important;
-        color: #475569;
-        font-weight: 700;
-    }
-    .cdg-radio-card:has(input:checked) {
-        background: linear-gradient(135deg, rgba(0,211,229,0.08) 0%, rgba(0,229,255,0.05) 100%);
-        border-color: #00D3E5;
-        box-shadow: 0 0 0 3px rgba(0,211,229,0.10);
-    }
-    .cdg-radio-card:has(input:checked) i,
-    .cdg-radio-card:has(input:checked) span { color: #2E3B4E; }
-    .cdg-radio-card:hover { border-color: #cbd5e1; }
-    .cdg-radio-card:has(input:checked):hover { border-color: #00D3E5; }
-
-    /* Sosyal connect butonlari (Google/Facebook) */
-    .cdg-social-connect {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        margin-bottom: 16px;
-    }
-    .cdg-social-connect a,
-    .cdg-social-connect button,
-    .cdg-social-connect > * {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        width: 100%;
-        padding: 12px 16px !important;
-        border-radius: 12px !important;
-        border: 2px solid #e2e8f0 !important;
-        background: #fff !important;
-        color: #0f172a !important;
-        font-size: 14px !important;
-        font-weight: 600 !important;
-        text-decoration: none !important;
-        transition: all 0.2s !important;
-        cursor: pointer;
-    }
-    .cdg-social-connect a:hover,
-    .cdg-social-connect button:hover,
-    .cdg-social-connect > *:hover {
-        border-color: #00D3E5 !important;
-        background: #f0fdff !important;
-        transform: translateY(-1px);
-    }
-
-    /* Veya ayirici */
-    .cdg-auth-divider {
-        position: relative;
-        text-align: center;
-        margin: 18px 0;
-    }
-    .cdg-auth-divider::before {
-        content: \'\';
-        position: absolute;
-        top: 50%; left: 0; right: 0;
-        height: 1px;
-        background: #e2e8f0;
-    }
-    .cdg-auth-divider span {
-        position: relative;
-        background: #fff;
-        padding: 0 14px;
-        font-size: 12px;
-        font-weight: 700;
-        color: #94a3b8;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-    }
-
-    /* Checkbox - Beni hatirla */
-    .cdg-checkbox {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 13px !important;
-        font-weight: 500 !important;
-        color: #475569 !important;
-        cursor: pointer;
-        text-transform: none !important;
-        letter-spacing: 0 !important;
-    }
-    .cdg-checkbox input[type=checkbox] {
-        width: 18px;
-        height: 18px;
-        accent-color: #00D3E5;
-        cursor: pointer;
-    }
-
-    /* Captcha alani moder gorunum */
-    .cdg-captcha-wrap {
-        display: flex;
-        gap: 12px;
-        align-items: stretch;
-    }
-    .cdg-captcha-wrap .cdg-captcha-img,
-    .cdg-captcha-wrap > img {
-        height: 48px;
-        border-radius: 10px;
-        border: 2px solid #e2e8f0;
-        background: #fff;
-    }
-    .cdg-captcha-wrap .cdg-form-control { flex: 1; }
 
 </style>
 <script>
