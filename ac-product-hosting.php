@@ -1,7 +1,7 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 /**
  * Codega - Hosting Ürün Yönetimi
- * Generic template + hosting'e özel kartlar (cPanel, şifre değiştir, email yönetimi)
+ * Generic template + hosting'e özel kartlar (DirectAdmin, şifre değiştir, email yönetimi)
  */
 
 $cdg_pd_kind      = 'hosting';
@@ -16,7 +16,7 @@ include __DIR__ . DS . 'inc' . DS . 'ac-product-detail-template.php';
 // Hosting kullanim grafikleri (Disk + Bandwidth)
 include __DIR__ . DS . 'inc' . DS . 'ac-hosting-usage.php';
 
-// Hosting'e özel kartlar (cPanel/Plesk panel girişi + şifre değiştirme + email butonu)
+// Hosting'e özel kartlar (DirectAdmin/Plesk panel girişi + şifre değiştirme + email butonu)
 include __DIR__ . DS . 'inc' . DS . 'ac-hosting-extras.php';
 
 // Email yönetim modal'ı (manage-email-account destekleniyorsa)

@@ -288,6 +288,25 @@ $balance_url   = cdg_link('ac-ps-balance');
 /* Greeting + Quick auto, Main 1fr (kalan alan) */
 .cdg-d > .cdg-d-main { flex: 1; min-height: 0; }
 .cdg-d *, .cdg-d *::before, .cdg-d *::after { box-sizing: border-box; }
+
+/* === KURUMSAL SHELL - Tüm dashboard panel içinde === */
+.cdg-d-shell {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid var(--d-border);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(15,23,42,0.04);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    height: 100%;
+    overflow: auto;
+}
+.cdg-d-shell > .cdg-d-main { flex: 1; min-height: 0; }
+@media (max-width: 768px) { .cdg-d-shell { padding: 14px; border-radius: 12px; } }
 .cdg-d a { text-decoration: none; color: inherit; }
 
 /* === GREETING (kompakt, viewport adaptive) === */
@@ -648,6 +667,7 @@ $balance_url   = cdg_link('ac-ps-balance');
 </style>
 
 <div class="cdg-d">
+    <div class="cdg-d-shell">
 
     <!-- GREETING -->
     <section class="cdg-d-greet">
@@ -824,4 +844,5 @@ $balance_url   = cdg_link('ac-ps-balance');
 
     </div>
 
+    </div><!-- /cdg-d-shell -->
 </div>

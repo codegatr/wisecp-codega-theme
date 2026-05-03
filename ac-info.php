@@ -86,43 +86,122 @@ if(!empty($udata['gsm'])) {
 }
 ?>
 
-<!-- TAB NAVIGATION -->
-<div class="cdg-info-tabs" style="display:flex;gap:4px;margin-bottom:20px;background:#f8fafc;padding:6px;border-radius:10px;flex-wrap:wrap;">
-    <button type="button" class="cdg-info-tab active" data-tab="profile" onclick="cdgInfoTab('profile')">
-        <i class="bi bi-person-badge"></i> Profil Bilgileri
-    </button>
-    <button type="button" class="cdg-info-tab" data-tab="addresses" onclick="cdgInfoTab('addresses')">
-        <i class="bi bi-geo-alt"></i> Adreslerim
-    </button>
-    <button type="button" class="cdg-info-tab" data-tab="preferences" onclick="cdgInfoTab('preferences')">
-        <i class="bi bi-sliders"></i> Tercihler
-    </button>
-    <button type="button" class="cdg-info-tab" data-tab="password" onclick="cdgInfoTab('password')">
-        <i class="bi bi-shield-lock"></i> Şifre Değiştir
-    </button>
-    <button type="button" class="cdg-info-tab" data-tab="security" onclick="cdgInfoTab('security')">
-        <i class="bi bi-key"></i> Guvenlik
-    </button>
-    <button type="button" class="cdg-info-tab" data-tab="twofa" onclick="cdgInfoTab('twofa')">
-        <i class="bi bi-shield-shaded"></i> 2 Adımlı Doğrulama
-    </button>
-    <?php if(isset($stored_cards_count) && $stored_cards_count > 0 || true): // Her zaman göster ?>
-    <button type="button" class="cdg-info-tab" data-tab="cards" onclick="cdgInfoTab('cards')">
-        <i class="bi bi-credit-card"></i> Kayıtlı Kartlar
-    </button>
-    <?php endif; ?>
-    <button type="button" class="cdg-info-tab" data-tab="kvkk" onclick="cdgInfoTab('kvkk')">
-        <i class="bi bi-file-earmark-shield"></i> KVKK / GDPR
-    </button>
+<!-- KURUMSAL HESAP BİLGİLERİ SHELL -->
+<div class="cdg-info-shell">
+    <div class="cdg-info-shell-head">
+        <div class="cdg-info-shell-head-left">
+            <div class="cdg-info-shell-icon">
+                <?php
+                $initial = '';
+                if(!empty($udata['name'])) $initial .= mb_strtoupper(mb_substr($udata['name'], 0, 1));
+                if(!empty($udata['surname'])) $initial .= mb_strtoupper(mb_substr($udata['surname'], 0, 1));
+                if(!$initial && !empty($udata['email'])) $initial = mb_strtoupper(mb_substr($udata['email'], 0, 1));
+                if(!$initial) $initial = '?';
+                ?>
+                <span><?php echo htmlspecialchars($initial, ENT_QUOTES); ?></span>
+            </div>
+            <div style="min-width:0;">
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                    <h1 class="cdg-info-shell-title">
+                        <?php echo htmlspecialchars(trim(($udata['name'] ?? '') . ' ' . ($udata['surname'] ?? '')) ?: 'Hesap', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                    </h1>
+                    <?php if($verified_email && $verified_gsm): ?>
+                    <span class="cdg-info-verified-chip"><i class="bi bi-patch-check-fill"></i> Doğrulandı</span>
+                    <?php elseif(!$verified_email || !$verified_gsm): ?>
+                    <span class="cdg-info-pending-chip"><i class="bi bi-exclamation-circle"></i> Doğrulama Bekliyor</span>
+                    <?php endif; ?>
+                </div>
+                <div class="cdg-info-shell-sub">
+                    <i class="bi bi-envelope"></i> <?php echo htmlspecialchars($udata['email'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                    <?php if($gsm_full): ?>
+                    <span style="margin:0 6px;color:#cbd5e1;">·</span>
+                    <i class="bi bi-telephone"></i> <?php echo htmlspecialchars($gsm_full, ENT_QUOTES); ?>
+                    <?php endif; ?>
+                    <?php if($is_corporate && !empty($udata['company_name'])): ?>
+                    <span style="margin:0 6px;color:#cbd5e1;">·</span>
+                    <i class="bi bi-building"></i> <?php echo htmlspecialchars($udata['company_name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <div class="cdg-info-shell-right">
+            <a href="<?php echo cdg_link('ac-dashboard'); ?>" class="cdg-info-shell-btn">
+                <i class="bi bi-speedometer2"></i> Panele Dön
+            </a>
+        </div>
+    </div>
+
+    <div class="cdg-info-shell-body">
+        <!-- SOL: SIDEBAR NAVIGATION -->
+        <aside class="cdg-info-side">
+            <div class="cdg-info-side-group">
+                <div class="cdg-info-side-title">Hesap</div>
+                <button type="button" class="cdg-info-side-link active" data-tab="profile" onclick="cdgInfoTab('profile')">
+                    <i class="bi bi-person-badge"></i> Profil Bilgileri
+                </button>
+                <button type="button" class="cdg-info-side-link" data-tab="addresses" onclick="cdgInfoTab('addresses')">
+                    <i class="bi bi-geo-alt"></i> Adreslerim
+                </button>
+                <button type="button" class="cdg-info-side-link" data-tab="preferences" onclick="cdgInfoTab('preferences')">
+                    <i class="bi bi-sliders"></i> Tercihler
+                </button>
+            </div>
+
+            <div class="cdg-info-side-group">
+                <div class="cdg-info-side-title">Güvenlik</div>
+                <button type="button" class="cdg-info-side-link" data-tab="password" onclick="cdgInfoTab('password')">
+                    <i class="bi bi-shield-lock"></i> Şifre Değiştir
+                </button>
+                <button type="button" class="cdg-info-side-link" data-tab="security" onclick="cdgInfoTab('security')">
+                    <i class="bi bi-key"></i> Güvenlik Sorusu
+                </button>
+                <button type="button" class="cdg-info-side-link" data-tab="twofa" onclick="cdgInfoTab('twofa')">
+                    <i class="bi bi-shield-shaded"></i> 2 Adımlı Doğrulama
+                </button>
+            </div>
+
+            <div class="cdg-info-side-group">
+                <div class="cdg-info-side-title">Ödeme</div>
+                <button type="button" class="cdg-info-side-link" data-tab="cards" onclick="cdgInfoTab('cards')">
+                    <i class="bi bi-credit-card"></i> Kayıtlı Kartlar
+                </button>
+            </div>
+
+            <div class="cdg-info-side-group">
+                <div class="cdg-info-side-title">Yasal</div>
+                <button type="button" class="cdg-info-side-link" data-tab="kvkk" onclick="cdgInfoTab('kvkk')">
+                    <i class="bi bi-file-earmark-shield"></i> KVKK / GDPR
+                </button>
+                <?php
+                $cdg_show_docvrf = isset($remainingVerifications) && is_array($remainingVerifications) && !empty($remainingVerifications['document_filters']);
+                if($cdg_show_docvrf):
+                ?>
+                <button type="button" class="cdg-info-side-link cdg-info-side-link-warning" data-tab="docvrf" onclick="cdgInfoTab('docvrf')">
+                    <i class="bi bi-shield-exclamation"></i> Belge Doğrulama
+                    <span class="cdg-info-side-badge">!</span>
+                </button>
+                <?php endif; ?>
+            </div>
+        </aside>
+
+        <!-- SAĞ: CONTENT AREA -->
+        <main class="cdg-info-main">
+
+<!-- ESKİ TAB NAV (gizli — fallback için kalsın) -->
+<div class="cdg-info-tabs" style="display:none;">
+    <button type="button" class="cdg-info-tab active" data-tab="profile"></button>
+    <button type="button" class="cdg-info-tab" data-tab="addresses"></button>
+    <button type="button" class="cdg-info-tab" data-tab="preferences"></button>
+    <button type="button" class="cdg-info-tab" data-tab="password"></button>
+    <button type="button" class="cdg-info-tab" data-tab="security"></button>
+    <button type="button" class="cdg-info-tab" data-tab="twofa"></button>
+    <button type="button" class="cdg-info-tab" data-tab="cards"></button>
+    <button type="button" class="cdg-info-tab" data-tab="kvkk"></button>
     <?php
-    // Belge dogrulama gerekiyorsa tab goster
     $cdg_show_docvrf = isset($remainingVerifications) && is_array($remainingVerifications) && !empty($remainingVerifications['document_filters']);
     if($cdg_show_docvrf):
     ?>
-    <button type="button" class="cdg-info-tab" data-tab="docvrf" onclick="cdgInfoTab('docvrf')" style="background:#fef3c7;color:#92400e;">
-        <i class="bi bi-shield-check"></i> Belge Dogrulama
-        <span style="display:inline-block;background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:4px;font-weight:700;">!</span>
-    </button>
+    <button type="button" class="cdg-info-tab" data-tab="docvrf"></button>
     <?php endif; ?>
 </div>
 
@@ -707,6 +786,10 @@ if(!empty($udata['gsm'])) {
     </div>
 </div>
 
+        </main><!-- /cdg-info-main -->
+    </div><!-- /cdg-info-shell-body -->
+</div><!-- /cdg-info-shell -->
+
 <script>
 // 2FA İşlemleri
 window.cdgInfo2FA = {
@@ -793,6 +876,228 @@ window.cdgInfoKvkk = {
 </script>
 
 <style>
+/* === KURUMSAL HESAP BİLGİLERİ SHELL === */
+.cdg-info-shell {
+    max-width: 1280px;
+    margin: 0 auto 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(15,23,42,0.04);
+    overflow: hidden;
+}
+.cdg-info-shell-head {
+    padding: 22px 26px;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.cdg-info-shell-head-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 0;
+}
+.cdg-info-shell-icon {
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 8px 20px rgba(30,64,175,0.25);
+    position: relative;
+    overflow: hidden;
+}
+.cdg-info-shell-icon::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(253,224,71,0.15) 0%, transparent 60%);
+}
+.cdg-info-shell-icon span {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    z-index: 1;
+}
+.cdg-info-shell-title {
+    margin: 0 0 4px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+.cdg-info-shell-sub {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+.cdg-info-shell-sub i { color: #94a3b8; }
+.cdg-info-verified-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    background: #dcfce7;
+    color: #15803d;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.cdg-info-pending-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    background: #fef3c7;
+    color: #92400e;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.cdg-info-shell-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    text-decoration: none;
+    transition: all 0.18s;
+}
+.cdg-info-shell-btn:hover {
+    border-color: #1e40af;
+    color: #1e40af;
+    transform: translateY(-1px);
+}
+.cdg-info-shell-body {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0;
+    min-height: 600px;
+}
+
+/* === SOL SIDEBAR === */
+.cdg-info-side {
+    background: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+    padding: 18px 12px;
+}
+.cdg-info-side-group { margin-bottom: 18px; }
+.cdg-info-side-group:last-child { margin-bottom: 0; }
+.cdg-info-side-title {
+    font-size: 10px;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0 12px 8px;
+    margin-bottom: 4px;
+}
+.cdg-info-side-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    text-align: left;
+    margin-bottom: 2px;
+}
+.cdg-info-side-link i {
+    font-size: 15px;
+    color: #94a3b8;
+    width: 18px;
+    flex-shrink: 0;
+}
+.cdg-info-side-link:hover {
+    background: #fff;
+    color: #1e40af;
+}
+.cdg-info-side-link:hover i { color: #1e40af; }
+.cdg-info-side-link.active {
+    background: #fff;
+    color: #1e40af;
+    box-shadow: 0 2px 8px rgba(30,64,175,0.10);
+    font-weight: 700;
+}
+.cdg-info-side-link.active i { color: #1e40af; }
+.cdg-info-side-link-warning { color: #92400e !important; }
+.cdg-info-side-link-warning i { color: #f59e0b !important; }
+.cdg-info-side-badge {
+    margin-left: auto;
+    background: #ef4444;
+    color: #fff;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-weight: 800;
+}
+
+/* === SAĞ CONTENT === */
+.cdg-info-main {
+    padding: 24px 28px;
+    background: #fff;
+    min-width: 0;
+}
+.cdg-info-main .cdg-info-pane { animation: cdgInfoFadeIn 0.25s ease; }
+@keyframes cdgInfoFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* === MOBILE: Sidebar üste taşır === */
+@media (max-width: 900px) {
+    .cdg-info-shell-body {
+        grid-template-columns: 1fr;
+    }
+    .cdg-info-side {
+        border-right: 0;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px;
+        overflow-x: auto;
+    }
+    .cdg-info-side-group {
+        display: inline-block;
+        margin-right: 12px;
+        margin-bottom: 0;
+        vertical-align: top;
+    }
+    .cdg-info-side-title { display: none; }
+    .cdg-info-side-link {
+        display: inline-flex;
+        width: auto;
+        white-space: nowrap;
+        margin: 4px;
+    }
+    .cdg-info-main { padding: 16px; }
+}
+
+<?php /* Eski TAB css - mobile fallback için */ ?>
 .cdg-info-tab {
     flex: 1;
     min-width: 130px;
@@ -815,11 +1120,18 @@ window.cdgInfoKvkk = {
 <script>
 window.cdgInfoTab = function(tab) {
     document.querySelectorAll('.cdg-info-tab').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('.cdg-info-side-link').forEach(function(b){ b.classList.remove('active'); });
     document.querySelectorAll('.cdg-info-pane').forEach(function(p){ p.style.display = 'none'; });
     var btn = document.querySelector('.cdg-info-tab[data-tab="'+tab+'"]');
+    var sideBtn = document.querySelector('.cdg-info-side-link[data-tab="'+tab+'"]');
     var pane = document.getElementById('cdg-info-pane-'+tab);
     if(btn) btn.classList.add('active');
+    if(sideBtn) sideBtn.classList.add('active');
     if(pane) pane.style.display = 'block';
+    // Mobile: aktif tab'ın görünür olmasını sağla
+    if(window.innerWidth < 900 && pane) {
+        pane.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 };
 
 window.cdgInfoKind = function(kind) {

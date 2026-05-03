@@ -296,7 +296,114 @@ foreach($options as $opt_k => $opt_v) {
 }
 .cdg-pd2 *, .cdg-pd2 *::before, .cdg-pd2 *::after { box-sizing: border-box; }
 .cdg-pd2 a { text-decoration: none; color: inherit; }
-.cdg-pd2-wrap { max-width: 100%; margin: 0; padding: 0; }
+.cdg-pd2-wrap { max-width: 1280px; margin: 0 auto; padding: 0; }
+
+/* === PANEL SHELL - Kurumsal kart konteyner === */
+.cdg-pd2-shell {
+    background: #ffffff;
+    border: 1px solid var(--p-border);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(15,23,42,0.04);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.cdg-pd2-shell-head {
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-bottom: 1px solid var(--p-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.cdg-pd2-shell-head-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+.cdg-pd2-shell-icon {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--p-primary), #2563eb);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px rgba(30,64,175,0.20);
+}
+.cdg-pd2-shell-title {
+    margin: 0 0 3px;
+    font-size: 18px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+.cdg-pd2-shell-sub {
+    font-size: 13px;
+    color: var(--p-muted);
+    font-weight: 500;
+}
+.cdg-pd2-shell-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.cdg-pd2-shell-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: #fff;
+    border: 1px solid var(--p-border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--p-text);
+    cursor: pointer;
+    transition: all 0.18s;
+    text-decoration: none;
+    font-family: inherit;
+}
+.cdg-pd2-shell-btn:hover {
+    border-color: var(--p-primary);
+    color: var(--p-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(15,23,42,0.06);
+}
+.cdg-pd2-shell-btn-primary {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    border-color: #1e3a8a;
+    color: #fff;
+}
+.cdg-pd2-shell-btn-primary:hover {
+    color: #fff;
+    border-color: #1e3a8a;
+    box-shadow: 0 6px 16px rgba(30,64,175,0.30);
+}
+.cdg-pd2-shell-btn-primary i { color: #fde047; }
+.cdg-pd2-shell-body { padding: 24px; }
+
+/* Hizmet durum chip - kurumsal görünüm */
+.cdg-pd2-status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 6px;
+}
+.cdg-pd2-status-chip.active { background: #dcfce7; color: #15803d; }
+.cdg-pd2-status-chip.pending { background: #fef3c7; color: #92400e; }
+.cdg-pd2-status-chip.suspended { background: #fed7aa; color: #9a3412; }
+.cdg-pd2-status-chip.cancelled, .cdg-pd2-status-chip.expired, .cdg-pd2-status-chip.terminated { background: #fee2e2; color: #991b1b; }
 
 .cdg-pd2-back {
     display: inline-flex; align-items: center; gap: 8px;
@@ -724,74 +831,87 @@ foreach($options as $opt_k => $opt_v) {
         <i class="bi bi-arrow-left"></i> Listeye Dön
     </a>
 
-    <section class="cdg-pd2-hero">
-        <div class="cdg-pd2-hero-row">
-            <div class="cdg-pd2-hero-icon"><i class="bi bi-<?php echo htmlspecialchars($cdg_pd_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i></div>
-            <div class="cdg-pd2-hero-text">
-                <div class="cdg-pd2-hero-eyebrow"><?php echo htmlspecialchars(mb_strtoupper($cdg_pd_title, 'UTF-8')); ?></div>
-                <h1><?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
-                <div class="cdg-pd2-hero-meta">
-                    <?php if($d_domain): ?>
-                    <span><i class="bi bi-globe"></i> <?php echo htmlspecialchars($d_domain, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
-                    <?php endif; ?>
-                    <?php if($d_hostname && $d_hostname !== $d_domain): ?>
-                    <span><i class="bi bi-server"></i> <?php echo htmlspecialchars($d_hostname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
-                    <?php endif; ?>
-                    <?php if($d_ip): ?>
-                    <span><i class="bi bi-hdd-network"></i> <?php echo htmlspecialchars($d_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
-                    <?php endif; ?>
-                    <?php if($d_duedate): ?>
-                    <span><i class="bi bi-calendar-check"></i> Bitiş: <?php echo htmlspecialchars(cdg_pd_date($d_duedate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
-                    <?php endif; ?>
+    <!-- KURUMSAL PANEL SHELL -->
+    <div class="cdg-pd2-shell">
+        <div class="cdg-pd2-shell-head">
+            <div class="cdg-pd2-shell-head-left">
+                <div class="cdg-pd2-shell-icon" style="background:linear-gradient(135deg, <?php echo htmlspecialchars($cdg_pd_color, ENT_QUOTES); ?>, <?php echo htmlspecialchars($cdg_pd_color, ENT_QUOTES); ?>cc);">
+                    <i class="bi bi-<?php echo htmlspecialchars($cdg_pd_icon, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
+                </div>
+                <div style="min-width:0;">
+                    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
+                        <h1 class="cdg-pd2-shell-title">
+                            <?php echo htmlspecialchars($d_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                        </h1>
+                        <span class="cdg-pd2-status-chip <?php echo htmlspecialchars($d_status, ENT_QUOTES); ?>">
+                            <i class="bi bi-<?php echo htmlspecialchars($st_meta['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
+                            <?php echo htmlspecialchars($st_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                        </span>
+                    </div>
+                    <div class="cdg-pd2-shell-sub">
+                        <?php if($d_domain): ?>
+                        <i class="bi bi-globe"></i> <strong><?php echo htmlspecialchars($d_domain, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong>
+                        <?php endif; ?>
+                        <?php if($d_ip): ?>
+                        <span style="margin:0 6px;color:#cbd5e1;">·</span>
+                        <i class="bi bi-hdd-network"></i> <?php echo htmlspecialchars($d_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                        <?php endif; ?>
+                        <?php if($d_duedate): ?>
+                        <span style="margin:0 6px;color:#cbd5e1;">·</span>
+                        <i class="bi bi-calendar-check"></i> Bitiş: <?php echo htmlspecialchars(cdg_pd_date($d_duedate), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
-            <div class="cdg-pd2-hero-status">
-                <i class="bi bi-<?php echo htmlspecialchars($st_meta['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"></i>
-                <?php echo htmlspecialchars($st_meta['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+            <div class="cdg-pd2-shell-actions">
+                <?php
+                // DirectAdmin / Plesk / cPanel - kontrol paneli URL'si
+                $cp_url_hero = $options['cp_url'] ?? ($options['panel_url'] ?? $d_panel_link);
+                // Panel tipi - DirectAdmin önceliği
+                $panel_label = 'Kontrol Paneli';
+                $panel_brand = '';
+                if($d_panel_type) {
+                    $pt = strtolower($d_panel_type);
+                    if(strpos($pt, 'directadmin') !== false || strpos($pt, 'da') !== false) {
+                        $panel_label = 'DirectAdmin';
+                        $panel_brand = 'DirectAdmin';
+                    } elseif(strpos($pt, 'plesk') !== false) {
+                        $panel_label = 'Plesk';
+                        $panel_brand = 'Plesk';
+                    } elseif(strpos($pt, 'cpanel') !== false) {
+                        $panel_label = 'Kontrol Paneli';
+                        $panel_brand = 'Kontrol Paneli';
+                    } else {
+                        $panel_brand = $d_panel_type;
+                    }
+                } elseif($cdg_pd_kind === 'hosting') {
+                    // Default Codega: DirectAdmin
+                    $panel_label = 'DirectAdmin';
+                    $panel_brand = 'DirectAdmin';
+                }
+                ?>
+                <?php if($cp_url_hero): ?>
+                <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-shell-btn cdg-pd2-shell-btn-primary">
+                    <i class="bi bi-box-arrow-up-right"></i> <?php echo htmlspecialchars($panel_label, ENT_QUOTES); ?>
+                </a>
+                <?php endif; ?>
+                <?php if($d_status === 'active' && $d_period && $d_period !== 'none'): ?>
+                <button type="button" class="cdg-pd2-shell-btn" onclick="document.querySelector('.cdg-pd2-tab[data-pane=renewal]')?.click(); window.scrollTo({top: document.querySelector('.cdg-pd2-tabs').offsetTop - 20, behavior: 'smooth'});">
+                    <i class="bi bi-arrow-clockwise"></i> Yenile
+                </button>
+                <?php endif; ?>
+                <?php if(!empty($upgrades)): ?>
+                <button type="button" class="cdg-pd2-shell-btn" onclick="document.querySelector('.cdg-pd2-tab[data-pane=upgrade]')?.click(); window.scrollTo({top: document.querySelector('.cdg-pd2-tabs').offsetTop - 20, behavior: 'smooth'});">
+                    <i class="bi bi-arrow-up-circle"></i> Yükselt
+                </button>
+                <?php endif; ?>
+                <a href="<?php echo cdg_link('ac-ps-create-ticket-request'); ?>?subject=%23<?php echo (int)$d_id; ?>+<?php echo urlencode($d_name); ?>" class="cdg-pd2-shell-btn">
+                    <i class="bi bi-headset"></i> Destek
+                </a>
             </div>
         </div>
-    </section>
+        <div class="cdg-pd2-shell-body">
 
-    <!-- HIZLI EYLEMLER BARI -->
-    <div class="cdg-pd2-actions">
-        <?php $cp_url_hero = $options['cp_url'] ?? ($options['panel_url'] ?? $d_panel_link); if($cp_url_hero): ?>
-        <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-action cdg-pd2-action-primary">
-            <i class="bi bi-box-arrow-up-right"></i>
-            <span>
-                <strong>Kontrol Paneline Git</strong>
-                <?php if($d_panel_type): ?><small><?php echo htmlspecialchars($d_panel_type, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></small><?php endif; ?>
-            </span>
-        </a>
-        <?php endif; ?>
-
-        <?php if($d_status === 'active' && $d_period && $d_period !== 'none'): ?>
-        <a href="javascript:void(0);" onclick="document.querySelector('.cdg-pd2-tab[data-pane=renewal]')?.click();" class="cdg-pd2-action">
-            <i class="bi bi-arrow-clockwise"></i>
-            <span>
-                <strong>Yenile</strong>
-                <small>Hizmeti uzat</small>
-            </span>
-        </a>
-        <?php endif; ?>
-
-        <?php if(!empty($upgrades)): ?>
-        <a href="javascript:void(0);" onclick="document.querySelector('.cdg-pd2-tab[data-pane=upgrade]')?.click();" class="cdg-pd2-action">
-            <i class="bi bi-arrow-up-circle"></i>
-            <span>
-                <strong>Yükselt</strong>
-                <small>Plan değiştir</small>
-            </span>
-        </a>
-        <?php endif; ?>
-
-        <a href="<?php echo cdg_link('ac-ps-create-ticket-request'); ?>?subject=%23<?php echo (int)$d_id; ?>+<?php echo urlencode($d_name); ?>" class="cdg-pd2-action">
-            <i class="bi bi-headset"></i>
-            <span>
-                <strong>Destek Al</strong>
-                <small>Talep oluştur</small>
-            </span>
-        </a>
-    </div>
     <?php if($cdg_pd_kind === 'server' && ($d_module_supports['reboot'] || $d_module_supports['reinstall'] || $d_module_supports['shutdown'] || $d_module_supports['powerOn'] || $d_module_supports['console'])): ?>
     <!-- SERVER AKSİYON PANELİ -->
     <div class="cdg-pd2-card" style="margin-bottom:14px;background:linear-gradient(135deg,#0f172a,#1e293b);border-color:#1e293b;">
@@ -1562,7 +1682,7 @@ foreach($options as $opt_k => $opt_v) {
             <div class="cdg-pd2-card-body">
                 <div class="cdg-pd2-alert cdg-pd2-alert-warning">
                     <i class="bi bi-exclamation-triangle"></i>
-                    <div>Hosting kontrol paneli (cPanel/DirectAdmin) şifrenizi buradan değiştirebilirsiniz.</div>
+                    <div>Hosting kontrol paneli (DirectAdmin) şifrenizi buradan değiştirebilirsiniz.</div>
                 </div>
 
                 <form id="cdg-pd2-pwd-form" onsubmit="return false;">
@@ -1777,7 +1897,7 @@ foreach($options as $opt_k => $opt_v) {
                     </div>
                     <?php if($cp_url_hero): ?>
                     <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm">
-                        <i class="bi bi-box-arrow-up-right"></i> cPanel'de Detaylı Yönet
+                        <i class="bi bi-box-arrow-up-right"></i> DirectAdmin'de Detaylı Yönet
                     </a>
                     <?php endif; ?>
                 </div>
@@ -1875,7 +1995,7 @@ foreach($options as $opt_k => $opt_v) {
                             </td>
                             <td style="padding:10px 12px;border-radius:0 8px 8px 0;border:1px solid #e2e8f0;border-left:0;text-align:right;">
                                 <?php if($cp_url_hero): ?>
-                                <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" title="cPanel'de yönet">
+                                <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" title="DirectAdmin'de yönet">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                                 <?php endif; ?>
@@ -1899,7 +2019,7 @@ foreach($options as $opt_k => $opt_v) {
                     <p>E-posta hesaplarınızı görüntülemek ve yönetmek için <strong>Kontrol Paneli</strong> üzerinden işlem yapın.</p>
                     <?php if($cp_url_hero): ?>
                     <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-primary">
-                        <i class="bi bi-box-arrow-up-right"></i> cPanel / Kontrol Paneline Git
+                        <i class="bi bi-box-arrow-up-right"></i> DirectAdmin Paneline Git
                     </a>
                     <?php endif; ?>
                     <?php endif; ?>
@@ -2120,7 +2240,7 @@ foreach($options as $opt_k => $opt_v) {
                     </div>
                     <h4 style="margin:16px 0 10px;font-size:13px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.5px;">Bizden istediğiniz şeyler:</h4>
                     <ul style="margin:0 0 16px;padding-left:22px;color:#475569;line-height:1.8;font-size:13.5px;">
-                        <li>Eski hosting/sunucu erişim bilgileri (cPanel/Plesk/DA URL, kullanıcı adı, şifre)</li>
+                        <li>Eski hosting/sunucu erişim bilgileri (DirectAdmin/Plesk URL, kullanıcı adı, şifre)</li>
                         <li>Veya FTP + veritabanı (MySQL) erişim bilgileri</li>
                         <li>Domain'in NS sunucularını <strong><?php echo !empty($d_dns) ? htmlspecialchars(is_array($d_dns[0]) ? implode(' ', $d_dns[0]) : $d_dns[0], ENT_QUOTES) : 'CODEGA NS'; ?></strong> olarak güncelleme erişiminiz</li>
                     </ul>
@@ -2349,6 +2469,9 @@ foreach($options as $opt_k => $opt_v) {
         </div>
         <?php endif; ?>
     </div>
+
+        </div><!-- /cdg-pd2-shell-body -->
+    </div><!-- /cdg-pd2-shell -->
 
 </div>
 </div>
