@@ -50,7 +50,14 @@ $_cdg_page = isset($hoptions["page"]) ? $hoptions["page"] : '';
     if(class_exists('View') && method_exists('View', 'footer_codes')) View::footer_codes();
 ?>
 
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-rocket"></i></a>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center" aria-label="Sayfanın başına dön"><i class="bi bi-rocket"></i></a>
+
+<?php
+// KVKK Cookie Banner - Public sayfalarda göster
+if(file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . 'cdg-cookie-banner.php')) {
+    include __DIR__ . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . 'cdg-cookie-banner.php';
+}
+?>
 
 <?php
     if(class_exists('Hook') && ($h_contents = Hook::run("ClientAreaEndBody"))) {

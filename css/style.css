@@ -905,7 +905,37 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
 
 /* ========== PRINT ========== */
 @media print {
-    .cdg-header, .cdg-footer, .cdg-mobile-toggle, .cdg-cta { display: none; }
+    /* Yazdırırken header, footer, navigasyon ve CTA bölümleri gizlensin */
+    .cdg-header, .cdg-footer, .cdg-mobile-toggle, .cdg-cta,
+    .cdg-ac-sidebar, .cdg-ac-topbar, .cdg-ac-footer,
+    .back-to-top, .cdg-back-top,
+    .cdg-nav-actions, .cdg-mobile-menu,
+    .cdg-cart-btn, .cdg-cart-badge,
+    .cdg-notif-wrap, .cdg-notif-dropdown,
+    button, .cdg-btn { display: none !important; }
+
+    /* Print uyumlu renk - her şey siyah */
+    body, * {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    /* Linklerden sonra URL'i bas (referans için) */
+    a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 90%;
+        color: #555;
+    }
+
+    /* Sayfa kırılmaları */
+    h1, h2, h3, h4 { page-break-after: avoid; }
+    img, table { page-break-inside: avoid; }
+    p, li { orphans: 3; widows: 3; }
+
+    /* Container boyutu */
+    .cdg-container, .cdg-ac-content { max-width: 100%; padding: 0; }
 }
 
 /* ==================== Müşteri Paneli Bileşenleri ==================== */
@@ -5118,5 +5148,147 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
     }
     .cdg-nav-mobile-only a i {
         font-size: 18px;
+    }
+}
+
+/* ========== FORM INPUT DISABLED & READONLY ==========
+ * Disabled/readonly inputlar görünür olsun ama interactive değil
+ */
+.cdg-form-control:disabled,
+.cdg-form-control[disabled],
+.cdg-form-control[readonly] {
+    background: #f1f5f9 !important;
+    color: #94a3b8 !important;
+    cursor: not-allowed;
+    opacity: 0.85;
+    border-color: #e2e8f0 !important;
+}
+.cdg-form-control:disabled:hover,
+.cdg-form-control[disabled]:hover,
+.cdg-form-control[readonly]:hover {
+    border-color: #e2e8f0 !important;
+    box-shadow: none !important;
+}
+
+/* Button disabled state */
+.cdg-btn:disabled,
+.cdg-btn[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed !important;
+    pointer-events: none;
+    box-shadow: none !important;
+}
+
+/* Required field indicator */
+.cdg-form-label.cdg-required::after {
+    content: ' *';
+    color: #ef4444;
+    font-weight: 700;
+}
+
+/* Input validation states */
+.cdg-form-control.cdg-is-invalid,
+.cdg-form-control:invalid:not(:placeholder-shown):not(:focus) {
+    border-color: #ef4444 !important;
+}
+.cdg-form-control.cdg-is-valid {
+    border-color: #10b981 !important;
+}
+.cdg-form-error {
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.cdg-form-help {
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* ========== LOADING STATES ==========
+ * Sayfanın çeşitli durumlarda loading göstergesi
+ */
+.cdg-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+}
+.cdg-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid #e2e8f0;
+    border-top-color: #1e40af;
+    border-radius: 50%;
+    animation: cdg-spin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+.cdg-spinner-lg { width: 32px; height: 32px; border-width: 3px; }
+.cdg-spinner-sm { width: 14px; height: 14px; border-width: 2px; }
+
+@keyframes cdg-spin {
+    to { transform: rotate(360deg); }
+}
+
+.cdg-skeleton {
+    background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%);
+    background-size: 200% 100%;
+    animation: cdg-skeleton-pulse 1.5s ease-in-out infinite;
+    border-radius: 6px;
+    color: transparent !important;
+}
+.cdg-skeleton * { color: transparent !important; }
+@keyframes cdg-skeleton-pulse {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Button içinde loading (form submit sırasında) */
+.cdg-btn.cdg-btn-loading {
+    pointer-events: none;
+    position: relative;
+    color: transparent !important;
+}
+.cdg-btn.cdg-btn-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 16px; height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: cdg-spin 0.6s linear infinite;
+    color: #fff;
+}
+
+/* ========== HEADER SCROLLED STATE ==========
+ * Sayfa scroll edildiğinde header'a gölge ekle
+ */
+.cdg-header.is-scrolled {
+    box-shadow: 0 1px 12px rgba(15, 23, 42, 0.08);
+    border-bottom-color: rgba(15, 23, 42, 0.10);
+}
+
+/* ========== SCROLL REVEAL ANIMATIONS ==========
+ * .cdg-reveal class'ı IntersectionObserver ile is-visible olur
+ */
+.cdg-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.cdg-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+    .cdg-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
     }
 }

@@ -262,7 +262,7 @@ if(!function_exists('cdg_link')) {
                     $cdg_basket_count = count($_SESSION['Basket']);
                 }
                 ?>
-                <a href="<?php echo (isset($basket_link) && $basket_link && $basket_link != '#') ? $basket_link : cdg_link('basket'); ?>" class="cdg-btn cdg-btn-ghost cdg-btn-sm cdg-cart-btn" title="Sepetim">
+                <a href="<?php echo (isset($basket_link) && $basket_link && $basket_link != '#') ? $basket_link : cdg_link('basket'); ?>" class="cdg-btn cdg-btn-ghost cdg-btn-sm cdg-cart-btn" title="Sepetim" aria-label="Sepetim">
                     <i class="bi bi-cart3"></i>
                     <?php if($cdg_basket_count > 0): ?>
                     <span class="cdg-cart-badge"><?php echo (int)$cdg_basket_count; ?></span>
@@ -273,7 +273,7 @@ if(!function_exists('cdg_link')) {
                     <a href="<?php echo (isset($my_account_link) && $my_account_link && $my_account_link != '#') ? $my_account_link : cdg_link('my-account'); ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm">
                         <i class="bi bi-person-circle"></i> <span>Hesabım</span>
                     </a>
-                    <a href="<?php echo (isset($logout_link) && $logout_link && $logout_link != '#') ? $logout_link : cdg_link('logout'); ?>" class="cdg-btn cdg-btn-ghost cdg-btn-sm" title="Çıkış">
+                    <a href="<?php echo (isset($logout_link) && $logout_link && $logout_link != '#') ? $logout_link : cdg_link('logout'); ?>" class="cdg-btn cdg-btn-ghost cdg-btn-sm" title="Çıkış" aria-label="Çıkış Yap">
                         <i class="bi bi-box-arrow-right"></i>
                     </a>
                 <?php else: ?>
