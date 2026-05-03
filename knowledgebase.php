@@ -265,7 +265,6 @@ foreach($kb_categories as $cat) $total_questions += count($cat['questions']);
                 <details class="cdg-faq-item cdg-kb-faq" data-q="<?php echo htmlspecialchars(mb_strtolower($q['q'], 'UTF-8')); ?>" data-a="<?php echo htmlspecialchars(mb_strtolower(strip_tags($q['a']), 'UTF-8')); ?>"<?php if($i===0) echo ' open'; ?>>
                     <summary>
                         <span><?php echo htmlspecialchars($q['q'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
-                        <i class="bi bi-plus-lg"></i>
                     </summary>
                     <div class="cdg-faq-answer"><?php echo $q['a']; /* HTML tags allowed */ ?></div>
                 </details>

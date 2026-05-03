@@ -1,5 +1,11 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 
+// Brand kimligi defansif yukle (logo SVG icin)
+if(!function_exists('cdg_logo_svg')) {
+    $_brand_inc = __DIR__ . DIRECTORY_SEPARATOR . 'cdg-brand.php';
+    if(file_exists($_brand_inc)) include_once $_brand_inc;
+}
+
 if(!isset($home_link))   $home_link   = defined('APP_URI') ? APP_URI . '/' : '/';
 if(!isset($logout_link)) $logout_link = '#';
 

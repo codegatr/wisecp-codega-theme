@@ -1,5 +1,11 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 
+// Brand kimligi defansif yukle (logo SVG icin)
+if(!function_exists('cdg_logo_svg')) {
+    $_brand_inc = __DIR__ . DIRECTORY_SEPARATOR . 'cdg-brand.php';
+    if(file_exists($_brand_inc)) include_once $_brand_inc;
+}
+
 $config    = include __DIR__ . "/../theme-config.php";
 $ts        = isset($config['settings']) ? $config['settings'] : [];
 $social    = isset($ts['social'])  ? $ts['social']  : [];
@@ -89,9 +95,13 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
         <div class="cdg-footer-grid">
 
             <div>
-                <div class="brand">
+                <div class="brand cdg-footer-brand">
+                    <?php if(function_exists('cdg_logo_svg')) {
+                        echo cdg_logo_svg('white', 42);
+                    } else { ?>
                     <span class="cdg-logo-mark">C</span>
                     CODEGA
+                    <?php } ?>
                 </div>
                 <p class="desc">
                     Modern PHP altyapısıyla web yazılım, hosting, domain ve özel yazılım çözümleri sunuyoruz.

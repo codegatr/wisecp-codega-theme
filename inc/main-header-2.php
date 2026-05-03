@@ -1,5 +1,11 @@
 <?php defined('CORE_FOLDER') OR exit('You can not get in here!');
 
+// Brand kimligi defansif yukle (logo SVG icin)
+if(!function_exists('cdg_logo_svg')) {
+    $_brand_inc = __DIR__ . DIRECTORY_SEPARATOR . 'cdg-brand.php';
+    if(file_exists($_brand_inc)) include_once $_brand_inc;
+}
+
 // Fallback'ler
 if(!isset($home_link))     $home_link     = defined('APP_URI') ? APP_URI . '/' : '/';
 if(!isset($login_link))    $login_link    = '#';
@@ -103,9 +109,13 @@ if(!function_exists('cdg_link')) {
     <div class="cdg-container">
         <div class="cdg-header-inner">
 
-            <a href="<?php echo $home_link; ?>" class="cdg-logo">
+            <a href="<?php echo $home_link; ?>" class="cdg-logo cdg-logo-v2" aria-label="CODEGA Anasayfa">
+                <?php if(function_exists('cdg_logo_svg')) {
+                    echo cdg_logo_svg('full', 38);
+                } else { ?>
                 <span class="cdg-logo-mark">C</span>
                 <span>CODEGA</span>
+                <?php } ?>
             </a>
 
             <button type="button" class="cdg-mobile-toggle" aria-label="Menu">
