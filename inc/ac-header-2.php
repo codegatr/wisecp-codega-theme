@@ -79,9 +79,7 @@ if(class_exists('User') && method_exists('User', 'logged_in') && User::logged_in
 if(!$user_name) $user_name = 'Müşteri';
 ?>
 <div class="cdg-ac-topbar">
-    <div>
-        <h1><?php echo isset($page_title) ? $page_title : 'Hoş geldiniz, ' . htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
-    </div>
+    <div class="cdg-ac-topbar-spacer"></div>
 
     <div style="display:flex;align-items:center;gap:10px;">
         <a href="<?php echo (isset($basket_link) && $basket_link && $basket_link != '#') ? $basket_link : cdg_link('basket'); ?>" class="cdg-btn cdg-btn-outline cdg-btn-sm" title="Sepetim">

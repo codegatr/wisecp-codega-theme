@@ -624,58 +624,159 @@ select.cdg-form-control { appearance: none; -webkit-appearance: none; background
 .cdg-reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
 .cdg-reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-/* ========== CLIENT AREA (ac-) ========== */
+/* ========== CLIENT AREA (ac-) — Tek Ekran Fit ========== */
+/* Body fixed - sayfa scroll YOK, sidebar+content içi scroll */
+body#codegapanel {
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    background: var(--cdg-bg-alt);
+}
+
 .cdg-ac-wrap {
     display: grid;
     grid-template-columns: 260px 1fr;
-    min-height: 100vh;
+    height: 100vh;
     background: var(--cdg-bg-alt);
+    overflow: hidden;
 }
-@media (max-width: 992px) { .cdg-ac-wrap { grid-template-columns: 1fr; } }
+@media (max-width: 992px) { 
+    .cdg-ac-wrap { grid-template-columns: 1fr; height: auto; min-height: 100vh; }
+    body#codegapanel { height: auto; min-height: 100vh; overflow: auto; }
+}
 
 .cdg-ac-sidebar {
     background: white;
     border-right: 1px solid var(--cdg-border);
-    padding: 24px 18px;
-    position: sticky; top: 0;
-    height: 100vh; overflow-y: auto;
+    padding: 18px 14px;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
 }
-.cdg-ac-brand { display: flex; align-items: center; gap: 10px; padding: 8px 10px; margin-bottom: 24px; font-weight: 800; color: var(--cdg-bg-dark); font-size: 18px; }
+/* Sidebar custom scrollbar */
+.cdg-ac-sidebar::-webkit-scrollbar { width: 5px; }
+.cdg-ac-sidebar::-webkit-scrollbar-track { background: transparent; }
+.cdg-ac-sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 100px; }
+.cdg-ac-sidebar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+.cdg-ac-brand { display: flex; align-items: center; gap: 10px; padding: 6px 10px; margin-bottom: 18px; font-weight: 800; color: var(--cdg-bg-dark); font-size: 17px; }
 .cdg-ac-menu { list-style: none; padding: 0; margin: 0; }
 .cdg-ac-menu > li > a {
-    display: flex; align-items: center; gap: 12px;
-    padding: 10px 12px;
+    display: flex; align-items: center; gap: 11px;
+    padding: 9px 11px;
     border-radius: var(--cdg-radius-sm);
     color: var(--cdg-text);
-    font-size: 14px; font-weight: 500;
-    margin-bottom: 2px;
+    font-size: 13.5px; font-weight: 500;
+    margin-bottom: 1px;
 }
 .cdg-ac-menu > li > a:hover { background: var(--cdg-bg-alt); color: var(--cdg-primary); }
 .cdg-ac-menu > li > a.active { background: var(--cdg-gradient-subtle); color: var(--cdg-primary); }
 .cdg-ac-menu .icon { width: 18px; font-size: 16px; }
-.cdg-ac-menu .group { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--cdg-muted-light); letter-spacing: 0.06em; padding: 16px 12px 6px; }
+.cdg-ac-menu .group { font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: var(--cdg-muted-light); letter-spacing: 0.06em; padding: 12px 11px 4px; }
 
-.cdg-ac-main { padding: 24px 32px; min-width: 0; }
-.cdg-ac-topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
-.cdg-ac-topbar h1 { font-size: 1.5rem; margin: 0; }
+/* Main area: topbar (sabit) + content (scroll) + footer (sabit) */
+.cdg-ac-main { 
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-width: 0;
+    overflow: hidden;
+}
+@media (max-width: 992px) { .cdg-ac-main { height: auto; } }
+
+/* Topbar - kompakt, sabit yükseklik */
+.cdg-ac-topbar { 
+    display: flex; align-items: center; justify-content: space-between; 
+    gap: 14px; 
+    padding: 10px 24px;
+    background: white;
+    border-bottom: 1px solid var(--cdg-border);
+    flex-shrink: 0;
+    min-height: 56px;
+    box-sizing: border-box;
+}
+.cdg-ac-topbar h1 { display: none; } /* H1 başlıklar kaldırıldı */
+.cdg-ac-topbar-spacer { flex: 1; }
+
+/* Content - kalan alanı doldurur, içi scroll */
+.cdg-ac-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 18px 24px;
+    box-sizing: border-box;
+}
+.cdg-ac-content::-webkit-scrollbar { width: 8px; }
+.cdg-ac-content::-webkit-scrollbar-track { background: transparent; }
+.cdg-ac-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 100px; }
+.cdg-ac-content::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Hesabım sayfaları - büyük HERO başlıkları KALDIRILDI */
+.cdg-ac-pagehead,
+.cdg-ac-content > .cdg-ac-pagehead,
+.cdg-pl-hero,
+.cdg-aff-hero,
+.cdg-msl-hero,
+.cdg-tk-hero,
+.cdg-rst-hero,
+.cdg-bal-hero,
+.cdg-info-hero,
+.cdg-vrf-hero,
+.cdg-docvrf-hero,
+.cdg-pd2-hero,
+.cdg-addon-hero,
+.cdg-upg-hero,
+.cdg-rmd-hero,
+.cdg-pbc-hero,
+.cdg-bc-hero,
+.cdg-share-hero,
+.cdg-sf-hero,
+.cdg-cards-hero,
+.cdg-host-hero,
+.cdg-hem-hero {
+    display: none !important;
+}
+
+/* H1 başlıkları herşeye karşı gizle (içerik h1'leri olabilir, ama ac- altında istemiyoruz) */
+body#codegapanel .cdg-ac-content > div > h1:first-child,
+body#codegapanel .cdg-ac-content > section > h1:first-child {
+    display: none;
+}
+
+/* Wide content desteği - bazı sayfalar geniş istiyor (mevcut $wide_content) */
+body#codegapanel .cdg-ac-content { max-width: 100%; }
+
+/* Footer - sabit alt, kompakt */
+.cdg-ac-footer {
+    flex-shrink: 0;
+    padding: 8px 24px;
+    background: white;
+    border-top: 1px solid var(--cdg-border);
+    text-align: center;
+    font-size: 11px;
+    color: var(--cdg-muted);
+}
+.cdg-ac-footer small { font-size: 11px; }
 
 .cdg-card {
     background: white;
     border: 1px solid var(--cdg-border);
     border-radius: var(--cdg-radius);
-    padding: 22px;
-    margin-bottom: 20px;
+    padding: 18px;
+    margin-bottom: 14px;
     box-shadow: var(--cdg-shadow-sm);
 }
-.cdg-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.cdg-card-head h3 { margin: 0; font-size: 1rem; }
+.cdg-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+.cdg-card-head h3 { margin: 0; font-size: 0.95rem; font-weight: 700; }
 
-.cdg-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.cdg-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
 @media (max-width: 992px) { .cdg-stat-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 540px) { .cdg-stat-grid { grid-template-columns: 1fr; } }
 .cdg-stat {
     background: white; border: 1px solid var(--cdg-border);
-    border-radius: var(--cdg-radius); padding: 20px;
+    border-radius: var(--cdg-radius); padding: 16px;
 }
 .cdg-stat .label { font-size: 12px; font-weight: 600; color: var(--cdg-muted); text-transform: uppercase; letter-spacing: 0.06em; }
 .cdg-stat .value { font-size: 28px; font-weight: 800; color: var(--cdg-bg-dark); margin: 6px 0; }

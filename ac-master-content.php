@@ -41,15 +41,6 @@ if(!isset($lang_list))      $lang_list      = [];
         ?>
 
         <div class="cdg-ac-content">
-            <?php if(isset($header_title) && $header_title): ?>
-                <div class="cdg-ac-pagehead">
-                    <h1><?php echo $header_title; ?></h1>
-                    <?php if(isset($header_description) && $header_description): ?>
-                        <p><?php echo $header_description; ?></p>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
-
             {get_content}
         </div>
 

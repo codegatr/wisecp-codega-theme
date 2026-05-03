@@ -247,20 +247,6 @@ $balance_url   = cdg_link('ac-ps-balance');
 
 <style>
 /* === CODEGA DASHBOARD - Kurumsal LNW-Style === */
-/* Dashboard sayfasında ana page header'ı gizle (greeting çakışmasın) */
-body:has(.cdg-d) .cdg-ac-topbar > div:first-child h1,
-body:has(.cdg-d) .cdg-ac-page-head,
-body:has(.cdg-d) > main > h1:first-child,
-body:has(.cdg-d) .cdg-ac-content > h1:first-child {
-    display: none !important;
-}
-/* Topbar daralsın */
-body:has(.cdg-d) .cdg-ac-topbar {
-    padding-top: 8px;
-    padding-bottom: 8px;
-    margin-bottom: 8px;
-}
-
 .cdg-d {
     --d-primary: #1e40af;
     --d-primary-deep: #0a1f44;
@@ -279,16 +265,16 @@ body:has(.cdg-d) .cdg-ac-topbar {
     --d-radius: 14px;
     font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
     color: var(--d-text);
-    /* Tek ekran fit: viewport'tan hesabım header (~92px) düşülür */
-    height: calc(100vh - 100px);
-    min-height: 540px;
-    max-height: 920px;
-    display: grid;
-    grid-template-rows: auto auto 1fr;
+    /* Parent (.cdg-ac-content) zaten 100vh fixed, biz onun içinde flex column */
+    display: flex;
+    flex-direction: column;
     gap: 12px;
+    height: 100%;
+    min-height: 0;
     box-sizing: border-box;
-    overflow: hidden;
 }
+/* Greeting + Quick auto, Main 1fr (kalan alan) */
+.cdg-d > .cdg-d-main { flex: 1; min-height: 0; }
 .cdg-d *, .cdg-d *::before, .cdg-d *::after { box-sizing: border-box; }
 .cdg-d a { text-decoration: none; color: inherit; }
 

@@ -217,9 +217,7 @@ if(!$cdg_notif_url) $cdg_notif_url = cdg_link('my-account');
 </style>
 
 <div class="cdg-ac-topbar">
-    <div>
-        <h1><?php echo isset($page_title) ? $page_title : 'Hoş geldiniz, ' . htmlspecialchars($user_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
-    </div>
+    <div class="cdg-ac-topbar-spacer"></div>
 
     <div style="display:flex;align-items:center;gap:10px;">
         <!-- Bildirim Bell -->
