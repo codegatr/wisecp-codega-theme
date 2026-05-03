@@ -133,19 +133,22 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
                         ?>
                     <li><a href="<?php echo $cdg_hosting_url; ?>">Hosting</a></li>
                     <li><a href="<?php echo cdg_link('domain'); ?>">Domain</a></li>
+                    <li><a href="/erp-yazilimi.html">CODEGA ERP</a></li>
+                    <li><a href="<?php echo cdg_link('softwares'); ?>">Özel Yazılım</a></li>
                 </ul>
             </div>
 
             <div>
                 <h4>Şirket</h4>
                 <ul>
+                    <li><a href="/vizyon.html">Vizyon &amp; Değerlerimiz</a></li>
                     <li><a href="/hakkimizda.html">Hakkımızda</a></li>
+                    <li><a href="/referanslarimiz.html">Referanslarımız</a></li>
                     <li><a href="/kariyer.html">Kariyer</a></li>
                     <li><a href="/sosyal-sorumluluk.html">Sosyal Sorumluluk</a></li>
                     <li><a href="/surdurulebilirlik.html">Sürdürülebilirlik</a></li>
-                    <li><a href="<?php echo cdg_link('references'); ?>">Referanslar</a></li>
+                    <li><a href="/sistem-durumu.html">Sistem Durumu</a></li>
                     <li><a href="<?php echo cdg_link('knowledgebase'); ?>">Bilgi Bankası</a></li>
-                    <li><a href="<?php echo cdg_link('news'); ?>">Haberler</a></li>
                 </ul>
             </div>
 

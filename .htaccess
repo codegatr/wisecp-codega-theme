@@ -1,0 +1,130 @@
+# =====================================================================
+# CODEGA WiseCP Theme - .htaccess
+# =====================================================================
+# Bu dosya tema kökündedir, WiseCP'nin kendi .htaccess'i ile uyumludur.
+# WiseCP'nin core .htaccess kuralları DOKUNULMAZ — bu dosya sadece
+# codega.com.tr eski URL'leri için 301 redirect içerir (cutover hazırlık).
+# =====================================================================
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# =====================================================================
+# CODEGA.COM.TR ESKİ URL'LERİ → WiseCP YENİ SLUG'LAR (Cutover sonrası)
+# Bu kurallar codega.com.tr public_html'e taşındığında etkin olur.
+# Şu an ca.codega.com.tr'de duruyor, etkisiz.
+# =====================================================================
+
+# Ana site eski page=X parametreli URL'ler
+RewriteCond %{QUERY_STRING} ^page=erp$ [NC]
+RewriteRule ^index\.php$ /erp-yazilimi.html? [R=301,L]
+
+RewriteCond %{QUERY_STRING} ^page=referanslar$ [NC]
+RewriteRule ^index\.php$ /referanslarimiz.html? [R=301,L]
+
+RewriteCond %{QUERY_STRING} ^page=hakkimizda$ [NC]
+RewriteRule ^index\.php$ /hakkimizda.html? [R=301,L]
+
+RewriteCond %{QUERY_STRING} ^page=hosting$ [NC]
+RewriteRule ^index\.php$ /hosting-products.html? [R=301,L]
+
+RewriteCond %{QUERY_STRING} ^page=domain$ [NC]
+RewriteRule ^index\.php$ /domain-checker.html? [R=301,L]
+
+RewriteCond %{QUERY_STRING} ^page=fiyatlar$ [NC]
+RewriteRule ^index\.php$ /hosting-products.html? [R=301,L]
+
+RewriteCond %{QUERY_STRING} ^page=iletisim$ [NC]
+RewriteRule ^index\.php$ /contact.html? [R=301,L]
+
+RewriteCond %{QUERY_STRING} ^page=bilgi_bankasi$ [NC]
+RewriteRule ^index\.php$ /knowledgebase.html? [R=301,L]
+
+RewriteCond %{QUERY_STRING} ^page=sistem_durum$ [NC]
+RewriteRule ^index\.php$ /sistem-durumu.html? [R=301,L]
+
+RewriteCond %{QUERY_STRING} ^page=yazilim$ [NC]
+RewriteRule ^index\.php$ /softwares.html? [R=301,L]
+
+# Direkt /pages/X.php URL'leri (eski pretty URL'ler)
+RewriteRule ^pages/erp\.php$ /erp-yazilimi.html [R=301,L]
+RewriteRule ^pages/referanslar\.php$ /referanslarimiz.html [R=301,L]
+RewriteRule ^pages/hakkimizda\.php$ /hakkimizda.html [R=301,L]
+RewriteRule ^pages/hosting\.php$ /hosting-products.html [R=301,L]
+RewriteRule ^pages/domain\.php$ /domain-checker.html [R=301,L]
+RewriteRule ^pages/fiyatlar\.php$ /hosting-products.html [R=301,L]
+RewriteRule ^pages/iletisim\.php$ /contact.html [R=301,L]
+RewriteRule ^pages/bilgi_bankasi\.php$ /knowledgebase.html [R=301,L]
+RewriteRule ^pages/sistem_durum\.php$ /sistem-durumu.html [R=301,L]
+RewriteRule ^pages/yazilim\.php$ /softwares.html [R=301,L]
+
+# Eski kurumsal sayfalar
+RewriteRule ^pages/kvkk\.php$ /kvkk-aydinlatma-metni.html [R=301,L]
+RewriteRule ^pages/gizlilik\.php$ /gizlilik-politikasi.html [R=301,L]
+RewriteRule ^pages/cerez\.php$ /cerez-politikasi.html [R=301,L]
+RewriteRule ^pages/kariyer\.php$ /kariyer.html [R=301,L]
+RewriteRule ^pages/sosyal-sorumluluk\.php$ /sosyal-sorumluluk.html [R=301,L]
+RewriteRule ^pages/surdurulebilirlik\.php$ /surdurulebilirlik.html [R=301,L]
+RewriteRule ^pages/vizyon\.php$ /vizyon.html [R=301,L]
+
+# =====================================================================
+# CA.CODEGA.COM.TR → CODEGA.COM.TR (Cutover sonrası subdomain redirect)
+# AŞAMA 4'te subdomain kaldırılınca Apache vhost'ta yapılır.
+# Bu blok ŞU AN YORUM - aktif değildir.
+# Subdomain kaldırılma günü açılır.
+# =====================================================================
+# RewriteCond %{HTTP_HOST} ^ca\.codega\.com\.tr$ [NC]
+# RewriteRule ^(.*)$ https://codega.com.tr/$1 [R=301,L]
+
+# =====================================================================
+# CODEGA.COM.TR/INDEX.HTML eski sayfaya direkt giriş
+# =====================================================================
+RewriteRule ^index\.html$ / [R=301,L]
+
+</IfModule>
+
+# =====================================================================
+# Güvenlik başlıkları (WiseCP'nin core'una ek olarak)
+# =====================================================================
+<IfModule mod_headers.c>
+    # X-Content-Type-Options
+    Header set X-Content-Type-Options "nosniff"
+    # X-Frame-Options - clickjacking koruması
+    Header set X-Frame-Options "SAMEORIGIN"
+    # Referrer-Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# =====================================================================
+# Statik dosyalar için cache
+# =====================================================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType font/woff "access plus 1 month"
+    ExpiresByType font/woff2 "access plus 1 month"
+</IfModule>
+
+# Hassas dosyaları gizle
+<FilesMatch "(\.sql|\.log|\.bak|\.swp|\.git|\.env|composer\.json|composer\.lock)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# migration.sql public erişimi engelle (önemli!)
+<Files migration.sql>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# data/ klasörünü dış erişime kapat (PHP içinden include edilir, web yok)
+<IfModule mod_rewrite.c>
+    RewriteRule ^data/ - [F,L]
+</IfModule>

@@ -2,220 +2,239 @@
 
 **Hedef:** `codega.com.tr` (ana site) içeriklerini `ca.codega.com.tr` (WiseCP)'ye aktarmak, sonra subdomain'i kaldırıp tek domain ile devam etmek.
 
-**Tarih:** 2026-05-03 itibariyle planlanmıştır.
+**Son Güncelleme:** 2026-05-03 — v3.5.54
 
 ---
 
-## 📊 Mevcut Durum Analizi
+## 📊 Mevcut Durum
 
-### codega.com.tr (ana site) içerikleri:
+### ✅ TAMAMLANDI
 
-| Kategori | İçerik | Boyut | Migration Önceliği |
+| # | İçerik | Sürüm | Durum |
 |---|---|---|---|
-| Anasayfa | hero, otomasyon, fiyatlar, neden biz, entegrasyonlar | `data/anasayfa.json` (7KB) | **P1** Kısmen tamamlandı |
-| Referanslar | 59 firma, 7 sektör | `data/referanslar.json` (15KB) | **✅ TAMAMLANDI v3.5.52** |
-| ERP Yazılımı | Detaylı tanıtım sayfası | `pages/erp.php` (1011 satır) | **P1** Bekliyor |
-| Bilgi Bankası | Kategoriler + makaleler | `data/bilgi_bankasi.json` (26KB) | **P2** WiseCP KB'da var |
-| Kurumsal | KVKK, gizlilik, çerez, kariyer, sürdürülebilirlik | 6 JSON dosyası | **✅ TAMAMLANDI v3.5.46** |
-| Vizyon | Şirket vizyonu | `data/kurumsal/vizyon.json` (3KB) | **P2** Bekliyor |
-| Sosyal Sorumluluk | CSR sayfası | `data/kurumsal/sorumluluk.json` (1.6KB) | **✅ TAMAMLANDI v3.5.43** |
-| Sistem Durum | Uptime monitor sayfası | `pages/sistem_durum.php` | **P3** Bekliyor |
-| Hakkımızda | Şirket hikayesi | `pages/hakkimizda.php` | **✅ TAMAMLANDI v3.5.43** |
-| Programs | ETA backup software | `programs/eta/` | **P3** İhtiyaç olursa |
+| 1 | KVKK, Gizlilik, Çerez, Kariyer, Sürdürülebilirlik, Sosyal Sorumluluk | v3.5.43-46 | ✅ |
+| 2 | Hakkımızda | v3.5.43 | ✅ |
+| 3 | Referanslar (59 firma) | v3.5.52 | ✅ |
+| 4 | ERP Yazılımı detay (1011 satır içerik) | v3.5.53 | ✅ |
+| 5 | Vizyon & Değerlerimiz | v3.5.53 | ✅ |
+| 6 | Sistem Durumu | v3.5.53 | ✅ |
+| 7 | Anasayfa otomasyon süreci | v3.5.53 | ✅ |
+| 8 | Mega menü 3-col upgrade | v3.5.53 | ✅ |
+| 9 | Migration SQL runner (otomatik DB sync) | v3.5.53 | ✅ |
+| 10 | **Bilgi Bankası migration** (5 kategori, 19 makale) | **v3.5.54** | **✅** |
+| 11 | **Footer link güncellemeleri** | **v3.5.54** | **✅** |
+| 12 | **.htaccess 301 redirect kuralları** | **v3.5.54** | **✅** |
 
-### ca.codega.com.tr (WiseCP) zaten içerenler:
+### ⏳ KALANLAR
 
-- ✅ Hosting / Domain ürünler (WiseCP core)
-- ✅ Sepet / Ödeme / Fatura (WiseCP core)
-- ✅ Kullanıcı Yönetimi
-- ✅ Talep / Destek (WiseCP core)
-- ✅ Yazılımlar (`softwares.php` + sektörel çözümler)
-- ✅ Kurumsal sayfalar (8 adet, v3.5.43-46)
-- ✅ Auth (sign-in, sign-up, forget) (v3.5.49-51)
-- ✅ Anasayfa zengin 15 bölüm
-- ✅ **Referanslar (v3.5.52 - YENİ)**
-
----
-
-## 🎯 Migration Aşamaları
-
-### **AŞAMA 1: İçerik Tamamlama (1-2 hafta)**
-
-#### ADIM 1: ✅ Referanslar (v3.5.52 - TAMAMLANDI)
-
-`/references` URL'inden erişim. Admin panel WiseCP page kayıt:
-- **Tür:** normal page
-- **Slug:** `references` veya `referanslar`
-- **TR:** "Referanslarımız"
-- **EN:** "Our References"
-
-#### ADIM 2: ⏳ ERP Yazılımı Detay Sayfası
-
-Ana sitedeki `pages/erp.php` (1011 satır) → tema kökünde `programs/erp.php` veya `software-erp.php`.
-
-**İçerik özeti:**
-- Hero: "Codega ERP — İşinizi tek panelden yönetin"
-- 12 modül kartı: Cari, Stok, Fatura, Çek/Senet, Üretim, vs.
-- Ekran görüntüleri carousel
-- Özellikler grid (oto faturalama, e-fatura, e-irsaliye)
-- Fiyatlandırma 3 paket
-- Demo talep formu
-- SSS (8-10 soru)
-
-**Sonraki turda:** "ERP sayfası taşı" derseniz tek seferde yaparız.
-
-#### ADIM 3: ⏳ Anasayfa Otomasyon Bölümü
-
-Mevcut tema anasayfasına yeni bölüm eklenecek (15. bölüm sonrası):
-
-```
-[ÜST] -> Mevcut hero
-[YENİ] -> Otomasyon Süreci Bölümü
-   4 Adım: Sipariş & Ödeme → İşlem Kuyruğu → Provisioning → Aktivasyon
-   Animasyonlu connector çizgi, ikonlar
-[ALT] -> Mevcut bölümler devam
-```
-
-#### ADIM 4: ⏳ Vizyon Sayfası
-
-`/vizyon` veya mevcut `hakkimizda` sayfasına bölüm olarak eklenebilir.
-
-#### ADIM 5: ⏳ Sistem Durum Sayfası
-
-`/system-status` URL'inden erişim. UptimeRobot API entegrasyonu veya statik servisler listesi:
-- Hosting servisleri
-- Domain DNS
-- E-posta sunucuları
-- Ödeme gateway
+| # | İçerik | Tahmini Sürüm | Önem |
+|---|---|---|---|
+| 13 | Yazılım menüsüne ERP detay link | v3.5.55 | 🟢 Düşük |
+| 14 | sitemap.xml otomatik güncelleme | v3.5.55 | 🟡 Orta |
+| 15 | Hero başlık güncellemesi (ana site pozisyonu) | v3.5.55 | 🟡 Orta |
+| 16 | İletişim sayfası zenginleştirme (form + harita) | v3.5.56 | 🟢 Düşük |
+| 17 | **AŞAMA 2 — Cross-domain hazırlık** | manuel | 🔴 Kritik |
+| 18 | **AŞAMA 3 — Cutover** | manuel | 🔴 Kritik |
+| 19 | **AŞAMA 4 — Subdomain kaldırma** | manuel +1 ay | 🔴 Kritik |
 
 ---
 
-### **AŞAMA 2: Cross-domain Geçiş Hazırlığı (3-5 gün)**
+## 🔄 Migration Runner Otomasyonu
 
-#### A) DirectAdmin'de Domain Yapılandırması
+### Çalışma Mantığı
+
+`inc/cdg-migration-runner.php` her sayfa yüklenmesinde otomatik kontrol eder:
 
 ```
-Yeni durum:
-- codega.com.tr           → public_html (ESKI: ana site)
-- ca.codega.com.tr        → public_html (yeni: WiseCP teması)
-- www.codega.com.tr       → 301 redirect → codega.com.tr
+İstek → main-head.php boot → CdgMigrationRunner::autoRun()
+   ↓
+   migration.sql hash'i değişti mi? (data/migration-applied.json)
+   ↓
+   EVET → SQL'i parse et, sırayla çalıştır
+       → İdempotent NOT EXISTS pattern, duplicate'ı skip
+       → Hata logla (sys_get_temp_dir/codega-migration.log)
+       → Yeni hash kaydet (data/migration-applied.json)
+   HAYIR → Atla, frontend'e devam
 ```
 
-**İki seçenek:**
+### Eklenen Veriler (v3.5.54)
 
-**SEÇENEK A — codega.com.tr ana domain olur (Önerilen):**
-```
-codega.com.tr ana ←→ WiseCP burada
-ca.codega.com.tr  → 301 redirect → codega.com.tr
-```
-- Avantaj: SEO codega.com.tr alanında kalır (yıllarca emek)
-- Dezavantaj: WiseCP'yi ana domain'e geçirmek gerek (DirectAdmin işlemi)
+`migration.sql` çalıştığında otomatik eklenir:
 
-**SEÇENEK B — ca.codega.com.tr kalır:**
+**4 sayfa (`pages` + `pages_lang` TR+EN):**
+- `referanslarimiz` / `our-references`
+- `vizyon` / `vision`
+- `sistem-durumu` / `system-status`
+- `erp-yazilimi` / `erp-software`
+
+**5 KB kategorisi (`categories` + `categories_lang` TR):**
+- Hosting (5 makale)
+- Domain (3 makale)
+- ERP Yazılımı (4 makale)
+- MRP Yazılımı (3 makale)
+- PHP Yazılımlar (4 makale)
+
+**19 makale (`knowledgebase` + `knowledgebase_lang` TR):**
+- Web Hosting Nedir, E-posta Hesabı Nasıl Oluşturulur, FTP Hesabı, vs.
+- Domain Nedir, DNS Yönetimi, Domain Transfer
+- ERP Nedir, Stok Yönetimi, Üretim Modülü, Finans Raporları
+- MRP Nedir, Üretim Emri, BOM Yönetimi
+- Neden Özel PHP Yazılım, API Entegrasyonu, Yazılım Bakım, PHP Güvenlik
+
+---
+
+## 🎯 AŞAMA 2: Cross-domain Hazırlık
+
+Bu adımları içerikler tamamlandıktan sonra Yunus + Claude beraber yapar.
+
+### A) DirectAdmin Yapılandırması
+
+**SEÇENEK A — Önerilen (codega.com.tr ana domain):**
+```
+codega.com.tr           → public_html (yeni: WiseCP teması)
+ca.codega.com.tr        → 301 redirect → codega.com.tr  
+www.codega.com.tr       → 301 redirect → codega.com.tr
+```
+
+**SEÇENEK B — ca. kalır:**
 ```
 codega.com.tr     → 301 redirect → ca.codega.com.tr
 ca.codega.com.tr  → WiseCP burada
 ```
-- Avantaj: WiseCP yerinde kalır, az iş
-- Dezavantaj: ca. SEO başlangıç (yeni domain gibi)
 
-**Önerim: SEÇENEK A** — codega.com.tr ana domain (SEO korunur).
+**Önerim: SEÇENEK A** — SEO codega.com.tr alanında kalır (20 yıl emek).
 
-#### B) DNS Yönlendirme
+### B) DNS Yapılandırması
 
+DirectAdmin → DNS Records:
+```
+ca.codega.com.tr → A → SUNUCU_IP (geçici, eski URL'ler için)
+www              → CNAME → codega.com.tr
+codega.com.tr    → A → SUNUCU_IP (mevcut)
+```
+
+TTL'leri 5 dakikaya düşür (cutover öncesi 24 saat).
+
+### C) .htaccess Redirect (codega.com.tr public_html'de)
+
+`.htaccess` dosyası **zaten tema kökünde hazır** (v3.5.54). 
+
+İçerikler:
+- ✅ codega.com.tr eski `?page=X` URL'leri → yeni slug'lar
+- ✅ Eski `/pages/X.php` URL'leri → yeni slug'lar
+- ⏳ ca.codega.com.tr → codega.com.tr blok (yorumlu, cutover günü açılır)
+
+---
+
+## 🚀 AŞAMA 3: Cutover (Tek Gün - Bakım Penceresi)
+
+### 1. YEDEK
+```bash
+# DirectAdmin → File Manager → public_html (mevcut codega.com.tr)
+# ZIP indir, güvenli yere koy
+# DB Backup: codega_database2027 → SQL dump
+```
+
+### 2. WiseCP Tema Aktarım
+```bash
+# DirectAdmin'de codega.com.tr public_html temizlenir
+# WiseCP teması (ca.codega.com.tr public_html) → codega.com.tr public_html'e taşınır
+# theme-config.php → 'site_url' => 'https://codega.com.tr' güncelle
+```
+
+### 3. DNS Cutover
 ```bash
 # DirectAdmin → DNS Records
-ca.codega.com.tr → CNAME → codega.com.tr (geçici, eski URL'ler için)
+# codega.com.tr A kaydı yeni public_html'e işaret etmeli (zaten ediyor)
+# ca.codega.com.tr → 301 redirect kuralı .htaccess'e ekle
 ```
 
-#### C) .htaccess Redirect (codega.com.tr public_html'de)
+### 4. Ödeme Gateway Callback URL'leri
+```
+iyzico merchant panel → callback URL: https://ca.codega.com.tr/... → https://codega.com.tr/...
+PayTR merchant panel → aynı şekilde
+GİB e-Fatura/e-Arşiv → callback URL kontrol
+```
 
-```apache
-# Eski codega.com.tr URL'lerini WiseCP slug'larına yönlendir
-RewriteEngine On
-RewriteRule ^pages/erp\.php$ /programs/erp [R=301,L]
-RewriteRule ^pages/referanslar\.php$ /references [R=301,L]
-RewriteRule ^pages/hosting\.php$ /hosting-products [R=301,L]
-RewriteRule ^pages/domain\.php$ /domain-checker [R=301,L]
-RewriteRule ^pages/iletisim\.php$ /contact [R=301,L]
-RewriteRule ^pages/hakkimizda\.php$ /about-us [R=301,L]
-RewriteRule ^pages/fiyatlar\.php$ /hosting-products [R=301,L]
-RewriteRule ^pages/bilgi_bankasi\.php$ /knowledgebase [R=301,L]
+### 5. SMTP / E-posta
+```
+WiseCP Settings → System → Mail
+  from-email: noreply@codega.com.tr (kontrol)
+  SPF/DKIM/DMARC kayıtları codega.com.tr için doğrulanmış olmalı
+```
+
+### 6. Cron Joblar
+```bash
+# DirectAdmin Cron Manager
+# Mevcut cron'ların path'leri kontrol:
+#   /home/codega/domains/codega.com.tr/public_html/cron.php  ← yeni
+#   eski: /home/codega/domains/ca.codega.com.tr/public_html/...
+# Path güncelle gerekirse
+```
+
+### 7. Test
+- [ ] codega.com.tr açılıyor → WiseCP teması
+- [ ] ca.codega.com.tr → 301 redirect codega.com.tr'ye
+- [ ] Eski URL'ler (`?page=erp`) → yeni slug'lara redirect
+- [ ] Sepet, ödeme, fatura akışı çalışıyor
+- [ ] e-posta gönderimi çalışıyor
+- [ ] Migration runner DB'de eksik sayfaları ekledi mi (data/migration-applied.json kontrol)
+- [ ] SSL sertifikası geçerli (codega.com.tr için)
+- [ ] Footer link'ler doğru çalışıyor
+- [ ] Mega menü 3-col gözüküyor
+
+### 8. Google Search Console
+- `codega.com.tr` (eski property) → kalır, redirect'leri tanır
+- `ca.codega.com.tr` → eski property, 4-8 hafta içinde Google indeks geçişi
+- Yeni sitemap.xml gönder: `https://codega.com.tr/sitemap.xml`
+
+---
+
+## ⏳ AŞAMA 4: Subdomain Kaldırma (+1 Ay Sonra)
+
+301 redirect'ler 4-8 hafta çalıştıktan sonra Google indeks tamamen geçer:
+
+```bash
+# DirectAdmin → Subdomain Manager
+# ca.codega.com.tr → SİL
+
+# DNS Records  
+# ca → A/CNAME kayıt SİL
+
+# Test
+# ca.codega.com.tr artık çalışmamalı
+# codega.com.tr tek başına devam ediyor
 ```
 
 ---
 
-### **AŞAMA 3: Cutover (1 gün)**
+## 🔧 Teknik Notlar
 
-**Adımlar:**
-1. **YEDEK AL** — codega.com.tr public_html ZIP, DB dump
-2. **codega.com.tr public_html** → WiseCP dosyaları taşınır (DirectAdmin file mover)
-3. **codega_wisecp2027** DB → WiseCP yeni `wp_options.siteurl` güncellemesi (gerekirse)
-4. **theme-config.php** → `'site_url' => 'https://codega.com.tr'` güncelle
-5. **DNS güncellemesi** (TTL 5dk düşür önceden)
-6. **ca.codega.com.tr** → 301 redirect kuralı public_html'de
-7. **Test:**
-   - codega.com.tr → WiseCP açılıyor mu
-   - ca.codega.com.tr → codega.com.tr'ye yönleniyor mu
-   - Eski URL'ler → yeni slug'lara redirect oluyor mu
-   - Ödeme gateway (iyzico/PayTR) callback URL'leri güncellendi mi
-   - SSL sertifikası geçerli mi
+### Migration Runner Log
+```bash
+# Hata kontrolü:
+tail -50 /tmp/codega-migration.log
 
----
+# Manuel re-run:
+# data/migration-applied.json dosyasını sil → bir sonraki sayfa açılışında yeniden uygulanır
+```
 
-### **AŞAMA 4: Subdomain Kaldırma (1 gün, AŞAMA 3'ten 1 ay sonra)**
+### .htaccess Hassas Korumalar
+- `migration.sql` web erişimi engelli (gizli)
+- `data/` klasörü dış erişime kapalı
+- `.git`, `.env`, `.bak` uzantıları gizli
 
-1 ay 301 redirect çalıştıktan sonra (Google indeksinin yeni URL'lere geçmesi için):
-
-1. **DirectAdmin → Subdomain Manager** → `ca.codega.com.tr` SİL
-2. **DNS Records** → `ca` A/CNAME kayıt SİL
-3. **Test:** `ca.codega.com.tr` artık çalışmamalı
+### Yedek Stratejisi
+- Cutover öncesi DirectAdmin'de **tam yedek** alınır
+- 7 gün içinde sorunsuz çalışırsa eski public_html silinir
+- 30 gün sonra ca. subdomain kaldırılır
 
 ---
 
-## ⚠️ Dikkat Edilecekler
+## 📞 İletişim
 
-### Ödeme Gateway Callback URL'leri
-- iyzico: Merchant panelinde `https://ca.codega.com.tr/...` → `https://codega.com.tr/...`
-- PayTR: Merchant panelinde aynı şekilde
-- Bu yapılmazsa ödemeler ÇALIŞMAZ.
+Sorun olduğunda:
+1. `tail -50 /tmp/codega-migration.log` (migration loglar)
+2. WiseCP Logs → Settings → Logs (uygulama loglar)
+3. DirectAdmin → Error Logs (Apache loglar)
 
-### E-posta SMTP Yapılandırması
-- WiseCP `Settings → System → Mail` → from-email kontrol
-- DKIM/SPF/DMARC kayıtları → codega.com.tr için doğru olmalı
-
-### Cron Joblar
-- DirectAdmin Cron Manager → mevcut cron'lar `/home/codega/domains/codega.com.tr/public_html/...` mı yoksa eski path'mi kontrol
-
-### Google Search Console
-- `codega.com.tr` (mevcut) → property kalır
-- `ca.codega.com.tr` → eski property kalır (301 redirect'i Google'a bildirir)
-- Sitemap güncelle: `codega.com.tr/sitemap.xml` → tüm WiseCP slug'ları
-
-### SEO 301 Redirect İzleme
-- Google Search Console → Coverage → 301 redirect'lerin işlenmesi 4-8 hafta sürer
-- Bu süre boyunca AŞAMA 4 (subdomain kaldırma) ERTELENMELİ
-
----
-
-## 📋 Yapılacaklar Listesi (Sıralı)
-
-- [x] **v3.5.52 — Referanslar sayfası** (TAMAMLANDI)
-- [ ] **v3.5.53 — ERP Yazılımı detay sayfası** (sonraki tur)
-- [ ] **v3.5.54 — Anasayfa otomasyon bölümü** (sonraki tur)
-- [ ] **v3.5.55 — Vizyon + Sistem Durum sayfaları** (sonraki tur)
-- [ ] **AŞAMA 2** — DNS / .htaccess yapılandırma (Yunus + Claude beraber)
-- [ ] **AŞAMA 3** — Cutover (DirectAdmin işlemi, planlı bakım penceresi)
-- [ ] **1 AY BEKLE** — Google indeks geçişi
-- [ ] **AŞAMA 4** — `ca.` subdomain kaldır
-
----
-
-## 🤝 Sonraki Adım
-
-1. **v3.5.52 zip'i yükle**, `/references` sayfasını test et
-2. WiseCP admin panel → Pages → "References" sayfasını **2 dilde** ekle (TR + EN)
-3. Mega menüye link ekle: Kurumsal → Referanslarımız
-4. Onay verirsen **ADIM 2 (ERP sayfası)** ile devam edelim
-
-**Sorular varsa:** Her aşama için "Bunu nasıl yaparım?" sorabilirsin, adım adım rehber yazarım.
