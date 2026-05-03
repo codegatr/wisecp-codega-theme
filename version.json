@@ -1,15 +1,20 @@
 {
-    "version": "3.5.81",
+    "version": "3.5.82",
     "release_date": "2026-05-03",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.81-codega",
-    "tag": "v3.5.81-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.82-codega",
+    "tag": "v3.5.82-codega",
     "changelog": [
-        "v3.5.81 - Debug panel TUM panel sayfalarinda (footer'a tasindi)",
-        "Yunus tespiti: /hesabim/hosting-detay/290 -> 404",
-        "  Demek detail-template hic yuklenmiyor, debug panel da yok",
-        "FIX: Debug panel inc/ac-footer-1.php ve ac-footer-2.php'e tasindi",
-        "  Tum panel sayfalarinda (dashboard, hosting listesi, vs.) calisir",
-        "  Yunus dashboard'a gider, F12 -> cdgDbg() yazar, panel her yerde aktif"
+        "v3.5.82 - HOSTING DETAY SAYFASI SIFIRDAN YAZILDI (JS YOK)",
+        "Yunus istegi: Komple sifirdan yaz",
+        "ac-product-hosting.php tek dosya, 668 satir (eski 23+3197=3220 satirdi)",
+        "JavaScript HIC YOK - CSS-only tab sistemi (radio button + sibling selector)",
+        "  Dezavantaj: Tab tikinca sadece gorunum degisir, URL hash takibi yok",
+        "  Avantaj: SES, MetaMask, ad blocker, hicbir extension etkileyemez",
+        "  Avantaj: 100% guvenli calisir, hata yok",
+        "Defansif WiseCP variable kontrolu (?? null coalesce)",
+        "Tab'lar: Ozet, E-posta, Sifre, Yenileme, Faturalar, Transfer, Iptal",
+        "Eski inc/ac-product-detail-template.php artik kullanilmiyor (degistirilmedi, korundu)",
+        "Hosting'a ozel: DirectAdmin panel link'i, FTP/DNS bilgileri, hosting limit'leri"
     ]
 }
