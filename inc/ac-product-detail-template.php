@@ -485,35 +485,44 @@ foreach($options as $opt_k => $opt_v) {
 
 .cdg-pd2-tabs {
     background: #fff;
-    border: 1px solid var(--p-border);
-    border-radius: var(--p-radius);
-    padding: 8px;
-    box-shadow: var(--p-shadow);
-    margin-bottom: 18px;
+    border: 0;
+    border-bottom: 1px solid var(--p-border);
+    border-radius: 0;
+    padding: 0 24px;
+    box-shadow: none;
+    margin: 0;
     display: flex;
-    gap: 4px;
+    gap: 2px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
 }
+.cdg-pd2-tabs::-webkit-scrollbar { height: 2px; }
+.cdg-pd2-tabs::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
 .cdg-pd2-tab {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 16px;
-    border-radius: 10px;
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 13px 18px;
+    border-radius: 0;
     font-size: 13px; font-weight: 600;
     color: var(--p-muted);
     cursor: pointer;
     background: transparent;
     border: 0;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
     font-family: inherit;
     white-space: nowrap;
-    transition: all 0.18s;
+    transition: all 0.15s;
 }
-.cdg-pd2-tab:hover { background: var(--p-bg); color: var(--p-text); }
+.cdg-pd2-tab:hover { color: var(--p-text); background: rgba(30,64,175,0.04); }
 .cdg-pd2-tab.active {
-    background: var(--p-primary);
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(30,64,175,0.22);
+    color: var(--p-primary);
+    border-bottom-color: var(--p-primary);
+    background: transparent;
+    box-shadow: none;
+    font-weight: 700;
 }
+.cdg-pd2-tab.active i { color: var(--p-primary); }
 
 .cdg-pd2-pane { display: none; }
 .cdg-pd2-pane.active { display: block; animation: cdg-pd2-fade 0.25s ease; }
@@ -910,6 +919,35 @@ foreach($options as $opt_k => $opt_v) {
                 </a>
             </div>
         </div>
+
+    <!-- TAB NAV - shell-head'in hemen altında (yapışık) -->
+    <div class="cdg-pd2-tabs">
+        <button class="cdg-pd2-tab active" data-pane="summary"><i class="bi bi-info-circle"></i> Özet</button>
+        <?php if($cdg_pd_kind === 'hosting'): ?>
+        <button class="cdg-pd2-tab" data-pane="emails"><i class="bi bi-envelope"></i> E-posta</button>
+        <?php endif; ?>
+        <?php if(!empty($requirements) && is_array($requirements)): ?>
+        <button class="cdg-pd2-tab" data-pane="requirements"><i class="bi bi-check2-square"></i> Bilgi Formları</button>
+        <?php endif; ?>
+        <?php if(!empty($addons)): ?>
+        <button class="cdg-pd2-tab" data-pane="addons"><i class="bi bi-rocket-takeoff"></i> Ek Hizmetler</button>
+        <?php endif; ?>
+        <?php if(!empty($upgrades)): ?>
+        <button class="cdg-pd2-tab" data-pane="upgrade"><i class="bi bi-arrow-up-circle"></i> Yükselt</button>
+        <?php endif; ?>
+        <?php if($cdg_pd_kind === 'hosting'): ?>
+        <button class="cdg-pd2-tab" data-pane="password"><i class="bi bi-key"></i> Şifre</button>
+        <?php endif; ?>
+        <button class="cdg-pd2-tab" data-pane="renewal"><i class="bi bi-arrow-clockwise"></i> Yenileme</button>
+        <?php if(!empty($d_bills)): ?>
+        <button class="cdg-pd2-tab" data-pane="bills"><i class="bi bi-receipt"></i> Faturalar (<?php echo count($d_bills); ?>)</button>
+        <?php endif; ?>
+        <?php if(in_array($cdg_pd_kind, ['hosting','server'])): ?>
+        <button class="cdg-pd2-tab" data-pane="transfer"><i class="bi bi-arrow-left-right"></i> Transfer</button>
+        <?php endif; ?>
+        <button class="cdg-pd2-tab" data-pane="cancel"><i class="bi bi-ban"></i> İptal</button>
+    </div>
+
         <div class="cdg-pd2-shell-body">
 
     <?php if($cdg_pd_kind === 'server' && ($d_module_supports['reboot'] || $d_module_supports['reinstall'] || $d_module_supports['shutdown'] || $d_module_supports['powerOn'] || $d_module_supports['console'])): ?>
@@ -953,34 +991,6 @@ foreach($options as $opt_k => $opt_v) {
         </div>
     </div>
     <?php endif; ?>
-
-    <!-- TAB NAV -->
-    <div class="cdg-pd2-tabs">
-        <button class="cdg-pd2-tab active" data-pane="summary"><i class="bi bi-info-circle"></i> Özet</button>
-        <?php if($cdg_pd_kind === 'hosting'): ?>
-        <button class="cdg-pd2-tab" data-pane="emails"><i class="bi bi-envelope"></i> E-posta</button>
-        <?php endif; ?>
-        <?php if(!empty($requirements) && is_array($requirements)): ?>
-        <button class="cdg-pd2-tab" data-pane="requirements"><i class="bi bi-check2-square"></i> Bilgi Formları</button>
-        <?php endif; ?>
-        <?php if(!empty($addons)): ?>
-        <button class="cdg-pd2-tab" data-pane="addons"><i class="bi bi-rocket-takeoff"></i> Ek Hizmetler</button>
-        <?php endif; ?>
-        <?php if(!empty($upgrades)): ?>
-        <button class="cdg-pd2-tab" data-pane="upgrade"><i class="bi bi-arrow-up-circle"></i> Yükselt</button>
-        <?php endif; ?>
-        <?php if($cdg_pd_kind === 'hosting'): ?>
-        <button class="cdg-pd2-tab" data-pane="password"><i class="bi bi-key"></i> Şifre</button>
-        <?php endif; ?>
-        <button class="cdg-pd2-tab" data-pane="renewal"><i class="bi bi-arrow-clockwise"></i> Yenileme</button>
-        <?php if(!empty($d_bills)): ?>
-        <button class="cdg-pd2-tab" data-pane="bills"><i class="bi bi-receipt"></i> Faturalar (<?php echo count($d_bills); ?>)</button>
-        <?php endif; ?>
-        <?php if(in_array($cdg_pd_kind, ['hosting','server'])): ?>
-        <button class="cdg-pd2-tab" data-pane="transfer"><i class="bi bi-arrow-left-right"></i> Transfer</button>
-        <?php endif; ?>
-        <button class="cdg-pd2-tab" data-pane="cancel"><i class="bi bi-ban"></i> İptal</button>
-    </div>
 
     <!-- TAB: SUMMARY -->
     <div class="cdg-pd2-pane active" id="cdg-pd2-pane-summary">
