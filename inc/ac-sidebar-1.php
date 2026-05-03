@@ -150,6 +150,58 @@ if(!function_exists('cdg_link')) {
 
         <li class="group">Hesap</li>
 
+        <?php
+            // Bayi Paneli — sadece bayilik aktifse VE kullanıcı uygunsa göster
+            $_cdg_show_reseller = false;
+            try {
+                if(class_exists('Config') && method_exists('Config', 'get')) {
+                    $_cdg_dealership_active = Config::get("options/dealership/status");
+                    if($_cdg_dealership_active) {
+                        $_cdg_view_no_member = Config::get("options/dealership/view-without-membership");
+                        $_cdg_dlr_status = $acheader_info["dealership"]["status"] ?? '';
+                        // Sistem aktif + (üye olmadan görme açık VEYA kullanıcının dealership status'u 'inactive' değil)
+                        if($_cdg_view_no_member || $_cdg_dlr_status !== 'inactive') {
+                            $_cdg_show_reseller = true;
+                        }
+                    }
+                }
+            } catch(\Throwable $e) { /* sessizce geç */ }
+        ?>
+        <?php if($_cdg_show_reseller): ?>
+        <li><a href="<?php echo cdg_link('reseller'); ?>" class="<?php echo cdg_ac_active(['ac-reseller','reseller'], $current_page); ?>">
+            <span class="icon"><i class="bi bi-shop"></i></span> Bayi Paneli
+        </a></li>
+        <?php endif; ?>
+
+        <?php
+        // === ClientAreaMenus Hook (dev.wisecp.com) ===
+        // Modüller bu hook ile sidebar'a kendi menü öğelerini ekleyebilir
+        if(class_exists('Hook')) {
+            $cdg_clientArea_menus = [];
+            try {
+                $cdg_hook_menus = Hook::run("ClientAreaMenus", $cdg_clientArea_menus);
+                if(is_array($cdg_hook_menus)) {
+                    foreach($cdg_hook_menus as $cdg_hm) {
+                        if(!is_array($cdg_hm)) continue;
+                        foreach($cdg_hm as $cdg_menu_item) {
+                            if(!is_array($cdg_menu_item)) continue;
+                            $cdg_mi_url   = $cdg_menu_item['url']   ?? $cdg_menu_item['link'] ?? '#';
+                            $cdg_mi_title = $cdg_menu_item['title'] ?? $cdg_menu_item['name'] ?? '';
+                            $cdg_mi_icon  = $cdg_menu_item['icon']  ?? 'puzzle';
+                            if(!$cdg_mi_title) continue;
+                            ?>
+                            <li><a href="<?php echo htmlspecialchars($cdg_mi_url); ?>">
+                                <span class="icon"><i class="bi bi-<?php echo htmlspecialchars($cdg_mi_icon); ?>"></i></span>
+                                <?php echo htmlspecialchars($cdg_mi_title); ?>
+                            </a></li>
+                            <?php
+                        }
+                    }
+                }
+            } catch(\Throwable $e) { /* sessiz geç */ }
+        }
+        ?>
+
         <li><a href="<?php echo cdg_link('ac-ps-info'); ?>" class="<?php echo cdg_ac_active(['ac-ps-info','ac-info'], $current_page); ?>">
             <span class="icon"><i class="bi bi-person"></i></span> Hesap Bilgilerim
         </a></li>
