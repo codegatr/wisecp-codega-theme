@@ -212,18 +212,11 @@ if($mod_hosting && class_exists('Products')) {
             ];
         };
 
-        // Yöntem A: Tüm hosting kategorilerini al, her biri için paketleri çek
+        // === HOSTING paketlerini çek (Products::getList YOK — get_products_with_category kullan) ===
+        // Her paket için ayrıca prices çekilir ve buy_link manuel inşa edilir
+        // (buy_link runtime field, controller seviyesinde set ediliyor; helper'dan gelmiyor)
         $all_hosting_packs = [];
-        if(method_exists('Products', 'getList')) {
-            try {
-                $hp = @Products::getList(['type' => 'hosting', 'status' => 'active']);
-                if(is_array($hp)) $all_hosting_packs = $hp;
-            } catch(\Throwable $e) {}
-        }
-
-        // Yöntem B: Yöntem A boşsa get_products_with_category dene
-        if(empty($all_hosting_packs) && method_exists('Products', 'get_products_with_category')) {
-            // Önce kategorileri al
+        if(method_exists('Products', 'get_products_with_category') && method_exists('Products', 'get_select_categories')) {
             try {
                 $hosting_cats = @Products::get_select_categories('hosting', 0);
                 if(is_array($hosting_cats)) {
@@ -231,12 +224,49 @@ if($mod_hosting && class_exists('Products')) {
                         $cat_id = $hc['id'] ?? 0;
                         if(!$cat_id) continue;
                         $pks = @Products::get_products_with_category('hosting', $cat_id);
-                        if(is_array($pks)) {
-                            foreach($pks as $p) {
-                                $p['_cat_title'] = $hc['title'] ?? ('Kategori #' . $cat_id);
-                                $p['_cat_id']    = $cat_id;
-                                $all_hosting_packs[] = $p;
+                        if(!is_array($pks)) continue;
+
+                        foreach($pks as $p) {
+                            if(!is_array($p)) continue;
+                            $p['_cat_title'] = $hc['title'] ?? ('Kategori #' . $cat_id);
+                            $p['_cat_id']    = $cat_id;
+                            $p['category']   = $cat_id;
+
+                            // 1) Prices ayrı sorgu (helper bunu otomatik yapmıyor)
+                            $p['prices'] = [];
+                            if(method_exists('Products', 'get_prices')) {
+                                try {
+                                    $pr = @Products::get_prices('periodicals', 'products', $p['id']);
+                                    if(is_array($pr)) $p['prices'] = $pr;
+                                } catch(\Throwable $e) {}
                             }
+
+                            // 2) buy_link MANUEL inşa — WiseCP order-steps URL formatı
+                            // CRLink('order-steps-p', [type, product_id, step]) → /order-steps/hosting/15/1
+                            $p['buy_link'] = '';
+                            if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Controllers::$init, 'CRLink')) {
+                                try {
+                                    $p['buy_link'] = Controllers::$init->CRLink('order-steps-p', ['hosting', (int)$p['id'], 1]);
+                                } catch(\Throwable $e) {}
+                            }
+
+                            // 3) JSON alanları decode et (popular flag, button name vb.)
+                            if(isset($p['options']) && is_string($p['options'])) {
+                                $dec = @json_decode($p['options'], true);
+                                if(class_exists('Utility') && method_exists('Utility', 'jdecode')) {
+                                    try { $dec = Utility::jdecode($p['options'], true); } catch(\Throwable $e) {}
+                                }
+                                $p['options'] = is_array($dec) ? $dec : [];
+                            }
+                            if(isset($p['options_lang']) && is_string($p['options_lang'])) {
+                                $dec = @json_decode($p['options_lang'], true);
+                                if(class_exists('Utility') && method_exists('Utility', 'jdecode')) {
+                                    try { $dec = Utility::jdecode($p['options_lang'], true); } catch(\Throwable $e) {}
+                                }
+                                $p['optionsl'] = is_array($dec) ? $dec : [];
+                            }
+
+                            $all_hosting_packs[] = $p;
                         }
                     }
                 }
