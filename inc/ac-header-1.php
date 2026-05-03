@@ -9,6 +9,18 @@ if(!function_exists('cdg_link')) {
         // Bu yuzden once alias+CRLink, $links sadece bilinmeyen slug'lar icin son fallback
         global $links;
 
+        // CDG_LINK_HARDCODED - Yunus'un sitesinde KESIN dogru URL'ler (CRLink bypass)
+        static $hardcoded = [
+            'ac-ps-create-ticket-request' => '/hesabim/destek-talebi-olustur',
+            'create-ticket-request'       => '/hesabim/destek-talebi-olustur',
+            'create-ticket'               => '/hesabim/destek-talebi-olustur',
+        ];
+        if(isset($hardcoded[$slug])) {
+            $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
+            return $base . $hardcoded[$slug];
+        }
+
+
         // 2) Kısa-isim -> WiseCP gerçek route alias map
         static $aliases = [
             'create-ticket-request'   => 'ac-ps-create-ticket-request',
