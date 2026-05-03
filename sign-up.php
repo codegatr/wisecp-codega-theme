@@ -241,16 +241,22 @@ $connectionButtons   = class_exists('Hook') ? Hook::run("ClientAreaConnectionBut
                         <div class="cdg-form-row">
                             <div class="cdg-form-group">
                                 <label class="cdg-form-label">Şifre</label>
-                                <div class="cdg-input-icon">
+                                <div class="cdg-input-icon cdg-auth-pwd-wrap">
                                     <i class="bi bi-lock"></i>
                                     <input name="password" type="password" id="password_primary" class="cdg-form-control" placeholder="••••••••" required>
+                                    <button type="button" class="cdg-auth-pwd-toggle" onclick="cdgPwdToggle('password_primary', this)" tabindex="-1" aria-label="Şifreyi göster/gizle">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="cdg-form-group">
                                 <label class="cdg-form-label">Şifre (Tekrar)</label>
-                                <div class="cdg-input-icon">
+                                <div class="cdg-input-icon cdg-auth-pwd-wrap">
                                     <i class="bi bi-lock-fill"></i>
-                                    <input name="password_again" type="password" class="cdg-form-control" placeholder="••••••••" required>
+                                    <input name="password_again" type="password" id="password_again" class="cdg-form-control" placeholder="••••••••" required>
+                                    <button type="button" class="cdg-auth-pwd-toggle" onclick="cdgPwdToggle('password_again', this)" tabindex="-1" aria-label="Şifreyi göster/gizle">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>

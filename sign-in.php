@@ -322,9 +322,12 @@ if(class_exists('Config') && Config::get("options/crtacwshop")) $sign_up = false
                                 <label class="cdg-form-label"><?php echo __("website/sign/in-form-password"); ?></label>
                                 <a class="cdg-form-link" href="javascript:void(0);" onclick="forget_password();"><?php echo __("website/sign/in-form-forget"); ?></a>
                             </div>
-                            <div class="cdg-input-icon">
+                            <div class="cdg-input-icon cdg-auth-pwd-wrap">
                                 <i class="bi bi-lock"></i>
-                                <input name="password" type="password" placeholder="••••••••" class="cdg-form-control" autocomplete="off">
+                                <input name="password" type="password" id="cdg-pwd-signin" placeholder="••••••••" class="cdg-form-control" autocomplete="off">
+                                <button type="button" class="cdg-auth-pwd-toggle" onclick="cdgPwdToggle('cdg-pwd-signin', this)" tabindex="-1" aria-label="Şifreyi göster/gizle">
+                                    <i class="bi bi-eye"></i>
+                                </button>
                             </div>
                         </div>
 

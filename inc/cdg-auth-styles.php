@@ -391,4 +391,423 @@
 
     .cdg-auth-preview-activity { margin-top: 14px; }
     .cdg-auth-preview-activity-head { color: rgba(255,255,255,0.70); font-size: 11px; margin-bottom: 8px; }
-    </style>
+    /* ====================================================
+       v3.5.49 - PREMIUM AUTH OVERHAUL
+       ==================================================== */
+
+    /* Section bg glow upgrade - daha derin */
+    body#cdg-auth { background: #0B1220; }
+    .cdg-auth-section {
+        background:
+            radial-gradient(ellipse at top right, rgba(0,229,255,0.18) 0%, transparent 50%),
+            radial-gradient(ellipse at bottom left, rgba(46,59,78,0.45) 0%, transparent 50%),
+            linear-gradient(135deg, #0B1220 0%, #1A2332 50%, #0B1220 100%);
+        padding: 60px 24px;
+    }
+    .cdg-auth-glow-1 { background: rgba(0,229,255,0.18) !important; }
+    .cdg-auth-glow-2 { background: rgba(0,211,229,0.16) !important; }
+
+    /* Status pill - cyan kurumsal */
+    .cdg-auth-pill {
+        background: rgba(0,229,255,0.08) !important;
+        border-color: rgba(0,229,255,0.30) !important;
+        color: #00E5FF !important;
+        backdrop-filter: blur(8px);
+    }
+    .cdg-auth-pill-dot { background: #00E5FF !important; box-shadow: 0 0 12px #00E5FF !important; }
+
+    /* Hero h1 gradient - kurumsal */
+    .cdg-auth-promo h1 .cdg-text-gradient,
+    .cdg-auth-hero-text .cdg-text-gradient,
+    .cdg-text-gradient-light {
+        background: linear-gradient(135deg, #00D3E5 0%, #00E5FF 50%, #67E8F9 100%) !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        color: transparent !important;
+    }
+
+    /* Brand mark - logo upgrade */
+    .cdg-auth-brand-logo {
+        background: linear-gradient(135deg, #2E3B4E 0%, #00D3E5 100%) !important;
+        box-shadow: 0 12px 30px rgba(0,211,229,0.40), inset 0 1px 0 rgba(255,255,255,0.2) !important;
+    }
+
+    /* Browser preview - daha temiz */
+    .cdg-auth-preview {
+        background: rgba(255,255,255,0.04) !important;
+        border-color: rgba(255,255,255,0.08) !important;
+        box-shadow: 0 16px 50px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .cdg-auth-preview-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+    .cdg-auth-preview-stat {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 10px;
+        min-width: 0;
+    }
+    .cdg-auth-preview-stat-icon {
+        width: 36px; height: 36px;
+        border-radius: 9px;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-size: 16px;
+        flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.20);
+    }
+    .cdg-auth-preview-stat .num { font-size: 18px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 3px; }
+    .cdg-auth-preview-stat .lbl { font-size: 10.5px; color: rgba(255,255,255,0.55); white-space: nowrap; }
+    .cdg-auth-preview-bars {
+        display: flex !important;
+        align-items: flex-end;
+        gap: 4px;
+        height: 60px;
+        margin-top: 10px;
+    }
+    .cdg-auth-preview-bars span {
+        flex: 1;
+        background: linear-gradient(180deg, #00E5FF 0%, #00D3E5 100%);
+        border-radius: 3px 3px 0 0;
+        animation: cdgAuthBar 2.5s ease-in-out infinite;
+        opacity: 0.85;
+    }
+    .cdg-auth-preview-bars span:nth-child(2n) { animation-delay: 0.2s; }
+    .cdg-auth-preview-bars span:nth-child(3n) { animation-delay: 0.4s; }
+    @keyframes cdgAuthBar { 0%,100% { opacity: 0.65; transform: scaleY(0.85); transform-origin: bottom; } 50% { opacity: 1; transform: scaleY(1); } }
+    .cdg-auth-preview-activity-head {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px !important;
+        color: rgba(255,255,255,0.7) !important;
+    }
+    .cdg-auth-preview-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 3px 10px !important;
+        background: rgba(0,229,255,0.10) !important;
+        border-color: rgba(0,229,255,0.40) !important;
+        color: #00E5FF !important;
+        font-size: 10px !important;
+    }
+    .cdg-auth-preview-live .dot { width: 6px; height: 6px; border-radius: 50%; background: #00E5FF; box-shadow: 0 0 8px #00E5FF; animation: cdgAuthPulse 1.5s infinite; }
+
+    /* Quick-grid - daha temiz */
+    .cdg-auth-quick-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin: 18px 0;
+    }
+    .cdg-auth-quick-item {
+        text-align: center;
+        padding: 14px 8px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 10px;
+        transition: all 0.2s;
+    }
+    .cdg-auth-quick-item:hover {
+        background: rgba(0,229,255,0.06);
+        border-color: rgba(0,229,255,0.25);
+        transform: translateY(-2px);
+    }
+    .cdg-auth-quick-icon { font-size: 22px; margin-bottom: 6px; }
+    .cdg-auth-quick-item span { font-size: 11px; color: rgba(255,255,255,0.75); font-weight: 600; }
+
+    /* CTA kart upgrade */
+    .cdg-auth-cta-card {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 18px 22px !important;
+        background: linear-gradient(135deg, rgba(0,229,255,0.10) 0%, rgba(0,211,229,0.06) 100%) !important;
+        border: 1px solid rgba(0,229,255,0.25) !important;
+        border-radius: 14px !important;
+        margin-top: 24px !important;
+    }
+    .cdg-auth-cta-card small { display: block; font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .cdg-auth-cta-card strong { display: block; font-size: 15px; color: #fff; font-weight: 700; }
+    .cdg-auth-cta-btn {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 22px !important;
+        background: linear-gradient(135deg, #00D3E5 0%, #00E5FF 100%) !important;
+        color: #0f172a !important;
+        border: 0 !important;
+        border-radius: 10px !important;
+        font-weight: 700;
+        font-size: 14px !important;
+        margin-top: 0 !important;
+        white-space: nowrap;
+        box-shadow: 0 8px 22px rgba(0,229,255,0.30);
+        transition: all 0.2s !important;
+    }
+    .cdg-auth-cta-btn:hover {
+        background: linear-gradient(135deg, #00E5FF 0%, #67E8F9 100%) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(0,229,255,0.45) !important;
+    }
+
+    /* Trust row - 3 sutun yan yana - HER ZAMAN */
+    .cdg-auth-trust-row {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 18px;
+    }
+    .cdg-auth-trust-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 12px 8px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 10px;
+        text-align: center;
+        font-size: 11px;
+        color: rgba(255,255,255,0.75);
+        font-weight: 600;
+    }
+    .cdg-auth-trust-item i { font-size: 18px; color: #00E5FF; }
+
+    /* FORM upgrade - modern */
+    .cdg-auth-card {
+        background: #fff !important;
+        border-radius: 24px !important;
+        padding: 44px !important;
+        box-shadow: 0 30px 80px rgba(0,0,0,0.30), 0 0 0 1px rgba(255,255,255,0.08) inset;
+        position: relative;
+        overflow: hidden;
+    }
+    .cdg-auth-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #2E3B4E 0%, #00D3E5 50%, #00E5FF 100%);
+    }
+    .cdg-auth-card-head h2 {
+        font-size: 26px !important;
+        letter-spacing: -0.02em;
+    }
+    .cdg-auth-card-head p {
+        font-size: 14px !important;
+        color: #64748b !important;
+    }
+    .cdg-auth-card label {
+        font-size: 12px !important;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #475569 !important;
+    }
+    .cdg-auth-card input[type=text],
+    .cdg-auth-card input[type=email],
+    .cdg-auth-card input[type=password],
+    .cdg-auth-card input[type=tel],
+    .cdg-auth-card input[type=number],
+    .cdg-auth-card select,
+    .cdg-auth-card textarea {
+        padding: 14px 16px !important;
+        border-radius: 12px !important;
+        border-width: 2px !important;
+        font-size: 15px !important;
+        background: #f8fafc !important;
+    }
+    .cdg-auth-card input:focus, .cdg-auth-card select:focus, .cdg-auth-card textarea:focus {
+        border-color: #00D3E5 !important;
+        background: #fff !important;
+        box-shadow: 0 0 0 4px rgba(0,211,229,0.10) !important;
+    }
+    /* Password toggle */
+    .cdg-auth-pwd-wrap { position: relative; }
+    .cdg-auth-pwd-toggle {
+        position: absolute;
+        top: 50%; right: 12px;
+        transform: translateY(-50%);
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: #64748b;
+        padding: 6px;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+    .cdg-auth-pwd-toggle:hover { color: #2E3B4E; background: #f1f5f9; }
+
+    /* Submit - cyan gradient */
+    .cdg-auth-card .mio-ajax-submit,
+    .cdg-auth-card button[type=submit],
+    .cdg-auth-card input[type=submit],
+    .cdg-auth-submit {
+        width: 100%;
+        padding: 16px 24px !important;
+        background: linear-gradient(135deg, #2E3B4E 0%, #1e293b 100%) !important;
+        color: #fff !important;
+        border: 0 !important;
+        border-radius: 12px !important;
+        font-size: 15px !important;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s !important;
+        box-shadow: 0 12px 28px rgba(46,59,78,0.30);
+        position: relative;
+        overflow: hidden;
+        margin-top: 10px;
+    }
+    .cdg-auth-card .mio-ajax-submit:hover,
+    .cdg-auth-card button[type=submit]:hover,
+    .cdg-auth-submit:hover {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 16px 36px rgba(46,59,78,0.40) !important;
+    }
+
+    /* Sosyal login butonlari modern */
+    #cdg-auth a.btn,
+    #cdg-auth .login-button,
+    #cdg-auth .social-btn,
+    .cdg-auth-card .btn-google,
+    .cdg-auth-card .btn-facebook,
+    .cdg-auth-card .clientarea-connection-buttons a {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 12px 16px !important;
+        border-radius: 10px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        text-decoration: none !important;
+        margin-bottom: 8px !important;
+        border: 2px solid #e2e8f0 !important;
+        background: #fff !important;
+        color: #0f172a !important;
+        transition: all 0.2s !important;
+    }
+    #cdg-auth a.btn:hover,
+    .cdg-auth-card .clientarea-connection-buttons a:hover {
+        border-color: #00D3E5 !important;
+        background: #f0fdff !important;
+        transform: translateY(-1px);
+    }
+
+    /* Captcha alanı - modern */
+    .cdg-auth-card .captcha-image,
+    .cdg-auth-card img[src*="captcha"] {
+        border-radius: 10px !important;
+        border: 2px solid #e2e8f0;
+        max-width: 220px !important;
+    }
+
+    /* Beni hatırla checkbox */
+    .cdg-auth-card .checkbox-row,
+    .cdg-auth-card label[for*="remember"],
+    .cdg-auth-card .remember-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 0;
+        font-size: 13px !important;
+        color: #475569 !important;
+        text-transform: none !important;
+        letter-spacing: 0 !important;
+        font-weight: 500 !important;
+        cursor: pointer;
+    }
+
+    /* ====================================================
+       RESPONSIVE - tum boyutlar duzenli
+       ==================================================== */
+
+    @media (max-width: 1100px) {
+        .cdg-auth-grid {
+            grid-template-columns: 1fr 420px !important;
+            gap: 40px !important;
+        }
+        .cdg-auth-card { padding: 36px !important; }
+        .cdg-auth-promo h1 { font-size: clamp(28px, 3.2vw, 36px) !important; }
+        .cdg-auth-quick-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 980px) {
+        .cdg-auth-grid {
+            grid-template-columns: 1fr !important;
+            gap: 32px !important;
+            max-width: 540px !important;
+        }
+        .cdg-auth-promo {
+            display: block !important;
+            order: 1;
+            text-align: center;
+        }
+        .cdg-auth-form-wrap { order: 2; }
+        .cdg-auth-promo h1 { font-size: 28px !important; max-width: 100%; }
+        .cdg-auth-lead { max-width: 100%; font-size: 14px !important; }
+        .cdg-auth-brand { justify-content: center; }
+        .cdg-auth-pill { margin: 0 auto 16px; }
+        .cdg-auth-preview { display: none; }
+        .cdg-auth-quick-grid { grid-template-columns: repeat(4, 1fr); margin: 16px 0; }
+        .cdg-auth-quick-item { padding: 10px 6px; }
+        .cdg-auth-quick-icon { font-size: 18px; }
+        .cdg-auth-cta-card {
+            flex-direction: row !important;
+            text-align: left;
+        }
+        .cdg-auth-trust-row { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+        .cdg-auth-section { padding: 24px 16px; }
+        .cdg-auth-card { padding: 28px 20px !important; border-radius: 18px !important; }
+        .cdg-auth-card-head h2 { font-size: 22px !important; }
+        .cdg-auth-promo h1 { font-size: 24px !important; }
+        .cdg-auth-lead { font-size: 13px !important; margin-bottom: 18px !important; }
+        .cdg-auth-quick-grid { display: none; }
+        .cdg-auth-cta-card {
+            flex-direction: column !important;
+            gap: 12px;
+            text-align: center;
+        }
+        .cdg-auth-cta-btn { width: 100%; justify-content: center; }
+        .cdg-auth-trust-row { gap: 6px; }
+        .cdg-auth-trust-item { padding: 10px 4px; font-size: 10px; }
+        .cdg-auth-trust-item i { font-size: 16px; }
+    }
+
+    @media (max-width: 420px) {
+        .cdg-auth-card { padding: 24px 16px !important; }
+        .cdg-auth-card label { font-size: 11px !important; }
+        .cdg-auth-card input { font-size: 14px !important; padding: 12px 14px !important; }
+    }
+</style>
+<script>
+/* Password göster/gizle toggle */
+window.cdgPwdToggle = function(inputId, btn){
+    var input = document.getElementById(inputId);
+    if(!input) return;
+    var icon = btn.querySelector('i');
+    if(input.type === 'password'){
+        input.type = 'text';
+        if(icon){ icon.classList.remove('bi-eye'); icon.classList.add('bi-eye-slash'); }
+    } else {
+        input.type = 'password';
+        if(icon){ icon.classList.remove('bi-eye-slash'); icon.classList.add('bi-eye'); }
+    }
+};
+</script>
