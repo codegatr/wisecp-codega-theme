@@ -616,6 +616,50 @@ foreach($options as $opt_k => $opt_v) {
     color: var(--p-primary);
 }
 
+/* === ALT-TAB (Transfer pane içinde) === */
+.cdg-pd2-subtab {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--p-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.cdg-pd2-subtab:hover { color: var(--p-text); }
+.cdg-pd2-subtab.active {
+    color: var(--p-primary);
+    border-bottom-color: var(--p-primary);
+}
+.cdg-pd2-subpane { animation: cdgFadeIn 0.2s ease; }
+@keyframes cdgFadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* === WARNING BUTTON === */
+.cdg-pd2-btn-warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff;
+    border: 0;
+}
+.cdg-pd2-btn-warning:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(245,158,11,0.30);
+}
+
+/* === ALERT DANGER === */
+.cdg-pd2-alert-danger {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    border-color: #fca5a5;
+    color: #991b1b;
+}
+.cdg-pd2-alert-danger i { color: #dc2626; }
+
 </style>
 
 <div class="cdg-pd2">
@@ -700,6 +744,9 @@ foreach($options as $opt_k => $opt_v) {
         <?php if($cdg_pd_kind === 'hosting'): ?>
         <button class="cdg-pd2-tab" data-pane="emails"><i class="bi bi-envelope"></i> E-posta</button>
         <?php endif; ?>
+        <?php if(!empty($requirements) && is_array($requirements)): ?>
+        <button class="cdg-pd2-tab" data-pane="requirements"><i class="bi bi-check2-square"></i> Bilgi Formları</button>
+        <?php endif; ?>
         <?php if(!empty($addons)): ?>
         <button class="cdg-pd2-tab" data-pane="addons"><i class="bi bi-rocket-takeoff"></i> Ek Hizmetler</button>
         <?php endif; ?>
@@ -759,11 +806,13 @@ foreach($options as $opt_k => $opt_v) {
                         <li>
                             <span class="cdg-pd2-info-label">Otomatik Ödeme</span>
                             <span class="cdg-pd2-info-value">
+                                <button type="button" onclick="cdgPd2.toggleAutoPay()" style="background:transparent;border:0;padding:0;cursor:pointer;" title="<?php echo $d_autopay ? 'Otomatik ödemeyi kapat' : 'Otomatik ödemeyi aç'; ?>">
                                 <?php if($d_autopay): ?>
                                     <span class="cdg-pd2-badge cdg-pd2-badge-success"><i class="bi bi-check-circle-fill"></i> Açık</span>
                                 <?php else: ?>
                                     <span class="cdg-pd2-badge cdg-pd2-badge-info"><i class="bi bi-x-circle"></i> Kapalı</span>
                                 <?php endif; ?>
+                                </button>
                             </span>
                         </li>
                         <?php if($d_renewal_date && $d_renewal_date !== $d_duedate): ?>
@@ -1299,13 +1348,21 @@ foreach($options as $opt_k => $opt_v) {
                 <form id="cdg-pd2-pwd-form" onsubmit="return false;">
                     <div class="cdg-pd2-field">
                         <label class="cdg-pd2-label">Yeni Şifre</label>
-                        <input type="password" id="cdg-pd2-newpass" class="cdg-pd2-input" minlength="8" autocomplete="new-password">
+                        <div style="display:flex;gap:8px;">
+                            <input type="password" id="cdg-pd2-newpass" class="cdg-pd2-input" minlength="8" autocomplete="new-password" style="flex:1;">
+                            <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" onclick="cdgPd2.generatePassword('cdg-pd2-newpass'); document.getElementById('cdg-pd2-newpass2').value = document.getElementById('cdg-pd2-newpass').value;" title="Güçlü şifre oluştur">
+                                <i class="bi bi-arrow-repeat"></i> Otomatik Oluştur
+                            </button>
+                        </div>
+                        <small style="display:block;margin-top:4px;color:#64748b;font-size:11px;">
+                            <i class="bi bi-info-circle"></i> En az 8 karakter, harf+rakam+sembol önerilir
+                        </small>
                     </div>
                     <div class="cdg-pd2-field">
                         <label class="cdg-pd2-label">Yeni Şifre (Tekrar)</label>
                         <input type="password" id="cdg-pd2-newpass2" class="cdg-pd2-input" minlength="8" autocomplete="new-password">
                     </div>
-                    <div style="display:flex;justify-content:flex-end;">
+                    <div style="display:flex;justify-content:flex-end;gap:8px;">
                         <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary" onclick="cdgPd2.changePassword()">
                             <i class="bi bi-key"></i> Şifreyi Değiştir
                         </button>
@@ -1458,65 +1515,155 @@ foreach($options as $opt_k => $opt_v) {
     <!-- E-POSTA YÖNETİMİ -->
     <?php if($cdg_pd_kind === 'hosting'): ?>
     <div class="cdg-pd2-pane" id="cdg-pd2-pane-emails">
-        <div class="cdg-pd2-card">
-            <div class="cdg-pd2-card-head">
-                <h3><i class="bi bi-envelope-fill"></i> E-posta Yönetimi</h3>
-                <a href="<?php echo htmlspecialchars($d_panel_link ?: '#', ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-primary cdg-pd2-btn-sm">
-                    <i class="bi bi-plus-circle"></i> Yeni E-posta Ekle
-                </a>
-            </div>
-            <div class="cdg-pd2-card-body">
-                <?php if(!empty($email_limit) || !empty($options['email_limit'])):
-                    $cur_emails = $options['used_email_count'] ?? null;
-                    $email_lim_val = $email_limit ?: ($options['email_limit'] ?? 0);
-                ?>
-                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin-bottom:14px;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+        <?php
+        // Hosting modülünün e-posta yönetimini destekleyip desteklemediği
+        $supports_email_create = false;
+        $supports_email_delete = false;
+        if(isset($module_con) && is_object($module_con)) {
+            if(method_exists($module_con, 'createEmail') || method_exists($module_con, 'create_email')) $supports_email_create = true;
+            if(method_exists($module_con, 'deleteEmail') || method_exists($module_con, 'delete_email')) $supports_email_delete = true;
+        }
+        // Domains for email creation (hosting domain + addon domains)
+        $email_domains = [];
+        if($d_domain) $email_domains[] = $d_domain;
+        if(!empty($options['addon_domains']) && is_array($options['addon_domains'])) {
+            foreach($options['addon_domains'] as $ad) $email_domains[] = $ad;
+        }
+
+        $cur_email_count = $options['used_email_count'] ?? null;
+        $email_lim_val = $email_limit ?: ($options['email_limit'] ?? 0);
+        ?>
+
+        <!-- E-POSTA KOTASI -->
+        <?php if($email_lim_val !== null): ?>
+        <div class="cdg-pd2-card" style="margin-bottom:14px;">
+            <div class="cdg-pd2-card-body" style="padding:16px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                    <div style="display:flex;align-items:center;gap:14px;">
+                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#1e40af;flex-shrink:0;">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
                         <div>
-                            <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">
-                                <i class="bi bi-envelope"></i> E-posta Kotanız
-                            </div>
+                            <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;">E-posta Kotanız</div>
                             <div style="font-size:18px;font-weight:800;color:#0f172a;">
-                                <?php if($cur_emails !== null): ?>
-                                    <?php echo (int)$cur_emails; ?> / <?php echo $email_lim_val == 0 ? 'Sınırsız' : (int)$email_lim_val; ?> hesap
+                                <?php if($cur_email_count !== null): ?>
+                                    <?php echo (int)$cur_email_count; ?> / <?php echo $email_lim_val == 0 ? '∞' : (int)$email_lim_val; ?>
                                 <?php else: ?>
-                                    <?php echo $email_lim_val == 0 ? 'Sınırsız hesap' : (int)$email_lim_val . ' hesap kotanız var'; ?>
+                                    <?php echo $email_lim_val == 0 ? 'Sınırsız' : (int)$email_lim_val . ' adet'; ?>
                                 <?php endif; ?>
+                                <span style="font-size:13px;font-weight:600;color:#64748b;"> hesap</span>
                             </div>
                         </div>
-                        <a href="<?php echo htmlspecialchars($d_panel_link ?: ($options['cp_url'] ?? '#'), ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm">
-                            <i class="bi bi-box-arrow-up-right"></i> cPanel'de Yönet
-                        </a>
                     </div>
+                    <?php if($cp_url_hero): ?>
+                    <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm">
+                        <i class="bi bi-box-arrow-up-right"></i> cPanel'de Detaylı Yönet
+                    </a>
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
+            </div>
+        </div>
+        <?php endif; ?>
 
+        <!-- YENİ E-POSTA EKLE -->
+        <?php if($supports_email_create && !empty($email_domains)): ?>
+        <div class="cdg-pd2-card" style="margin-bottom:14px;">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-envelope-plus"></i> Yeni E-posta Ekle</h3>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <form id="cdg-pd2-add-email-form" onsubmit="return false;">
+                    <div class="cdg-pd2-grid-2" style="gap:12px;">
+                        <div class="cdg-pd2-field">
+                            <label class="cdg-pd2-label">E-posta Adresi</label>
+                            <div style="display:flex;align-items:stretch;gap:0;">
+                                <input type="text" id="cdg-pd2-email-prefix" class="cdg-pd2-input" placeholder="ornek" style="border-radius:10px 0 0 10px;border-right:0;">
+                                <span style="display:flex;align-items:center;padding:0 10px;background:#f8fafc;border:1px solid var(--p-border);font-size:14px;font-weight:600;color:#64748b;">@</span>
+                                <select id="cdg-pd2-email-domain" class="cdg-pd2-input" style="border-radius:0 10px 10px 0;border-left:0;flex:1;">
+                                    <?php foreach($email_domains as $ed): ?>
+                                    <option value="<?php echo htmlspecialchars($ed, ENT_QUOTES); ?>"><?php echo htmlspecialchars($ed, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="cdg-pd2-field">
+                            <label class="cdg-pd2-label">Şifre</label>
+                            <div style="display:flex;gap:6px;">
+                                <input type="text" id="cdg-pd2-email-pass" class="cdg-pd2-input" minlength="8" placeholder="En az 8 karakter" style="flex:1;">
+                                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm" onclick="cdgPd2.generatePassword('cdg-pd2-email-pass')" title="Otomatik">
+                                    <i class="bi bi-arrow-repeat"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cdg-pd2-grid-2" style="gap:12px;align-items:flex-end;">
+                        <div class="cdg-pd2-field">
+                            <label class="cdg-pd2-label">Kota (MB)</label>
+                            <input type="number" id="cdg-pd2-email-quota" class="cdg-pd2-input" placeholder="250" min="0">
+                        </div>
+                        <div class="cdg-pd2-field">
+                            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#475569;">
+                                <input type="checkbox" id="cdg-pd2-email-unlimited" style="width:18px;height:18px;">
+                                <span><i class="bi bi-infinity"></i> Sınırsız kota</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;">
+                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary" onclick="cdgPd2.addEmail()">
+                            <i class="bi bi-plus-circle"></i> E-posta Hesabı Oluştur
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <!-- MEVCUT E-POSTA HESAPLARI -->
+        <div class="cdg-pd2-card">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-list-ul"></i> Mevcut E-posta Hesapları</h3>
+            </div>
+            <div class="cdg-pd2-card-body">
                 <?php if(isset($mailaccs) && is_array($mailaccs) && !empty($mailaccs)): ?>
                 <table class="cdg-pd2-table" style="width:100%;border-collapse:separate;border-spacing:0 4px;">
                     <thead>
                         <tr style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#64748b;">
                             <th style="text-align:left;padding:8px 12px;">E-posta Adresi</th>
                             <th style="text-align:right;padding:8px 12px;">Kota</th>
-                            <th style="width:80px;"></th>
+                            <th style="width:100px;text-align:center;"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach($mailaccs as $em):
                             $em_addr = is_array($em) ? ($em['email'] ?? ($em['address'] ?? '-')) : $em;
                             $em_quota = is_array($em) ? ($em['quota'] ?? 0) : 0;
+                            $em_used  = is_array($em) ? ($em['used'] ?? 0) : 0;
                         ?>
                         <tr style="background:#fff;">
                             <td style="padding:10px 12px;border-radius:8px 0 0 8px;border:1px solid #e2e8f0;border-right:0;">
                                 <i class="bi bi-envelope" style="color:#1e40af;margin-right:6px;"></i>
-                                <code><?php echo htmlspecialchars($em_addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
+                                <code style="font-size:13px;"><?php echo htmlspecialchars($em_addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
                             </td>
                             <td style="padding:10px 12px;text-align:right;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#64748b;">
-                                <?php echo $em_quota == 0 ? 'Sınırsız' : (int)$em_quota . ' MB'; ?>
+                                <?php if($em_used && $em_quota): ?>
+                                    <?php echo (int)$em_used; ?> / <?php echo (int)$em_quota; ?> MB
+                                <?php elseif($em_quota): ?>
+                                    <?php echo (int)$em_quota; ?> MB
+                                <?php else: ?>
+                                    <i class="bi bi-infinity"></i> Sınırsız
+                                <?php endif; ?>
                             </td>
-                            <td style="padding:10px 12px;border-radius:0 8px 8px 0;border:1px solid #e2e8f0;border-left:0;">
-                                <a href="<?php echo htmlspecialchars($d_panel_link ?: '#', ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" title="cPanel'de yönet">
+                            <td style="padding:10px 12px;border-radius:0 8px 8px 0;border:1px solid #e2e8f0;border-left:0;text-align:right;">
+                                <?php if($cp_url_hero): ?>
+                                <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" title="cPanel'de yönet">
                                     <i class="bi bi-pencil"></i>
                                 </a>
+                                <?php endif; ?>
+                                <?php if($supports_email_delete): ?>
+                                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" onclick="cdgPd2.deleteEmail('<?php echo htmlspecialchars($em_addr, ENT_QUOTES); ?>')" title="Sil" style="color:#dc2626;">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -1525,31 +1672,114 @@ foreach($options as $opt_k => $opt_v) {
                 <?php else: ?>
                 <div class="cdg-pd2-empty">
                     <i class="bi bi-envelope-paper"></i>
-                    <h4>E-posta Hesabı Listesi cPanel'den Yönetilir</h4>
-                    <p>E-posta hesaplarınızı görüntülemek, eklemek veya silmek için <strong>Kontrol Paneli</strong> üzerinden işlem yapın.</p>
-                    <?php if($d_panel_link || !empty($options['cp_url'])): ?>
-                    <a href="<?php echo htmlspecialchars($d_panel_link ?: $options['cp_url'], ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-primary">
+                    <h4>Henüz E-posta Hesabınız Yok</h4>
+                    <?php if($supports_email_create): ?>
+                    <p>Yukarıdaki formu kullanarak yeni e-posta hesabı oluşturabilirsiniz.</p>
+                    <?php else: ?>
+                    <p>E-posta hesaplarınızı görüntülemek ve yönetmek için <strong>Kontrol Paneli</strong> üzerinden işlem yapın.</p>
+                    <?php if($cp_url_hero): ?>
+                    <a href="<?php echo htmlspecialchars($cp_url_hero, ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-primary">
                         <i class="bi bi-box-arrow-up-right"></i> cPanel / Kontrol Paneline Git
                     </a>
+                    <?php endif; ?>
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>
             </div>
         </div>
 
+        <!-- E-POSTA YÖNLENDİRMELERİ -->
+        <?php if(isset($forwards) && is_array($forwards) && !empty($forwards)): ?>
         <div class="cdg-pd2-card" style="margin-top:14px;">
             <div class="cdg-pd2-card-head">
-                <h3><i class="bi bi-arrow-right-circle"></i> E-posta Yönlendirme</h3>
+                <h3><i class="bi bi-arrow-right-circle"></i> E-posta Yönlendirmeleri (<?php echo count($forwards); ?>)</h3>
             </div>
             <div class="cdg-pd2-card-body">
-                <p style="color:#64748b;margin:0 0 10px;">
-                    Gelen e-postalarınızı başka bir adrese yönlendirmek için cPanel'in "Forwarders" bölümünü kullanın.
-                </p>
-                <?php if($d_panel_link || !empty($options['cp_url'])): ?>
-                <a href="<?php echo htmlspecialchars($d_panel_link ?: $options['cp_url'], ENT_QUOTES); ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm">
-                    <i class="bi bi-arrow-right"></i> Forwarders Yönetimi
-                </a>
-                <?php endif; ?>
+                <table class="cdg-pd2-table" style="width:100%;border-collapse:separate;border-spacing:0 4px;">
+                    <thead>
+                        <tr style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#64748b;">
+                            <th style="text-align:left;padding:8px 12px;">Kaynak</th>
+                            <th style="padding:8px 12px;"></th>
+                            <th style="text-align:left;padding:8px 12px;">Hedef</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($forwards as $fw):
+                            $fw_src = is_array($fw) ? ($fw['dest'] ?? '') : '';
+                            $fw_dst = is_array($fw) ? ($fw['forward'] ?? '') : '';
+                        ?>
+                        <tr style="background:#fff;">
+                            <td style="padding:10px 12px;border-radius:8px 0 0 8px;border:1px solid #e2e8f0;border-right:0;">
+                                <code style="font-size:12px;"><?php echo htmlspecialchars($fw_src, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
+                            </td>
+                            <td style="padding:10px 8px;text-align:center;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;color:#94a3b8;">
+                                <i class="bi bi-arrow-right"></i>
+                            </td>
+                            <td style="padding:10px 12px;border-radius:0 8px 8px 0;border:1px solid #e2e8f0;border-left:0;">
+                                <code style="font-size:12px;"><?php echo htmlspecialchars($fw_dst, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
+
+    <!-- GEREKSINIMLER (REQUIREMENTS) -->
+    <?php if(!empty($requirements) && is_array($requirements)): ?>
+    <div class="cdg-pd2-pane" id="cdg-pd2-pane-requirements">
+        <div class="cdg-pd2-card">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-check2-square"></i> Bilgi Formları</h3>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <div class="cdg-pd2-alert cdg-pd2-alert-info" style="margin-bottom:14px;">
+                    <i class="bi bi-info-circle-fill"></i>
+                    <div>Aşağıdaki bilgileri sipariş esnasında siz tarafınızdan girilmiş veya bizim tarafımızdan size gönderilmiştir.</div>
+                </div>
+                <ul class="cdg-pd2-info">
+                    <?php foreach($requirements as $req):
+                        $req_name = $req['requirement_name'] ?? ($req['name'] ?? '');
+                        $req_response = $req['response'] ?? '';
+                        $req_type = $req['response_type'] ?? 'text';
+                        $req_id = $req['id'] ?? 0;
+
+                        // Decode JSON for select/radio/checkbox/file
+                        if(in_array($req_type, ['select', 'radio', 'checkbox', 'file']) && is_string($req_response)) {
+                            if(class_exists('Utility') && method_exists('Utility','jdecode')) {
+                                try { $req_response_decoded = Utility::jdecode($req_response, true); } catch(\Throwable $e) { $req_response_decoded = json_decode($req_response, true); }
+                            } else {
+                                $req_response_decoded = json_decode($req_response, true);
+                            }
+                            if(!is_array($req_response_decoded)) $req_response_decoded = [];
+                        }
+                    ?>
+                    <li>
+                        <span class="cdg-pd2-info-label"><?php echo htmlspecialchars($req_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                        <span class="cdg-pd2-info-value">
+                            <?php if($req_type === 'file' && !empty($req_response_decoded)): ?>
+                                <?php foreach($req_response_decoded as $k => $f):
+                                    $file_name = is_array($f) ? ($f['file_name'] ?? 'dosya') : $f;
+                                    $dl_link = $controller_url . '?operation=requirement-file-download&rid=' . (int)$req_id . '&key=' . htmlspecialchars($k, ENT_QUOTES);
+                                ?>
+                                <a href="<?php echo $dl_link; ?>" target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm" style="margin-right:6px;">
+                                    <i class="bi bi-file-earmark-arrow-down"></i> <?php echo htmlspecialchars($file_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                                </a>
+                                <?php endforeach; ?>
+                            <?php elseif(in_array($req_type, ['select', 'radio']) && !empty($req_response_decoded)): ?>
+                                <?php echo htmlspecialchars(is_array($req_response_decoded) ? ($req_response_decoded[0] ?? '') : $req_response_decoded, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                            <?php elseif($req_type === 'checkbox' && !empty($req_response_decoded)): ?>
+                                <?php echo htmlspecialchars(implode(', ', (array)$req_response_decoded), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                            <?php else: ?>
+                                <?php echo nl2br(htmlspecialchars((string)$req_response, ENT_QUOTES | ENT_HTML5, 'UTF-8')); ?>
+                            <?php endif; ?>
+                        </span>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </div>
     </div>
@@ -1639,58 +1869,136 @@ foreach($options as $opt_k => $opt_v) {
     <!-- TRANSFER -->
     <?php if(in_array($cdg_pd_kind, ['hosting','server'])): ?>
     <div class="cdg-pd2-pane" id="cdg-pd2-pane-transfer">
+        <?php
+        $ctoc_lim_active = isset($ctoc_limit) && strlen((string)$ctoc_limit) > 0;
+        $ctoc_used_val = $ctoc_used ?? 0;
+        $ctoc_expired = $ctoc_has_expired ?? false;
+        ?>
         <div class="cdg-pd2-card">
             <div class="cdg-pd2-card-head">
-                <h3><i class="bi bi-arrow-left-right"></i> Hizmet Taşıma</h3>
+                <h3><i class="bi bi-arrow-left-right"></i> Hizmet Taşıma & Devir</h3>
             </div>
             <div class="cdg-pd2-card-body">
-                <div style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border:1px solid #93c5fd;border-radius:10px;padding:18px;margin-bottom:14px;">
-                    <div style="display:flex;align-items:flex-start;gap:14px;">
-                        <i class="bi bi-info-circle-fill" style="color:#1e40af;font-size:24px;flex-shrink:0;"></i>
+                <!-- ALT-TAB NAV -->
+                <div style="display:flex;gap:6px;border-bottom:1px solid #e2e8f0;margin-bottom:16px;flex-wrap:wrap;">
+                    <button type="button" class="cdg-pd2-subtab active" data-subtab="server-migration" onclick="cdgPd2SubTab(event,'server-migration')">
+                        <i class="bi bi-cloud-arrow-up"></i> Sunucu Taşıma (Eski → Codega)
+                    </button>
+                    <button type="button" class="cdg-pd2-subtab" data-subtab="account-transfer" onclick="cdgPd2SubTab(event,'account-transfer')">
+                        <i class="bi bi-person-check"></i> Hesap Devri (Müşteriye)
+                    </button>
+                </div>
+
+                <!-- ALT-TAB 1: Sunucu Taşıma -->
+                <div id="cdg-pd2-subtab-server-migration" class="cdg-pd2-subpane">
+                    <div class="cdg-pd2-alert cdg-pd2-alert-info" style="margin-bottom:14px;">
+                        <i class="bi bi-info-circle-fill"></i>
                         <div>
-                            <h4 style="margin:0 0 6px;color:#1e3a8a;">Ücretsiz Taşıma Hizmeti</h4>
-                            <p style="margin:0;color:#1e40af;font-size:13.5px;line-height:1.6;">
-                                Mevcut hosting/sunucu sağlayıcınızdan <strong>5 web sitesine kadar</strong> ücretsiz taşıma yapıyoruz.
-                                Standart taşıma süresi <strong>1-24 saat</strong> arasındadır.
-                            </p>
+                            <strong>Ücretsiz Taşıma Hizmeti</strong><br>
+                            Mevcut hosting/sunucu sağlayıcınızdan <strong>5 web sitesine kadar</strong> ücretsiz taşıma yapıyoruz. Standart taşıma süresi <strong>1-24 saat</strong> arasındadır.
                         </div>
+                    </div>
+                    <h4 style="margin:16px 0 10px;font-size:13px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.5px;">Bizden istediğiniz şeyler:</h4>
+                    <ul style="margin:0 0 16px;padding-left:22px;color:#475569;line-height:1.8;font-size:13.5px;">
+                        <li>Eski hosting/sunucu erişim bilgileri (cPanel/Plesk/DA URL, kullanıcı adı, şifre)</li>
+                        <li>Veya FTP + veritabanı (MySQL) erişim bilgileri</li>
+                        <li>Domain'in NS sunucularını <strong><?php echo !empty($d_dns) ? htmlspecialchars(is_array($d_dns[0]) ? implode(' ', $d_dns[0]) : $d_dns[0], ENT_QUOTES) : 'CODEGA NS'; ?></strong> olarak güncelleme erişiminiz</li>
+                    </ul>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <a href="<?php echo cdg_link('ac-ps-create-ticket-request'); ?>?subject=Sunucu+Tasima+Talebi+%23<?php echo (int)$d_id; ?>" class="cdg-pd2-btn cdg-pd2-btn-primary">
+                            <i class="bi bi-send"></i> Taşıma Talebi Oluştur
+                        </a>
+                        <a href="https://wa.me/908508850707?text=Merhaba%2C+%23<?php echo (int)$d_id; ?>+numarali+hizmetimi+tasitmak+istiyorum." target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline">
+                            <i class="bi bi-whatsapp"></i> WhatsApp ile İletişim
+                        </a>
                     </div>
                 </div>
 
-                <h4 style="margin:18px 0 10px;font-size:14px;font-weight:700;">Taşıma için ihtiyacımız olanlar:</h4>
-                <ul style="margin:0 0 16px;padding-left:22px;color:#475569;line-height:1.8;">
-                    <li>Eski hosting/sunucu erişim bilgileri (cPanel/Plesk URL, kullanıcı adı, şifre)</li>
-                    <li>Veya FTP + veritabanı (MySQL) erişim bilgileri</li>
-                    <li>Domain'in NS sunucularını <strong><?php echo !empty($d_dns) ? htmlspecialchars(is_array($d_dns[0]) ? implode(' ', $d_dns[0]) : $d_dns[0], ENT_QUOTES) : 'CODEGA NS'; ?></strong> olarak güncelleyebileceğiniz erişim</li>
-                </ul>
+                <!-- ALT-TAB 2: Hesap Devri -->
+                <div id="cdg-pd2-subtab-account-transfer" class="cdg-pd2-subpane" style="display:none;">
+                    <div class="cdg-pd2-alert cdg-pd2-alert-warning" style="margin-bottom:14px;">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <div>
+                            <strong>Bu hizmeti başka bir CODEGA müşterisine devretmek üzeresiniz.</strong><br>
+                            Devir tamamlandığında bu hizmet artık sizin hesabınızda görünmeyecek. Bu işlem geri alınamaz.
+                        </div>
+                    </div>
 
-                <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                    <a href="<?php echo cdg_link('ac-ps-create-ticket-request'); ?>?subject=Hizmet+Tasima+Talebi+%23<?php echo (int)$d_id; ?>" class="cdg-pd2-btn cdg-pd2-btn-primary">
-                        <i class="bi bi-send"></i> Taşıma Talebi Oluştur
-                    </a>
-                    <a href="https://wa.me/908508850707?text=Merhaba%2C+%23<?php echo (int)$d_id; ?>+numarali+hizmetimi+tasitmak+istiyorum." target="_blank" rel="noopener" class="cdg-pd2-btn cdg-pd2-btn-outline">
-                        <i class="bi bi-whatsapp"></i> WhatsApp ile İletişim
-                    </a>
+                    <?php if($ctoc_lim_active): ?>
+                    <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:inline-flex;align-items:center;gap:10px;">
+                        <i class="bi bi-check-circle-fill" style="color:#16a34a;"></i>
+                        <div style="font-size:13px;color:#15803d;">
+                            <strong>Devir Hakkı:</strong> <?php echo (int)($ctoc_limit - $ctoc_used_val); ?> / <?php echo (int)$ctoc_limit; ?> kalan
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if(!$ctoc_expired): ?>
+                    <form id="cdg-pd2-transfer-form" onsubmit="return false;">
+                        <div class="cdg-pd2-grid-2" style="gap:12px;">
+                            <div class="cdg-pd2-field">
+                                <label class="cdg-pd2-label">Devredilecek Kullanıcının E-postası</label>
+                                <input type="email" id="cdg-pd2-transfer-email" class="cdg-pd2-input" placeholder="alici@example.com" required>
+                            </div>
+                            <div class="cdg-pd2-field">
+                                <label class="cdg-pd2-label">Hesap Şifreniz</label>
+                                <input type="password" id="cdg-pd2-transfer-pass" class="cdg-pd2-input" placeholder="Doğrulama için şifrenizi girin" required>
+                            </div>
+                        </div>
+                        <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;">
+                            <button type="button" class="cdg-pd2-btn cdg-pd2-btn-warning" onclick="cdgPd2.transferService()">
+                                <i class="bi bi-send-arrow-up"></i> Devir Talebi Gönder
+                            </button>
+                        </div>
+                    </form>
+                    <?php else: ?>
+                    <div class="cdg-pd2-alert cdg-pd2-alert-danger">
+                        <i class="bi bi-x-circle-fill"></i>
+                        <div>Devir hakkınız bulunmuyor. Detay için destek ekibimizle iletişime geçin.</div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if(isset($ctoc_s_t_list) && is_array($ctoc_s_t_list) && !empty($ctoc_s_t_list)): ?>
+                    <h4 style="margin:24px 0 10px;font-size:13px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.5px;">
+                        <i class="bi bi-hourglass-split"></i> Bekleyen Devir Talepleri
+                    </h4>
+                    <table class="cdg-pd2-table" style="width:100%;border-collapse:separate;border-spacing:0 4px;">
+                        <thead>
+                            <tr style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#64748b;">
+                                <th style="text-align:left;padding:8px 12px;">Alıcı</th>
+                                <th style="text-align:left;padding:8px 12px;">E-posta</th>
+                                <th style="text-align:left;padding:8px 12px;">Tarih</th>
+                                <th style="width:80px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($ctoc_s_t_list as $tr):
+                                $tr_id = $tr['id'] ?? 0;
+                                $tr_data = $tr['data'] ?? [];
+                                if(is_string($tr_data)) {
+                                    if(class_exists('Utility')) { try { $tr_data = Utility::jdecode($tr_data, true); } catch(\Throwable $e) { $tr_data = json_decode($tr_data, true); } }
+                                    else $tr_data = json_decode($tr_data, true);
+                                }
+                                $tr_name = $tr_data['to_full_name'] ?? '-';
+                                $tr_email = $tr_data['to_email'] ?? '-';
+                                $tr_date = $tr['cdate'] ?? '';
+                                if(mb_strlen($tr_name) > 2) $tr_name = mb_substr($tr_name, 0, 2) . str_repeat('*', max(2, mb_strlen($tr_name) - 2));
+                            ?>
+                            <tr id="cdg-pd2-tr-<?php echo (int)$tr_id; ?>" style="background:#fff;">
+                                <td style="padding:10px 12px;border-radius:8px 0 0 8px;border:1px solid #e2e8f0;border-right:0;font-size:13px;"><?php echo htmlspecialchars($tr_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></td>
+                                <td style="padding:10px 12px;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:13px;"><code><?php echo htmlspecialchars($tr_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></td>
+                                <td style="padding:10px 12px;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:12px;color:#64748b;"><?php echo cdg_pd_date($tr_date); ?></td>
+                                <td style="padding:10px 12px;border-radius:0 8px 8px 0;border:1px solid #e2e8f0;border-left:0;text-align:center;">
+                                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" onclick="cdgPd2.removeTransfer(<?php echo (int)$tr_id; ?>)" title="Talebi iptal et" style="color:#dc2626;">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <?php endif; ?>
                 </div>
-
-                <?php if(isset($transfers) && is_array($transfers) && !empty($transfers)): ?>
-                <h4 style="margin:24px 0 10px;font-size:14px;font-weight:700;">Bekleyen Taşıma Talepleriniz</h4>
-                <ul class="cdg-pd2-info">
-                    <?php foreach($transfers as $tr):
-                        $tr_status = $tr['status'] ?? 'pending';
-                        $tr_subject = $tr['subject'] ?? 'Taşıma Talebi';
-                        $tr_date = $tr['cdate'] ?? '';
-                    ?>
-                    <li>
-                        <span class="cdg-pd2-info-label"><?php echo htmlspecialchars($tr_subject, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
-                        <span class="cdg-pd2-info-value">
-                            <span class="cdg-pd2-badge cdg-pd2-badge-warning"><?php echo htmlspecialchars(ucfirst($tr_status), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
-                            <small style="color:#94a3b8;margin-left:8px;"><?php echo cdg_pd_date($tr_date); ?></small>
-                        </span>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
-                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -1855,160 +2163,235 @@ window.cdgPd2 = {
     productId: <?php echo (int)$d_id; ?>,
     controllerUrl: '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
 
+    // === Toast Notification (kendi fallback'imiz) ===
+    _toast: function(msg, type){
+        // WiseCP varsa kullan
+        if(type === 'success' && typeof alert_success === 'function') return alert_success(msg, {timer: 2500});
+        if(type === 'error' && typeof alert_error === 'function')   return alert_error(msg, {timer: 4000});
+        if(type === 'info' && typeof alert_info === 'function')     return alert_info(msg, {timer: 2500});
+
+        // Fallback: kendi toast'umuz
+        var t = document.createElement('div');
+        var clr = type === 'error' ? '#dc2626' : (type === 'success' ? '#10b981' : '#1e40af');
+        t.style.cssText = 'position:fixed;top:20px;right:20px;background:'+clr+';color:#fff;padding:14px 20px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.20);z-index:99999;font-size:14px;font-weight:600;max-width:380px;animation:cdgToastIn 0.3s ease;';
+        t.innerHTML = '<i class="bi bi-'+(type==='error'?'exclamation-circle':(type==='success'?'check-circle':'info-circle'))+'"></i> '+msg;
+        document.body.appendChild(t);
+        setTimeout(function(){ t.style.opacity = '0'; t.style.transform = 'translateX(20px)'; t.style.transition = 'all 0.3s'; }, 3000);
+        setTimeout(function(){ t.remove(); }, 3400);
+    },
+
+    // === HTTP POST (MioAjax varsa onu, yoksa fetch) ===
+    _post: function(data, onSuccess, onError){
+        var self = this;
+        // MioAjax varsa kullan (Classic uyumlu)
+        if(typeof MioAjax === 'function') {
+            MioAjax({
+                url: this.controllerUrl,
+                type: 'post',
+                data: data,
+                result: function(r){
+                    if(typeof r === 'string') {
+                        try { r = JSON.parse(r); } catch(e) {}
+                    }
+                    if(r && r.status === 'successful') {
+                        if(onSuccess) onSuccess(r);
+                        else { self._toast(r.message || 'İşlem başarılı', 'success'); setTimeout(function(){ location.reload(); }, 1500); }
+                    } else {
+                        if(onError) onError(r);
+                        else self._toast((r && r.message) ? r.message : 'Bir hata oluştu', 'error');
+                    }
+                }
+            });
+            return;
+        }
+        // Fallback: fetch API
+        var fd = new FormData();
+        Object.keys(data).forEach(function(k){ fd.append(k, data[k]); });
+        fetch(this.controllerUrl, { method: 'POST', body: fd, credentials: 'same-origin' })
+            .then(function(r){ return r.text(); })
+            .then(function(txt){
+                var r = null;
+                try { r = JSON.parse(txt); } catch(e) {}
+                if(r && r.status === 'successful') {
+                    if(onSuccess) onSuccess(r);
+                    else { self._toast(r.message || 'İşlem başarılı', 'success'); setTimeout(function(){ location.reload(); }, 1500); }
+                } else {
+                    if(onError) onError(r || {message: 'Sunucu yanıtı işlenemedi'});
+                    else self._toast((r && r.message) ? r.message : 'Bir hata oluştu', 'error');
+                }
+            })
+            .catch(function(err){
+                if(onError) onError({message: 'Bağlantı hatası: ' + err.message});
+                else self._toast('Bağlantı hatası', 'error');
+            });
+    },
+
     renew: function(){
         if(!confirm('Yenileme faturası oluşturulacak. Devam edilsin mi?')) return;
-        if(typeof MioAjax !== 'function') return;
-        MioAjax({
-            url: this.controllerUrl,
-            type: 'post',
-            data: { operation: 'product_renewal', id: this.productId },
-            result: function(r){
-                if(r && r.status === 'successful') {
-                    if(typeof alert_success === 'function') alert_success(r.message || 'Yenileme talebi oluşturuldu', {timer: 2000});
-                    setTimeout(function(){ if(r.redirect) location.href = r.redirect; else location.reload(); }, 1500);
-                } else if(r && r.message && typeof alert_error === 'function') {
-                    alert_error(r.message, {timer: 3000});
-                }
-            }
+        var self = this;
+        this._post({ operation: 'product_renewal', id: this.productId }, function(r){
+            self._toast(r.message || 'Yenileme talebi oluşturuldu', 'success');
+            setTimeout(function(){ if(r.redirect) location.href = r.redirect; else location.reload(); }, 1500);
         });
     },
 
     toggleAutoPay: function(){
-        if(typeof MioAjax !== 'function') return;
-        MioAjax({
-            url: this.controllerUrl,
-            type: 'post',
-            data: { operation: 'set_auto_pay_status', id: this.productId },
-            result: function(r){
-                if(r && r.status === 'successful') {
-                    if(typeof alert_success === 'function') alert_success(r.message || 'Güncellendi', {timer: 1500});
-                    setTimeout(function(){ location.reload(); }, 1200);
-                } else if(r && r.message && typeof alert_error === 'function') {
-                    alert_error(r.message, {timer: 3000});
-                }
-            }
+        var self = this;
+        this._post({ operation: 'set_auto_pay_status', id: this.productId }, function(r){
+            self._toast(r.message || 'Otomatik ödeme güncellendi', 'success');
+            setTimeout(function(){ location.reload(); }, 1200);
         });
     },
 
-    // Aktif abonelik detaylarini AJAX ile cek (Classic'in subscription_detail operation)
-    loadSubscriptionDetail: function(){
-        var statusBox = document.getElementById('cdg-pd2-subscription-status');
-        if(!statusBox || !window.jQuery) return;
-        // Classic format: GET ?operation=subscription_detail
-        jQuery.get(this.controllerUrl + '?operation=subscription_detail', function(html){
-            if(html && html.trim()) statusBox.innerHTML = html;
-        }).fail(function(){
-            // Hata durumunda PHP-side'tan render edilmis bilgileri biraz
-            statusBox.innerHTML = '<i class="bi bi-info-circle"></i> Otomatik yenileme bilgileri Classic detay endpoint\'inden alinamadi. PHP-side renderdaki bilgiler gecerlidir.';
-        });
-    },
-
-    // Aboneligi iptal et
     cancelSubscription: function(){
         if(!confirm('Otomatik yenilemeyi iptal etmek istediğinize emin misiniz? İptalden sonra ürününüz manuel olarak yenilenebilir.')) return;
-        if(typeof MioAjax !== 'function') return;
-        MioAjax({
-            url: this.controllerUrl,
-            type: 'post',
-            data: { operation: 'cancel_subscription', id: this.productId },
-            result: function(r){
-                if(r && r.status === 'successful') {
-                    if(typeof alert_success === 'function') alert_success(r.message || 'Abonelik iptal edildi', {timer: 1500});
-                    setTimeout(function(){ location.reload(); }, 1500);
-                } else if(r && r.message && typeof alert_error === 'function') {
-                    alert_error(r.message, {timer: 3000});
-                }
-            }
-        });
+        this._post({ operation: 'cancel_subscription', id: this.productId });
     },
 
+    // Aktif abonelik detayları (Classic'in subscription_detail operation)
+    loadSubscriptionDetail: function(){
+        var statusBox = document.getElementById('cdg-pd2-subscription-status');
+        if(!statusBox) return;
+        fetch(this.controllerUrl + '?operation=subscription_detail', { credentials: 'same-origin' })
+            .then(function(r){ return r.text(); })
+            .then(function(html){ if(html && html.trim()) statusBox.innerHTML = html; })
+            .catch(function(){ /* sessizce yut */ });
+    },
+
+    // Hosting kontrol paneli şifresi değiştir
     changePassword: function(){
         var p1 = document.getElementById('cdg-pd2-newpass').value;
         var p2 = document.getElementById('cdg-pd2-newpass2').value;
-        if(!p1 || p1.length < 8) {
-            if(typeof alert_error === 'function') alert_error('Şifre en az 8 karakter olmalı', {timer: 3000});
-            return;
-        }
-        if(p1 !== p2) {
-            if(typeof alert_error === 'function') alert_error('Şifreler eşleşmiyor', {timer: 3000});
-            return;
-        }
-        if(typeof MioAjax !== 'function') return;
-        MioAjax({
-            url: this.controllerUrl,
-            type: 'post',
-            data: { operation: 'change_hosting_password', id: this.productId, password: p1, password2: p2 },
-            result: function(r){
-                if(r && r.status === 'successful') {
-                    if(typeof alert_success === 'function') alert_success(r.message || 'Şifre değiştirildi', {timer: 2000});
-                    document.getElementById('cdg-pd2-newpass').value = '';
-                    document.getElementById('cdg-pd2-newpass2').value = '';
-                } else if(r && r.message && typeof alert_error === 'function') {
-                    alert_error(r.message, {timer: 3000});
-                }
-            }
+        if(!p1 || p1.length < 8) return this._toast('Şifre en az 8 karakter olmalı', 'error');
+        if(p1 !== p2) return this._toast('Şifreler eşleşmiyor', 'error');
+        var self = this;
+        this._post({ operation: 'change_hosting_password', id: this.productId, password: p1, password2: p2 }, function(r){
+            self._toast(r.message || 'Şifre değiştirildi', 'success');
+            document.getElementById('cdg-pd2-newpass').value = '';
+            document.getElementById('cdg-pd2-newpass2').value = '';
         });
     },
 
+    // Random şifre oluştur
+    generatePassword: function(targetId){
+        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@!*';
+        var pwd = '';
+        for(var i = 0; i < 14; i++) pwd += chars[Math.floor(Math.random() * chars.length)];
+        var el = document.getElementById(targetId);
+        if(el) {
+            el.type = 'text';
+            el.value = pwd;
+            this._toast('Yeni şifre oluşturuldu — kopyalamayı unutmayın!', 'info');
+        }
+    },
+
+    // Hizmet iptal talebi
     cancel: function(){
-        if(!confirm('Hizmet iptal talebinizi göndermek istediğinize emin misiniz? Bu işlem geri alınamaz.')) return;
         var urgency = document.getElementById('cdg-pd2-cancel-type').value;
         var reason = document.getElementById('cdg-pd2-cancel-reason').value;
-        if(typeof MioAjax !== 'function') return;
-        MioAjax({
-            url: this.controllerUrl,
-            type: 'post',
-            data: { operation: 'canceled_product', id: this.productId, urgency: urgency, reason: reason },
-            result: function(r){
-                if(r && r.status === 'successful') {
-                    if(typeof alert_success === 'function') alert_success(r.message || 'İptal talebiniz alındı', {timer: 2500});
-                    setTimeout(function(){ location.reload(); }, 2000);
-                } else if(r && r.message && typeof alert_error === 'function') {
-                    alert_error(r.message, {timer: 3000});
-                }
-            }
-        });
+        if(!reason || reason.trim().length < 10) return this._toast('İptal sebebini en az 10 karakter olarak yazın', 'error');
+        if(!confirm('Hizmet iptal talebinizi göndermek istediğinize emin misiniz?')) return;
+        this._post({ operation: 'canceled_product', id: this.productId, urgency: urgency, reason: reason });
     },
 
-    // Mevcut iptal talebini geri cek
+    // Mevcut iptal talebini geri çek
     removeCancellation: function(){
-        if(!confirm('Iptal talebinizi geri cekmek istediginize emin misiniz? Hizmetiniz aktif kalacaktir.')) return;
-        if(typeof MioAjax !== 'function') return;
-        MioAjax({
-            url: this.controllerUrl,
-            type: 'post',
-            data: { operation: 'remove_cancelled_product', id: this.productId },
-            result: function(r){
-                if(r && r.status === 'successful') {
-                    if(typeof alert_success === 'function') alert_success(r.message || 'Iptal talebi geri cekildi', {timer: 2500});
-                    setTimeout(function(){ location.reload(); }, 2000);
-                } else if(r && r.message && typeof alert_error === 'function') {
-                    alert_error(r.message, {timer: 3000});
-                }
-            }
+        if(!confirm('İptal talebinizi geri çekmek istediğinize emin misiniz? Hizmetiniz aktif kalacaktır.')) return;
+        this._post({ operation: 'remove_cancelled_product', id: this.productId });
+    },
+
+    // Eklenti satın al (addon)
+    addAddon: function(addonId){
+        if(!confirm('Bu eklenti için fatura oluşturulup ödeme sayfasına yönlendirileceksiniz. Devam edilsin mi?')) return;
+        var self = this;
+        this._post({ operation: 'product_addon', id: this.productId, addon_id: addonId }, function(r){
+            self._toast(r.message || 'Eklenti faturası oluşturuldu', 'success');
+            setTimeout(function(){ if(r.redirect) location.href = r.redirect; else location.reload(); }, 1500);
         });
     },
 
-    addAddon: function(addonId){
-        if(!confirm('Eklenti satın almak için fatura oluşturulacak. Devam edilsin mi?')) return;
-        // operation: addon_buy / product_addon
-        if(typeof alert_info === 'function') alert_info('İşleniyor...', {timer: 2000});
+    // Paket yükselt
+    upgrade: function(upgradeId){
+        if(!confirm('Paket yükseltme için fatura oluşturulup ödeme sayfasına yönlendirileceksiniz. Devam edilsin mi?')) return;
+        var self = this;
+        this._post({ operation: 'product_upgrade', id: this.productId, upgrade_id: upgradeId }, function(r){
+            self._toast(r.message || 'Yükseltme faturası oluşturuldu', 'success');
+            setTimeout(function(){ if(r.redirect) location.href = r.redirect; else location.reload(); }, 1500);
+        });
     },
 
-    upgrade: function(upgradeId){
-        if(!confirm('Paket yükseltme için fatura oluşturulacak. Devam edilsin mi?')) return;
-        if(typeof alert_info === 'function') alert_info('İşleniyor...', {timer: 2000});
+    // E-posta hesabı ekle (hosting modülü destekliyorsa)
+    addEmail: function(){
+        var prefix = document.getElementById('cdg-pd2-email-prefix').value.trim();
+        var domain = document.getElementById('cdg-pd2-email-domain').value;
+        var pass = document.getElementById('cdg-pd2-email-pass').value;
+        var quota = document.getElementById('cdg-pd2-email-quota').value;
+        var unlimited = document.getElementById('cdg-pd2-email-unlimited').checked ? 1 : 0;
+        if(!prefix) return this._toast('E-posta kullanıcı adı boş olamaz', 'error');
+        if(!domain) return this._toast('Domain seçin', 'error');
+        if(!pass || pass.length < 8) return this._toast('Şifre en az 8 karakter olmalı', 'error');
+        var self = this;
+        this._post({
+            operation: 'hosting_add_new_email',
+            id: this.productId,
+            username: prefix,
+            domain: domain,
+            password: pass,
+            quota: unlimited ? 0 : quota,
+            unlimited: unlimited
+        }, function(r){
+            self._toast(r.message || 'E-posta hesabı oluşturuldu', 'success');
+            setTimeout(function(){ location.reload(); }, 1500);
+        });
+    },
+
+    // E-posta hesabı sil
+    deleteEmail: function(email){
+        if(!confirm('"' + email + '" adresini silmek istediğinize emin misiniz? Bu işlem geri alınamaz.')) return;
+        this._post({ operation: 'hosting_delete_email', id: this.productId, email: email });
+    },
+
+    // Hizmet transferi (müşteriden müşteriye)
+    transferService: function(){
+        var email = document.getElementById('cdg-pd2-transfer-email').value;
+        var pass = document.getElementById('cdg-pd2-transfer-pass').value;
+        if(!email || !email.includes('@')) return this._toast('Geçerli bir e-posta girin', 'error');
+        if(!pass) return this._toast('Hesap şifrenizi girin', 'error');
+        if(!confirm('Hizmeti "' + email + '" adresindeki kullanıcıya devretmek istediğinize emin misiniz?')) return;
+        var self = this;
+        this._post({ operation: 'transfer_service', id: this.productId, email: email, password: pass }, function(r){
+            self._toast(r.message || 'Transfer talebi oluşturuldu — alıcı onayını bekleyin', 'success');
+            setTimeout(function(){ location.reload(); }, 2000);
+        });
+    },
+
+    // Bekleyen transfer talebini iptal et
+    removeTransfer: function(transferId){
+        if(!confirm('Bu transfer talebini iptal etmek istediğinize emin misiniz?')) return;
+        this._post({ operation: 'remove_ctoc_s_t', id: transferId });
     }
+};
+
+// Toast animation keyframes (style tag dışında)
+if(!document.getElementById('cdg-pd2-toast-style')) {
+    var s = document.createElement('style'); s.id = 'cdg-pd2-toast-style';
+    s.textContent = '@keyframes cdgToastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }';
+    document.head.appendChild(s);
+}
+
+// Alt-tab toggle (Transfer pane'de Sunucu Taşıma vs Hesap Devri)
+window.cdgPd2SubTab = function(evt, name){
+    document.querySelectorAll('.cdg-pd2-subtab').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('.cdg-pd2-subpane').forEach(function(p){ p.style.display = 'none'; });
+    if(evt && evt.target) evt.target.closest('.cdg-pd2-subtab').classList.add('active');
+    var pane = document.getElementById('cdg-pd2-subtab-' + name);
+    if(pane) pane.style.display = 'block';
 };
 
 // Yenileme dönemi seçimi (order_renewal) - global function
 window.cdgPd2OrderRenewal = function(btn) {
     var sel = document.getElementById('cdg-pd2-renewal-period');
-    if(!sel || !sel.value) {
-        if(typeof alert_error === 'function') alert_error('Lütfen yenileme dönemi seçin', {timer: 3000});
-        return;
-    }
-    if(typeof MioAjax !== 'function') return;
+    if(!sel || !sel.value) return cdgPd2._toast('Lütfen yenileme dönemi seçin', 'error');
 
     var label = sel.options[sel.selectedIndex].text;
     if(!confirm('"' + label + '" yenileme talebi sepete eklenecek. Devam edilsin mi?')) return;
@@ -2017,23 +2400,18 @@ window.cdgPd2OrderRenewal = function(btn) {
     btn.disabled = true;
     btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> İşleniyor...';
 
-    MioAjax({
-        url: cdgPd2.controllerUrl, type: 'post',
-        data: { operation: 'order_renewal', id: cdgPd2.productId, period: sel.value },
-        result: function(r) {
-            btn.disabled = false; btn.innerHTML = orig;
-            if(r && r.status === 'successful') {
-                if(r.redirect) {
-                    if(typeof alert_success === 'function') alert_success('Ödeme sayfasına yönlendiriliyorsunuz...', {timer: 1500});
-                    setTimeout(function(){ window.location.href = r.redirect; }, 1200);
-                } else {
-                    if(typeof alert_success === 'function') alert_success(r.message || 'Yenileme talebi oluşturuldu', {timer: 2000});
-                    setTimeout(function(){ window.location.reload(); }, 1500);
-                }
-            } else if(r && r.message && typeof alert_error === 'function') {
-                alert_error(r.message, {timer: 4000});
-            }
+    cdgPd2._post({ operation: 'order_renewal', id: cdgPd2.productId, period: sel.value }, function(r){
+        btn.disabled = false; btn.innerHTML = orig;
+        if(r.redirect) {
+            cdgPd2._toast('Ödeme sayfasına yönlendiriliyorsunuz...', 'success');
+            setTimeout(function(){ window.location.href = r.redirect; }, 1200);
+        } else {
+            cdgPd2._toast(r.message || 'Yenileme talebi oluşturuldu', 'success');
+            setTimeout(function(){ window.location.reload(); }, 1500);
         }
+    }, function(r){
+        btn.disabled = false; btn.innerHTML = orig;
+        cdgPd2._toast((r && r.message) ? r.message : 'Bir hata oluştu', 'error');
     });
 };
 </script>
