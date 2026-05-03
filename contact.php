@@ -119,7 +119,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cdg_contact_form'])) 
         if(!$form_success) {
             // Email fallback
             $body = "İletişim Formu\n\nAd: {$name}\nE-posta: {$email}\nTelefon: {$phone}\nKonu: {$subject}\n\nMesaj:\n{$message}";
-            @mail($company_email, '[CODEGA İletişim] ' . ($subject ?: 'Yeni Mesaj'), $body, "From: noreply@codega.com.tr\r\nReply-To: {$email}");
+            @mail($company_email, '[CODEGA İletişim] ' . ($subject ?: 'Yeni Mesaj'), $body, "From: info@codega.com.tr\r\nReply-To: {$email}");
             $form_success = true;
             $form_msg = 'Mesajınız alındı. En kısa sürede size dönüş yapacağız.';
         }

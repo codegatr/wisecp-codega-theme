@@ -42,7 +42,7 @@ if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public
 
 <div style="background:#f8fafc;border-radius:16px;padding:32px;text-align:center;">
     <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin:0 0 12px;">Birlikte daha çok yapabiliriz</h2>
-    <p style="font-size:15px;color:#64748b;margin:0 0 20px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6;">Sosyal sorumluluk projemize iş ortağı olmak veya bireysel destek vermek isterseniz, bize <a href="mailto:csr@codega.com.tr" style="color:#00D3E5;font-weight:700;">csr@codega.com.tr</a> adresinden ulaşın.</p>
+    <p style="font-size:15px;color:#64748b;margin:0 0 20px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6;">Sosyal sorumluluk projemize iş ortağı olmak veya bireysel destek vermek isterseniz, bize <a href="mailto:info@codega.com.tr" style="color:#00D3E5;font-weight:700;">info@codega.com.tr</a> adresinden ulaşın.</p>
 </div>
     </div>
 </section>

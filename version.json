@@ -1,22 +1,20 @@
 {
-    "version": "3.5.71",
+    "version": "3.5.72",
     "release_date": "2026-05-03",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.71-codega",
-    "tag": "v3.5.71-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.72-codega",
+    "tag": "v3.5.72-codega",
     "changelog": [
-        "v3.5.71 - KESIN COZUM: Singleton Guard (cift footer ihtimali sifir)",
-        "Yunus screenshot paylasti - acikca 2 footer goruluyordu",
-        "Tani: master-content.php veya main-footer.php birden fazla kez include ediliyor",
-        "  Sebep: WiseCP cache, auto-wrap, veya hook tarafından çift render",
-        "FIX KESIN: Singleton guard eklendi (3 dosyaya):",
-        "  1. master-content.php => CDG_MASTER_CONTENT_RENDERED constant ile kilit",
-        "  2. inc/main-footer.php => CDG_FOOTER_RENDERED constant ile kilit",
-        "  3. inc/main-header-1.php => CDG_HEADER_RENDERED constant ile kilit",
-        "  Eger 2. kez include edilirse otomatik return - SADECE 1 KEZ render edilir",
-        "  Ne kadar cagrilsa da: tek footer, tek header, tek master-content",
-        "Debug: HTML yorumu eklendi (Yunus view-source ile dogrulayabilir):",
-        "  <!-- CDG_MASTER_CONTENT_DUPLICATE_BLOCKED_v3.5.71 -->",
-        "  Bu yorum HTML'de gorunurse demek ki 2. cagri OLMUS ama BLOKLANMIS"
+        "v3.5.72 - Tum mailler tek noktaya: info@codega.com.tr",
+        "Yunus'un istegi uzerine sitedeki tum mail adresleri info@codega.com.tr oldu",
+        "Degistirilen mailler:",
+        "  csr@codega.com.tr -> info@codega.com.tr (sosyal sorumluluk)",
+        "  gizlilik@codega.com.tr -> info@codega.com.tr (gizlilik politikasi)",
+        "  kariyer@codega.com.tr -> info@codega.com.tr (kariyer sayfasi)",
+        "  kvkk@codega.com.tr -> info@codega.com.tr (kvkk + gizlilik)",
+        "  noreply@codega.com.tr -> info@codega.com.tr (contact form From header)",
+        "Etkilenen 6 dosyada 14 degisiklik:",
+        "  contact.php, pages/kvkk.php, pages/gizlilik-politikasi.php,",
+        "  pages/sosyal-sorumluluk.php, pages/kariyer.php"
     ]
 }

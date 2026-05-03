@@ -11,7 +11,7 @@ if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public
 </div>
 
 <h2 style="font-size:22px;font-weight:800;color:#0f172a;margin:24px 0 12px;">1. Veri Sorumlusu</h2>
-<p style="font-size:15px;line-height:1.8;color:#475569;">CODEGA YAZILIM ve İLETİŞİM HİZMETLERİ ("CODEGA"), AKSOY GROUP iştiraki olup, Türkiye'de kurulu hukuki bir kişiliktir. Mersis No: 0xxxxxxxxxxxxxx. İletişim: <a href="mailto:kvkk@codega.com.tr" style="color:#00D3E5;">kvkk@codega.com.tr</a></p>
+<p style="font-size:15px;line-height:1.8;color:#475569;">CODEGA YAZILIM ve İLETİŞİM HİZMETLERİ ("CODEGA"), AKSOY GROUP iştiraki olup, Türkiye'de kurulu hukuki bir kişiliktir. Mersis No: 0xxxxxxxxxxxxxx. İletişim: <a href="mailto:info@codega.com.tr" style="color:#00D3E5;">info@codega.com.tr</a></p>
 
 <h2 style="font-size:22px;font-weight:800;color:#0f172a;margin:24px 0 12px;">2. İşlenen Kişisel Veriler</h2>
 <ul style="font-size:15px;line-height:1.9;color:#475569;padding-left:20px;">
@@ -56,7 +56,7 @@ if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public
 <p style="font-size:15px;line-height:1.8;color:#475569;">KVKK kapsamında başvurularınızı şu yollarla yapabilirsiniz:</p>
 <ul style="font-size:15px;line-height:1.9;color:#475569;padding-left:20px;">
     <li>Hesabınızdan: <strong>Hesabım → Bilgilerim → KVKK / GDPR sekmesi</strong></li>
-    <li>E-posta: <a href="mailto:kvkk@codega.com.tr" style="color:#00D3E5;">kvkk@codega.com.tr</a></li>
+    <li>E-posta: <a href="mailto:info@codega.com.tr" style="color:#00D3E5;">info@codega.com.tr</a></li>
     <li>Posta: CODEGA Yazılım, Konya, Türkiye (kayıtlı yazılı başvuru)</li>
 </ul>
 <p style="font-size:14px;color:#64748b;margin-top:14px;">Talepleriniz <strong>30 iş günü içinde</strong> sonuçlandırılır.</p>

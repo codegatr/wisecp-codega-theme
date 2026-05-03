@@ -59,7 +59,7 @@ if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public
 
 <h2 style="font-size:22px;font-weight:800;color:#0f172a;margin:24px 0 12px;">7. İletişim</h2>
 <p style="font-size:15px;line-height:1.8;color:#475569;">Gizlilik konularında sorularınız için:<br>
-<strong>E-posta:</strong> <a href="mailto:gizlilik@codega.com.tr" style="color:#00D3E5;">gizlilik@codega.com.tr</a><br>
-<strong>KVKK Sorumlusu:</strong> <a href="mailto:kvkk@codega.com.tr" style="color:#00D3E5;">kvkk@codega.com.tr</a></p>
+<strong>E-posta:</strong> <a href="mailto:info@codega.com.tr" style="color:#00D3E5;">info@codega.com.tr</a><br>
+<strong>KVKK Sorumlusu:</strong> <a href="mailto:info@codega.com.tr" style="color:#00D3E5;">info@codega.com.tr</a></p>
     </div>
 </section>

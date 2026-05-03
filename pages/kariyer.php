@@ -53,10 +53,10 @@ if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.'cdg-public
         <span style="display:inline-block;background:rgba(0,229,255,0.15);color:#00E5FF;padding:6px 14px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:0.05em;margin-bottom:16px;">YETENEK HAVUZUMUZ</span>
         <h3 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 12px;line-height:1.3;">CV'ni gönder, doğru pozisyon açıldığında ilk biz haber verelim</h3>
         <p style="font-size:15px;color:rgba(255,255,255,0.75);line-height:1.65;margin:0 0 24px;max-width:620px;">CODEGA olarak ekibimizi sürekli büyütüyoruz. PHP, sistem yönetimi, müşteri deneyimi, UI/UX, satış, pazarlama — her departmanda yetenekli arkadaşlar arıyoruz. Açık pozisyon olmasa bile <strong style="color:#fff;">CV'ni gönder</strong>, sana uygun rol açıldığında ilk önce seninle iletişime geçelim.</p>
-        <a href="mailto:kariyer@codega.com.tr?subject=CV%20Başvurusu" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#00D3E5 0%,#00E5FF 100%);color:#0f172a;padding:14px 28px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;box-shadow:0 8px 24px rgba(0,211,229,0.35);transition:all 0.2s;">
+        <a href="mailto:info@codega.com.tr?subject=CV%20Başvurusu" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#00D3E5 0%,#00E5FF 100%);color:#0f172a;padding:14px 28px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;box-shadow:0 8px 24px rgba(0,211,229,0.35);transition:all 0.2s;">
             <i class="bi bi-envelope-paper-fill"></i> CV'mi Gönder
         </a>
-        <p style="font-size:13px;color:rgba(255,255,255,0.55);margin:18px 0 0;"><i class="bi bi-envelope"></i> kariyer@codega.com.tr</p>
+        <p style="font-size:13px;color:rgba(255,255,255,0.55);margin:18px 0 0;"><i class="bi bi-envelope"></i> info@codega.com.tr</p>
     </div>
 </div>
 
