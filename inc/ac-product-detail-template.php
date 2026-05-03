@@ -979,7 +979,7 @@ foreach($options as $opt_k => $opt_v) {
 <div class="cdg-pd2">
 <div class="cdg-pd2-wrap">
 
-    <a href="<?php echo htmlspecialchars($back_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd2-back" onclick="if(window.history.length>1){window.history.back();return false;}">
+    <a href="<?php echo htmlspecialchars($back_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-pd2-back" data-cdg-action="history-back">
         <i class="bi bi-arrow-left"></i> Listeye Dön
     </a>
 
@@ -1048,12 +1048,12 @@ foreach($options as $opt_k => $opt_v) {
                 </a>
                 <?php endif; ?>
                 <?php if($d_status === 'active' && $d_period && $d_period !== 'none'): ?>
-                <button type="button" class="cdg-pd2-shell-btn" onclick="document.querySelector('.cdg-pd2-tab[data-pane=renewal]')?.click(); window.scrollTo({top: document.querySelector('.cdg-pd2-tabs').offsetTop - 20, behavior: 'smooth'});">
+                <button type="button" class="cdg-pd2-shell-btn" data-cdg-action="goto-tab" data-cdg-target="renewal">
                     <i class="bi bi-arrow-clockwise"></i> Yenile
                 </button>
                 <?php endif; ?>
                 <?php if(!empty($upgrades)): ?>
-                <button type="button" class="cdg-pd2-shell-btn" onclick="document.querySelector('.cdg-pd2-tab[data-pane=upgrade]')?.click(); window.scrollTo({top: document.querySelector('.cdg-pd2-tabs').offsetTop - 20, behavior: 'smooth'});">
+                <button type="button" class="cdg-pd2-shell-btn" data-cdg-action="goto-tab" data-cdg-target="upgrade">
                     <i class="bi bi-arrow-up-circle"></i> Yükselt
                 </button>
                 <?php endif; ?>
@@ -1103,27 +1103,27 @@ foreach($options as $opt_k => $opt_v) {
         <div class="cdg-pd2-card-body" style="padding:16px;">
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
                 <?php if($d_module_supports['reboot']): ?>
-                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-warning" onclick="cdgPd2.serverAction('reboot')">
+                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-warning" data-cdg-action="server-action" data-cdg-server-cmd="reboot">
                     <i class="bi bi-arrow-clockwise"></i> Yeniden Başlat
                 </button>
                 <?php endif; ?>
                 <?php if($d_module_supports['shutdown']): ?>
-                <button type="button" class="cdg-pd2-btn" style="background:#dc2626;color:#fff;border:0;" onclick="cdgPd2.serverAction('shutdown')">
+                <button type="button" class="cdg-pd2-btn" style="background:#dc2626;color:#fff;border:0;" data-cdg-action="server-action" data-cdg-server-cmd="shutdown">
                     <i class="bi bi-power"></i> Kapat
                 </button>
                 <?php endif; ?>
                 <?php if($d_module_supports['powerOn']): ?>
-                <button type="button" class="cdg-pd2-btn" style="background:#16a34a;color:#fff;border:0;" onclick="cdgPd2.serverAction('powerOn')">
+                <button type="button" class="cdg-pd2-btn" style="background:#16a34a;color:#fff;border:0;" data-cdg-action="server-action" data-cdg-server-cmd="powerOn">
                     <i class="bi bi-play-circle"></i> Aç
                 </button>
                 <?php endif; ?>
                 <?php if($d_module_supports['reinstall']): ?>
-                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="background:rgba(255,255,255,0.10);color:#fff;border-color:rgba(255,255,255,0.30);" onclick="cdgPd2.serverAction('reinstall')">
+                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="background:rgba(255,255,255,0.10);color:#fff;border-color:rgba(255,255,255,0.30);" data-cdg-action="server-action" data-cdg-server-cmd="reinstall">
                     <i class="bi bi-cpu"></i> İşletim Sistemini Yeniden Kur
                 </button>
                 <?php endif; ?>
                 <?php if($d_module_supports['console']): ?>
-                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="background:rgba(255,255,255,0.10);color:#fde047;border-color:#fde047;" onclick="cdgPd2.serverConsole()">
+                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="background:rgba(255,255,255,0.10);color:#fde047;border-color:#fde047;" data-cdg-action="pd2-serverConsole" data-cdg-args=''>
                     <i class="bi bi-terminal"></i> Web Konsol (VNC)
                 </button>
                 <?php endif; ?>
@@ -1207,7 +1207,7 @@ foreach($options as $opt_k => $opt_v) {
                         <li>
                             <span class="cdg-pd2-info-label">Otomatik Ödeme</span>
                             <span class="cdg-pd2-info-value">
-                                <button type="button" onclick="cdgPd2.toggleAutoPay(<?php echo $cdg_stored_cards ? 'true' : 'false'; ?>)" style="background:transparent;border:0;padding:0;cursor:pointer;" title="<?php echo $d_autopay ? 'Otomatik ödemeyi kapat' : 'Otomatik ödemeyi aç'; ?>">
+                                <button type="button" data-cdg-action="pd2-toggleAutoPay" data-cdg-args='<?php echo $cdg_stored_cards ? 'true' : 'false'; ?>' style="background:transparent;border:0;padding:0;cursor:pointer;" title="<?php echo $d_autopay ? 'Otomatik ödemeyi kapat' : 'Otomatik ödemeyi aç'; ?>">
                                 <?php if($d_autopay): ?>
                                     <span class="cdg-pd2-badge cdg-pd2-badge-success"><i class="bi bi-check-circle-fill"></i> Açık</span>
                                 <?php else: ?>
@@ -1249,7 +1249,7 @@ foreach($options as $opt_k => $opt_v) {
                             <span class="cdg-pd2-info-label">Kullanıcı Adı</span>
                             <span class="cdg-pd2-info-value">
                                 <code class="cdg-pd2-cred"><?php echo htmlspecialchars($d_username, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
-                                <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($d_username, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Kopyala">
+                                <button type="button" class="cdg-pd2-copy" data-cdg-action="copy-cred" data-cdg-text="<?php echo htmlspecialchars($d_username, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" title="Kopyala">
                                     <i class="bi bi-clipboard"></i>
                                 </button>
                             </span>
@@ -1260,10 +1260,10 @@ foreach($options as $opt_k => $opt_v) {
                             <span class="cdg-pd2-info-label">Şifre</span>
                             <span class="cdg-pd2-info-value">
                                 <code class="cdg-pd2-cred cdg-pd2-cred-masked" data-pw="<?php echo htmlspecialchars($d_root_pass, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>">••••••••</code>
-                                <button type="button" class="cdg-pd2-copy cdg-pd2-toggle-pw" onclick="cdgTogglePw(this)" title="Göster/Gizle">
+                                <button type="button" class="cdg-pd2-copy cdg-pd2-toggle-pw" data-cdg-action="toggle-pw" title="Göster/Gizle">
                                     <i class="bi bi-eye"></i>
                                 </button>
-                                <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($d_root_pass, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Kopyala">
+                                <button type="button" class="cdg-pd2-copy" data-cdg-action="copy-cred" data-cdg-text="<?php echo htmlspecialchars($d_root_pass, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" title="Kopyala">
                                     <i class="bi bi-clipboard"></i>
                                 </button>
                             </span>
@@ -1329,7 +1329,7 @@ foreach($options as $opt_k => $opt_v) {
                         <div class="cdg-pd2-panel-login-url">
                             <i class="bi bi-link-45deg"></i>
                             <code><?php echo htmlspecialchars($cp_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code>
-                            <button type="button" class="cdg-pd2-copy" onclick="cdgCopyCred(this, '<?php echo htmlspecialchars($cp_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Kopyala">
+                            <button type="button" class="cdg-pd2-copy" data-cdg-action="copy-cred" data-cdg-text="<?php echo htmlspecialchars($cp_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" title="Kopyala">
                                 <i class="bi bi-clipboard"></i>
                             </button>
                         </div>
@@ -1534,7 +1534,7 @@ foreach($options as $opt_k => $opt_v) {
                         <span class="cdg-pd2-info-label">Sunucu Hostname</span>
                         <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#2E3B4E;">
                             <?php echo htmlspecialchars($server_hostname, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
-                            <button type="button" onclick="navigator.clipboard.writeText('<?php echo htmlspecialchars(addslashes($server_hostname), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>'); this.innerHTML='<i class=\'bi bi-check\'></i>';" style="margin-left:6px;background:#f1f5f9;border:0;padding:2px 6px;border-radius:4px;cursor:pointer;font-size:11px;color:#64748b;" title="Kopyala">
+                            <button type="button" data-cdg-action="copy-text" data-cdg-text="<?php echo htmlspecialchars(addslashes($server_hostname), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="margin-left:6px;background:#f1f5f9;border:0;padding:2px 6px;border-radius:4px;cursor:pointer;font-size:11px;color:#64748b;" title="Kopyala">
                                 <i class="bi bi-clipboard"></i>
                             </button>
                         </span>
@@ -1545,7 +1545,7 @@ foreach($options as $opt_k => $opt_v) {
                         <span class="cdg-pd2-info-label">Sunucu IP</span>
                         <span class="cdg-pd2-info-value" style="font-family:'Courier New',monospace;font-weight:700;color:#2E3B4E;">
                             <?php echo htmlspecialchars($server_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
-                            <button type="button" onclick="navigator.clipboard.writeText('<?php echo htmlspecialchars(addslashes($server_ip), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>'); this.innerHTML='<i class=\'bi bi-check\'></i>';" style="margin-left:6px;background:#f1f5f9;border:0;padding:2px 6px;border-radius:4px;cursor:pointer;font-size:11px;color:#64748b;" title="Kopyala">
+                            <button type="button" data-cdg-action="copy-text" data-cdg-text="<?php echo htmlspecialchars(addslashes($server_ip), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" style="margin-left:6px;background:#f1f5f9;border:0;padding:2px 6px;border-radius:4px;cursor:pointer;font-size:11px;color:#64748b;" title="Kopyala">
                                 <i class="bi bi-clipboard"></i>
                             </button>
                         </span>
@@ -1703,7 +1703,7 @@ foreach($options as $opt_k => $opt_v) {
             <div class="cdg-pd2-card-head">
                 <h3><i class="bi bi-graph-up"></i> Kullanım Durumu</h3>
                 <?php if($d_module_supports['getUsage']): ?>
-                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" onclick="cdgPd2.refreshUsage()" title="Yenile">
+                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" data-cdg-action="pd2-refreshUsage" data-cdg-args='' title="Yenile">
                     <i class="bi bi-arrow-clockwise"></i>
                 </button>
                 <?php endif; ?>
@@ -1858,7 +1858,7 @@ foreach($options as $opt_k => $opt_v) {
                     </div>
                     <div style="display:flex;align-items:center;gap:14px;">
                         <span class="cdg-pd2-addon-price"><?php echo htmlspecialchars(cdg_pd_money($a_amount, $a_cid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
-                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-success cdg-pd2-btn-sm" onclick="cdgPd2.addAddon(<?php echo (int)$a_id; ?>)">
+                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-success cdg-pd2-btn-sm" data-cdg-action="add-addon" data-cdg-id="<?php echo (int)$a_id; ?>">
                             <i class="bi bi-cart-plus"></i> Ekle
                         </button>
                     </div>
@@ -1895,7 +1895,7 @@ foreach($options as $opt_k => $opt_v) {
                     </div>
                     <div style="display:flex;align-items:center;gap:14px;">
                         <span class="cdg-pd2-addon-price"><?php echo htmlspecialchars(cdg_pd_money($u_amount, $u_cid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
-                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary cdg-pd2-btn-sm" onclick="cdgPd2.upgrade(<?php echo (int)$u_id; ?>)">
+                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary cdg-pd2-btn-sm" data-cdg-action="upgrade" data-cdg-id="<?php echo (int)$u_id; ?>">
                             <i class="bi bi-arrow-up"></i> Yükselt
                         </button>
                     </div>
@@ -1924,7 +1924,7 @@ foreach($options as $opt_k => $opt_v) {
                         <label class="cdg-pd2-label">Yeni Şifre</label>
                         <div style="display:flex;gap:8px;">
                             <input type="password" id="cdg-pd2-newpass" class="cdg-pd2-input" minlength="8" autocomplete="new-password" style="flex:1;">
-                            <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" onclick="cdgPd2.generatePassword('cdg-pd2-newpass'); document.getElementById('cdg-pd2-newpass2').value = document.getElementById('cdg-pd2-newpass').value;" title="Güçlü şifre oluştur">
+                            <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" data-cdg-action="generate-password" title="Güçlü şifre oluştur">
                                 <i class="bi bi-arrow-repeat"></i> Otomatik Oluştur
                             </button>
                         </div>
@@ -1937,7 +1937,7 @@ foreach($options as $opt_k => $opt_v) {
                         <input type="password" id="cdg-pd2-newpass2" class="cdg-pd2-input" minlength="8" autocomplete="new-password">
                     </div>
                     <div style="display:flex;justify-content:flex-end;gap:8px;">
-                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary" onclick="cdgPd2.changePassword()">
+                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary" data-cdg-action="pd2-changePassword" data-cdg-args=''>
                             <i class="bi bi-key"></i> Şifreyi Değiştir
                         </button>
                     </div>
@@ -2011,7 +2011,7 @@ foreach($options as $opt_k => $opt_v) {
                             <option value="<?php echo htmlspecialchars($k, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"><?php echo htmlspecialchars($period_label, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> — <?php echo htmlspecialchars($amount_str, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php echo $is_current ? ' (mevcut)' : ''; ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary" onclick="cdgPd2OrderRenewal(this)">
+                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary" data-cdg-action="order-renewal">
                             <i class="bi bi-cart-plus"></i> Sepete Ekle
                         </button>
                     </div>
@@ -2021,7 +2021,7 @@ foreach($options as $opt_k => $opt_v) {
                 </div>
                 <?php endif; ?>
 
-                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-success" style="width:100%;justify-content:center;" onclick="cdgPd2.renew()">
+                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-success" style="width:100%;justify-content:center;" data-cdg-action="pd2-renew" data-cdg-args=''>
                     <i class="bi bi-arrow-clockwise"></i> Mevcut Dönemle Yenile
                 </button>
                 <?php endif; ?>
@@ -2065,12 +2065,12 @@ foreach($options as $opt_k => $opt_v) {
                         </div>
                         <?php endif; ?>
                     </div>
-                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="width:100%;justify-content:center;" onclick="cdgPd2.cancelSubscription()">
+                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="width:100%;justify-content:center;" data-cdg-action="pd2-cancelSubscription" data-cdg-args=''>
                         <i class="bi bi-x-circle"></i> Aboneliği İptal Et
                     </button>
                     <?php else: ?>
                     <!-- ABONELIK YOK - manuel auto_pay checkbox (stored_cards gerekir) -->
-                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="width:100%;justify-content:center;" onclick="cdgPd2.toggleAutoPay()">
+                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="width:100%;justify-content:center;" data-cdg-action="pd2-toggleAutoPay" data-cdg-args=''>
                         <i class="bi bi-credit-card-2-back"></i>
                         Otomatik Ödeme: <strong><?php echo $d_autopay ? 'Aktif' : 'Pasif'; ?></strong>
                     </button>
@@ -2164,7 +2164,7 @@ foreach($options as $opt_k => $opt_v) {
                             <label class="cdg-pd2-label">Şifre</label>
                             <div style="display:flex;gap:6px;">
                                 <input type="text" id="cdg-pd2-email-pass" class="cdg-pd2-input" minlength="8" placeholder="En az 8 karakter" style="flex:1;">
-                                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm" onclick="cdgPd2.generatePassword('cdg-pd2-email-pass')" title="Otomatik">
+                                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm" data-cdg-action="pd2-generatePassword" data-cdg-args=''cdg-pd2-email-pass'' title="Otomatik">
                                     <i class="bi bi-arrow-repeat"></i>
                                 </button>
                             </div>
@@ -2183,7 +2183,7 @@ foreach($options as $opt_k => $opt_v) {
                         </div>
                     </div>
                     <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;">
-                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary" onclick="cdgPd2.addEmail()">
+                        <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary" data-cdg-action="pd2-addEmail" data-cdg-args=''>
                             <i class="bi bi-plus-circle"></i> E-posta Hesabı Oluştur
                         </button>
                     </div>
@@ -2234,7 +2234,7 @@ foreach($options as $opt_k => $opt_v) {
                                 </a>
                                 <?php endif; ?>
                                 <?php if($supports_email_delete): ?>
-                                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" onclick="cdgPd2.deleteEmail('<?php echo htmlspecialchars($em_addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>')" title="Sil" style="color:#dc2626;">
+                                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" data-cdg-action="delete-email" data-cdg-email="<?php echo htmlspecialchars($em_addr, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" title="Sil" style="color:#dc2626;">
                                     <i class="bi bi-trash"></i>
                                 </button>
                                 <?php endif; ?>
@@ -2455,10 +2455,10 @@ foreach($options as $opt_k => $opt_v) {
             <div class="cdg-pd2-card-body">
                 <!-- ALT-TAB NAV -->
                 <div style="display:flex;gap:6px;border-bottom:1px solid #e2e8f0;margin-bottom:16px;flex-wrap:wrap;">
-                    <button type="button" class="cdg-pd2-subtab active" data-subtab="server-migration" onclick="cdgPd2SubTab(event,'server-migration')">
+                    <button type="button" class="cdg-pd2-subtab active" data-subtab="server-migration" data-cdg-action="sub-tab" data-cdg-target="server-migration">
                         <i class="bi bi-cloud-arrow-up"></i> Sunucu Taşıma (Eski → Codega)
                     </button>
-                    <button type="button" class="cdg-pd2-subtab" data-subtab="account-transfer" onclick="cdgPd2SubTab(event,'account-transfer')">
+                    <button type="button" class="cdg-pd2-subtab" data-subtab="account-transfer" data-cdg-action="sub-tab" data-cdg-target="account-transfer">
                         <i class="bi bi-person-check"></i> Hesap Devri (Müşteriye)
                     </button>
                 </div>
@@ -2520,7 +2520,7 @@ foreach($options as $opt_k => $opt_v) {
                             </div>
                         </div>
                         <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;">
-                            <button type="button" class="cdg-pd2-btn cdg-pd2-btn-warning" onclick="cdgPd2.transferService()">
+                            <button type="button" class="cdg-pd2-btn cdg-pd2-btn-warning" data-cdg-action="pd2-transferService" data-cdg-args=''>
                                 <i class="bi bi-send-arrow-up"></i> Devir Talebi Gönder
                             </button>
                         </div>
@@ -2563,7 +2563,7 @@ foreach($options as $opt_k => $opt_v) {
                                 <td style="padding:10px 12px;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:13px;"><code><?php echo htmlspecialchars($tr_email, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></code></td>
                                 <td style="padding:10px 12px;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:12px;color:#64748b;"><?php echo cdg_pd_date($tr_date); ?></td>
                                 <td style="padding:10px 12px;border-radius:0 8px 8px 0;border:1px solid #e2e8f0;border-left:0;text-align:center;">
-                                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" onclick="cdgPd2.removeTransfer(<?php echo (int)$tr_id; ?>)" title="Talebi iptal et" style="color:#dc2626;">
+                                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" data-cdg-action="remove-transfer" data-cdg-id="<?php echo (int)$tr_id; ?>" title="Talebi iptal et" style="color:#dc2626;">
                                         <i class="bi bi-x-lg"></i>
                                     </button>
                                 </td>
@@ -2652,7 +2652,7 @@ foreach($options as $opt_k => $opt_v) {
 
                 <?php if($cancel_status !== 'approved'): ?>
                 <div style="margin-top:18px;display:flex;justify-content:center;">
-                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-success" onclick="cdgPd2.removeCancellation()">
+                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-success" data-cdg-action="pd2-removeCancellation" data-cdg-args=''>
                         <i class="bi bi-arrow-counterclockwise"></i> Iptal Talebini Geri Cek
                     </button>
                 </div>
@@ -2695,7 +2695,7 @@ foreach($options as $opt_k => $opt_v) {
                 </div>
 
                 <div style="display:flex;justify-content:flex-end;">
-                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-danger" onclick="cdgPd2.cancel()">
+                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-danger" data-cdg-action="pd2-cancel" data-cdg-args=''>
                         <i class="bi bi-x-circle"></i> İptal Talebi Gönder
                     </button>
                 </div>
