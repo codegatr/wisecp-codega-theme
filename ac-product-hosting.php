@@ -70,13 +70,27 @@ if(empty($cdg_panels)) {
 $panel_url_final = '';
 $webmail_url_final = '';
 
+// === KRITIK: $buttons üret (auto-login için) ===
+// WiseCP'nin DirectAdmin/cPanel/Plesk modülü `panel_links_for_client()` çağrılınca
+// auto-login URL'leri üretir (?inc=use_method&method=SingleSignOn formatında).
+// Tıklanınca WiseCP DirectAdmin API'den one-time-url alıp redirect eder.
+if(!isset($buttons) || !is_array($buttons)) $buttons = [];
+if(isset($module_con) && is_object($module_con) && method_exists($module_con, 'panel_links_for_client')) {
+    try {
+        $generated = $module_con->panel_links_for_client();
+        if(is_array($generated) && !empty($generated)) {
+            $buttons = array_merge($buttons, $generated);
+        }
+    } catch(\Throwable $e) { /* sessiz fallback */ }
+}
+
 // 1. WiseCP $buttons varsa kullan (auto-login token'lı — en iyi seçenek)
 if(!empty($buttons)) {
     foreach($buttons as $b_type => $b_value) {
         $url = is_array($b_value) ? ($b_value['url'] ?? '') : (is_string($b_value) ? $b_value : '');
         $type_lower = strtolower((string)$b_type);
-        if(stripos($type_lower, 'webmail') !== false) {
-            $webmail_url_final = $url;
+        if(stripos($type_lower, 'webmail') !== false || stripos($type_lower, 'mail') !== false) {
+            if(empty($webmail_url_final)) $webmail_url_final = $url;
         } elseif(empty($panel_url_final)) {
             $panel_url_final = $url;
         }
@@ -1130,40 +1144,73 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
             btn.style.cursor = 'wait';
             btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Değiştiriliyor...';
         }
-        MioAjax({
-            url: '<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
-            type: 'post',
-            data: {
-                operation: 'hosting_change_password',
-                id:       <?php echo (int)$d_id; ?>,
-                password: pw
-            },
-            result: function(r) {
-                if(r && (r.status === 'successful' || r.status === 'success')) {
-                    if(typeof alert_success === 'function') alert_success(r.message || 'Şifre değiştirildi', {timer: 3000});
-                    cdgHpwClear();
-                    if(btn) {
-                        btn.innerHTML = '<i class="bi bi-check-circle"></i> Değiştirildi';
-                        btn.style.background = '#10b981';
-                        setTimeout(function(){
-                            btn.disabled = false;
-                            btn.style.opacity = '1';
-                            btn.style.cursor = 'pointer';
-                            btn.style.background = 'var(--c-primary)';
-                            btn.innerHTML = '<i class="bi bi-check-circle"></i> Şifreyi Değiştir';
-                        }, 2500);
-                    }
-                } else {
-                    if(typeof alert_error === 'function') alert_error((r && r.message) || 'Şifre değiştirilemedi', {timer: 3500});
-                    if(btn) {
-                        btn.disabled = false;
-                        btn.style.opacity = '1';
-                        btn.style.cursor = 'pointer';
-                        btn.innerHTML = '<i class="bi bi-check-circle"></i> Şifreyi Değiştir';
-                    }
-                }
+
+        // === DOĞRU MioAjax KULLANIMI (Codega tema'nın diğer dosyalarından örnek) ===
+        // MioAjax({action, method, data}, true, true) — 2 ek bool: showLoader, useToken
+        // Sonra request.done(callback) ile sonucu yakala — `result` parametresi YOKTUR
+        var __cdgRestoreBtn = function(){
+            if(btn) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+                btn.style.background = 'var(--c-primary)';
+                btn.innerHTML = '<i class="bi bi-check-circle"></i> Şifreyi Değiştir';
             }
-        });
+        };
+        var __cdgSuccessBtn = function(){
+            if(btn) {
+                btn.innerHTML = '<i class="bi bi-check-circle"></i> Değiştirildi';
+                btn.style.background = '#10b981';
+                setTimeout(__cdgRestoreBtn, 2500);
+            }
+        };
+
+        try {
+            var request = MioAjax({
+                action: '<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
+                method: "POST",
+                data: {
+                    operation: 'hosting_change_password',
+                    id:       <?php echo (int)$d_id; ?>,
+                    password: pw
+                }
+            }, true, true);
+
+            request.done(function(rawResult){
+                var r = (typeof getJson === 'function') ? getJson(rawResult) : null;
+                if(!r) {
+                    // getJson yoksa native parse dene
+                    try { r = (typeof rawResult === 'string') ? JSON.parse(rawResult) : rawResult; }
+                    catch(e) { r = null; }
+                }
+
+                if(r && (r.status === 'successful' || r.status === 'success')) {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Şifre başarıyla değiştirildi', {timer: 3000});
+                    else alert('Şifre başarıyla değiştirildi');
+                    cdgHpwClear();
+                    __cdgSuccessBtn();
+                } else {
+                    var errMsg = (r && r.message) ? r.message : 'Şifre değiştirilemedi (sunucu yanıtı geçersiz)';
+                    if(typeof alert_error === 'function') alert_error(errMsg, {timer: 4000});
+                    else alert('HATA: ' + errMsg);
+                    __cdgRestoreBtn();
+                }
+            });
+
+            request.fail(function(xhr, status, error){
+                var errMsg = 'Sunucuya bağlanılamadı';
+                if(xhr && xhr.responseText) {
+                    var r2 = (typeof getJson === 'function') ? getJson(xhr.responseText) : null;
+                    if(r2 && r2.message) errMsg = r2.message;
+                }
+                if(typeof alert_error === 'function') alert_error(errMsg, {timer: 4000});
+                else alert('HATA: ' + errMsg);
+                __cdgRestoreBtn();
+            });
+        } catch(ex) {
+            alert('Beklenmeyen hata: ' + ex.message);
+            __cdgRestoreBtn();
+        }
     };
 })();
 </script>
