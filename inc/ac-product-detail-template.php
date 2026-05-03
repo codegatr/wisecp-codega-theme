@@ -169,6 +169,61 @@ if(isset($bills) && is_array($bills)) {
     });
 }
 
+// === HOSTING KULLANIM (disk + bandwidth + email + database + ftp + addon kullanım) ===
+$d_usage = [];
+if(isset($options['usage']) && is_array($options['usage'])) {
+    $d_usage = $options['usage'];
+} elseif(isset($usage) && is_array($usage)) {
+    $d_usage = $usage;
+}
+
+// === MODÜL-SPESİFİK BİLGİ BLOKLARI (cPanel/Plesk/DA notları) ===
+$d_blocks = [];
+if(isset($options['blocks']) && is_array($options['blocks'])) {
+    $d_blocks = $options['blocks'];
+}
+
+// === MODÜL ÖZELLİKLERİ - hangi action'ları destekliyor ===
+$d_module_supports = [
+    'changePassword'   => false,
+    'addEmail'         => false,
+    'deleteEmail'      => false,
+    'addForward'       => false,
+    'deleteForward'    => false,
+    'reboot'           => false,
+    'reinstall'        => false,
+    'shutdown'         => false,
+    'powerOn'          => false,
+    'console'          => false,
+    'changeRootPass'   => false,
+    'getStatus'        => false,
+    'getUsage'         => false,
+];
+if(isset($module_con) && is_object($module_con)) {
+    foreach($d_module_supports as $action => $_) {
+        $methods = [$action, strtolower($action), 'set' . ucfirst(str_replace('_', '', $action))];
+        foreach($methods as $m) {
+            if(method_exists($module_con, $m)) { $d_module_supports[$action] = true; break; }
+        }
+    }
+}
+
+// === SUBSCRIPTION (Stripe/PayPal otomatik yenileme aboneliği) ===
+$d_subscription = null;
+if(isset($subscription) && is_array($subscription) && !empty($subscription)) {
+    $d_subscription = $subscription;
+}
+
+// === ÜRÜNE ÖZEL BUTONLAR ($buttons array) ===
+$d_extra_buttons = [];
+if(isset($buttons) && is_array($buttons)) {
+    $d_extra_buttons = $buttons;
+}
+
+// === MODÜL DİNAMİK SAYFA (m_page - cPanel/Plesk modülünden gelen panel) ===
+$d_m_page = $m_page ?? '';
+$d_module_panel = $module_panel ?? '';
+
 $controller_url = $links['controller'] ?? '';
 $back_url = cdg_link($cdg_pd_back_slug);
 
@@ -737,6 +792,47 @@ foreach($options as $opt_k => $opt_v) {
             </span>
         </a>
     </div>
+    <?php if($cdg_pd_kind === 'server' && ($d_module_supports['reboot'] || $d_module_supports['reinstall'] || $d_module_supports['shutdown'] || $d_module_supports['powerOn'] || $d_module_supports['console'])): ?>
+    <!-- SERVER AKSİYON PANELİ -->
+    <div class="cdg-pd2-card" style="margin-bottom:14px;background:linear-gradient(135deg,#0f172a,#1e293b);border-color:#1e293b;">
+        <div class="cdg-pd2-card-head" style="border-bottom:1px solid rgba(255,255,255,0.10);">
+            <h3 style="color:#fff;"><i class="bi bi-power" style="color:#fde047;"></i> Sunucu Aksiyonları</h3>
+            <span style="font-size:11px;color:rgba(255,255,255,0.60);">Bu işlemler sunucunuzu doğrudan etkiler</span>
+        </div>
+        <div class="cdg-pd2-card-body" style="padding:16px;">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <?php if($d_module_supports['reboot']): ?>
+                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-warning" onclick="cdgPd2.serverAction('reboot')">
+                    <i class="bi bi-arrow-clockwise"></i> Yeniden Başlat
+                </button>
+                <?php endif; ?>
+                <?php if($d_module_supports['shutdown']): ?>
+                <button type="button" class="cdg-pd2-btn" style="background:#dc2626;color:#fff;border:0;" onclick="cdgPd2.serverAction('shutdown')">
+                    <i class="bi bi-power"></i> Kapat
+                </button>
+                <?php endif; ?>
+                <?php if($d_module_supports['powerOn']): ?>
+                <button type="button" class="cdg-pd2-btn" style="background:#16a34a;color:#fff;border:0;" onclick="cdgPd2.serverAction('powerOn')">
+                    <i class="bi bi-play-circle"></i> Aç
+                </button>
+                <?php endif; ?>
+                <?php if($d_module_supports['reinstall']): ?>
+                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="background:rgba(255,255,255,0.10);color:#fff;border-color:rgba(255,255,255,0.30);" onclick="cdgPd2.serverAction('reinstall')">
+                    <i class="bi bi-cpu"></i> İşletim Sistemini Yeniden Kur
+                </button>
+                <?php endif; ?>
+                <?php if($d_module_supports['console']): ?>
+                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" style="background:rgba(255,255,255,0.10);color:#fde047;border-color:#fde047;" onclick="cdgPd2.serverConsole()">
+                    <i class="bi bi-terminal"></i> Web Konsol (VNC)
+                </button>
+                <?php endif; ?>
+            </div>
+            <p style="margin:12px 0 0;font-size:12px;color:rgba(255,255,255,0.60);">
+                <i class="bi bi-info-circle"></i> İşlemler doğrudan sunucu sağlayıcısına gönderilir, etkili olması 30 saniye sürebilir.
+            </p>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <!-- TAB NAV -->
     <div class="cdg-pd2-tabs">
@@ -1183,6 +1279,130 @@ foreach($options as $opt_k => $opt_v) {
                 </div>
             </div>
         </div>
+        <?php endif; ?>
+
+        <?php
+        // === HOSTING KULLANIM BARLARI (disk + bandwidth + email + database + ftp) ===
+        if(!empty($d_usage)):
+            $usage_items = [];
+            // disk
+            if(isset($d_usage['disk_used_percent']) || isset($d_usage['disk_used'])) {
+                $usage_items[] = [
+                    'label' => 'Disk Kullanımı',
+                    'icon'  => 'hdd-fill',
+                    'color' => '#3b82f6',
+                    'percent' => (int)($d_usage['disk_used_percent'] ?? 0),
+                    'used'  => $d_usage['disk_used_format'] ?? ($d_usage['disk_used'] ?? '0'),
+                    'limit' => $d_usage['disk_limit_format'] ?? ($d_usage['disk_limit'] ?? '0'),
+                ];
+            }
+            // bandwidth
+            if(isset($d_usage['bandwidth_used_percent']) || isset($d_usage['bandwidth_used'])) {
+                $usage_items[] = [
+                    'label' => 'Aylık Trafik',
+                    'icon'  => 'arrow-down-up',
+                    'color' => '#7c3aed',
+                    'percent' => (int)($d_usage['bandwidth_used_percent'] ?? 0),
+                    'used'  => $d_usage['bandwidth_used_format'] ?? ($d_usage['bandwidth_used'] ?? '0'),
+                    'limit' => $d_usage['bandwidth_limit_format'] ?? ($d_usage['bandwidth_limit'] ?? '0'),
+                ];
+            }
+            // email
+            if(isset($d_usage['email_used'])) {
+                $email_pct = !empty($d_usage['email_limit']) ? (int)(($d_usage['email_used'] / max(1,$d_usage['email_limit'])) * 100) : 0;
+                $usage_items[] = [
+                    'label' => 'E-posta Hesapları',
+                    'icon'  => 'envelope-fill',
+                    'color' => '#f59e0b',
+                    'percent' => $email_pct,
+                    'used'  => $d_usage['email_used'],
+                    'limit' => $d_usage['email_limit'] ?: '∞',
+                ];
+            }
+            // database
+            if(isset($d_usage['database_used'])) {
+                $db_pct = !empty($d_usage['database_limit']) ? (int)(($d_usage['database_used'] / max(1,$d_usage['database_limit'])) * 100) : 0;
+                $usage_items[] = [
+                    'label' => 'Veritabanları',
+                    'icon'  => 'database-fill',
+                    'color' => '#10b981',
+                    'percent' => $db_pct,
+                    'used'  => $d_usage['database_used'],
+                    'limit' => $d_usage['database_limit'] ?: '∞',
+                ];
+            }
+            // ftp
+            if(isset($d_usage['ftp_used'])) {
+                $ftp_pct = !empty($d_usage['ftp_limit']) ? (int)(($d_usage['ftp_used'] / max(1,$d_usage['ftp_limit'])) * 100) : 0;
+                $usage_items[] = [
+                    'label' => 'FTP Hesapları',
+                    'icon'  => 'cloud-arrow-up-fill',
+                    'color' => '#64748b',
+                    'percent' => $ftp_pct,
+                    'used'  => $d_usage['ftp_used'],
+                    'limit' => $d_usage['ftp_limit'] ?: '∞',
+                ];
+            }
+            if(!empty($usage_items)):
+        ?>
+        <div class="cdg-pd2-card" style="margin-top:14px;">
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-graph-up"></i> Kullanım Durumu</h3>
+                <?php if($d_module_supports['getUsage']): ?>
+                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-ghost cdg-pd2-btn-sm" onclick="cdgPd2.refreshUsage()" title="Yenile">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </button>
+                <?php endif; ?>
+            </div>
+            <div class="cdg-pd2-card-body">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;">
+                    <?php foreach($usage_items as $u):
+                        $pct = max(0, min(100, $u['percent']));
+                        $bar_color = $pct >= 90 ? '#ef4444' : ($pct >= 75 ? '#f59e0b' : $u['color']);
+                    ?>
+                    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <i class="bi bi-<?php echo $u['icon']; ?>" style="color:<?php echo $u['color']; ?>;font-size:16px;"></i>
+                                <span style="font-size:13px;font-weight:700;color:#0f172a;"><?php echo htmlspecialchars($u['label'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                            </div>
+                            <span style="font-size:13px;font-weight:800;color:<?php echo $bar_color; ?>;">%<?php echo $pct; ?></span>
+                        </div>
+                        <div style="height:8px;background:#e2e8f0;border-radius:100px;overflow:hidden;margin-bottom:6px;">
+                            <div style="height:100%;width:<?php echo $pct; ?>%;background:linear-gradient(90deg, <?php echo $bar_color; ?>, <?php echo $bar_color; ?>cc);border-radius:100px;transition:width 0.4s ease;"></div>
+                        </div>
+                        <div style="font-size:11px;color:#64748b;text-align:right;">
+                            <?php echo htmlspecialchars((string)$u['used'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?> / <?php echo htmlspecialchars((string)$u['limit'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; endif; ?>
+
+        <?php if(!empty($d_blocks)): ?>
+        <!-- MODÜL-SPESİFİK BİLGİ BLOKLARI (cPanel/Plesk/DA notları) -->
+        <?php foreach($d_blocks as $block):
+            $b_title = $block['title'] ?? '';
+            $b_desc  = $block['description'] ?? '';
+            $b_icon  = $block['icon'] ?? 'info-square';
+            $b_color = $block['color'] ?? '#1e40af';
+            if(!$b_title && !$b_desc) continue;
+        ?>
+        <div class="cdg-pd2-card" style="margin-top:14px;border-left:4px solid <?php echo $b_color; ?>;">
+            <?php if($b_title): ?>
+            <div class="cdg-pd2-card-head">
+                <h3><i class="bi bi-<?php echo $b_icon; ?>" style="color:<?php echo $b_color; ?>;"></i> <?php echo htmlspecialchars($b_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h3>
+            </div>
+            <?php endif; ?>
+            <?php if($b_desc): ?>
+            <div class="cdg-pd2-card-body">
+                <div style="line-height:1.7;color:#475569;font-size:14px;"><?php echo nl2br($b_desc); ?></div>
+            </div>
+            <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
         <?php endif; ?>
 
         <?php if(!empty($hosting_dns)): ?>
@@ -2369,6 +2589,81 @@ window.cdgPd2 = {
     removeTransfer: function(transferId){
         if(!confirm('Bu transfer talebini iptal etmek istediğinize emin misiniz?')) return;
         this._post({ operation: 'remove_ctoc_s_t', id: transferId });
+    },
+
+    // E-posta yönlendirme sil
+    deleteForward: function(dest, forward){
+        if(!confirm('"' + dest + ' → ' + forward + '" yönlendirmesini silmek istediğinize emin misiniz?')) return;
+        this._post({ operation: 'hosting_delete_email_forward', id: this.productId, dest: dest, forward: forward });
+    },
+
+    // E-posta yönlendirme ekle
+    addForward: function(){
+        var dest = document.getElementById('cdg-pd2-forward-from').value.trim();
+        var forward = document.getElementById('cdg-pd2-forward-to').value.trim();
+        if(!dest || !forward) return this._toast('Kaynak ve hedef adres zorunlu', 'error');
+        if(!forward.includes('@')) return this._toast('Geçerli bir hedef e-posta girin', 'error');
+        var self = this;
+        this._post({ operation: 'hosting_add_email_forward', id: this.productId, dest: dest, forward: forward }, function(r){
+            self._toast(r.message || 'Yönlendirme oluşturuldu', 'success');
+            setTimeout(function(){ location.reload(); }, 1500);
+        });
+    },
+
+    // Server aksiyonları (reboot/shutdown/powerOn/reinstall)
+    serverAction: function(action){
+        var labels = {
+            reboot: 'yeniden başlatmak',
+            shutdown: 'kapatmak',
+            powerOn: 'açmak',
+            reinstall: 'işletim sistemini yeniden kurmak'
+        };
+        var lbl = labels[action] || action;
+        var warning = action === 'reinstall' ? '\n\n⚠️ DİKKAT: TÜM VERİLERİNİZ SİLİNECEK! Devam etmeden önce yedek aldığınızdan emin olun.' : '';
+        if(!confirm('Sunucuyu ' + lbl + ' istediğinize emin misiniz?' + warning)) return;
+        // Reinstall için ek doğrulama
+        if(action === 'reinstall') {
+            var confirmText = prompt('Onaylamak için "REINSTALL" yazın:');
+            if(confirmText !== 'REINSTALL') return this._toast('Onay metni hatalı, işlem iptal edildi', 'error');
+        }
+        var self = this;
+        this._post({ operation: 'server_' + action, id: this.productId }, function(r){
+            self._toast(r.message || 'Komut sunucuya gönderildi', 'success');
+        });
+    },
+
+    // Web Konsol (VNC/noVNC) - yeni sekmede
+    serverConsole: function(){
+        var self = this;
+        // Önce konsol URL'sini al
+        this._post({ operation: 'server_console', id: this.productId }, function(r){
+            if(r.url) {
+                window.open(r.url, '_blank', 'width=1024,height=720,resizable=yes');
+            } else {
+                self._toast(r.message || 'Konsol URL alınamadı', 'error');
+            }
+        });
+    },
+
+    // Kullanım istatistiklerini yenile
+    refreshUsage: function(){
+        var self = this;
+        this._toast('Kullanım istatistikleri güncelleniyor...', 'info');
+        fetch(this.controllerUrl + '?inc=get_hosting_informations&m_page=', { credentials: 'same-origin' })
+            .then(function(r){ return r.text(); })
+            .then(function(txt){
+                self._toast('Kullanım yenilendi', 'success');
+                setTimeout(function(){ location.reload(); }, 800);
+            })
+            .catch(function(){
+                self._toast('Yenileme başarısız', 'error');
+            });
+    },
+
+    // Eklenti kaldır (mevcut bir addon'u sil)
+    removeAddon: function(addonId){
+        if(!confirm('Bu eklentiyi kaldırmak istediğinize emin misiniz?')) return;
+        this._post({ operation: 'product_addon_remove', id: this.productId, addon_id: addonId });
     }
 };
 

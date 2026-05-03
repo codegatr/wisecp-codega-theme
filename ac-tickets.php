@@ -107,8 +107,26 @@ $ui_lang_local = isset($ui_lang) ? $ui_lang : 'tr';
     </div>
 
     <?php if(!empty($items)): ?>
+        <!-- ARAMA + FİLTRE -->
+        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
+            <div style="flex:1;min-width:200px;position:relative;">
+                <i class="bi bi-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#94a3b8;"></i>
+                <input type="text" id="cdg-tk-search" placeholder="Konu, ID veya departman ara..." onkeyup="cdgTkFilter()" style="width:100%;padding:10px 12px 10px 36px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-family:inherit;">
+            </div>
+            <select id="cdg-tk-status-filter" onchange="cdgTkFilter()" style="padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-family:inherit;background:#fff;">
+                <option value="">Tüm Durumlar</option>
+                <option value="open">Açık</option>
+                <option value="customer-reply">Yanıt Bekliyor</option>
+                <option value="answered">Yanıtlandı</option>
+                <option value="closed">Kapalı</option>
+            </select>
+            <div style="font-size:13px;color:#64748b;">
+                <span id="cdg-tk-count"><?php echo count($items); ?></span> talep
+            </div>
+        </div>
+
         <div class="cdg-table-wrap">
-            <table class="cdg-table">
+            <table class="cdg-table" id="cdg-tk-table">
                 <thead>
                     <tr>
                         <th>#ID</th>
@@ -137,7 +155,7 @@ $ui_lang_local = isset($ui_lang) ? $ui_lang : 'tr';
                         }
                     }
                 ?>
-                    <tr>
+                    <tr data-search="<?php echo htmlspecialchars(strtolower($tid . ' ' . $title . ' ' . ($row['service'] ?? '') . ' ' . ($row['department'] ?? '')), ENT_QUOTES); ?>" data-status="<?php echo htmlspecialchars(strtolower($row['status'] ?? ''), ENT_QUOTES); ?>">
                         <td><span style="font-family:monospace;color:var(--cdg-muted);font-size:12px;">#<?php echo $tid; ?></span></td>
                         <td>
                             <?php if(isset($row['detail_link'])): ?>
@@ -162,6 +180,24 @@ $ui_lang_local = isset($ui_lang) ? $ui_lang : 'tr';
                 </tbody>
             </table>
         </div>
+
+        <script>
+        window.cdgTkFilter = function(){
+            var search = (document.getElementById('cdg-tk-search').value || '').toLowerCase().trim();
+            var status = (document.getElementById('cdg-tk-status-filter').value || '').toLowerCase();
+            var rows = document.querySelectorAll('#cdg-tk-table tbody tr');
+            var visible = 0;
+            rows.forEach(function(tr){
+                var ds = (tr.getAttribute('data-search') || '');
+                var st = (tr.getAttribute('data-status') || '');
+                var matchSearch = !search || ds.indexOf(search) !== -1;
+                var matchStatus = !status || st === status;
+                if(matchSearch && matchStatus) { tr.style.display = ''; visible++; }
+                else { tr.style.display = 'none'; }
+            });
+            document.getElementById('cdg-tk-count').textContent = visible;
+        };
+        </script>
     <?php else: ?>
         <div class="cdg-empty">
             <div class="icon"><i class="bi bi-emoji-smile"></i></div>

@@ -93,8 +93,63 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
     </div>
 
     <?php if(!empty($items)): ?>
+        <!-- ARAMA + FİLTRE + TOPLAM -->
+        <?php
+        $unpaid_total = 0;
+        $unpaid_count = 0;
+        $paid_count = 0;
+        foreach($items as $inv) {
+            $status = strtolower($inv['status'] ?? '');
+            if($status === 'unpaid' || $status === 'overdue') {
+                $unpaid_total += (float)($inv['amount'] ?? 0);
+                $unpaid_count++;
+            } elseif($status === 'paid') {
+                $paid_count++;
+            }
+        }
+        ?>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:14px;">
+            <div style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #fcd34d;border-radius:10px;padding:14px;">
+                <div style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">
+                    <i class="bi bi-hourglass-split"></i> Bekleyen Faturalar
+                </div>
+                <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo $unpaid_count; ?> adet</div>
+                <?php if($unpaid_total > 0): ?>
+                <div style="font-size:13px;color:#92400e;margin-top:2px;">
+                    <?php echo number_format($unpaid_total, 2, ',', '.'); ?> ₺ tutarında
+                </div>
+                <?php endif; ?>
+            </div>
+            <div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border:1px solid #86efac;border-radius:10px;padding:14px;">
+                <div style="font-size:11px;font-weight:700;color:#065f46;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">
+                    <i class="bi bi-check-circle-fill"></i> Ödenen Faturalar
+                </div>
+                <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo $paid_count; ?> adet</div>
+            </div>
+            <div style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border:1px solid #93c5fd;border-radius:10px;padding:14px;">
+                <div style="font-size:11px;font-weight:700;color:#1e40af;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">
+                    <i class="bi bi-receipt"></i> Toplam
+                </div>
+                <div style="font-size:18px;font-weight:800;color:#0f172a;"><?php echo count($items); ?> fatura</div>
+            </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
+            <div style="flex:1;min-width:200px;position:relative;">
+                <i class="bi bi-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#94a3b8;"></i>
+                <input type="text" id="cdg-inv-search" placeholder="Fatura no veya açıklama ara..." onkeyup="cdgInvFilter()" style="width:100%;padding:10px 12px 10px 36px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-family:inherit;">
+            </div>
+            <select id="cdg-inv-status-filter" onchange="cdgInvFilter()" style="padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-family:inherit;background:#fff;">
+                <option value="">Tüm Durumlar</option>
+                <option value="unpaid">Bekleyen</option>
+                <option value="overdue">Gecikmiş</option>
+                <option value="paid">Ödenen</option>
+                <option value="cancelled">İptal</option>
+            </select>
+        </div>
+
         <div class="cdg-table-wrap">
-            <table class="cdg-table">
+            <table class="cdg-table" id="cdg-inv-table">
                 <thead>
                     <tr>
                         <th>Fatura No</th>
@@ -161,7 +216,7 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
                         $status_html = '<span class="cdg-badge cdg-badge-' . $st_info['cls'] . '">' . htmlspecialchars($st_info['lbl'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</span>';
                     }
                 ?>
-                    <tr>
+                    <tr data-search="<?php echo htmlspecialchars(strtolower($num . ' ' . ($row['description'] ?? '') . ' ' . ($row['title'] ?? '')), ENT_QUOTES); ?>" data-status="<?php echo htmlspecialchars(strtolower($row['status'] ?? ''), ENT_QUOTES); ?>">
                         <td><span style="font-family:monospace;font-size:13px;">#<?php echo htmlspecialchars($num, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></td>
                         <td style="text-align:center;font-size:13px;"><?php echo $ctime_fmt; ?></td>
                         <td style="text-align:center;font-size:13px;"><?php echo $duedate_fmt ?: '-'; ?></td>
@@ -179,6 +234,21 @@ $items = isset($list) ? $list : (isset($invoices) ? $invoices : []);
                 </tbody>
             </table>
         </div>
+
+        <script>
+        window.cdgInvFilter = function(){
+            var search = (document.getElementById('cdg-inv-search').value || '').toLowerCase().trim();
+            var status = (document.getElementById('cdg-inv-status-filter').value || '').toLowerCase();
+            var rows = document.querySelectorAll('#cdg-inv-table tbody tr');
+            rows.forEach(function(tr){
+                var ds = (tr.getAttribute('data-search') || '');
+                var st = (tr.getAttribute('data-status') || '');
+                var matchSearch = !search || ds.indexOf(search) !== -1;
+                var matchStatus = !status || st === status;
+                tr.style.display = (matchSearch && matchStatus) ? '' : 'none';
+            });
+        };
+        </script>
     <?php else: ?>
         <div class="cdg-empty">
             <div class="icon"><i class="bi bi-receipt"></i></div>

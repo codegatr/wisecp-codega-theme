@@ -103,6 +103,17 @@ if(!empty($udata['gsm'])) {
     <button type="button" class="cdg-info-tab" data-tab="security" onclick="cdgInfoTab('security')">
         <i class="bi bi-key"></i> Guvenlik
     </button>
+    <button type="button" class="cdg-info-tab" data-tab="twofa" onclick="cdgInfoTab('twofa')">
+        <i class="bi bi-shield-shaded"></i> 2 Adımlı Doğrulama
+    </button>
+    <?php if(isset($stored_cards_count) && $stored_cards_count > 0 || true): // Her zaman göster ?>
+    <button type="button" class="cdg-info-tab" data-tab="cards" onclick="cdgInfoTab('cards')">
+        <i class="bi bi-credit-card"></i> Kayıtlı Kartlar
+    </button>
+    <?php endif; ?>
+    <button type="button" class="cdg-info-tab" data-tab="kvkk" onclick="cdgInfoTab('kvkk')">
+        <i class="bi bi-file-earmark-shield"></i> KVKK / GDPR
+    </button>
     <?php
     // Belge dogrulama gerekiyorsa tab goster
     $cdg_show_docvrf = isset($remainingVerifications) && is_array($remainingVerifications) && !empty($remainingVerifications['document_filters']);
@@ -460,6 +471,326 @@ if(!empty($udata['gsm'])) {
     <?php include __DIR__ . DS . 'inc' . DS . 'ac-document-verification.php'; ?>
 </div>
 <?php endif; ?>
+
+<!-- TAB: 2 ADIMLI DOĞRULAMA (2FA) -->
+<div class="cdg-info-pane" id="cdg-info-pane-twofa" style="display:none;">
+    <?php
+    $tfa_enabled = isset($udata['two_factor_status']) ? (bool)$udata['two_factor_status'] : (isset($two_factor_status) ? (bool)$two_factor_status : false);
+    $tfa_method = $udata['two_factor_method'] ?? ($two_factor_method ?? 'totp');
+    ?>
+    <div class="cdg-card">
+        <div class="cdg-card-head">
+            <h3><i class="bi bi-shield-shaded"></i> 2 Adımlı Doğrulama</h3>
+            <span class="cdg-pd2-badge cdg-pd2-badge-<?php echo $tfa_enabled ? 'success' : 'info'; ?>">
+                <i class="bi bi-<?php echo $tfa_enabled ? 'check-circle-fill' : 'x-circle'; ?>"></i> <?php echo $tfa_enabled ? 'Aktif' : 'Pasif'; ?>
+            </span>
+        </div>
+        <div style="padding:18px;">
+            <div class="cdg-pd2-alert cdg-pd2-alert-<?php echo $tfa_enabled ? 'success' : 'warning'; ?>" style="margin-bottom:18px;">
+                <i class="bi bi-<?php echo $tfa_enabled ? 'shield-fill-check' : 'shield-exclamation'; ?>"></i>
+                <div>
+                    <?php if($tfa_enabled): ?>
+                    <strong>Hesabınız 2 adımlı doğrulama ile korunuyor.</strong><br>
+                    Giriş yaparken Google Authenticator veya benzeri bir uygulamadan kod girmeniz gerekir.
+                    <?php else: ?>
+                    <strong>Hesap güvenliğiniz için 2FA önerilir!</strong><br>
+                    2 adımlı doğrulama, şifreniz çalınsa bile hesabınızı korur. Google Authenticator, Authy, Microsoft Authenticator veya benzeri bir uygulama kullanın.
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <?php if(!$tfa_enabled): ?>
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;text-align:center;">
+                <div style="margin-bottom:14px;">
+                    <i class="bi bi-shield-shaded" style="font-size:48px;color:#1e40af;"></i>
+                </div>
+                <h4 style="margin:0 0 8px;font-size:16px;font-weight:700;">2FA Şimdi Etkinleştir</h4>
+                <p style="margin:0 0 16px;color:#64748b;font-size:13.5px;line-height:1.6;">
+                    Aktivasyon için bir kez QR kodu okuyup uygulamadan tek seferlik kod girersiniz.
+                </p>
+                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary" onclick="cdgInfo2FA.enable()">
+                    <i class="bi bi-plus-circle"></i> 2FA'yı Etkinleştir
+                </button>
+            </div>
+            <?php else: ?>
+            <ul class="cdg-pd2-info">
+                <li><span class="cdg-pd2-info-label">Yöntem</span><span class="cdg-pd2-info-value">
+                    <?php
+                    $method_labels = ['totp' => 'TOTP (Authenticator App)', 'sms' => 'SMS', 'email' => 'E-posta'];
+                    echo htmlspecialchars($method_labels[$tfa_method] ?? $tfa_method, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    ?>
+                </span></li>
+                <li><span class="cdg-pd2-info-label">Aktivasyon Tarihi</span><span class="cdg-pd2-info-value">
+                    <?php echo isset($udata['two_factor_date']) ? htmlspecialchars(date('d.m.Y', strtotime($udata['two_factor_date'])), ENT_QUOTES) : '-'; ?>
+                </span></li>
+            </ul>
+            <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+                <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline" onclick="cdgInfo2FA.regenerate()">
+                    <i class="bi bi-arrow-repeat"></i> Yedek Kodları Yenile
+                </button>
+                <button type="button" class="cdg-pd2-btn" style="background:#dc2626;color:#fff;border:0;" onclick="cdgInfo2FA.disable()">
+                    <i class="bi bi-shield-slash"></i> 2FA'yı Devre Dışı Bırak
+                </button>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<!-- TAB: KAYITLI KARTLAR -->
+<div class="cdg-info-pane" id="cdg-info-pane-cards" style="display:none;">
+    <div class="cdg-card">
+        <div class="cdg-card-head">
+            <h3><i class="bi bi-credit-card"></i> Kayıtlı Kartlarım</h3>
+        </div>
+        <div style="padding:18px;">
+            <div class="cdg-pd2-alert cdg-pd2-alert-info" style="margin-bottom:14px;">
+                <i class="bi bi-info-circle-fill"></i>
+                <div>
+                    Kayıtlı kartlarınızı buradan görüntüleyebilir, varsayılan kartı belirleyebilir veya otomatik ödemeyi açabilirsiniz.
+                    Kart bilgileri <strong>PCI-DSS uyumlu ödeme sağlayıcımızda</strong> şifrelenerek saklanır.
+                </div>
+            </div>
+
+            <?php if(isset($stored_cards) && is_array($stored_cards) && !empty($stored_cards)): ?>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">
+                <?php foreach($stored_cards as $card):
+                    $card_id = $card['id'] ?? 0;
+                    $card_brand = strtolower($card['brand'] ?? ($card['type'] ?? 'visa'));
+                    $card_last4 = $card['last4'] ?? ($card['number'] ?? '****');
+                    $card_holder = $card['holder'] ?? ($card['name'] ?? '');
+                    $card_default = !empty($card['default']);
+                    $card_autopay = !empty($card['auto_payment']);
+                    $card_exp = $card['exp_month'] ?? '';
+                    $card_exp .= $card_exp && !empty($card['exp_year']) ? '/' . substr($card['exp_year'], -2) : '';
+                ?>
+                <div style="background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:14px;padding:20px;color:#fff;position:relative;overflow:hidden;<?php echo $card_default ? 'box-shadow:0 0 0 3px #f59e0b;' : ''; ?>">
+                    <?php if($card_default): ?>
+                    <span style="position:absolute;top:10px;right:10px;background:#f59e0b;color:#422006;font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:0.5px;">Varsayılan</span>
+                    <?php endif; ?>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+                        <i class="bi bi-credit-card-2-front" style="font-size:28px;color:#fde047;"></i>
+                        <span style="font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.80);">
+                            <?php echo htmlspecialchars(ucfirst($card_brand), ENT_QUOTES); ?>
+                        </span>
+                    </div>
+                    <div style="font-size:18px;font-weight:700;letter-spacing:2px;margin-bottom:14px;font-family:monospace;">
+                        •••• •••• •••• <?php echo htmlspecialchars(substr((string)$card_last4, -4), ENT_QUOTES); ?>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+                        <div>
+                            <div style="font-size:10px;color:rgba(255,255,255,0.50);text-transform:uppercase;letter-spacing:0.5px;">Kart Sahibi</div>
+                            <div style="font-size:13px;font-weight:600;"><?php echo htmlspecialchars($card_holder ?: '—', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                        </div>
+                        <?php if($card_exp): ?>
+                        <div>
+                            <div style="font-size:10px;color:rgba(255,255,255,0.50);text-transform:uppercase;letter-spacing:0.5px;">SKT</div>
+                            <div style="font-size:13px;font-weight:600;"><?php echo htmlspecialchars($card_exp, ENT_QUOTES); ?></div>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.10);display:flex;gap:6px;flex-wrap:wrap;">
+                        <?php if(!$card_default): ?>
+                        <button type="button" onclick="cdgInfoCard.setDefault(<?php echo (int)$card_id; ?>)" style="background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.30);color:#fff;font-size:11px;padding:5px 10px;border-radius:6px;cursor:pointer;">
+                            <i class="bi bi-star"></i> Varsayılan Yap
+                        </button>
+                        <?php endif; ?>
+                        <button type="button" onclick="cdgInfoCard.toggleAutopay(<?php echo (int)$card_id; ?>)" style="background:<?php echo $card_autopay ? '#f59e0b' : 'rgba(255,255,255,0.10)'; ?>;border:1px solid <?php echo $card_autopay ? '#f59e0b' : 'rgba(255,255,255,0.30)'; ?>;color:#fff;font-size:11px;padding:5px 10px;border-radius:6px;cursor:pointer;">
+                            <i class="bi bi-arrow-repeat"></i> Otomatik <?php echo $card_autopay ? 'Açık' : 'Kapalı'; ?>
+                        </button>
+                        <button type="button" onclick="cdgInfoCard.remove(<?php echo (int)$card_id; ?>)" style="background:rgba(220,38,38,0.20);border:1px solid rgba(220,38,38,0.50);color:#fca5a5;font-size:11px;padding:5px 10px;border-radius:6px;cursor:pointer;margin-left:auto;">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <?php else: ?>
+            <div class="cdg-pd2-empty">
+                <i class="bi bi-credit-card-2-front"></i>
+                <h4>Kayıtlı Kartınız Yok</h4>
+                <p>Bir sonraki ödemenizde "Kartı kaydet" seçeneğini işaretleyerek kart ekleyebilirsiniz.</p>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<!-- TAB: KVKK / GDPR -->
+<div class="cdg-info-pane" id="cdg-info-pane-kvkk" style="display:none;">
+    <div class="cdg-card">
+        <div class="cdg-card-head">
+            <h3><i class="bi bi-file-earmark-shield"></i> KVKK / GDPR Veri Hakları</h3>
+        </div>
+        <div style="padding:18px;">
+            <div class="cdg-pd2-alert cdg-pd2-alert-info" style="margin-bottom:18px;">
+                <i class="bi bi-info-circle-fill"></i>
+                <div>
+                    <strong>Kişisel Verilerin Korunması Kanunu (KVKK)</strong> ve <strong>AB Genel Veri Koruma Tüzüğü (GDPR)</strong> kapsamında, hesabınızla ilgili aşağıdaki taleplerde bulunabilirsiniz.
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
+                <!-- Veri İndir -->
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                        <div style="width:42px;height:42px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:20px;flex-shrink:0;">
+                            <i class="bi bi-download"></i>
+                        </div>
+                        <h4 style="margin:0;font-size:14px;font-weight:700;">Verilerimi İndir</h4>
+                    </div>
+                    <p style="margin:0 0 12px;font-size:12.5px;color:#64748b;line-height:1.6;">
+                        Hesabınızla ilgili tüm verilerin (profil, faturalar, hizmetler, talepler) ZIP dosyasını indirin.
+                    </p>
+                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-primary cdg-pd2-btn-sm" onclick="cdgInfoKvkk.export()">
+                        <i class="bi bi-cloud-arrow-down"></i> İndirme Talebi Oluştur
+                    </button>
+                </div>
+
+                <!-- Veri Düzeltme -->
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                        <div style="width:42px;height:42px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#92400e;font-size:20px;flex-shrink:0;">
+                            <i class="bi bi-pencil-square"></i>
+                        </div>
+                        <h4 style="margin:0;font-size:14px;font-weight:700;">Verilerimi Düzelt</h4>
+                    </div>
+                    <p style="margin:0 0 12px;font-size:12.5px;color:#64748b;line-height:1.6;">
+                        Hatalı veya eksik kişisel verilerinizin düzeltilmesini talep edin.
+                    </p>
+                    <button type="button" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm" onclick="cdgInfoKvkk.correction()">
+                        <i class="bi bi-pencil"></i> Düzeltme Talebi
+                    </button>
+                </div>
+
+                <!-- Hesap Sil -->
+                <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:18px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                        <div style="width:42px;height:42px;background:linear-gradient(135deg,#fee2e2,#fecaca);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#dc2626;font-size:20px;flex-shrink:0;">
+                            <i class="bi bi-person-x"></i>
+                        </div>
+                        <h4 style="margin:0;font-size:14px;font-weight:700;color:#991b1b;">Unutulma Hakkı</h4>
+                    </div>
+                    <p style="margin:0 0 12px;font-size:12.5px;color:#7f1d1d;line-height:1.6;">
+                        Hesabınızın ve tüm verilerinizin <strong>kalıcı olarak silinmesini</strong> talep edin. Aktif hizmetler iptal edilecektir.
+                    </p>
+                    <button type="button" class="cdg-pd2-btn" style="background:#dc2626;color:#fff;border:0;font-size:12px;padding:6px 12px;" onclick="cdgInfoKvkk.deleteAccount()">
+                        <i class="bi bi-trash"></i> Hesabımı Sil
+                    </button>
+                </div>
+
+                <!-- Pazarlama İletilerini Durdur -->
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                        <div style="width:42px;height:42px;background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#065f46;font-size:20px;flex-shrink:0;">
+                            <i class="bi bi-bell-slash"></i>
+                        </div>
+                        <h4 style="margin:0;font-size:14px;font-weight:700;">Pazarlama İletilerini Durdur</h4>
+                    </div>
+                    <p style="margin:0 0 12px;font-size:12.5px;color:#64748b;line-height:1.6;">
+                        Promosyon, kampanya ve duyuru e-postalarını almayı durdurun. (Kritik hizmet uyarıları gelmeye devam eder.)
+                    </p>
+                    <a href="#cdg-info-pane-preferences" class="cdg-pd2-btn cdg-pd2-btn-outline cdg-pd2-btn-sm" onclick="cdgInfoTab('preferences');return false;">
+                        <i class="bi bi-sliders"></i> Tercihlere Git
+                    </a>
+                </div>
+            </div>
+
+            <div style="margin-top:18px;padding:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;font-size:12px;color:#64748b;line-height:1.6;">
+                <i class="bi bi-info-circle"></i> Talepleriniz <strong>30 iş günü</strong> içinde değerlendirilir. Detaylı bilgi için
+                <a href="/gizlilik-politikasi" style="color:#1e40af;font-weight:600;">Gizlilik Politikamızı</a>
+                veya
+                <a href="/kvkk" style="color:#1e40af;font-weight:600;">KVKK Aydınlatma Metnimizi</a>
+                inceleyin.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// 2FA İşlemleri
+window.cdgInfo2FA = {
+    _post: function(op, data){
+        var fd = new FormData();
+        fd.append('operation', op);
+        if(data) Object.keys(data).forEach(function(k){ fd.append(k, data[k]); });
+        return fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES); ?>', { method: 'POST', body: fd, credentials: 'same-origin' }).then(function(r){ return r.text(); }).then(function(t){ try { return JSON.parse(t); } catch(e) { return null; } });
+    },
+    enable: function(){
+        if(!confirm('2 Adımlı Doğrulama (2FA) etkinleştirilsin mi? Aktif olduktan sonra her girişte uygulamadan kod gireceksiniz.')) return;
+        this._post('enable_two_factor').then(function(r){
+            if(r && r.qr_url) {
+                window.open(r.qr_url, '_blank');
+                alert('Açılan sayfada QR kodu Google Authenticator vb. uygulamayla okutun ve verilen 6 haneli kodu girin.');
+            } else if(r && r.message) alert(r.message);
+            else location.reload();
+        });
+    },
+    disable: function(){
+        if(!confirm('2FA devre dışı bırakılsın mı? Hesabınız sadece şifreyle korunacak.')) return;
+        this._post('disable_two_factor').then(function(r){ location.reload(); });
+    },
+    regenerate: function(){
+        if(!confirm('Yedek kodları yenileyelim mi? Eski kodlar geçersiz olacak.')) return;
+        this._post('regenerate_two_factor_backup').then(function(r){
+            if(r && r.codes) prompt('Yeni yedek kodlarınız (güvenli yere kaydedin):', r.codes.join(', '));
+            else location.reload();
+        });
+    }
+};
+
+// Kayıtlı Kart İşlemleri
+window.cdgInfoCard = {
+    _post: function(op, cardId){
+        var fd = new FormData();
+        fd.append('operation', op);
+        fd.append('card_id', cardId);
+        return fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES); ?>', { method: 'POST', body: fd, credentials: 'same-origin' }).then(function(r){ return r.text(); });
+    },
+    setDefault: function(id){
+        if(!confirm('Bu kart varsayılan ödeme kartı olarak ayarlansın mı?')) return;
+        this._post('stored_card_as_default', id).then(function(){ location.reload(); });
+    },
+    toggleAutopay: function(id){
+        this._post('stored_card_auto_payment', id).then(function(){ location.reload(); });
+    },
+    remove: function(id){
+        if(!confirm('Bu kartı silmek istediğinize emin misiniz?')) return;
+        this._post('stored_card_remove', id).then(function(){ location.reload(); });
+    }
+};
+
+// KVKK / GDPR İşlemleri
+window.cdgInfoKvkk = {
+    _post: function(type){
+        var fd = new FormData();
+        fd.append('operation', 'gdpr_request');
+        fd.append('type', type);
+        return fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES); ?>', { method: 'POST', body: fd, credentials: 'same-origin' }).then(function(r){ return r.text(); });
+    },
+    export: function(){
+        if(!confirm('Tüm verilerinizin ZIP arşivinin oluşturulması için talep gönderilsin mi? Hazırlandığında e-posta ile bildirilecek.')) return;
+        this._post('export').then(function(){ alert('Talebiniz alındı. Hazırlandığında e-postanıza bildirim gelecek.'); });
+    },
+    correction: function(){
+        var note = prompt('Lütfen düzeltilmesini istediğiniz bilgiyi yazın:');
+        if(!note || note.trim().length < 5) return;
+        var fd = new FormData();
+        fd.append('operation', 'gdpr_request');
+        fd.append('type', 'correction');
+        fd.append('note', note);
+        fetch('<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES); ?>', { method: 'POST', body: fd, credentials: 'same-origin' })
+            .then(function(){ alert('Düzeltme talebiniz alındı. 30 iş günü içinde işleme alınacak.'); });
+    },
+    deleteAccount: function(){
+        var confirm1 = confirm('⚠️ DİKKAT: Hesabınızı ve TÜM VERİLERİNİZİ kalıcı olarak silmek üzeresiniz!\n\n• Aktif hizmetler iptal edilecek\n• Faturalar ve geçmiş silinecek\n• Bu işlem GERİ ALINAMAZ\n\nDevam etmek istiyor musunuz?');
+        if(!confirm1) return;
+        var typed = prompt('Onaylamak için "HESABIMI SIL" yazın:');
+        if(typed !== 'HESABIMI SIL') return alert('Onay metni hatalı, işlem iptal edildi.');
+        this._post('delete_account').then(function(){ alert('Talebiniz alındı. 30 iş günü içinde hesabınız silinecek.'); });
+    }
+};
+</script>
 
 <style>
 .cdg-info-tab {
