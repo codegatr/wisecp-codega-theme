@@ -13,6 +13,19 @@
         });
     }
 
+    // ========== Mobile mega menu accordion (Kurumsal dropdown) ==========
+    var megaToggles = document.querySelectorAll('.cdg-nav-mega-toggle');
+    megaToggles.forEach(function(mt){
+        mt.addEventListener('click', function(ev){
+            // Sadece mobilde (992px altı) açıp kapama yap
+            if(window.innerWidth > 992) return;
+            ev.preventDefault();
+            ev.stopPropagation();
+            var mega = mt.parentElement.querySelector('.cdg-nav-mega');
+            if(mega) mega.classList.toggle('open');
+        });
+    });
+
     // ========== Scroll reveal (IntersectionObserver) ==========
     if('IntersectionObserver' in window){
         var io = new IntersectionObserver(function(entries){

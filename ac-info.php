@@ -693,6 +693,12 @@ if(!empty($udata['gsm'])) {
             <?php endif; ?>
         </div>
     </div>
+
+    <?php
+    // === Saklı Kart Detaylı Yönetim ===
+    $stored_cards_inc = __DIR__ . DS . 'inc' . DS . 'ac-stored-cards.php';
+    if(file_exists($stored_cards_inc)) include $stored_cards_inc;
+    ?>
 </div>
 
 <!-- TAB: KVKK / GDPR -->
@@ -784,6 +790,12 @@ if(!empty($udata['gsm'])) {
             </div>
         </div>
     </div>
+
+    <?php
+    // === KVKK / GDPR Detaylı Talepler (Hesap Sil / Anonimleştir) ===
+    $gdpr_inc = __DIR__ . DS . 'inc' . DS . 'ac-gdpr.php';
+    if(file_exists($gdpr_inc)) include $gdpr_inc;
+    ?>
 </div>
 
         </main><!-- /cdg-info-main -->
@@ -1234,14 +1246,7 @@ window.cdgInfoLoadCities = function(country_id) {
 </script>
 
 <?php
-// === Sakli Kart Yonetimi ===
-$stored_cards_inc = __DIR__ . DS . 'inc' . DS . 'ac-stored-cards.php';
-if(file_exists($stored_cards_inc)) include $stored_cards_inc;
-
-// === KVKK / GDPR Talepleri ===
-$gdpr_inc = __DIR__ . DS . 'inc' . DS . 'ac-gdpr.php';
-if(file_exists($gdpr_inc)) include $gdpr_inc;
-
-// === E-posta / GSM Dogrulama Modal ===
+// === E-posta / GSM Dogrulama Modal === (sayfa sonu - modal)
 $verify_inc = __DIR__ . DS . 'inc' . DS . 'ac-verify-modal.php';
 if(file_exists($verify_inc)) include $verify_inc;
+?>

@@ -164,8 +164,43 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
         </div>
 
         <div class="cdg-footer-bottom">
-            <div>&copy; <?php echo $year; ?> CODEGA - Tüm haklari saklidir.</div>
-            <?php if(class_exists('View') && method_exists('View', 'show_brand')) View::show_brand(); ?>
+            <div class="cdg-footer-bottom-left">
+                <div>&copy; <?php echo $year; ?> CODEGA. Tüm hakları saklıdır.</div>
+            </div>
+
+            <div class="cdg-footer-bottom-center">
+                <?php
+                $cdg_theme_version = '';
+                $cdg_theme_date = '';
+                $cdg_theme_config_file = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'theme-config.php';
+                if(file_exists($cdg_theme_config_file)) {
+                    $cdg_theme_config = @include $cdg_theme_config_file;
+                    if(is_array($cdg_theme_config)) {
+                        $cdg_theme_version = $cdg_theme_config['version'] ?? '';
+                    }
+                }
+                $cdg_version_json = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'version.json';
+                if(file_exists($cdg_version_json)) {
+                    $vj = @json_decode(file_get_contents($cdg_version_json), true);
+                    if(is_array($vj)) {
+                        $cdg_theme_date = $vj['release_date'] ?? '';
+                    }
+                }
+                ?>
+                <?php if($cdg_theme_version): ?>
+                <span class="cdg-footer-version">v<?php echo htmlspecialchars($cdg_theme_version, ENT_QUOTES); ?></span>
+                <?php endif; ?>
+                <?php if($cdg_theme_date): ?>
+                <span class="cdg-footer-version-meta">&middot; Güncelleme: <?php echo htmlspecialchars(date('d.m.Y', strtotime($cdg_theme_date)), ENT_QUOTES); ?></span>
+                <?php endif; ?>
+            </div>
+
+            <div class="cdg-footer-bottom-right">
+                <a href="https://aksoy.web.tr" target="_blank" rel="noopener" class="cdg-footer-aksoy">
+                    <strong>AKSOY GROUP</strong><span>iştirakidir</span>
+                </a>
+                <?php if(class_exists('View') && method_exists('View', 'show_brand')) View::show_brand(); ?>
+            </div>
         </div>
     </div>
 </footer>
