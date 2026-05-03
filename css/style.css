@@ -4301,3 +4301,174 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
 }
 @keyframes cdgSpin {from{transform:rotate(0);}to{transform:rotate(360deg);}}
 
+
+/* ====================================================
+   v3.5.40 - KAPSAMLI MOBİL RESPONSİVE İYİLEŞTİRMELERİ
+   ==================================================== */
+
+/* MOBILE: 768px ve altı - tablet/küçük tablet */
+@media (max-width: 768px) {
+    /* Container padding */
+    .cdg-container { padding: 0 16px; }
+
+    /* HEADER - Logo küçült, alt yazı gizle, hesabım icon-only */
+    .cdg-header-inner { height: 60px; gap: 8px; }
+    .cdg-logo-v2 .cdg-brand-icon-svg { width: 32px !important; height: 32px !important; }
+    .cdg-logo-v2 .cdg-brand-name {
+        font-size: 18px !important;
+    }
+    .cdg-logo-v2 .cdg-brand-sub {
+        display: none !important;
+    }
+    .cdg-nav-actions { gap: 6px; }
+    .cdg-nav-actions .cdg-btn {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        min-height: 38px;
+    }
+    .cdg-mobile-toggle { width: 38px; height: 38px; }
+
+    /* HERO - başlık küçült, padding düşür */
+    .cdg-hero, .cdg-page-hero { padding: 36px 0 48px; }
+    .cdg-hero h1 { font-size: clamp(26px, 7vw, 36px) !important; line-height: 1.2 !important; }
+    .cdg-hero p, .cdg-hero-lead { font-size: 14.5px !important; line-height: 1.6; }
+    .cdg-page-hero-content h1 { font-size: clamp(24px, 6vw, 32px); }
+    .cdg-page-hero-content p { font-size: 14.5px; }
+
+    /* HERO DOMAIN SEARCH - dikey yığın */
+    .cdg-hero-domain {
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px;
+    }
+    .cdg-hero-domain .cdg-hero-domain-input,
+    .cdg-hero-domain button,
+    .cdg-hero-domain .cdg-btn { width: 100%; flex: 1 1 100%; }
+    .cdg-hero-domain-input input { font-size: 15px !important; }
+    .cdg-hero-domain button { padding: 12px !important; }
+
+    /* HERO POPULAR TLDs */
+    .cdg-hero-popular-tlds { flex-wrap: wrap; gap: 8px 12px; font-size: 12px; }
+
+    /* TRUST ITEMS - 2 sütun */
+    .cdg-hero-trust { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .cdg-trust-item { font-size: 12px; }
+
+    /* HERO VISUAL - mobilde gizle (zaten boş yer harcıyor) */
+    .cdg-hero-visual { display: none; }
+    .cdg-hero-grid { grid-template-columns: 1fr !important; gap: 24px; }
+    .cdg-hero-inner { grid-template-columns: 1fr !important; gap: 24px; }
+
+    /* SECTIONS - padding düşür */
+    .cdg-section { padding: 48px 0; }
+    .cdg-section-head h2 { font-size: clamp(22px, 6vw, 28px) !important; }
+    .cdg-section-head p { font-size: 14px; }
+
+    /* CARDS - kompakt */
+    .cdg-card, .cdg-pricing-card { padding: 18px !important; border-radius: 12px; }
+
+    /* PRICING TABS - yatay scroll */
+    .cdg-pricing-tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        padding-bottom: 4px;
+    }
+    .cdg-pricing-tabs::-webkit-scrollbar { height: 0; }
+    .cdg-pricing-tab { white-space: nowrap; }
+
+    /* COMPARE TABLE - yatay scroll */
+    .cdg-compare-section .cdg-compare-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .cdg-compare-table { min-width: 720px; }
+
+    /* CONTACT - tek sütun */
+    .cdg-contact-grid { grid-template-columns: 1fr !important; gap: 24px; }
+    .cdg-channel-grid { grid-template-columns: 1fr !important; }
+
+    /* FOOTER - kompakt */
+    .cdg-footer-grid { grid-template-columns: 1fr !important; gap: 28px; }
+    .cdg-footer { padding: 36px 0 20px; }
+
+    /* BUTONLAR */
+    .cdg-btn-lg { padding: 12px 22px !important; font-size: 14px !important; }
+    .cdg-btn { padding: 10px 18px; font-size: 13.5px; }
+
+    /* HİZMET DETAY MOBİL */
+    .cdg-pd2-shell-head { padding: 16px !important; flex-direction: column; align-items: flex-start; }
+    .cdg-pd2-shell-head-left { width: 100%; }
+    .cdg-pd2-shell-icon { width: 44px !important; height: 44px !important; font-size: 20px !important; }
+    .cdg-pd2-shell-title { font-size: 16px !important; }
+    .cdg-pd2-shell-actions { width: 100%; flex-wrap: wrap; gap: 6px; }
+    .cdg-pd2-shell-actions .cdg-pd2-shell-btn {
+        flex: 1 1 calc(50% - 3px);
+        font-size: 12px !important;
+        padding: 7px 10px !important;
+        justify-content: center;
+    }
+    .cdg-pd2-shell-body { padding: 16px !important; }
+    .cdg-pd2-tabs { padding: 0 8px !important; gap: 0; }
+    .cdg-pd2-tab { font-size: 12.5px !important; padding: 11px 12px !important; }
+    .cdg-pd2-grid-2 { grid-template-columns: 1fr !important; }
+    .cdg-pd2-info-value { text-align: left !important; }
+
+    /* HESABIM SAYFALARI - sidebar üste taşır */
+    .cdg-ac-wrap { grid-template-columns: 1fr !important; }
+    .cdg-ac-sidebar {
+        position: relative !important;
+        height: auto !important;
+        max-height: none !important;
+        border-right: 0;
+        border-bottom: 1px solid var(--cdg-border);
+        padding: 12px 16px !important;
+    }
+    .cdg-ac-content { padding: 14px 16px !important; }
+    .cdg-ac-topbar { padding: 10px 16px !important; }
+    .cdg-ac-menu .group { display: none; }
+
+    /* MAP */
+    .cdg-map-wrap iframe { height: 320px !important; }
+
+    /* FAQ */
+    .cdg-faq-item summary { font-size: 14px !important; padding: 14px 16px !important; }
+    .cdg-faq-answer { font-size: 13.5px !important; padding: 14px 16px !important; }
+}
+
+/* MOBILE: 480px ve altı - küçük telefon */
+@media (max-width: 480px) {
+    /* HEADER - tıkla ve sığdır */
+    .cdg-header-inner { height: 56px; }
+    .cdg-logo-v2 .cdg-brand-icon-svg { width: 28px !important; height: 28px !important; }
+    .cdg-logo-v2 .cdg-brand-name { font-size: 16px !important; }
+    .cdg-nav-actions .cdg-btn span { display: none; }
+    .cdg-nav-actions .cdg-btn { min-width: 38px; padding: 8px !important; }
+    .cdg-nav-actions .cdg-btn i { margin: 0 !important; font-size: 16px; }
+
+    /* HERO */
+    .cdg-hero h1 { font-size: 24px !important; }
+    .cdg-hero p { font-size: 13.5px !important; }
+
+    /* CARDS - daha kompakt */
+    .cdg-card, .cdg-pricing-card { padding: 14px !important; }
+
+    /* PD2 SHELL ACTIONS - tek sütun */
+    .cdg-pd2-shell-actions .cdg-pd2-shell-btn {
+        flex: 1 1 100% !important;
+    }
+
+    /* INFO CARDS */
+    .cdg-info-shell-head, .cdg-bal-shell-head, .cdg-d-greet {
+        padding: 14px !important;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .cdg-info-shell-actions, .cdg-bal-shell-actions, .cdg-d-greet-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    /* TABLES - font scale */
+    .cdg-bal-table thead th, .cdg-bal-table tbody td {
+        padding: 10px 8px !important;
+        font-size: 12px;
+    }
+}

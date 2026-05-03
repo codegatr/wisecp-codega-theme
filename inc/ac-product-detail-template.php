@@ -2725,22 +2725,38 @@ window.cdgTogglePw = function(btn){
 </script>
 <script>
 (function(){
-    document.querySelectorAll('.cdg-pd2-tab').forEach(function(tab){
-        tab.addEventListener('click', function(){
-            var pane = this.getAttribute('data-pane');
+    // === TAB TIKLAMASI - Global event delegation (DOM ready bekleme yok) ===
+    document.addEventListener('click', function(ev){
+        var tab = ev.target.closest('.cdg-pd2-tab');
+        if(!tab) return;
+        ev.preventDefault();
+        var pane = tab.getAttribute('data-pane');
+        if(!pane) return;
+        try {
             document.querySelectorAll('.cdg-pd2-tab').forEach(function(t){ t.classList.remove('active'); });
-            this.classList.add('active');
+            tab.classList.add('active');
             document.querySelectorAll('.cdg-pd2-pane').forEach(function(p){ p.classList.remove('active'); });
             var target = document.getElementById('cdg-pd2-pane-' + pane);
             if(target) target.classList.add('active');
             try { history.replaceState(null, '', '#' + pane); } catch(e) {}
-        });
+        } catch(e) {
+            console.error('[cdgPd2] tab click error:', e);
+        }
     });
-    if(location.hash) {
+
+    // Hash'le geldiyse o tab'ı aktifleştir
+    function activateHashTab() {
+        if(!location.hash) return;
         var hash = location.hash.substring(1);
         var tab = document.querySelector('.cdg-pd2-tab[data-pane="' + hash + '"]');
         if(tab) tab.click();
     }
+    if(document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', activateHashTab);
+    } else {
+        activateHashTab();
+    }
+
     // Subscription detayini yukle (varsa)
     if(document.getElementById('cdg-pd2-subscription-status')) {
         if(typeof cdgPd2 !== 'undefined' && cdgPd2.loadSubscriptionDetail) {
@@ -2752,6 +2768,8 @@ window.cdgTogglePw = function(btn){
 window.cdgPd2 = {
     productId: <?php echo (int)$d_id; ?>,
     controllerUrl: '<?php echo htmlspecialchars($controller_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
+    _ready: true,
+    _version: '3.5.40',
 
     // === Toast Notification (kendi fallback'imiz) ===
     _toast: function(msg, type){
@@ -3036,6 +3054,16 @@ window.cdgPd2 = {
         this._post({ operation: 'product_addon_remove', id: this.productId, addon_id: addonId });
     }
 };
+
+// CDGPD2 HAZIR - debug için console'a yaz
+console.log('%c[CODEGA] cdgPd2 v' + cdgPd2._version + ' yüklendi', 'background:#2E3B4E;color:#00E5FF;padding:4px 8px;border-radius:4px;font-weight:bold;', { productId: cdgPd2.productId, controller: cdgPd2.controllerUrl ? 'OK' : 'EKSİK' });
+
+// Global hata yakalama (sayfada JS hatasi olursa toast goster)
+window.addEventListener('error', function(e){
+    if(e && e.message && e.message.indexOf('cdgPd2') !== -1) {
+        console.error('[CODEGA] cdgPd2 hatası:', e.message, e.filename, e.lineno);
+    }
+});
 
 // Toast animation keyframes (style tag dışında)
 if(!document.getElementById('cdg-pd2-toast-style')) {
