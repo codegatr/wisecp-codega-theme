@@ -1,20 +1,24 @@
 {
-    "version": "3.5.72",
+    "version": "3.5.73",
     "release_date": "2026-05-03",
     "file_url": "https://github.com/codegatr/wisecp-codega-theme/archive/refs/heads/main.zip",
-    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.72-codega",
-    "tag": "v3.5.72-codega",
+    "details_url": "https://github.com/codegatr/wisecp-codega-theme/releases/tag/v3.5.73-codega",
+    "tag": "v3.5.73-codega",
     "changelog": [
-        "v3.5.72 - Tum mailler tek noktaya: info@codega.com.tr",
-        "Yunus'un istegi uzerine sitedeki tum mail adresleri info@codega.com.tr oldu",
-        "Degistirilen mailler:",
-        "  csr@codega.com.tr -> info@codega.com.tr (sosyal sorumluluk)",
-        "  gizlilik@codega.com.tr -> info@codega.com.tr (gizlilik politikasi)",
-        "  kariyer@codega.com.tr -> info@codega.com.tr (kariyer sayfasi)",
-        "  kvkk@codega.com.tr -> info@codega.com.tr (kvkk + gizlilik)",
-        "  noreply@codega.com.tr -> info@codega.com.tr (contact form From header)",
-        "Etkilenen 6 dosyada 14 degisiklik:",
-        "  contact.php, pages/kvkk.php, pages/gizlilik-politikasi.php,",
-        "  pages/sosyal-sorumluluk.php, pages/kariyer.php"
+        "v3.5.73 - Final CTA okunabilirlik fix (kontrast)",
+        "Yunus screenshot paylasti - 'Profesyonel hosting deneyimine ile baslayin' okunmuyordu",
+        "Sebep: HTML'de class isimleri eksikti, CSS'in bekledigi class'lar HTML'de yoktu",
+        "  CSS'te .cdg-final-cta-title (color:#fff) tanimliydi ama HTML'de <h2> class'siz",
+        "  Global h2 stilini aliyordu => color:var(--cdg-text) (koyu lacivert)",
+        "  Arka plan da koyu lacivert => kontrast SIFIR",
+        "FIX: index.php Final CTA HTML'i CSS'e uygun refactor edildi",
+        "  - <h2 class='cdg-final-cta-title'> eklendi (CSS color:#fff)",
+        "  - <p class='cdg-final-cta-lead'> eklendi (CSS color:rgba(255,255,255,0.75))",
+        "  - <div class='cdg-eyebrow cdg-eyebrow-light'> light versiyon",
+        "  - cdg-final-cta-bg/blob/grid dekoratif elemanlar eklendi",
+        "  - cdg-final-cta-inner padding wrapper eklendi",
+        "FIX: hosting-products.php Final CTA aynısı duzeltildi",
+        "FIX: cdg-final-cta-content içindeki cdg-btn-outline override CSS eklendi",
+        "  Koyu arkaplanda buton metni beyaz görünür"
     ]
 }

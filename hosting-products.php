@@ -449,12 +449,19 @@ if(isset($showCategory) && is_array($showCategory)) {
 <section class="cdg-final-cta">
     <div class="cdg-container">
         <div class="cdg-final-cta-content">
-            <div class="cdg-eyebrow">Hemen Başlayın</div>
-            <h2>Profesyonel <span class="cdg-text-gradient">hosting deneyimine</span> hoş geldiniz</h2>
-            <p>Bugün kayıt olun, ücretsiz SSL + ücretsiz taşıma + 30 gün para iade garantisi.</p>
-            <div class="cdg-final-cta-actions">
-                <a href="#packages" class="cdg-btn cdg-btn-primary cdg-btn-lg cdg-btn-glow"><i class="bi bi-rocket-takeoff-fill"></i> Paketleri İncele</a>
-                <a href="<?php echo $domain_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-globe2"></i> Domain Sorgula</a>
+            <div class="cdg-final-cta-bg">
+                <div class="cdg-final-cta-blob cdg-final-cta-blob-1"></div>
+                <div class="cdg-final-cta-blob cdg-final-cta-blob-2"></div>
+                <div class="cdg-final-cta-grid"></div>
+            </div>
+            <div class="cdg-final-cta-inner">
+                <div class="cdg-eyebrow cdg-eyebrow-light">Hemen Başlayın</div>
+                <h2 class="cdg-final-cta-title">Profesyonel <span>hosting deneyimine</span> hoş geldiniz</h2>
+                <p class="cdg-final-cta-lead">Bugün kayıt olun, ücretsiz SSL + ücretsiz taşıma + 30 gün para iade garantisi.</p>
+                <div class="cdg-final-cta-actions">
+                    <a href="#packages" class="cdg-btn cdg-btn-primary cdg-btn-lg cdg-btn-glow"><i class="bi bi-rocket-takeoff-fill"></i> Paketleri İncele</a>
+                    <a href="<?php echo $domain_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-globe2"></i> Domain Sorgula</a>
+                </div>
             </div>
         </div>
     </div>

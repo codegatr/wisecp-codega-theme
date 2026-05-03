@@ -5292,3 +5292,16 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
         transition: none;
     }
 }
+
+/* ========== FINAL CTA (Koyu arkaplan üzerinde butonlar) ========== */
+.cdg-final-cta-content .cdg-btn-outline {
+    background: rgba(255,255,255,0.08);
+    color: #fff !important;
+    border-color: rgba(255,255,255,0.30);
+}
+.cdg-final-cta-content .cdg-btn-outline:hover {
+    background: rgba(255,255,255,0.16);
+    color: #fff !important;
+    border-color: rgba(255,255,255,0.55);
+    transform: translateY(-1px);
+}

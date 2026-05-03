@@ -1081,18 +1081,25 @@ function cdgSolToggle(idx){
 <section class="cdg-final-cta">
     <div class="cdg-container">
         <div class="cdg-final-cta-content">
-            <div class="cdg-eyebrow">Hemen Başlayın</div>
-            <h2>Profesyonel hosting deneyimine<br><span class="cdg-text-gradient">CODEGA</span> ile başlayın</h2>
-            <p>Bugün kayıt olun, %30 indirim + ücretsiz domain + 30 gün para iade garantisi.</p>
-            <div class="cdg-final-cta-actions">
-                <?php if($mod_hosting): ?><a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-primary cdg-btn-lg cdg-btn-glow"><i class="bi bi-rocket-takeoff-fill"></i> Hosting Al</a><?php endif; ?>
-                <?php if($mod_domain): ?><a href="<?php echo $domain_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-globe2"></i> Domain Sorgula</a><?php endif; ?>
+            <div class="cdg-final-cta-bg">
+                <div class="cdg-final-cta-blob cdg-final-cta-blob-1"></div>
+                <div class="cdg-final-cta-blob cdg-final-cta-blob-2"></div>
+                <div class="cdg-final-cta-grid"></div>
             </div>
-            <div class="cdg-final-trust">
-                <span><i class="bi bi-shield-check"></i> %99.99 Uptime</span>
-                <span><i class="bi bi-arrow-counterclockwise"></i> 30 Gün İade</span>
-                <span><i class="bi bi-headset"></i> 7/24 Destek</span>
-                <span><i class="bi bi-cpu-fill"></i> AI Optimizasyon</span>
+            <div class="cdg-final-cta-inner">
+                <div class="cdg-eyebrow cdg-eyebrow-light">Hemen Başlayın</div>
+                <h2 class="cdg-final-cta-title">Profesyonel hosting deneyimine<br><span>CODEGA</span> ile başlayın</h2>
+                <p class="cdg-final-cta-lead">Bugün kayıt olun, %30 indirim + ücretsiz domain + 30 gün para iade garantisi.</p>
+                <div class="cdg-final-cta-actions">
+                    <?php if($mod_hosting): ?><a href="<?php echo $hosting_url; ?>" class="cdg-btn cdg-btn-primary cdg-btn-lg cdg-btn-glow"><i class="bi bi-rocket-takeoff-fill"></i> Hosting Al</a><?php endif; ?>
+                    <?php if($mod_domain): ?><a href="<?php echo $domain_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-globe2"></i> Domain Sorgula</a><?php endif; ?>
+                </div>
+                <div class="cdg-final-trust">
+                    <span><i class="bi bi-shield-check"></i> %99.99 Uptime</span>
+                    <span><i class="bi bi-arrow-counterclockwise"></i> 30 Gün İade</span>
+                    <span><i class="bi bi-headset"></i> 7/24 Destek</span>
+                    <span><i class="bi bi-cpu-fill"></i> AI Optimizasyon</span>
+                </div>
             </div>
         </div>
     </div>
