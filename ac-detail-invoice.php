@@ -656,6 +656,38 @@ $discounted_total = $inv_subtotal - $total_discount;
                 <h3><i class="bi bi-person-vcard"></i> Fatura Sahibi</h3>
             </div>
             <div class="cdg-inv-card-body">
+                <?php
+                // Adres değiştirme - Classic uyumlu
+                // $acAddresses primary, $addresses fallback
+                $cdg_ac_addresses = isset($acAddresses) && is_array($acAddresses) ? $acAddresses : (isset($addresses) && is_array($addresses) ? $addresses : []);
+                $cdg_change_link = $links['change_address'] ?? '';
+                $cdg_default_address = $user_data['default_address'] ?? 0;
+                $cdg_can_change_addr = ($inv_status === 'unpaid' && !empty($cdg_ac_addresses) && $cdg_change_link);
+                ?>
+                <?php if($cdg_can_change_addr): ?>
+                <div style="background:#eff6ff;border:1px solid #dbeafe;border-radius:10px;padding:12px;margin-bottom:14px;">
+                    <div style="font-size:11px;font-weight:800;color:#1e40af;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;">
+                        <i class="bi bi-geo-alt"></i> Fatura Adresi Seç
+                    </div>
+                    <select onchange="if(this.value) location = this.value;" style="width:100%;padding:9px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;background:#fff;">
+                        <option value="">— Adres seç —</option>
+                        <?php foreach($cdg_ac_addresses as $addr):
+                            $addr_id = $addr['id'] ?? 0;
+                            $addr_name = $addr['name'] ?? 'Adres';
+                            $addr_line = $addr['address_line'] ?? '';
+                            $is_default = ($cdg_default_address == $addr_id);
+                        ?>
+                        <option value="<?php echo htmlspecialchars($cdg_change_link . $addr_id, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>"<?php echo $is_default ? ' selected' : ''; ?>>
+                            <?php echo htmlspecialchars($addr_name . ' - ' . $addr_line, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <div style="font-size:10px;color:#64748b;margin-top:6px;">
+                        <i class="bi bi-info-circle"></i> Faturayı oluşturduğunuz adresi değiştirebilirsiniz. Vergi hesaplamaları seçili adrese göre güncellenir.
+                    </div>
+                </div>
+                <?php endif; ?>
+
                 <ul class="cdg-inv-info">
                     <?php if($u_kind === 'corporate' || $u_kind === 'company'): ?>
                         <?php if($u_company): ?>

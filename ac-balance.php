@@ -104,12 +104,23 @@ $max_buy = (class_exists('Config') && method_exists('Config','get')) ? @Config::
 $user_curr = isset($currency) && $currency ? $currency : 'TRY';
 
 // Otomatik ödeme + min eşik
+// Classic runtime: $auto_payment_by_credit, $balance_min direkt veriyor (primary)
+// User::$init->info fallback olarak (eski Classic uyumlu)
 $auto_pay_active = false;
 $balance_min_threshold = '0';
-if(class_exists('User') && isset(User::$init->info)) {
+if(isset($auto_payment_by_credit)) {
+    $auto_pay_active = !empty($auto_payment_by_credit);
+} elseif(class_exists('User') && isset(User::$init->info)) {
     $auto_pay_active = !empty(User::$init->info['auto_payment_by_credit']);
+}
+if(isset($balance_min)) {
+    $balance_min_threshold = $balance_min;
+} elseif(class_exists('User') && isset(User::$init->info)) {
     $balance_min_threshold = User::$init->info['balance_min'] ?? '0';
 }
+
+// Pay latest balance (Classic runtime - son bakiye yukleme zamani)
+$cdg_pay_latest_balance = isset($pay_latest_balance) ? $pay_latest_balance : '';
 
 // İstatistikler
 $total_loaded = 0;
@@ -184,6 +195,16 @@ if(!empty($transactions) && is_array($transactions)) {
                 </div>
                 <div class="cdg-bal-stat-sub"><i class="bi bi-arrow-up-circle"></i> Faturalardan</div>
             </div>
+            <?php if(!empty($cdg_pay_latest_balance)): ?>
+            <div class="cdg-bal-stat">
+                <div class="cdg-bal-stat-label">Son Bakiye Yükleme</div>
+                <div class="cdg-bal-stat-value-sm" style="color:#0ea5e9;font-size:14px;">
+                    <i class="bi bi-clock-history"></i>
+                    <?php echo htmlspecialchars($cdg_pay_latest_balance, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                </div>
+                <div class="cdg-bal-stat-sub"><i class="bi bi-calendar-check"></i> En son işlem</div>
+            </div>
+            <?php endif; ?>
         </div>
 
         <div class="cdg-bal-grid">

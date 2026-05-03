@@ -74,7 +74,7 @@ if(!function_exists('cdg_link')) {
 }
 
 $message = isset($message) && is_array($message) ? $message : [];
-$msg_subject = $message['subject'] ?? $message['title'] ?? 'Mesaj';
+$msg_subject = $header_title ?? ($message['subject'] ?? $message['title'] ?? 'Mesaj');
 $msg_content = $message['content'] ?? $message['body'] ?? '';
 $msg_date = $message['date'] ?? $message['cdate'] ?? '';
 $msg_addresses = $message['addresses'] ?? '';

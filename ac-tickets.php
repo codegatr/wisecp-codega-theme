@@ -98,6 +98,18 @@ if(class_exists('Helper') && method_exists('Helper', 'Load')) {
 $ui_lang_local = isset($ui_lang) ? $ui_lang : 'tr';
 ?>
 
+<?php
+// Hook: TicketClientAreaViewList - üçüncü taraf entegrasyonlar için
+if(class_exists('Hook') && method_exists('Hook', 'run')) {
+    $h_contents = Hook::run("TicketClientAreaViewList");
+    if($h_contents && is_array($h_contents)) {
+        foreach($h_contents as $h_content) {
+            if($h_content) echo $h_content;
+        }
+    }
+}
+?>
+
 <div class="cdg-card">
     <div class="cdg-card-head">
         <h3><i class="bi bi-headset"></i> Destek Talepleri</h3>

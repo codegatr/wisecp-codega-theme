@@ -389,6 +389,18 @@ $tickets_url = cdg_link('tickets');
 <div class="cdg-tk">
 <div class="cdg-tk-wrap">
 
+    <?php
+    // Hook: TicketClientAreaViewCreate - üçüncü taraf entegrasyonlar
+    if(class_exists('Hook') && method_exists('Hook', 'run')) {
+        $h_contents = Hook::run("TicketClientAreaViewCreate");
+        if($h_contents && is_array($h_contents)) {
+            foreach($h_contents as $h_content) {
+                if($h_content) echo $h_content;
+            }
+        }
+    }
+    ?>
+
     <!-- BACK -->
     <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-tk-back">
         <i class="bi bi-arrow-left"></i> Taleplerime Dön

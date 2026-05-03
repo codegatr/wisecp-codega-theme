@@ -1172,18 +1172,56 @@ foreach($options as $opt_k => $opt_v) {
                         <?php if($d_amount): ?>
                         <li><span class="cdg-pd2-info-label">Ücret</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_money($d_amount, $d_amount_cid), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
+                        <?php
+                        // Subscription detail (Classic uyumlu)
+                        // - $subscription set + status != cancelled: Aktif subscription, AJAX subscription_detail ile bilgi yuklenir
+                        // - $subscription cancelled VEYA YOK + card-storage-module: auto_pay checkbox + stored_cards kontrolu
+                        $cdg_subscription = isset($subscription) && is_array($subscription) ? $subscription : null;
+                        $cdg_sub_active = ($cdg_subscription && ($cdg_subscription['status'] ?? '') !== 'cancelled');
+                        $cdg_stored_cards = isset($stored_cards) && $stored_cards;
+                        ?>
+                        <?php if($cdg_sub_active): ?>
+                        <!-- Aktif subscription: backend'ten yuklenecek -->
+                        <li>
+                            <span class="cdg-pd2-info-label">Otomatik Ödeme (Subscription)</span>
+                            <span class="cdg-pd2-info-value">
+                                <span id="subscription_status">
+                                    <span style="color:#3b82f6;font-size:12px;"><i class="bi bi-arrow-clockwise" style="animation:spin 1s linear infinite;"></i> Yükleniyor...</span>
+                                </span>
+                            </span>
+                        </li>
+                        <script>
+                        (function(){
+                            var ctrlUrl = '<?php echo htmlspecialchars($links['controller'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>';
+                            if(window.jQuery && ctrlUrl) {
+                                jQuery.get(ctrlUrl + '?operation=subscription_detail', function(data){
+                                    if(data) jQuery('#subscription_status').html(data);
+                                }).fail(function(){
+                                    jQuery('#subscription_status').html('<span style="color:#94a3b8;font-size:12px;">Subscription bilgisi alinamadi</span>');
+                                });
+                            }
+                        })();
+                        </script>
+                        <?php else: ?>
+                        <!-- Subscription yok / iptal edilmis - Auto-pay checkbox -->
                         <li>
                             <span class="cdg-pd2-info-label">Otomatik Ödeme</span>
                             <span class="cdg-pd2-info-value">
-                                <button type="button" onclick="cdgPd2.toggleAutoPay()" style="background:transparent;border:0;padding:0;cursor:pointer;" title="<?php echo $d_autopay ? 'Otomatik ödemeyi kapat' : 'Otomatik ödemeyi aç'; ?>">
+                                <button type="button" onclick="cdgPd2.toggleAutoPay(<?php echo $cdg_stored_cards ? 'true' : 'false'; ?>)" style="background:transparent;border:0;padding:0;cursor:pointer;" title="<?php echo $d_autopay ? 'Otomatik ödemeyi kapat' : 'Otomatik ödemeyi aç'; ?>">
                                 <?php if($d_autopay): ?>
                                     <span class="cdg-pd2-badge cdg-pd2-badge-success"><i class="bi bi-check-circle-fill"></i> Açık</span>
                                 <?php else: ?>
                                     <span class="cdg-pd2-badge cdg-pd2-badge-info"><i class="bi bi-x-circle"></i> Kapalı</span>
                                 <?php endif; ?>
                                 </button>
+                                <?php if(!$cdg_stored_cards): ?>
+                                <small style="display:block;color:#94a3b8;font-size:10px;margin-top:4px;font-weight:600;">
+                                    <i class="bi bi-info-circle"></i> Önce bir kart kayıt etmelisiniz
+                                </small>
+                                <?php endif; ?>
                             </span>
                         </li>
+                        <?php endif; ?>
                         <?php if($d_renewal_date && $d_renewal_date !== $d_duedate): ?>
                         <li><span class="cdg-pd2-info-label">Yenileme Tarihi</span><span class="cdg-pd2-info-value"><?php echo htmlspecialchars(cdg_pd_date($d_renewal_date), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span></li>
                         <?php endif; ?>
@@ -2865,9 +2903,22 @@ window.cdgPd2 = {
         });
     },
 
-    toggleAutoPay: function(){
+    // Classic format: operation, status (NO 'id'!)
+    // hasStoredCards: kart kayitli mi - frontend'te kontrol edilmeli
+    toggleAutoPay: function(hasStoredCards){
         var self = this;
-        this._post({ operation: 'set_auto_pay_status', id: this.productId }, function(r){
+        // Yeni status'u tespit et (mevcut: badge "Açık" mi/Kapalı mi)
+        var btn = event && event.currentTarget ? event.currentTarget : null;
+        var currentlyOn = btn ? btn.querySelector('.cdg-pd2-badge-success') !== null : false;
+        var newStatus = currentlyOn ? 0 : 1;
+
+        // Aktif etme isteniyor ve kart yok ise uyari ver
+        if(newStatus === 1 && hasStoredCards === false) {
+            self._toast('Otomatik ödeme için önce bir kart kayıt etmelisiniz. Hesap > Kayıtlı Kartlar bölümünü kontrol edin.', 'error');
+            return;
+        }
+
+        this._post({ operation: 'set_auto_pay_status', status: newStatus }, function(r){
             self._toast(r.message || 'Otomatik ödeme güncellendi', 'success');
             setTimeout(function(){ location.reload(); }, 1200);
         });
@@ -2875,7 +2926,12 @@ window.cdgPd2 = {
 
     cancelSubscription: function(){
         if(!confirm('Otomatik yenilemeyi iptal etmek istediğinize emin misiniz? İptalden sonra ürününüz manuel olarak yenilenebilir.')) return;
-        this._post({ operation: 'cancel_subscription', id: this.productId });
+        var self = this;
+        // Classic format: sadece operation (NO 'id'!)
+        this._post({ operation: 'cancel_subscription' }, function(r){
+            self._toast(r.message || 'Subscription iptal edildi', 'success');
+            setTimeout(function(){ window.location.href = self.controllerUrl; }, 1200);
+        });
     },
 
     // Aktif abonelik detayları (Classic'in subscription_detail operation)

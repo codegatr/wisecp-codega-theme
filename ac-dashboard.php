@@ -231,6 +231,27 @@ if(isset($tickets) && is_array($tickets)) {
     $recent_tickets = array_slice($tickets, 0, 5);
 }
 
+// === Duyurular - Classic uyumlu (dashboard_news primary, news fallback) ===
+$cdg_news_items = [];
+if(isset($dashboard_news) && is_array($dashboard_news)) {
+    $cdg_news_items = $dashboard_news;
+} elseif(isset($news) && is_array($news)) {
+    $cdg_news_items = $news;
+}
+$cdg_news_items = array_slice($cdg_news_items, 0, 4);
+
+// === Hesap Aktivite Geçmişi - Classic uyumlu ===
+$cdg_activity_items = [];
+if(isset($dashboard_activity) && is_array($dashboard_activity)) {
+    $cdg_activity_items = array_slice($dashboard_activity, 0, 5);
+}
+
+// === Domain Doğrulama Bekleyenler (.tr/.com.tr için) ===
+$cdg_domain_verification = [];
+if(isset($domain_verification_orders) && is_array($domain_verification_orders)) {
+    $cdg_domain_verification = $domain_verification_orders;
+}
+
 // Ticket status meta
 $tk_meta = [
     'Customer-Reply' => ['cls' => 'warning', 'lbl' => 'Yanıt Bekliyor', 'icon' => 'hourglass-split'],
@@ -841,6 +862,98 @@ $balance_url   = cdg_link('ac-ps-balance');
                 <?php endif; ?>
             </div>
         </div>
+
+        <?php if(!empty($cdg_domain_verification)): ?>
+        <!-- DOMAIN DOĞRULAMA BEKLEYENLER (.tr / .com.tr) -->
+        <div class="cdg-d-panel" style="border-left:4px solid #f59e0b;background:linear-gradient(135deg,#fffbeb,#fef3c7);">
+            <div class="cdg-d-panel-head" style="background:rgba(245,158,11,0.10);">
+                <h3 style="color:#92400e;"><i class="bi bi-shield-exclamation"></i> Doğrulama Bekleyen Domainler</h3>
+                <span class="cdg-d-empty-stat" style="color:#92400e;font-weight:800;font-size:14px;background:#fbbf24;padding:3px 10px;border-radius:6px;color:#fff;"><?php echo count($cdg_domain_verification); ?></span>
+            </div>
+            <div class="cdg-d-panel-body">
+                <ul class="cdg-d-list">
+                    <?php foreach($cdg_domain_verification as $dv):
+                        $dv_name = $dv['name'] ?? '-';
+                        $dv_link = $dv['detail_link'] ?? ($dv['link'] ?? '#');
+                    ?>
+                    <li>
+                        <div class="cdg-d-list-icon" style="background:rgba(245,158,11,0.10);color:#f59e0b;">
+                            <i class="bi bi-shield"></i>
+                        </div>
+                        <div class="cdg-d-list-text">
+                            <div class="cdg-d-list-title"><a href="<?php echo htmlspecialchars($dv_link, ENT_QUOTES); ?>" style="color:inherit;"><?php echo htmlspecialchars($dv_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></a></div>
+                            <div class="cdg-d-list-sub" style="color:#92400e;"><i class="bi bi-exclamation-triangle"></i> Belge yüklemeniz gerekiyor</div>
+                        </div>
+                        <a href="<?php echo htmlspecialchars($dv_link, ENT_QUOTES); ?>" class="cdg-d-tk-badge warning" style="text-decoration:none;">
+                            <i class="bi bi-arrow-right"></i> Doğrula
+                        </a>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <?php if(!empty($cdg_news_items)): ?>
+        <!-- DUYURULAR -->
+        <div class="cdg-d-panel">
+            <div class="cdg-d-panel-head">
+                <h3><i class="bi bi-megaphone-fill" style="color:#3b82f6;"></i> Duyurular</h3>
+            </div>
+            <div class="cdg-d-panel-body">
+                <div class="cdg-d-news-grid">
+                    <?php foreach($cdg_news_items as $news_item):
+                        $news_title = $news_item['title'] ?? ($news_item['subject'] ?? '-');
+                        $news_date  = $news_item['cdate'] ?? ($news_item['date'] ?? '');
+                        $news_link  = $news_item['link'] ?? ($news_item['detail_link'] ?? '#');
+                    ?>
+                    <a href="<?php echo htmlspecialchars($news_link, ENT_QUOTES); ?>" class="cdg-d-news-item" style="text-decoration:none;color:inherit;">
+                        <div class="cdg-d-news-item-title"><?php echo htmlspecialchars($news_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                        <?php if($news_date): ?>
+                        <div class="cdg-d-news-item-date"><i class="bi bi-calendar3"></i> <?php echo $cdg_date_fmt($news_date); ?></div>
+                        <?php endif; ?>
+                    </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <?php if(!empty($cdg_activity_items)): ?>
+        <!-- AKTIVITE GEÇMİŞİ (Hesap Hareketleri) -->
+        <div class="cdg-d-panel">
+            <div class="cdg-d-panel-head">
+                <h3><i class="bi bi-clock-history" style="color:#0ea5e9;"></i> Hesap Aktivitesi</h3>
+            </div>
+            <div class="cdg-d-panel-body">
+                <ul class="cdg-d-list">
+                    <?php foreach($cdg_activity_items as $activity):
+                        $act_desc = '-';
+                        if(isset($activity['description'])) {
+                            $act_desc = is_array($activity['description'])
+                                ? ($activity['detail'] ?? '-')
+                                : $activity['description'];
+                        }
+                        $act_time = $activity['ctime'] ?? ($activity['cdate'] ?? '');
+                        $act_ip   = $activity['ip'] ?? '';
+                    ?>
+                    <li>
+                        <div class="cdg-d-list-icon" style="background:rgba(14,165,233,0.10);color:#0ea5e9;">
+                            <i class="bi bi-activity"></i>
+                        </div>
+                        <div class="cdg-d-list-text">
+                            <div class="cdg-d-list-title"><?php echo htmlspecialchars(strip_tags($act_desc), ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
+                            <div class="cdg-d-list-sub">
+                                <?php if($act_time): ?><i class="bi bi-clock"></i> <?php echo htmlspecialchars($act_time, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php endif; ?>
+                                <?php if($act_ip): ?> &middot; <i class="bi bi-globe"></i> <?php echo htmlspecialchars($act_ip, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?><?php endif; ?>
+                            </div>
+                        </div>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+        <?php endif; ?>
 
     </div>
 

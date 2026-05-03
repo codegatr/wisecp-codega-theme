@@ -472,6 +472,18 @@ function cdg_t_date($date) {
 <div class="cdg-td">
 <div class="cdg-td-wrap">
 
+    <?php
+    // Hook: TicketClientAreaViewDetailTop - üçüncü taraf entegrasyonlar (üstte)
+    if(class_exists('Hook') && method_exists('Hook', 'run') && isset($ticket)) {
+        $h_contents = Hook::run("TicketClientAreaViewDetailTop", $ticket);
+        if($h_contents && is_array($h_contents)) {
+            foreach($h_contents as $h_content) {
+                if($h_content) echo $h_content;
+            }
+        }
+    }
+    ?>
+
     <!-- BACK -->
     <a href="<?php echo htmlspecialchars($tickets_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-td-back">
         <i class="bi bi-arrow-left"></i> Taleplerime Dön
@@ -523,6 +535,18 @@ function cdg_t_date($date) {
             </span>
         </div>
     </div>
+
+    <?php
+    // Hook: TicketClientAreaViewDetail - üçüncü taraf entegrasyonlar (orta)
+    if(class_exists('Hook') && method_exists('Hook', 'run') && isset($ticket)) {
+        $h_contents = Hook::run("TicketClientAreaViewDetail", $ticket);
+        if($h_contents && is_array($h_contents)) {
+            foreach($h_contents as $h_content) {
+                if($h_content) echo $h_content;
+            }
+        }
+    }
+    ?>
 
     <!-- MESSAGES THREAD -->
     <div class="cdg-td-thread" id="cdg-td-thread">
@@ -625,7 +649,16 @@ function cdg_t_date($date) {
                         <i class="bi bi-paperclip" style="font-size:20px;color:#2E3B4E;"></i>
                         <div style="flex:1;">
                             <div style="font-size:13px;font-weight:700;color:#0f172a;">Dosya Ekle (Opsiyonel)</div>
-                            <div style="font-size:11px;color:#64748b;" id="cdg-td-attachments-info">Birden fazla dosya secebilirsiniz. Maks 5 MB.</div>
+                            <div style="font-size:11px;color:#64748b;" id="cdg-td-attachments-info">
+                                <?php
+                                // Classic uyumlu - $atachment_extensions Classic'ten gelir
+                                $cdg_attach_ext = isset($atachment_extensions) ? $atachment_extensions : '';
+                                if($cdg_attach_ext) {
+                                    echo 'İzin verilen: ' . htmlspecialchars($cdg_attach_ext, ENT_QUOTES | ENT_HTML5, 'UTF-8') . ' &middot; ';
+                                }
+                                ?>
+                                Birden fazla dosya secebilirsiniz. Maks 5 MB.
+                            </div>
                         </div>
                         <input type="file" name="attachments[]" id="cdg-td-attachments" multiple style="display:none;" onchange="cdgTdShowFiles(this)">
                         <button type="button" class="cdg-td-btn" style="background:#fff;border:1px solid #e2e8f0;color:#475569;padding:6px 14px;font-size:12px;" onclick="document.getElementById('cdg-td-attachments').click()">
