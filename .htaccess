@@ -73,6 +73,88 @@ RewriteRule ^pages/surdurulebilirlik\.php$ /surdurulebilirlik.html [R=301,L]
 RewriteRule ^pages/vizyon\.php$ /vizyon.html [R=301,L]
 
 # =====================================================================
+# CORPORATE SAYFALAR: .html URL'leri → gercek .php dosyalara INTERNAL rewrite
+# (Header/Footer linklerinde .html kullaniliyor, ama dosyalar .php uzantili)
+# Bu kurallar subdomain'den bagimsiz - hem ca'da hem migrationda calisir
+# =====================================================================
+
+# Vizyon - Codega'da dosya yok, hakkimizda.php'ye yonlendir (icerik orada birlikte)
+RewriteRule ^vizyon\.html$ hakkimizda.php [L]
+
+# Hakkimizda
+RewriteRule ^hakkimizda\.html$ hakkimizda.php [L]
+
+# Referanslar
+RewriteRule ^referanslarimiz\.html$ references.php [L]
+RewriteRule ^referanslar\.html$ references.php [L]
+
+# Kariyer
+RewriteRule ^kariyer\.html$ kariyer.php [L]
+
+# Sosyal Sorumluluk
+RewriteRule ^sosyal-sorumluluk\.html$ sosyal-sorumluluk.php [L]
+
+# Surdurulebilirlik
+RewriteRule ^surdurulebilirlik\.html$ surdurulebilirlik.php [L]
+
+# Sistem Durumu
+RewriteRule ^sistem-durumu\.html$ system-status.php [L]
+
+# KVKK Aydinlatma
+RewriteRule ^kvkk-aydinlatma-metni\.html$ kvkk.php [L]
+RewriteRule ^kvkk\.html$ kvkk.php [L]
+
+# Cerez Politikasi
+RewriteRule ^cerez-politikasi\.html$ cerez-politikasi.php [L]
+
+# Gizlilik Politikasi
+RewriteRule ^gizlilik-politikasi\.html$ gizlilik-politikasi.php [L]
+
+# Hizmet Sozlesmesi
+RewriteRule ^hizmet-sozlesmesi\.html$ hizmet-sozlesmesi.php [L]
+
+# CODEGA ERP
+RewriteRule ^erp-yazilimi\.html$ erp.php [L]
+RewriteRule ^erp\.html$ erp.php [L]
+
+# Hosting
+RewriteRule ^hosting-products\.html$ hosting-products.php [L]
+RewriteRule ^hosting\.html$ hosting-products.php [L]
+
+# Domain
+RewriteRule ^domain-checker\.html$ domain.php [L]
+RewriteRule ^domain\.html$ domain.php [L]
+
+# Iletisim / Contact
+RewriteRule ^contact\.html$ contact.php [L]
+RewriteRule ^iletisim\.html$ contact.php [L]
+
+# Bilgi Bankasi
+RewriteRule ^knowledgebase\.html$ knowledgebase.php [L]
+RewriteRule ^bilgi-bankasi\.html$ knowledgebase.php [L]
+
+# Yazilimlar
+RewriteRule ^softwares\.html$ softwares.php [L]
+RewriteRule ^yazilimlar\.html$ softwares.php [L]
+
+# Sunucular
+RewriteRule ^server-products\.html$ server-products.php [L]
+
+# SMS
+RewriteRule ^sms-products\.html$ sms-products.php [L]
+
+# News
+RewriteRule ^news\.html$ news.php [L]
+RewriteRule ^haberler\.html$ news.php [L]
+
+# Articles
+RewriteRule ^articles\.html$ articles.php [L]
+RewriteRule ^makaleler\.html$ articles.php [L]
+
+# Lisans
+RewriteRule ^license\.html$ license.php [L]
+
+# =====================================================================
 # CA.CODEGA.COM.TR → CODEGA.COM.TR (Cutover sonrası subdomain redirect)
 # AŞAMA 4'te subdomain kaldırılınca Apache vhost'ta yapılır.
 # Bu blok ŞU AN YORUM - aktif değildir.
