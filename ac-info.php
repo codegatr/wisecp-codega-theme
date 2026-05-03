@@ -783,9 +783,9 @@ if(!empty($udata['gsm'])) {
 
             <div style="margin-top:18px;padding:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;font-size:12px;color:#64748b;line-height:1.6;">
                 <i class="bi bi-info-circle"></i> Talepleriniz <strong>30 iş günü</strong> içinde değerlendirilir. Detaylı bilgi için
-                <a href="/gizlilik-politikasi" style="color:#2E3B4E;font-weight:600;">Gizlilik Politikamızı</a>
+                <a href="/gizlilik-politikasi.html" style="color:#2E3B4E;font-weight:600;">Gizlilik Politikamızı</a>
                 veya
-                <a href="/kvkk" style="color:#2E3B4E;font-weight:600;">KVKK Aydınlatma Metnimizi</a>
+                <a href="/kvkk.html" style="color:#2E3B4E;font-weight:600;">KVKK Aydınlatma Metnimizi</a>
                 inceleyin.
             </div>
         </div>

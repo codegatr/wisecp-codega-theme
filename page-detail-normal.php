@@ -33,6 +33,14 @@ if(!$cdg_corp_slug && isset($_SERVER['REQUEST_URI'])) {
     $cdg_uri_segments = explode('/', $cdg_uri_path);
     $cdg_corp_slug = strtolower(end($cdg_uri_segments));
 }
+// .html / .htm uzantısını strip et (WiseCP page URL formatı)
+$cdg_corp_slug = preg_replace('/\.html?$/i', '', $cdg_corp_slug);
+
+// 3) WiseCP $page_data['route']'dan da kontrol et
+if(!isset($cdg_corp_pages[$cdg_corp_slug]) && isset($page) && is_array($page) && !empty($page['route'])) {
+    $cdg_corp_slug = strtolower(trim($page['route']));
+    $cdg_corp_slug = preg_replace('/\.html?$/i', '', $cdg_corp_slug);
+}
 
 if(isset($cdg_corp_pages[$cdg_corp_slug])) {
     $cdg_corp_file = __DIR__ . DIRECTORY_SEPARATOR . $cdg_corp_pages[$cdg_corp_slug];

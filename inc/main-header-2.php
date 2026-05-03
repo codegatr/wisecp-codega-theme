@@ -145,38 +145,38 @@ if(!function_exists('cdg_link')) {
                         <div class="cdg-nav-mega-grid">
                             <div class="cdg-nav-mega-col">
                                 <div class="cdg-nav-mega-title">Hakkımızda</div>
-                                <a href="/hakkimizda" class="cdg-nav-mega-link">
+                                <a href="/hakkimizda.html" class="cdg-nav-mega-link">
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#fee2e2,#fecaca);color:#dc2626;"><i class="bi bi-bullseye"></i></span>
                                     <span><strong>Vizyon &amp; Değerlerimiz</strong><small>Misyonumuz ve ilkelerimiz</small></span>
                                 </a>
-                                <a href="/sosyal-sorumluluk" class="cdg-nav-mega-link">
+                                <a href="/sosyal-sorumluluk.html" class="cdg-nav-mega-link">
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#15803d;"><i class="bi bi-tree"></i></span>
                                     <span><strong>Sosyal Sorumluluk</strong><small>Toplum ve çevre projeleri</small></span>
                                 </a>
-                                <a href="/surdurulebilirlik" class="cdg-nav-mega-link">
+                                <a href="/surdurulebilirlik.html" class="cdg-nav-mega-link">
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#dcfce7,#86efac);color:#16a34a;"><i class="bi bi-recycle"></i></span>
                                     <span><strong>Sürdürülebilirlik</strong><small>Yeşil hosting taahhüdümüz</small></span>
                                 </a>
-                                <a href="/kariyer" class="cdg-nav-mega-link">
+                                <a href="/kariyer.html" class="cdg-nav-mega-link">
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;"><i class="bi bi-briefcase"></i></span>
                                     <span><strong>Kariyer</strong><small>Açık pozisyonlar</small></span>
                                 </a>
                             </div>
                             <div class="cdg-nav-mega-col">
                                 <div class="cdg-nav-mega-title">Yasal</div>
-                                <a href="/kvkk" class="cdg-nav-mega-link">
+                                <a href="/kvkk.html" class="cdg-nav-mega-link">
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;"><i class="bi bi-shield-lock"></i></span>
                                     <span><strong>KVKK</strong><small>Kişisel verilerin korunması</small></span>
                                 </a>
-                                <a href="/cerez-politikasi" class="cdg-nav-mega-link">
+                                <a href="/cerez-politikasi.html" class="cdg-nav-mega-link">
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);color:#9d174d;"><i class="bi bi-cookie"></i></span>
                                     <span><strong>Çerez Politikası</strong><small>Cookie kullanımımız</small></span>
                                 </a>
-                                <a href="/gizlilik-politikasi" class="cdg-nav-mega-link">
+                                <a href="/gizlilik-politikasi.html" class="cdg-nav-mega-link">
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe);color:#4338ca;"><i class="bi bi-file-earmark-text"></i></span>
                                     <span><strong>Gizlilik Sözleşmesi</strong><small>Veri işleme politikamız</small></span>
                                 </a>
-                                <a href="/hizmet-sozlesmesi" class="cdg-nav-mega-link">
+                                <a href="/hizmet-sozlesmesi.html" class="cdg-nav-mega-link">
                                     <span class="cdg-nav-mega-ico" style="background:linear-gradient(135deg,#cffafe,#a5f3fc);color:#0e7490;"><i class="bi bi-file-earmark-check"></i></span>
                                     <span><strong>Hizmet Sözleşmesi</strong><small>Üyelik koşullarımız</small></span>
                                 </a>
