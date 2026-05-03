@@ -88,7 +88,7 @@ p { margin: 0 0 1em; }
 /* ========== HEADER ========== */
 .cdg-header {
     position: sticky; top: 0; z-index: 1000;
-    background: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.97);
     backdrop-filter: saturate(180%) blur(14px);
     -webkit-backdrop-filter: saturate(180%) blur(14px);
     border-bottom: 1px solid rgba(15, 23, 42, 0.06);
@@ -5053,3 +5053,48 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
 .d-flex { display: flex !important; }
 .align-items-center { align-items: center !important; }
 .justify-content-center { justify-content: center !important; }
+
+/* ========== HEADER BUTTON OVERRIDES ==========
+ * Header'ın yarı şeffaf arka planı + koyu hero ile kombinasyonda
+ * butonların metni okunamaz hale gelebiliyor. Force opaque + dark text.
+ */
+.cdg-header .cdg-btn-outline {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border-color: #e2e8f0 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+.cdg-header .cdg-btn-outline:hover {
+    background: #f8fafc !important;
+    color: #1e40af !important;
+    border-color: #1e40af !important;
+    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
+}
+.cdg-header .cdg-btn-outline i {
+    color: inherit;
+}
+
+/* Ghost butonu da güçlendir (Çıkış butonu) */
+.cdg-header .cdg-btn-ghost {
+    background: rgba(255, 255, 255, 0.6) !important;
+    color: #1e293b !important;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+.cdg-header .cdg-btn-ghost:hover {
+    background: #ffffff !important;
+    color: #1e40af !important;
+    border-color: #1e40af !important;
+}
+
+/* Sepet butonu da açık header'da tam görünür olsun */
+.cdg-header .cdg-cart-btn {
+    background: rgba(255, 255, 255, 0.6) !important;
+    color: #1e293b !important;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+.cdg-header .cdg-cart-btn:hover {
+    background: #ffffff !important;
+    color: #1e40af !important;
+    border-color: #1e40af !important;
+}
