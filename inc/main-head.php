@@ -47,6 +47,7 @@ if(!isset($canonical_link) || !$canonical_link) {
 <link rel="canonical" href="<?php echo htmlspecialchars($canonical_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" />
 <link rel="icon" type="image/png" href="<?php echo (isset($favicon_link) && $favicon_link) ? $favicon_link : $tadress.'images/favicon.png'; ?>" />
 <meta name="theme-color" content="<?php echo isset($meta_color) ? $meta_color : '#2E3B4E'; ?>">
+<meta name="color-scheme" content="light">
 
 <?php if(isset($page) && isset($page["mockup"]) && $page["mockup"] != ''): ?>
     <meta property="og:image" content="<?php echo $page["mockup"]; ?>">

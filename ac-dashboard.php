@@ -503,44 +503,58 @@ $balance_url   = cdg_link('ac-ps-balance');
 @media (max-width: 880px) { .cdg-d-main { grid-template-columns: 1fr; overflow: auto; } }
 
 .cdg-d-panel {
-    background: var(--d-card);
-    border: 1px solid var(--d-border);
-    border-radius: var(--d-radius);
+    background: #ffffff;
+    background: var(--d-card, #ffffff);
+    border: 1px solid #e2e8f0;
+    border: 1px solid var(--d-border, #e2e8f0);
+    border-radius: var(--d-radius, 14px);
     overflow: hidden;
     display: flex;
     flex-direction: column;
     min-height: 0;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
 }
 .cdg-d-panel-head {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 11px 16px;
+    padding: 12px 18px;
     color: #fff;
     background: linear-gradient(135deg, #1A2332, #2E3B4E);
     flex-shrink: 0;
+    border-bottom: 2px solid rgba(0, 211, 229, 0.15);
 }
 .cdg-d-panel-head.gold {
     background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-bottom-color: rgba(255, 255, 255, 0.20);
 }
 .cdg-d-panel-head.deep {
     background: linear-gradient(135deg, #1A2332, #1A2332);
+    border-bottom-color: rgba(0, 211, 229, 0.20);
 }
 .cdg-d-panel-head h3 {
     margin: 0;
-    font-size: 13px; font-weight: 800;
+    font-size: 14px; font-weight: 800;
     letter-spacing: 0.3px;
-    display: flex; align-items: center; gap: 7px;
+    color: #ffffff !important;
+    display: flex; align-items: center; gap: 8px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.20);
 }
-.cdg-d-panel-head h3 i { font-size: 16px; }
+.cdg-d-panel-head h3 i { font-size: 17px; }
 .cdg-d-panel-head a {
-    color: #fff;
-    font-size: 11px; font-weight: 700;
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 4px 10px;
-    border-radius: 7px;
-    background: rgba(255,255,255,0.18);
+    color: #ffffff !important;
+    font-size: 12px; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     transition: all 0.2s;
+    backdrop-filter: blur(4px);
 }
-.cdg-d-panel-head a:hover { background: rgba(255,255,255,0.30); }
+.cdg-d-panel-head a:hover {
+    background: rgba(255, 255, 255, 0.32);
+    border-color: rgba(255, 255, 255, 0.30);
+    transform: translateX(2px);
+}
 
 .cdg-d-panel-body {
     padding: 0;
@@ -548,6 +562,9 @@ $balance_url   = cdg_link('ac-ps-balance');
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    background: #ffffff;
+    color: #0f172a;
+    color: var(--d-text, #0f172a);
 }
 .cdg-d-panel-body.padded { padding: 12px 16px; }
 /* Custom scrollbar */
@@ -649,11 +666,72 @@ $balance_url   = cdg_link('ac-ps-balance');
 /* Empty state */
 .cdg-d-empty {
     text-align: center;
-    padding: 40px 20px;
+    padding: 48px 24px;
     color: var(--d-muted);
+    background: linear-gradient(180deg, #fafbfd 0%, #ffffff 100%);
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
 }
-.cdg-d-empty i { font-size: 36px; color: #cbd5e1; display: block; margin-bottom: 8px; }
-.cdg-d-empty-text { font-size: 13px; }
+.cdg-d-empty-icon {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 4px;
+    box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.04);
+}
+.cdg-d-empty-icon i {
+    font-size: 32px;
+    color: #94a3b8;
+    margin: 0;
+    display: block;
+}
+.cdg-d-empty i {
+    font-size: 32px;
+    color: #94a3b8;
+    display: block;
+    margin: 0 auto;
+}
+.cdg-d-empty-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    line-height: 1.5;
+    max-width: 280px;
+    margin: 0 auto;
+}
+.cdg-d-empty-sub {
+    font-size: 12px;
+    color: #94a3b8;
+    margin: 4px auto 0;
+    max-width: 320px;
+    line-height: 1.5;
+}
+.cdg-d-empty-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    margin-top: 8px;
+    background: linear-gradient(135deg, #2E3B4E 0%, #1A2332 100%);
+    color: #fff !important;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(46, 59, 78, 0.20);
+}
+.cdg-d-empty-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(46, 59, 78, 0.30);
+}
 
 /* News mini section */
 .cdg-d-news-grid {
@@ -815,8 +893,14 @@ $balance_url   = cdg_link('ac-ps-balance');
                 </ul>
                 <?php else: ?>
                 <div class="cdg-d-empty">
-                    <i class="bi bi-calendar-check"></i>
-                    <div class="cdg-d-empty-text">Yaklaşan ödemesi olan hizmet bulunmuyor.</div>
+                    <div class="cdg-d-empty-icon">
+                        <i class="bi bi-calendar2-check"></i>
+                    </div>
+                    <div class="cdg-d-empty-text">Tüm hizmetleriniz güvende</div>
+                    <div class="cdg-d-empty-sub">Yaklaşan ödemesi olan hizmet bulunmuyor. Tüm ürünleriniz aktif ve ödemeleri zamanında yapılmış durumda.</div>
+                    <a href="<?php echo $products_url; ?>" class="cdg-d-empty-action">
+                        <i class="bi bi-grid-fill"></i> Tüm Hizmetlerim
+                    </a>
                 </div>
                 <?php endif; ?>
             </div>
@@ -856,8 +940,14 @@ $balance_url   = cdg_link('ac-ps-balance');
                 </ul>
                 <?php else: ?>
                 <div class="cdg-d-empty">
-                    <i class="bi bi-headset"></i>
-                    <div class="cdg-d-empty-text">Henüz destek talebiniz yok.<br><a href="<?php echo $create_ticket_url; ?>" style="color:#2E3B4E;font-weight:700;">İlk talebinizi oluşturun</a></div>
+                    <div class="cdg-d-empty-icon">
+                        <i class="bi bi-chat-square-heart"></i>
+                    </div>
+                    <div class="cdg-d-empty-text">Hiç destek talebiniz yok</div>
+                    <div class="cdg-d-empty-sub">Bir sorunla mı karşılaştınız? Teknik ekibimiz 7/24 yanınızda. Ortalama yanıt süresi 28 dakika.</div>
+                    <a href="<?php echo $create_ticket_url; ?>" class="cdg-d-empty-action">
+                        <i class="bi bi-plus-circle-fill"></i> İlk Talebinizi Oluşturun
+                    </a>
                 </div>
                 <?php endif; ?>
             </div>

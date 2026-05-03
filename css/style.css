@@ -5305,3 +5305,20 @@ body#codegapanel .cdg-ac-content { max-width: 100%; }
     border-color: rgba(255,255,255,0.55);
     transform: translateY(-1px);
 }
+
+/* ========== COLOR SCHEME LOCK ==========
+ * Site light tema. Sistem dark mode'da bile renklerin TUTARLI olmasını sağla.
+ * Browser'ların auto-dark-invert'ini engelle.
+ */
+:root {
+    color-scheme: light;
+}
+html, body {
+    color-scheme: light;
+    background-color: #ffffff;
+}
+
+/* Force form/input/select renderları light olsun */
+input, textarea, select, button {
+    color-scheme: light;
+}
