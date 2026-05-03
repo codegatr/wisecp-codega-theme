@@ -1047,5 +1047,22 @@ $balance_url   = cdg_link('ac-ps-balance');
 
     </div>
 
+    <?php
+    // === ClientAreaDashboardBottom Hook (dev.wisecp.com) ===
+    // Modüller dashboard'un altına widget ekleyebilir
+    if(class_exists('Hook')) {
+        try {
+            $cdg_dashboard_widgets = Hook::run("ClientAreaDashboardBottom");
+            if(is_array($cdg_dashboard_widgets) && !empty($cdg_dashboard_widgets)) {
+                echo '<div style="margin-top:18px;display:flex;flex-direction:column;gap:14px;">';
+                foreach($cdg_dashboard_widgets as $cdg_dw) {
+                    if(is_string($cdg_dw) && $cdg_dw) echo $cdg_dw;
+                }
+                echo '</div>';
+            }
+        } catch(\Throwable $e) { /* sessiz geç */ }
+    }
+    ?>
+
     </div><!-- /cdg-d-shell -->
 </div>
