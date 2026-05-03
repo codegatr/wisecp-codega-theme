@@ -100,9 +100,24 @@ if(!function_exists('cdg_link')) {
                 <span></span>
             </button>
 
+            <?php
+            // === Hosting URL defansif hesaplama ===
+            // 1. WiseCP runtime $links global'inden dene (admin panel'de tanimlanmis ise)
+            $cdg_hosting_url = '';
+            if(isset($links) && is_array($links)) {
+                foreach(['hosting-products','products-hosting','hosting','public-hosting'] as $_k) {
+                    if(!empty($links[$_k]) && $links[$_k] !== '#') { $cdg_hosting_url = $links[$_k]; break; }
+                }
+            }
+            // 2. Yoksa anasayfa + #paketler anchor (anasayfada paketler bolumu var)
+            if(!$cdg_hosting_url) {
+                $_home = isset($home_link) && $home_link ? $home_link : (defined('APP_URI') ? APP_URI : '/');
+                $cdg_hosting_url = rtrim($_home, '/') . '#paketler';
+            }
+            ?>
             <ul class="cdg-nav">
                 <li><a href="<?php echo $home_link; ?>" class="<?php echo cdg_active(['index',''], $current_page); ?>">Ana Sayfa</a></li>
-                <li><a href="<?php echo cdg_link('hosting-products'); ?>" class="<?php echo cdg_active(['products','hosting-products'], $current_page); ?>">Hosting</a></li>
+                <li><a href="<?php echo $cdg_hosting_url; ?>" class="<?php echo cdg_active(['products','hosting-products','products-hosting'], $current_page); ?>">Hosting</a></li>
                 <li><a href="<?php echo cdg_link('domain'); ?>"                class="<?php echo cdg_active('domain', $current_page); ?>">Domain</a></li>
                 <li><a href="<?php echo cdg_link('softwares'); ?>"             class="<?php echo cdg_active(['softwares','special-products'], $current_page); ?>">Yazılım</a></li>
                 <li><a href="<?php echo cdg_link('knowledgebase'); ?>"         class="<?php echo cdg_active(['knowledgebase','articles','news'], $current_page); ?>">Bilgi</a></li>

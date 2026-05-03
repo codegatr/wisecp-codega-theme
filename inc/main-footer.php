@@ -94,7 +94,22 @@ $addr  = isset($contact_i['address']) ? $contact_i['address'] : '';
             <div>
                 <h4>Hizmetler</h4>
                 <ul>
-                    <li><a href="<?php echo cdg_link('hosting-products'); ?>">Hosting</a></li>
+                    <?php
+                        // Hosting URL defansif hesaplama (header ile ayni mantik)
+                        if(!isset($cdg_hosting_url) || !$cdg_hosting_url) {
+                            $cdg_hosting_url = '';
+                            if(isset($links) && is_array($links)) {
+                                foreach(['hosting-products','products-hosting','hosting','public-hosting'] as $_k) {
+                                    if(!empty($links[$_k]) && $links[$_k] !== '#') { $cdg_hosting_url = $links[$_k]; break; }
+                                }
+                            }
+                            if(!$cdg_hosting_url) {
+                                $_home = isset($home_link) && $home_link ? $home_link : (defined('APP_URI') ? APP_URI : '/');
+                                $cdg_hosting_url = rtrim($_home, '/') . '#paketler';
+                            }
+                        }
+                        ?>
+                    <li><a href="<?php echo $cdg_hosting_url; ?>">Hosting</a></li>
                     <li><a href="<?php echo cdg_link('domain'); ?>">Domain</a></li>
                 </ul>
             </div>

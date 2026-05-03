@@ -458,7 +458,7 @@ $faqs = [
 
 <!-- 5. HOSTING PRICING -->
 <?php if($mod_hosting): ?>
-<section class="cdg-pricing-tabbed cdg-section">
+<section class="cdg-pricing-tabbed cdg-section" id="paketler">
     <div class="cdg-container">
         <div class="cdg-section-head">
             <div class="cdg-eyebrow">Hosting Paketleri</div>
