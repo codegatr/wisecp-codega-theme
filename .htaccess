@@ -18,8 +18,11 @@ RewriteRule ^templates/website/Codega/css/wisecp\.css$ templates/website/Codega/
 RewriteRule ^css/wisecp\.css$ css/wisecp.php [L]
 
 # =====================================================================
-# SITEMAP.XML → sitemap.php (dinamik üretim)
+# SITEMAP.XML → static dosya öncelikli, yoksa sitemap.php (dinamik)
+# Statik sitemap.xml mevcutsa Apache direkt onu serve eder.
+# Eğer silinirse, sitemap.php'ye yönlenir (DB'den dinamik üretim).
 # =====================================================================
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
 # =====================================================================

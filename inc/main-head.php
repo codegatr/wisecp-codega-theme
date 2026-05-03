@@ -35,7 +35,16 @@ if(isset($hoptions["page"]) && $hoptions["page"] != "index" && isset($meta["titl
 
 <?php if(class_exists('View') && method_exists('View', 'main_meta')) View::main_meta(); ?>
 
-<link rel="canonical" href="<?php echo isset($canonical_link) ? $canonical_link : ''; ?>" />
+<?php
+// CANONICAL URL - boş olursa current URL kullan (SEO için kritik)
+if(!isset($canonical_link) || !$canonical_link) {
+    $_proto = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || ($_SERVER['SERVER_PORT'] ?? 80) == 443 ? 'https' : 'http';
+    $_host  = $_SERVER['HTTP_HOST'] ?? 'codega.com.tr';
+    $_uri   = strtok($_SERVER['REQUEST_URI'] ?? '/', '?'); // Query string'i çıkar
+    $canonical_link = $_proto . '://' . $_host . $_uri;
+}
+?>
+<link rel="canonical" href="<?php echo htmlspecialchars($canonical_link, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" />
 <link rel="icon" type="image/png" href="<?php echo (isset($favicon_link) && $favicon_link) ? $favicon_link : $tadress.'images/favicon.png'; ?>" />
 <meta name="theme-color" content="<?php echo isset($meta_color) ? $meta_color : '#2E3B4E'; ?>">
 
@@ -124,3 +133,59 @@ if(isset($hoptions["page"]) && $hoptions["page"] != "index" && isset($meta["titl
 
 <!-- Classic temadan kalan icin jquery alias'leri (bazi pluginler bekler) -->
 <script>if(typeof jQuery!=='undefined' && typeof window.$==='undefined') window.$=jQuery;</script>
+
+<!-- ====================================================
+     JSON-LD Schema.org Structured Data (SEO için kritik)
+     Google rich results için Organization + WebSite
+     ==================================================== -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "<?php echo defined('APP_URI') ? APP_URI : 'https://codega.com.tr'; ?>/#organization",
+    "name": "CODEGA",
+    "alternateName": "CODEGA Yazılım ve İletişim Hizmetleri",
+    "url": "<?php echo defined('APP_URI') ? APP_URI : 'https://codega.com.tr'; ?>",
+    "logo": "<?php echo defined('APP_URI') ? APP_URI : 'https://codega.com.tr'; ?>/templates/website/Codega/images/favicon.png",
+    "description": "Modern PHP altyapısıyla web yazılım, hosting, domain ve özel yazılım çözümleri. AKSOY GROUP iştiraki.",
+    "foundingDate": "2020",
+    "parentOrganization": {
+        "@type": "Organization",
+        "name": "AKSOY GROUP",
+        "url": "https://aksoy.web.tr"
+    },
+    "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "TR",
+        "addressLocality": "Konya"
+    },
+    "sameAs": [
+        "https://instagram.com/codegatr",
+        "https://linkedin.com/company/codega",
+        "https://github.com/codegatr"
+    ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "<?php echo defined('APP_URI') ? APP_URI : 'https://codega.com.tr'; ?>/#website",
+    "url": "<?php echo defined('APP_URI') ? APP_URI : 'https://codega.com.tr'; ?>",
+    "name": "CODEGA",
+    "description": "<?php echo isset($meta['description']) ? htmlspecialchars($meta['description'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : 'Web yazılım, hosting, domain ve özel yazılım çözümleri'; ?>",
+    "inLanguage": "tr-TR",
+    "publisher": {
+        "@id": "<?php echo defined('APP_URI') ? APP_URI : 'https://codega.com.tr'; ?>/#organization"
+    },
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "<?php echo defined('APP_URI') ? APP_URI : 'https://codega.com.tr'; ?>/knowledgebase?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+    }
+}
+</script>
