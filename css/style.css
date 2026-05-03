@@ -820,17 +820,10 @@ body#codegapanel .cdg-ac-content > section > h1:first-child {
 /* Wide content desteği */
 body#codegapanel .cdg-ac-content { max-width: 100%; }
 
-/* Footer - sabit alt, kompakt */
+/* Footer - sabit alt, kompakt (detay CSS inc/ac-footer-1.php icindedir) */
 .cdg-ac-footer {
     flex-shrink: 0;
-    padding: 8px 24px;
-    background: white;
-    border-top: 1px solid var(--cdg-border);
-    text-align: center;
-    font-size: 11px;
-    color: var(--cdg-muted);
 }
-.cdg-ac-footer small { font-size: 11px; }
 
 .cdg-card {
     background: white;
