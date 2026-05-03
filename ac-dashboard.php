@@ -247,6 +247,20 @@ $balance_url   = cdg_link('ac-ps-balance');
 
 <style>
 /* === CODEGA DASHBOARD - Kurumsal LNW-Style === */
+/* Dashboard sayfasında ana page header'ı gizle (greeting çakışmasın) */
+body:has(.cdg-d) .cdg-ac-topbar > div:first-child h1,
+body:has(.cdg-d) .cdg-ac-page-head,
+body:has(.cdg-d) > main > h1:first-child,
+body:has(.cdg-d) .cdg-ac-content > h1:first-child {
+    display: none !important;
+}
+/* Topbar daralsın */
+body:has(.cdg-d) .cdg-ac-topbar {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
 .cdg-d {
     --d-primary: #1e40af;
     --d-primary-deep: #0a1f44;
@@ -265,21 +279,29 @@ $balance_url   = cdg_link('ac-ps-balance');
     --d-radius: 14px;
     font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
     color: var(--d-text);
-    padding: 0;
+    /* Tek ekran fit: viewport'tan hesabım header (~92px) düşülür */
+    height: calc(100vh - 100px);
+    min-height: 540px;
+    max-height: 920px;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 12px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 .cdg-d *, .cdg-d *::before, .cdg-d *::after { box-sizing: border-box; }
 .cdg-d a { text-decoration: none; color: inherit; }
 
-/* === GREETING (kompakt) === */
+/* === GREETING (kompakt, viewport adaptive) === */
 .cdg-d-greet {
     background: linear-gradient(135deg, #0a1f44 0%, #1e3a8a 50%, #2563eb 100%);
-    border-radius: 18px;
-    padding: 22px 28px;
+    border-radius: 14px;
+    padding: clamp(12px, 1.6vh, 18px) clamp(16px, 2vw, 24px);
     color: #fff;
     overflow: hidden;
     position: relative;
-    margin-bottom: 18px;
+    margin-bottom: 0;
+    flex-shrink: 0;
 }
 .cdg-d-greet::before {
     content: '';
@@ -298,57 +320,60 @@ $balance_url   = cdg_link('ac-ps-balance');
 }
 .cdg-d-greet-row {
     position: relative; z-index: 1;
-    display: flex; align-items: center; gap: 18px;
+    display: flex; align-items: center; gap: 14px;
     flex-wrap: wrap;
 }
 .cdg-d-greet-avatar {
-    width: 56px; height: 56px;
+    width: 46px; height: 46px;
     background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    border-radius: 14px;
+    border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 24px; font-weight: 800;
+    font-size: 20px; font-weight: 800;
     color: #422006;
     flex-shrink: 0;
-    box-shadow: 0 8px 20px rgba(251,191,36,0.30);
+    box-shadow: 0 6px 16px rgba(251,191,36,0.30);
 }
 .cdg-d-greet-text { flex: 1; min-width: 200px; }
 .cdg-d-greet-eyebrow {
     display: inline-flex; align-items: center; gap: 6px;
-    font-size: 11px; font-weight: 700;
+    font-size: 10px; font-weight: 700;
     color: #fde047;
     text-transform: uppercase; letter-spacing: 1px;
-    margin-bottom: 3px;
+    margin-bottom: 1px;
 }
 .cdg-d-greet h1 {
-    font-size: 22px; font-weight: 800;
+    font-size: clamp(15px, 2vh, 19px); font-weight: 800;
     margin: 0;
     color: #fff; letter-spacing: -0.01em;
+    line-height: 1.2;
 }
 .cdg-d-greet h1 strong { color: #fde047; }
 .cdg-d-greet-meta {
-    font-size: 13px;
+    font-size: 12px;
     color: rgba(255,255,255,0.80);
-    margin-top: 4px;
+    margin-top: 3px;
 }
 .cdg-d-greet-cta {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 11px 20px;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 16px;
     background: rgba(255,255,255,0.15);
     border: 1px solid rgba(255,255,255,0.30);
-    border-radius: 10px;
+    border-radius: 9px;
     color: #fff;
-    font-size: 13px; font-weight: 700;
+    font-size: 12px; font-weight: 700;
     backdrop-filter: blur(10px);
     transition: all 0.2s;
+    white-space: nowrap;
 }
 .cdg-d-greet-cta:hover { background: rgba(255,255,255,0.25); transform: translateY(-1px); color: #fde047; }
 
-/* === QUICK CARDS (3'lü grid) === */
+/* === QUICK CARDS (3'lü grid, kompakt) === */
 .cdg-d-quick {
     display: grid;
-    grid-template-columns: 1fr 1fr 1.5fr;
-    gap: 14px;
-    margin-bottom: 18px;
+    grid-template-columns: 1fr 1fr 1.4fr;
+    gap: 10px;
+    margin-bottom: 0;
+    flex-shrink: 0;
 }
 @media (max-width: 980px) { .cdg-d-quick { grid-template-columns: 1fr 1fr; } .cdg-d-quick > :last-child { grid-column: 1 / -1; } }
 @media (max-width: 540px) { .cdg-d-quick { grid-template-columns: 1fr; } }
@@ -356,53 +381,55 @@ $balance_url   = cdg_link('ac-ps-balance');
 .cdg-d-quick-card {
     background: var(--d-card);
     border: 1px solid var(--d-border);
-    border-radius: var(--d-radius);
-    padding: 24px 22px;
+    border-radius: 12px;
+    padding: clamp(11px, 1.4vh, 16px) clamp(14px, 1.6vw, 18px);
     display: flex; align-items: center; justify-content: space-between;
-    gap: 14px;
+    gap: 12px;
     transition: all 0.2s;
     position: relative;
     overflow: hidden;
 }
 .cdg-d-quick-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(15,23,42,0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(15,23,42,0.08);
     border-color: var(--d-primary);
 }
 .cdg-d-quick-card-text {
     flex: 1; min-width: 0;
 }
 .cdg-d-quick-card-title {
-    font-size: 14px; font-weight: 800;
+    font-size: 13px; font-weight: 800;
     color: var(--d-text);
-    text-transform: uppercase; letter-spacing: 0.5px;
-    margin: 0 0 3px;
+    text-transform: uppercase; letter-spacing: 0.4px;
+    margin: 0 0 2px;
+    line-height: 1.2;
 }
 .cdg-d-quick-card-sub {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--d-muted);
     margin: 0;
+    line-height: 1.3;
 }
 .cdg-d-quick-card-icon {
-    width: 48px; height: 48px;
-    border-radius: 12px;
+    width: 40px; height: 40px;
+    border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
+    font-size: 18px;
     flex-shrink: 0;
     position: relative;
 }
 .cdg-d-quick-card-badge {
     position: absolute;
     top: -4px; right: -4px;
-    min-width: 20px; height: 20px;
-    padding: 0 5px;
+    min-width: 18px; height: 18px;
+    padding: 0 4px;
     background: linear-gradient(135deg, #f59e0b, #d97706);
     color: #fff;
-    font-size: 11px; font-weight: 800;
-    line-height: 20px; text-align: center;
+    font-size: 10px; font-weight: 800;
+    line-height: 18px; text-align: center;
     border-radius: 100px;
     border: 2px solid #fff;
-    box-shadow: 0 2px 6px rgba(245,158,11,0.40);
+    box-shadow: 0 2px 5px rgba(245,158,11,0.40);
 }
 
 /* Status (Gecikmiş ödeme) */
@@ -426,26 +453,32 @@ $balance_url   = cdg_link('ac-ps-balance');
 .cdg-d-quick-status.warning .cdg-d-quick-card-icon i { color: #92400e; }
 .cdg-d-quick-status.danger .cdg-d-quick-card-icon i { color: #991b1b; }
 
-/* === ANA GRID (üst widget'lardan sonra) === */
+/* === ANA GRID (panel'ler, kalan dikey alanı doldurur) === */
 .cdg-d-main {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin-bottom: 18px;
+    gap: 12px;
+    margin-bottom: 0;
+    min-height: 0; /* kritik: grid içinde overflow düzgün çalışsın */
+    overflow: hidden;
 }
-@media (max-width: 880px) { .cdg-d-main { grid-template-columns: 1fr; } }
+@media (max-width: 880px) { .cdg-d-main { grid-template-columns: 1fr; overflow: auto; } }
 
 .cdg-d-panel {
     background: var(--d-card);
     border: 1px solid var(--d-border);
     border-radius: var(--d-radius);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 .cdg-d-panel-head {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 20px;
+    padding: 11px 16px;
     color: #fff;
     background: linear-gradient(135deg, #1e3a8a, #1e40af);
+    flex-shrink: 0;
 }
 .cdg-d-panel-head.gold {
     background: linear-gradient(135deg, #f59e0b, #d97706);
@@ -455,17 +488,17 @@ $balance_url   = cdg_link('ac-ps-balance');
 }
 .cdg-d-panel-head h3 {
     margin: 0;
-    font-size: 14px; font-weight: 800;
+    font-size: 13px; font-weight: 800;
     letter-spacing: 0.3px;
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center; gap: 7px;
 }
-.cdg-d-panel-head h3 i { font-size: 18px; }
+.cdg-d-panel-head h3 i { font-size: 16px; }
 .cdg-d-panel-head a {
     color: #fff;
-    font-size: 12px; font-weight: 700;
+    font-size: 11px; font-weight: 700;
     display: inline-flex; align-items: center; gap: 4px;
-    padding: 5px 11px;
-    border-radius: 8px;
+    padding: 4px 10px;
+    border-radius: 7px;
     background: rgba(255,255,255,0.18);
     transition: all 0.2s;
 }
@@ -473,14 +506,23 @@ $balance_url   = cdg_link('ac-ps-balance');
 
 .cdg-d-panel-body {
     padding: 0;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
-.cdg-d-panel-body.padded { padding: 16px 20px; }
+.cdg-d-panel-body.padded { padding: 12px 16px; }
+/* Custom scrollbar */
+.cdg-d-panel-body::-webkit-scrollbar { width: 6px; }
+.cdg-d-panel-body::-webkit-scrollbar-track { background: transparent; }
+.cdg-d-panel-body::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 100px; }
+.cdg-d-panel-body::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
 /* List items */
 .cdg-d-list { list-style: none; margin: 0; padding: 0; }
 .cdg-d-list li {
-    display: flex; align-items: center; gap: 14px;
-    padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px;
 }
 .cdg-d-list li:not(:last-child) {
     border-bottom: 1px solid #f1f5f9;
@@ -489,24 +531,25 @@ $balance_url   = cdg_link('ac-ps-balance');
     background: #fafbfd;
 }
 .cdg-d-list-icon {
-    width: 38px; height: 38px;
-    border-radius: 9px;
+    width: 34px; height: 34px;
+    border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 17px;
+    font-size: 15px;
     flex-shrink: 0;
 }
 .cdg-d-list-text {
     flex: 1; min-width: 0;
 }
 .cdg-d-list-title {
-    font-size: 14px; font-weight: 700;
+    font-size: 13px; font-weight: 700;
     color: var(--d-text);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    line-height: 1.3;
 }
 .cdg-d-list-sub {
     font-size: 11px;
     color: var(--d-muted);
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 /* Progress (kalan gün) */
@@ -614,14 +657,15 @@ $balance_url   = cdg_link('ac-ps-balance');
             <div class="cdg-d-greet-avatar">
                 <?php
                 $first_letter = '?';
-                if(isset($cdg_uname) && $cdg_uname) $first_letter = mb_strtoupper(mb_substr($cdg_uname, 0, 1, 'UTF-8'), 'UTF-8');
+                if(isset($user_initial) && $user_initial) $first_letter = $user_initial;
+                elseif(isset($user_name) && $user_name) $first_letter = mb_strtoupper(mb_substr($user_name, 0, 1, 'UTF-8'), 'UTF-8');
                 elseif(isset($cdg_uinfo['firstname']) && $cdg_uinfo['firstname']) $first_letter = mb_strtoupper(mb_substr($cdg_uinfo['firstname'], 0, 1, 'UTF-8'), 'UTF-8');
                 echo htmlspecialchars($first_letter, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                 ?>
             </div>
             <div class="cdg-d-greet-text">
                 <div class="cdg-d-greet-eyebrow"><i class="bi bi-sun-fill"></i> <?php echo $greeting; ?></div>
-                <h1>Hoş geldin, <strong><?php echo htmlspecialchars(isset($cdg_uname) ? $cdg_uname : 'Müşteri', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong></h1>
+                <h1>Hoş geldin, <strong><?php echo htmlspecialchars(isset($user_name) && $user_name ? $user_name : 'Müşteri', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></strong></h1>
                 <div class="cdg-d-greet-meta">
                     <i class="bi bi-calendar-check"></i> <?php echo date('d.m.Y'); ?>
                     <?php if(isset($cdg_uinfo['id'])): ?>
@@ -781,31 +825,5 @@ $balance_url   = cdg_link('ac-ps-balance');
         </div>
 
     </div>
-
-    <!-- HABERLER -->
-    <?php if(isset($news) && is_array($news) && !empty($news)): ?>
-    <div class="cdg-d-panel">
-        <div class="cdg-d-panel-head">
-            <h3><i class="bi bi-megaphone-fill"></i> Haberler ve Duyurular</h3>
-            <a href="<?php echo cdg_link('news'); ?>">Tümü <i class="bi bi-arrow-right"></i></a>
-        </div>
-        <div class="cdg-d-panel-body padded">
-            <div class="cdg-d-news-grid">
-                <?php foreach(array_slice($news, 0, 4) as $nw):
-                    $nw_title = $nw['title'] ?? ($nw['name'] ?? '-');
-                    $nw_link = $nw['link'] ?? ($nw['detail_link'] ?? '#');
-                    $nw_date = $nw['cdate'] ?? ($nw['date'] ?? '');
-                ?>
-                <a href="<?php echo htmlspecialchars($nw_link, ENT_QUOTES); ?>" class="cdg-d-news-item">
-                    <div class="cdg-d-news-item-title"><?php echo htmlspecialchars($nw_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></div>
-                    <?php if($nw_date): ?>
-                    <div class="cdg-d-news-item-date"><i class="bi bi-calendar"></i> <?php echo $cdg_date_fmt($nw_date); ?></div>
-                    <?php endif; ?>
-                </a>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </div>
-    <?php endif; ?>
 
 </div>
