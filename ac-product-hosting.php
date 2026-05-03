@@ -70,7 +70,7 @@ if(empty($cdg_panels)) {
 $panel_url_final = '';
 $webmail_url_final = '';
 
-// 1. WiseCP $buttons varsa kullan (auto-login token'lı)
+// 1. WiseCP $buttons varsa kullan (auto-login token'lı — en iyi seçenek)
 if(!empty($buttons)) {
     foreach($buttons as $b_type => $b_value) {
         $url = is_array($b_value) ? ($b_value['url'] ?? '') : (is_string($b_value) ? $b_value : '');
@@ -88,7 +88,46 @@ if(empty($panel_url_final) && !empty($options['panel_link'])) {
     $panel_url_final = $options['panel_link'];
 }
 
-// 3. Tema config'ten panel tipine göre URL
+// 3. Servis runtime'dan server IP / hostname al → panel URL üret
+//    (Müşteri domain bağlamamış olabilir, hostname yerine IP'ye yönlendiriyoruz)
+$_cdg_server_ip = '';
+$_cdg_server_host = '';
+// $server runtime değişkeni (WiseCP hosting modülünden)
+if(isset($server) && is_array($server)) {
+    $_cdg_server_ip   = $server['ip']        ?? ($server['address']  ?? '');
+    $_cdg_server_host = $server['hostname']  ?? ($server['name']     ?? '');
+}
+// $options içinde de olabilir
+if(empty($_cdg_server_ip) && !empty($options['server_ip']))   $_cdg_server_ip = $options['server_ip'];
+if(empty($_cdg_server_host) && !empty($options['hostname']))  $_cdg_server_host = $options['hostname'];
+
+// IP varsa, panel tipine göre standart port ile URL üret
+$_cdg_make_panel_url = function($host, $type) {
+    if(!$host) return '';
+    if($type === 'directadmin' || $type === 'da') return 'https://' . $host . ':2222';
+    if($type === 'cpanel')                         return 'https://' . $host . ':2083';
+    if($type === 'plesk')                          return 'https://' . $host . ':8443';
+    return 'https://' . $host . ':2222'; // bilinmiyorsa DA varsayılan
+};
+$_cdg_make_webmail_url = function($host, $type) {
+    if(!$host) return '';
+    if($type === 'directadmin' || $type === 'da') return 'https://' . $host . ':2096';
+    if($type === 'cpanel')                         return 'https://' . $host . '/webmail';
+    if($type === 'plesk')                          return 'https://' . $host . '/webmail';
+    return 'https://' . $host . ':2096';
+};
+
+if(empty($panel_url_final) && $_cdg_server_ip) {
+    $panel_url_final = $_cdg_make_panel_url($_cdg_server_ip, $d_panel_type);
+} elseif(empty($panel_url_final) && $_cdg_server_host) {
+    $panel_url_final = $_cdg_make_panel_url($_cdg_server_host, $d_panel_type);
+}
+
+if(empty($webmail_url_final) && $_cdg_server_ip) {
+    $webmail_url_final = $_cdg_make_webmail_url($_cdg_server_ip, $d_panel_type);
+}
+
+// 4. Tema config'ten panel tipine göre URL
 if(empty($panel_url_final)) {
     if($d_panel_type === 'directadmin' || $d_panel_type === 'da') {
         $panel_url_final = $cdg_panels['directadmin_url'] ?? '';
@@ -101,6 +140,11 @@ if(empty($panel_url_final)) {
     if(empty($panel_url_final) && !empty($cdg_panels['directadmin_url'])) {
         $panel_url_final = $cdg_panels['directadmin_url'];
     }
+}
+
+// 5. Son çare — theme config default_server_ip
+if(empty($panel_url_final) && !empty($cdg_panels['default_server_ip'])) {
+    $panel_url_final = $_cdg_make_panel_url($cdg_panels['default_server_ip'], $d_panel_type);
 }
 
 // Webmail URL
@@ -253,6 +297,7 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
 #cdg-h-r-emails:checked   ~ .cdg-h-tabs label[for="cdg-h-r-emails"],
 #cdg-h-r-renewal:checked  ~ .cdg-h-tabs label[for="cdg-h-r-renewal"],
 #cdg-h-r-bills:checked    ~ .cdg-h-tabs label[for="cdg-h-r-bills"],
+#cdg-h-r-password:checked ~ .cdg-h-tabs label[for="cdg-h-r-password"],
 #cdg-h-r-cancel:checked   ~ .cdg-h-tabs label[for="cdg-h-r-cancel"] {
     color: var(--c-primary);
     border-bottom-color: var(--c-primary);
@@ -265,6 +310,7 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
 #cdg-h-r-emails:checked   ~ .cdg-h-body .cdg-h-pane[data-pane="emails"]   { display: block; }
 #cdg-h-r-renewal:checked  ~ .cdg-h-body .cdg-h-pane[data-pane="renewal"]  { display: block; }
 #cdg-h-r-bills:checked    ~ .cdg-h-body .cdg-h-pane[data-pane="bills"]    { display: block; }
+#cdg-h-r-password:checked ~ .cdg-h-body .cdg-h-pane[data-pane="password"] { display: block; }
 #cdg-h-r-cancel:checked   ~ .cdg-h-body .cdg-h-pane[data-pane="cancel"]   { display: block; }
 
 .cdg-h-card {
@@ -441,6 +487,7 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
         <input type="radio" name="cdg-h-tab" id="cdg-h-r-emails" class="cdg-h-tab-radio">
         <input type="radio" name="cdg-h-tab" id="cdg-h-r-renewal" class="cdg-h-tab-radio">
         <input type="radio" name="cdg-h-tab" id="cdg-h-r-bills" class="cdg-h-tab-radio">
+        <input type="radio" name="cdg-h-tab" id="cdg-h-r-password" class="cdg-h-tab-radio">
         <input type="radio" name="cdg-h-tab" id="cdg-h-r-cancel" class="cdg-h-tab-radio">
 
         <!-- Header -->
@@ -469,12 +516,23 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
         </div>
 
         <!-- Tab nav -->
+        <?php
+            // Şifre değiştirme: hosting aktif VE modül destekliyor
+            $_cdg_can_change_pw = ($d_status === 'active') && (
+                empty($supported) ||
+                in_array('change-password', $supported, true) ||
+                in_array('change_password', $supported, true)
+            );
+        ?>
         <div class="cdg-h-tabs">
             <label class="cdg-h-tab" for="cdg-h-r-summary"><i class="bi bi-info-circle"></i> Özet</label>
             <label class="cdg-h-tab" for="cdg-h-r-emails"><i class="bi bi-envelope"></i> E-posta</label>
             <label class="cdg-h-tab" for="cdg-h-r-renewal"><i class="bi bi-arrow-clockwise"></i> Yenileme</label>
             <?php if(!empty($bills)): ?>
             <label class="cdg-h-tab" for="cdg-h-r-bills"><i class="bi bi-receipt"></i> Faturalar (<?php echo count($bills); ?>)</label>
+            <?php endif; ?>
+            <?php if($_cdg_can_change_pw): ?>
+            <label class="cdg-h-tab" for="cdg-h-r-password"><i class="bi bi-key"></i> Şifre Değiştir</label>
             <?php endif; ?>
             <label class="cdg-h-tab" for="cdg-h-r-cancel"><i class="bi bi-ban"></i> İptal</label>
         </div>
@@ -714,6 +772,116 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
             </div>
             <?php endif; ?>
 
+            <!-- ===== ŞİFRE DEĞİŞTİR ===== -->
+            <div class="cdg-h-pane" data-pane="password">
+                <?php if($_cdg_can_change_pw): ?>
+                <div class="cdg-h-card">
+                    <div class="cdg-h-card-head">
+                        <h3 style="margin:0;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;">
+                            <i class="bi bi-key" style="color:var(--c-primary);"></i> Hosting (DirectAdmin) Şifresini Değiştir
+                        </h3>
+                    </div>
+                    <div style="padding:18px;">
+                        <div class="cdg-h-alert cdg-h-alert-info" style="margin-bottom:14px;">
+                            <i class="bi bi-info-circle"></i>
+                            <div style="line-height:1.6;">
+                                <strong>Yeni şifrenizi belirleyin.</strong><br>
+                                Bu işlem hosting kontrol panelinizin (DirectAdmin) ana hesap şifresini değiştirir. FTP, e-posta ve veritabanı şifreleri ayrıca yönetilir. Yeni şifre derhal uygulanır &mdash; eski şifreyle artık giriş yapamayacaksınız.
+                            </div>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:1fr;gap:12px;">
+                            <div>
+                                <label style="display:block;font-size:12px;font-weight:600;color:var(--c-text);margin-bottom:6px;">
+                                    Yeni Şifre <span style="color:var(--c-danger);">*</span>
+                                </label>
+                                <div style="display:flex;gap:8px;align-items:stretch;">
+                                    <div style="flex:1;position:relative;">
+                                        <input type="password" id="cdg-h-pw-new"
+                                               style="width:100%;padding:10px 40px 10px 12px;border:1px solid var(--c-border);border-radius:8px;font-size:14px;font-family:'JetBrains Mono', monospace;letter-spacing:1px;"
+                                               placeholder="••••••••••••••••"
+                                               autocomplete="new-password"
+                                               oninput="cdgHpwCheck();">
+                                        <button type="button"
+                                                onclick="cdgHpwToggleVisibility();"
+                                                style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:var(--c-muted);cursor:pointer;padding:4px 8px;font-size:14px;"
+                                                title="Şifreyi göster/gizle">
+                                            <i class="bi bi-eye" id="cdg-h-pw-eye"></i>
+                                        </button>
+                                    </div>
+                                    <button type="button" onclick="cdgHpwGenerate();"
+                                            style="padding:10px 14px;background:#f1f5f9;border:1px solid var(--c-border);border-radius:8px;font-size:12.5px;font-weight:600;color:var(--c-text);cursor:pointer;white-space:nowrap;">
+                                        <i class="bi bi-shuffle"></i> Rastgele Üret
+                                    </button>
+                                </div>
+                                <!-- Güç göstergesi -->
+                                <div style="margin-top:10px;">
+                                    <div style="display:flex;gap:4px;height:6px;border-radius:3px;overflow:hidden;background:#f1f5f9;">
+                                        <div id="cdg-h-pw-bar" style="height:100%;width:0;background:#cbd5e1;transition:width 0.25s, background 0.25s;"></div>
+                                    </div>
+                                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
+                                        <small id="cdg-h-pw-strength-text" style="font-size:11.5px;color:var(--c-muted);">Güç: bekleniyor</small>
+                                        <small id="cdg-h-pw-len" style="font-size:11.5px;color:var(--c-muted);font-family:monospace;">0 karakter</small>
+                                    </div>
+                                </div>
+                                <ul id="cdg-h-pw-rules" style="list-style:none;padding:0;margin:10px 0 0;font-size:11.5px;color:var(--c-muted);line-height:1.8;">
+                                    <li id="cdg-h-pw-r-len"><i class="bi bi-circle"></i> En az 10 karakter</li>
+                                    <li id="cdg-h-pw-r-up"><i class="bi bi-circle"></i> En az 1 büyük harf (A-Z)</li>
+                                    <li id="cdg-h-pw-r-low"><i class="bi bi-circle"></i> En az 1 küçük harf (a-z)</li>
+                                    <li id="cdg-h-pw-r-num"><i class="bi bi-circle"></i> En az 1 rakam (0-9)</li>
+                                    <li id="cdg-h-pw-r-spc"><i class="bi bi-circle"></i> En az 1 özel karakter (#@!$%&*)</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <label style="display:block;font-size:12px;font-weight:600;color:var(--c-text);margin-bottom:6px;">
+                                    Yeni Şifre (Tekrar) <span style="color:var(--c-danger);">*</span>
+                                </label>
+                                <input type="password" id="cdg-h-pw-confirm"
+                                       style="width:100%;padding:10px 12px;border:1px solid var(--c-border);border-radius:8px;font-size:14px;font-family:'JetBrains Mono', monospace;letter-spacing:1px;"
+                                       placeholder="••••••••••••••••"
+                                       autocomplete="new-password"
+                                       oninput="cdgHpwCheck();">
+                                <small id="cdg-h-pw-match" style="display:block;font-size:11.5px;color:var(--c-muted);margin-top:6px;">&nbsp;</small>
+                            </div>
+                        </div>
+
+                        <div class="cdg-h-alert cdg-h-alert-warning" style="margin-top:16px;font-size:12.5px;">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <div>
+                                Şifre değişiklikten sonra <strong>FTP istemcileri ve e-posta uygulamalarınızda</strong> manuel olarak güncellenmelidir &mdash; aksi halde bağlanamazlar.
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:8px;margin-top:14px;align-items:center;">
+                            <button type="button" id="cdg-h-pw-submit"
+                                    onclick="cdgHpwSubmit();"
+                                    disabled
+                                    style="padding:10px 22px;background:var(--c-primary);color:#fff;border:0;border-radius:8px;font-size:13px;font-weight:700;cursor:not-allowed;opacity:0.5;">
+                                <i class="bi bi-check-circle"></i> Şifreyi Değiştir
+                            </button>
+                            <button type="button" onclick="cdgHpwClear();"
+                                    style="padding:10px 18px;background:#f1f5f9;border:1px solid var(--c-border);border-radius:8px;font-size:13px;font-weight:600;color:var(--c-text);cursor:pointer;">
+                                <i class="bi bi-arrow-counterclockwise"></i> Temizle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <?php else: ?>
+                <div class="cdg-h-alert cdg-h-alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <div>
+                        <strong>Şifre değişikliği şu anda mümkün değil.</strong><br>
+                        <?php if($d_status !== 'active'): ?>
+                            Hizmetiniz aktif olmadığı için şifre değiştirilemez. Hizmet durumu: <strong><?php echo htmlspecialchars($d_status, ENT_QUOTES); ?></strong>
+                        <?php else: ?>
+                            Hosting paneliniz bu özelliği desteklemiyor. Lütfen <a href="<?php echo cdg_link('create-ticket-request'); ?>" style="color:var(--c-primary);font-weight:700;">destek talebi</a> oluşturun.
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+
             <!-- ===== İPTAL ===== -->
             <div class="cdg-h-pane" data-pane="cancel">
                 <?php if($d_status === 'active'): ?>
@@ -754,3 +922,178 @@ if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Con
         </div>
     </div>
 </div>
+
+<?php if($_cdg_can_change_pw): ?>
+<script>
+// === Hosting şifre değiştirme ===
+(function(){
+    var lastStrength = 0;
+
+    window.cdgHpwGenerate = function() {
+        // 16 karakter, A-Z+a-z+0-9+#@!$%&*?
+        var charset = 'ABCDEFGHJKLMNPQRSTUVWXYZ' + 'abcdefghjkmnpqrstuvwxyz' + '23456789' + '#@!$%&*?';
+        var pw = '';
+        var arr = new Uint32Array(16);
+        if(window.crypto && window.crypto.getRandomValues) {
+            window.crypto.getRandomValues(arr);
+            for(var i=0; i<16; i++) pw += charset[arr[i] % charset.length];
+        } else {
+            for(var j=0; j<16; j++) pw += charset[Math.floor(Math.random() * charset.length)];
+        }
+        document.getElementById('cdg-h-pw-new').value = pw;
+        document.getElementById('cdg-h-pw-confirm').value = pw;
+        // Görünür hale getir ki kullanıcı kopyalayabilsin
+        var pwEl = document.getElementById('cdg-h-pw-new');
+        var cfEl = document.getElementById('cdg-h-pw-confirm');
+        pwEl.type = 'text';
+        cfEl.type = 'text';
+        var eye = document.getElementById('cdg-h-pw-eye');
+        if(eye) { eye.classList.remove('bi-eye'); eye.classList.add('bi-eye-slash'); }
+        cdgHpwCheck();
+    };
+
+    window.cdgHpwToggleVisibility = function() {
+        var pwEl = document.getElementById('cdg-h-pw-new');
+        var cfEl = document.getElementById('cdg-h-pw-confirm');
+        var eye  = document.getElementById('cdg-h-pw-eye');
+        var show = pwEl.type === 'password';
+        pwEl.type = show ? 'text' : 'password';
+        cfEl.type = show ? 'text' : 'password';
+        if(eye) {
+            eye.classList.toggle('bi-eye', !show);
+            eye.classList.toggle('bi-eye-slash', show);
+        }
+    };
+
+    window.cdgHpwClear = function() {
+        document.getElementById('cdg-h-pw-new').value = '';
+        document.getElementById('cdg-h-pw-confirm').value = '';
+        cdgHpwCheck();
+    };
+
+    window.cdgHpwCheck = function() {
+        var pw = document.getElementById('cdg-h-pw-new').value;
+        var cf = document.getElementById('cdg-h-pw-confirm').value;
+        var len = pw.length;
+
+        // Karakter sayısı
+        document.getElementById('cdg-h-pw-len').textContent = len + ' karakter';
+
+        // Kurallar
+        var hasLen = len >= 10;
+        var hasUp  = /[A-Z]/.test(pw);
+        var hasLow = /[a-z]/.test(pw);
+        var hasNum = /[0-9]/.test(pw);
+        var hasSpc = /[^A-Za-z0-9]/.test(pw);
+
+        function setRule(id, ok) {
+            var el = document.getElementById(id);
+            if(!el) return;
+            var ic = el.querySelector('i');
+            if(ok) {
+                if(ic){ ic.classList.remove('bi-circle'); ic.classList.add('bi-check-circle-fill'); }
+                el.style.color = '#10b981';
+            } else {
+                if(ic){ ic.classList.remove('bi-check-circle-fill'); ic.classList.add('bi-circle'); }
+                el.style.color = '';
+            }
+        }
+        setRule('cdg-h-pw-r-len', hasLen);
+        setRule('cdg-h-pw-r-up',  hasUp);
+        setRule('cdg-h-pw-r-low', hasLow);
+        setRule('cdg-h-pw-r-num', hasNum);
+        setRule('cdg-h-pw-r-spc', hasSpc);
+
+        // Güç skoru (5 üzerinden)
+        var score = (hasLen?1:0) + (hasUp?1:0) + (hasLow?1:0) + (hasNum?1:0) + (hasSpc?1:0);
+        // Uzunluk bonusu
+        if(len >= 14) score = Math.min(5, score + 1);
+
+        var bar  = document.getElementById('cdg-h-pw-bar');
+        var txt  = document.getElementById('cdg-h-pw-strength-text');
+        var labels = ['Çok zayıf', 'Zayıf', 'Orta', 'İyi', 'Güçlü', 'Çok güçlü'];
+        var colors = ['#ef4444', '#ef4444', '#f59e0b', '#3b82f6', '#10b981', '#059669'];
+        var idx = Math.min(score, 5);
+        bar.style.width = (len === 0 ? 0 : (idx * 20)) + '%';
+        bar.style.background = len === 0 ? '#cbd5e1' : colors[idx];
+        txt.textContent = 'Güç: ' + (len === 0 ? 'bekleniyor' : labels[idx]);
+        txt.style.color = len === 0 ? '' : colors[idx];
+        lastStrength = score;
+
+        // Eşleşme kontrolü
+        var match = document.getElementById('cdg-h-pw-match');
+        if(cf.length === 0) {
+            match.textContent = '\u00A0';
+            match.style.color = '';
+        } else if(pw === cf) {
+            match.innerHTML = '<i class="bi bi-check-circle-fill"></i> Şifreler eşleşiyor';
+            match.style.color = '#10b981';
+        } else {
+            match.innerHTML = '<i class="bi bi-x-circle-fill"></i> Şifreler eşleşmiyor';
+            match.style.color = '#ef4444';
+        }
+
+        // Submit butonu
+        var canSubmit = hasLen && hasUp && hasLow && hasNum && pw === cf && cf.length > 0;
+        var btn = document.getElementById('cdg-h-pw-submit');
+        if(btn) {
+            btn.disabled = !canSubmit;
+            btn.style.cursor = canSubmit ? 'pointer' : 'not-allowed';
+            btn.style.opacity = canSubmit ? '1' : '0.5';
+        }
+    };
+
+    window.cdgHpwSubmit = function() {
+        var pw = document.getElementById('cdg-h-pw-new').value;
+        var cf = document.getElementById('cdg-h-pw-confirm').value;
+        if(pw !== cf) {
+            if(typeof alert_error === 'function') alert_error('Şifreler eşleşmiyor', {timer: 3000});
+            return;
+        }
+        if(pw.length < 10) {
+            if(typeof alert_error === 'function') alert_error('Şifre en az 10 karakter olmalı', {timer: 3000});
+            return;
+        }
+        if(lastStrength < 4) {
+            if(!confirm('Şifre gücü düşük. Yine de değiştirmek istiyor musunuz?')) return;
+        }
+        if(typeof MioAjax !== 'function') {
+            alert('MioAjax yüklü değil — sayfa yenilemesi gerekiyor.');
+            return;
+        }
+        var btn = document.getElementById('cdg-h-pw-submit');
+        if(btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Değiştiriliyor...';
+        }
+        MioAjax({
+            url: '<?php echo htmlspecialchars($links["controller"] ?? "", ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>',
+            type: 'post',
+            data: {
+                operation: 'hosting_change_password',
+                id:       <?php echo (int)$d_id; ?>,
+                password: pw
+            },
+            result: function(r) {
+                if(r && (r.status === 'successful' || r.status === 'success')) {
+                    if(typeof alert_success === 'function') alert_success(r.message || 'Şifre değiştirildi', {timer: 3000});
+                    cdgHpwClear();
+                    if(btn) {
+                        btn.innerHTML = '<i class="bi bi-check-circle"></i> Değiştirildi';
+                        setTimeout(function(){
+                            btn.innerHTML = '<i class="bi bi-check-circle"></i> Şifreyi Değiştir';
+                        }, 2500);
+                    }
+                } else {
+                    if(typeof alert_error === 'function') alert_error((r && r.message) || 'Şifre değiştirilemedi', {timer: 3500});
+                    if(btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="bi bi-check-circle"></i> Şifreyi Değiştir';
+                    }
+                }
+            }
+        });
+    };
+})();
+</script>
+<?php endif; ?>
