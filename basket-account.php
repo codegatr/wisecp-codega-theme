@@ -13,6 +13,13 @@
         $currency_symbols[$symbol] = $currency["id"];
     }
 ?>
+<?php
+$cdg_active_step = 5;
+$cdg_section_title = "Sepet";
+$cdg_page_title = "Sipariş";
+include __DIR__ . "/inc/cdg-checkout-stepper.php";
+?>
+
 <style>
 /* Basket Codega Override CSS */
 #wrapper, .basket_wrapper { background:#f8fafc; padding:32px 0 60px; min-height:60vh; }
@@ -37,18 +44,6 @@
 #wrapper .error { padding:12px; background:#fee2e2; border:1px solid #fecaca; border-radius:8px; color:#991b1b; font-weight:600; margin:8px 0; }
 #wrapper .info, #wrapper .success { padding:12px; background:#dcfce7; border:1px solid #bbf7d0; border-radius:8px; color:#14532d; }
 </style>
-
-<section class="cdg-page-hero" style="padding:40px 0;">
-    <div class="cdg-page-hero-bg">
-        <div class="cdg-mesh-gradient"></div>
-        <div class="cdg-hero-grid-pattern"></div>
-    </div>
-    <div class="cdg-container">
-        <div class="cdg-page-hero-content" style="text-align:center;">
-            <div class="cdg-domain-badge"><i class="bi bi-person-fill"></i> Hesap Bilgileri</div>
-        </div>
-    </div>
-</section>
 
 <div class="cdg-container">
 
