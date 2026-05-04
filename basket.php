@@ -10,7 +10,15 @@
         $currency_symbols[$symbol] = $currency["id"];
     }
 ?>
-<style>
+
+<?php
+// === Forte-tarzi 5 adimli stepper (Adim 4: Siparis Ozeti & Sepet) ===
+$cdg_active_step = 4;
+$cdg_section_title = 'Sepet';
+$cdg_page_title = '';
+include __DIR__ . '/inc/cdg-checkout-stepper.php';
+?>
+
 <style>
 /* ============================================================
    CODEGA SEPET — Kurumsal Override CSS
@@ -20,9 +28,9 @@
 
 /* Wrapper - sayfa arka planı */
 #wrapper, .basket_wrapper {
-    background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
-    padding: 24px 0 70px;
-    min-height: 70vh;
+    background: #f5f6f8;
+    padding: 0 0 60px;
+    min-height: 60vh;
 }
 
 /* === SARI "SEPETIM" buton bombesini KALDIR === */
@@ -617,24 +625,6 @@
 /* clear */
 .clear { clear: both; }
 </style>
-
-<!-- ==================== SEPET HEADER (CODEGA) ==================== -->
-<div class="cdg-container" style="margin-top:24px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:14px;">
-        <div>
-            <h1 style="margin:0 0 4px;font-size:22px;font-weight:800;color:#0f172a;display:flex;align-items:center;gap:10px;">
-                <i class="bi bi-cart-fill" style="color:#00D3E5;"></i>
-                Sepetim
-                <span class="basket-count" style="display:inline-flex;align-items:center;justify-content:center;background:#2E3B4E;color:#fff;font-size:12px;font-weight:700;width:26px;height:26px;border-radius:99px;margin-left:4px;">0</span>
-            </h1>
-            <p style="margin:0;font-size:13px;color:#64748b;">Siparişinizi gözden geçirin ve ödeme adımına ilerleyin</p>
-        </div>
-        <div style="display:flex;align-items:center;gap:18px;font-size:12px;color:#64748b;">
-            <div style="display:flex;align-items:center;gap:6px;"><i class="bi bi-shield-lock" style="color:#10b981;font-size:14px;"></i> SSL Korumalı</div>
-            <div style="display:flex;align-items:center;gap:6px;"><i class="bi bi-credit-card" style="color:#2E3B4E;font-size:14px;"></i> Güvenli Ödeme</div>
-        </div>
-    </div>
-</div>
 
 <div class="cdg-container">
 
