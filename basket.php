@@ -507,10 +507,9 @@ include __DIR__ . '/inc/cdg-checkout-stepper.php';
 /* OrderSummary loader */
 #wrapper #OrderSummary_loader { padding: 30px 0; text-align: center; }
 
-/* === DEVAM ET BUTONLARI - tek aktif/pasif === */
+/* === DEVAM ET BUTONLARI - tek aktif/pasif (JS toggle calisir) === */
 #wrapper #continue_go,
 #wrapper #continue_block {
-    display: block !important;
     width: 100% !important;
     margin: 14px 0 0 !important;
     padding: 14px 22px !important;
@@ -524,6 +523,15 @@ include __DIR__ . '/inc/cdg-checkout-stepper.php';
     transition: all 0.18s !important;
     box-sizing: border-box;
 }
+/* Block buton baslangicta gizli, JS gerekirse acar */
+#wrapper #continue_block { display: none; }
+/* Go buton baslangicta gizli, JS gerekirse acar */
+#wrapper #continue_go { display: none; }
+/* Inline style ile JS'in display:block atamasini engelleme */
+#wrapper #continue_go[style*="block"],
+#wrapper #continue_block[style*="block"] { display: block !important; }
+#wrapper #continue_go[style*="inline"],
+#wrapper #continue_block[style*="inline"] { display: inline-flex !important; }
 #wrapper #continue_go {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
     color: #fff !important;
@@ -965,7 +973,13 @@ include __DIR__ . '/inc/cdg-checkout-stepper.php';
                             var amount_info = amount_divider(solve.total_tax_amount);
                             $("#tax-amount").html('<div class="amount_spot_view"><i class="currpos'+amount_info.symbol_pos+'">'+amount_info.symbol+'</i> '+amount_info.amount+'</div>');
                         }else $("#tax-amount").html('-');
-                    }else $("#tax_content").fadeOut(1);
+                    }else {
+                        // CODEGA OVERRIDE: KDV her zaman gorunsun (admin panel'de tanimli olmasa bile)
+                        // solve.taxation false/0 ise: "KDV (%0) — 0,00" goster
+                        $("#tax_content").fadeIn(1);
+                        $("#tax-see").html('KDV (%0)');
+                        $("#tax-amount").html('<div class="amount_spot_view">0,00</div>');
+                    }
 
                     if(solve.total_amount_payable != undefined){
                         $("#continue_block").fadeOut(100,function(){
