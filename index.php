@@ -398,10 +398,10 @@ if(empty($pricing_categories)) {
         'id' => 'ekonomik', 'name' => 'Ekonomik SSD Hosting', 'icon' => 'bi-rocket-takeoff', 'color' => '#10b981',
         'desc' => 'Bireysel ve küçük projeler için uygun fiyatlı paketler',
         'packages' => [
-            ['id' => 103, 'name' => 'Linux Hosting 1', 'subtitle' => 'Bireysel siteler', 'price' => '150', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(103), 'features' => ['1 Web Sitesi', '5 GB NVMe SSD', '50 GB Trafik', '5 E-posta', 'Ücretsiz SSL', 'Günlük Yedekleme']],
-            ['id' => 104, 'name' => 'Linux Hosting 2', 'subtitle' => 'Hobi siteleri', 'price' => '289', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true,  'buy_link' => $_cdg_static_buy(104), 'features' => ['3 Web Sitesi', '20 GB NVMe SSD', 'Sınırsız Trafik', '20 E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Günlük Yedekleme']],
-            ['id' => 105, 'name' => 'Linux Hosting 3', 'subtitle' => 'Küçük işletme', 'price' => '389', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(105), 'features' => ['5 Web Sitesi', '50 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Saatlik Yedek']],
-            ['id' => 106, 'name' => 'Linux Hosting 4', 'subtitle' => 'Geniş projeler', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(106), 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Saatlik Yedek']],
+            ['id' => 103, 'name' => 'Linux Hosting 1', 'subtitle' => 'Bireysel siteler', 'price' => '150', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(103), 'features' => ['1 Web Sitesi', '5 GB NVMe SSD', '50 GB Trafik', '5 E-posta', 'Ücretsiz SSL', 'Haftalık Yedekleme']],
+            ['id' => 104, 'name' => 'Linux Hosting 2', 'subtitle' => 'Hobi siteleri', 'price' => '289', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true,  'buy_link' => $_cdg_static_buy(104), 'features' => ['3 Web Sitesi', '20 GB NVMe SSD', 'Sınırsız Trafik', '20 E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Haftalık Yedekleme']],
+            ['id' => 105, 'name' => 'Linux Hosting 3', 'subtitle' => 'Küçük işletme', 'price' => '389', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(105), 'features' => ['5 Web Sitesi', '50 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Haftalık Yedek']],
+            ['id' => 106, 'name' => 'Linux Hosting 4', 'subtitle' => 'Geniş projeler', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(106), 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Haftalık Yedek']],
         ],
     ],
     [
@@ -588,20 +588,20 @@ $compare_features = [
     ['feature' => 'E-posta',               'starter' => '5',        'pro' => 'Sınırsız',  'business' => 'Sınırsız', 'enterprise' => 'Sınırsız'],
     ['feature' => 'Ücretsiz SSL',          'starter' => 'check',    'pro' => 'check',     'business' => 'check',    'enterprise' => 'check'],
     ['feature' => 'LiteSpeed Enterprise',  'starter' => 'cross',    'pro' => 'check',     'business' => 'check',    'enterprise' => 'check'],
-    ['feature' => 'Saatlik Yedekleme',     'starter' => 'cross',    'pro' => 'cross',     'business' => 'check',    'enterprise' => 'check'],
+    ['feature' => 'Haftalık Yedekleme',    'starter' => 'check',    'pro' => 'check',     'business' => 'check',    'enterprise' => 'check'],
     ['feature' => 'Dedicated IP',          'starter' => 'cross',    'pro' => 'cross',     'business' => 'cross',    'enterprise' => 'check'],
     ['feature' => 'Öncelikli Destek',      'starter' => 'cross',    'pro' => 'cross',     'business' => 'check',    'enterprise' => 'check'],
 ];
 
 $advantages = [
-    ['icon' => 'bi-lightning-charge-fill', 'title' => '%100 NVMe SSD',         'desc' => 'NVMe disklerle 10x daha hızlı I/O performansı.'],
-    ['icon' => 'bi-speedometer2',          'title' => 'LiteSpeed Enterprise',  'desc' => 'Apache\'den 9 kat hızlı, kaynak verimli.'],
-    ['icon' => 'bi-shield-fill-check',     'title' => 'Ücretsiz SSL',          'desc' => 'Tüm paketlerde Let\'s Encrypt SSL otomatik.'],
-    ['icon' => 'bi-arrow-clockwise',       'title' => 'Saatlik Yedekleme',     'desc' => 'Verileriniz saat başı yedeklenir.'],
-    ['icon' => 'bi-cloud-arrow-up-fill',   'title' => 'Ücretsiz Taşıma',       'desc' => 'Mevcut sitenizi ücretsiz taşıyalım.'],
-    ['icon' => 'bi-fingerprint',           'title' => 'DDoS Koruması',         'desc' => 'Gelişmiş firewall + 24/7 izleme.'],
-    ['icon' => 'bi-graph-up-arrow',        'title' => '%99.99 Uptime',         'desc' => 'SLA garantili kesintisiz hizmet.'],
-    ['icon' => 'bi-headset',               'title' => '7/24 Destek',           'desc' => 'WhatsApp, telefon, panel üzerinden.'],
+    ['icon' => 'bi-lightning-charge-fill', 'title' => 'NVMe SSD Disk',        'desc' => 'NVMe SSD ile yüksek I/O performansı.'],
+    ['icon' => 'bi-speedometer2',          'title' => 'LiteSpeed Enterprise', 'desc' => 'Yüksek performanslı web sunucu, kaynak verimli.'],
+    ['icon' => 'bi-shield-fill-check',     'title' => 'Ücretsiz SSL',         'desc' => 'Tüm paketlerde Let\'s Encrypt SSL otomatik.'],
+    ['icon' => 'bi-arrow-clockwise',       'title' => 'Haftalık Yedekleme',   'desc' => 'Haftada bir yedek, 1 yıl saklama.'],
+    ['icon' => 'bi-cloud-arrow-up-fill',   'title' => 'Ücretsiz Taşıma',      'desc' => 'Mevcut sitenizi ücretsiz taşıyalım.'],
+    ['icon' => 'bi-fingerprint',           'title' => 'Güvenlik Önlemleri',   'desc' => 'Sunucu seviyesinde firewall ve izleme.'],
+    ['icon' => 'bi-geo-alt-fill',          'title' => 'Türkiye Sunucuları',   'desc' => 'Düşük gecikme, hızlı erişim.'],
+    ['icon' => 'bi-headset',               'title' => '7/24 Destek',          'desc' => 'WhatsApp, telefon, panel üzerinden.'],
 ];
 
 $solutions = [
@@ -617,18 +617,18 @@ $solutions = [
             ['icon' => 'bi-shield-lock-fill',      'title' => 'PCI-DSS Uyumlu',    'text' => 'TLS 1.3 zorunlu, kart verisi şifreli sanal POS, ModSecurity WAF, brute-force koruması.'],
             ['icon' => 'bi-cloud-download-fill',   'title' => 'Tek Tıkla Kurulum',  'text' => 'Softaculous: WooCommerce, OpenCart 4.x, PrestaShop 8.x, Magento 2 anında kurulum.'],
             ['icon' => 'bi-graph-up',              'title' => 'Yüksek Stok',         'text' => '100.000+ ürün desteği; MariaDB 10.11 InnoDB tuning, query cache optimize.'],
-            ['icon' => 'bi-arrow-clockwise',        'title' => 'Otomatik Yedek',     'text' => 'Günlük JetBackup ile 30 gün geriye dönük restore; ürün-sipariş kaybı yok.'],
+            ['icon' => 'bi-arrow-clockwise',        'title' => 'Otomatik Yedek',     'text' => 'Haftalık yedek 1 yıl saklama; geriye dönük geri yükleme.'],
             ['icon' => 'bi-credit-card-2-front',   'title' => 'iyzico/Param/PayTR',  'text' => 'Türk sanal POS sağlayıcılarıyla yerel hosting (düşük latency, hızlı 3D Secure).'],
         ],
-        'audience' => 'Aylık 10K+ ziyaretçi alan butik mağazalar, B2C e-ticaret, marketplace satıcıları, dropshipping projeleri için ideal.',
+        'audience' => 'Butik mağazalar, B2C e-ticaret, marketplace satıcıları, dropshipping projeleri için ideal.',
     ],
     [
         'icon'  => 'bi-wordpress',
         'title' => 'WordPress Hosting',
-        'desc'  => 'Apache\'ye göre 9 kat hızlı, WP-CLI + auto update + LiteSpeed Cache hazır',
+        'desc'  => 'WP-CLI + auto update + LiteSpeed Cache hazır',
         'color' => '#21759b',
         'detail_title' => 'WordPress için optimize hosting',
-        'detail_intro' => 'WordPress siteleri trafik aldıkça yavaşlar — biz bunu çözdük. CODEGA WordPress Hosting LiteSpeed + LSCache eklentisi + Object Cache (Redis) + PHP 8.3 OpCache ile sitenizi Apache + standart PHP altyapısına göre 9 kat hızlandırır. Tek tıkla otomatik güncelleme, WP-CLI komut satırı, malware tarama dahil.',
+        'detail_intro' => 'WordPress siteleri için optimize edilmiş altyapı. CODEGA WordPress Hosting; LiteSpeed + LSCache eklentisi + Object Cache (Redis) + PHP 8.3 OpCache ile sitenizi performanslı çalıştırır. Tek tıkla otomatik güncelleme, WP-CLI komut satırı, malware tarama dahil.',
         'features' => [
             ['icon' => 'bi-magic',                  'title' => 'Tek Tık Kurulum',  'text' => 'Softaculous: WordPress son sürüm + LSCache + Wordfence + Akismet kurulu hazır.'],
             ['icon' => 'bi-terminal-fill',           'title' => 'WP-CLI Erişimi',    'text' => 'SSH üzerinden tüm WordPress yönetimi; bulk plugin update, DB optimize, search-replace.'],
@@ -642,19 +642,19 @@ $solutions = [
     [
         'icon'  => 'bi-buildings',
         'title' => 'Kurumsal Hosting',
-        'desc'  => 'Dedicated kaynak, %99.95 uptime SLA, premium destek, custom firewall',
+        'desc'  => 'Dedicated kaynak, premium destek, custom firewall',
         'color' => '#8b5cf6',
         'detail_title' => 'Kurumsal seviyede güvence',
-        'detail_intro' => 'Büyük şirketlerin web altyapısı küçük yatak yapamaz. CODEGA Kurumsal Hosting; sizinle paylaşımsız dedicated CPU + RAM + IP, %99.95 uptime SLA garantisi, 4 saat içinde yanıt premium destek ve custom firewall kurallarıyla mission-critical iş yüklerini güvenle barındırır. Cluster mimari ve failover ile sıfır kesinti hedefi.',
+        'detail_intro' => 'Büyük şirketlerin web altyapısı paylaşımlı kalmamalı. CODEGA Kurumsal Hosting; sizinle paylaşımsız dedicated CPU + RAM + IP, premium destek ve custom firewall kurallarıyla iş yüklerinizi güvenle barındırır. İhtiyacınıza göre cluster mimari opsiyonu sunulabilir.',
         'features' => [
             ['icon' => 'bi-cpu-fill',              'title' => 'Dedicated Kaynak',     'text' => 'Garantili 4-32 vCore CPU, 8-128 GB RAM, paylaşımsız NVMe storage; başkası kaynak çalmaz.'],
-            ['icon' => 'bi-award-fill',            'title' => '%99.95 Uptime SLA',    'text' => 'Yıllık downtime 4.5 saatten az; aşımı durumunda krediler. Yazılı SLA sözleşmesi.'],
-            ['icon' => 'bi-people-fill',           'title' => 'Premium Destek',       'text' => 'Atanmış teknik müşteri temsilcisi, telefonla 24/7, 4 saat içinde yanıt SLA\'lı destek.'],
-            ['icon' => 'bi-firewall',               'title' => 'Custom Firewall',      'text' => 'IP whitelist, geo-block, DDoS L7 koruma, custom ModSecurity kuralları.'],
-            ['icon' => 'bi-arrow-repeat',           'title' => 'Cluster + Failover',  'text' => 'Aktif-pasif HA cluster, 1 saniye altı failover, MySQL replication, load balancer.'],
-            ['icon' => 'bi-clipboard-data',         'title' => 'Detaylı Raporlama',     'text' => 'Aylık SLA raporu, kaynak kullanım grafikleri, security audit, performans metrikleri.'],
+            ['icon' => 'bi-award-fill',            'title' => 'Yüksek Erişilebilirlik','text' => 'Modern altyapı + izleme + hızlı müdahale ile minimum kesinti hedefi.'],
+            ['icon' => 'bi-people-fill',           'title' => 'Premium Destek',       'text' => 'Telefon, WhatsApp ve panel üzerinden öncelikli destek; iş günlerinde kısa sürede yanıt.'],
+            ['icon' => 'bi-firewall',               'title' => 'Custom Firewall',      'text' => 'IP whitelist, geo-block, ModSecurity WAF, sunucu seviyesinde koruma kuralları.'],
+            ['icon' => 'bi-arrow-repeat',           'title' => 'Yedekli Altyapı',      'text' => 'Haftalık otomatik yedek + 1 yıl saklama, MySQL düzenli yedeklenir.'],
+            ['icon' => 'bi-clipboard-data',         'title' => 'Detaylı Raporlama',     'text' => 'Aylık kaynak kullanım grafikleri, security audit, performans metrikleri.'],
         ],
-        'audience' => 'Holding, banka, kamu, üniversite, mission-critical SaaS uygulamaları ve aylık 100K+ ziyaretçi alan kurumsal siteler için.',
+        'audience' => 'Holding, kurumsal şirket, kamu, üniversite ve yüksek trafikli kurumsal siteler için tercih edilen pakettir.',
     ],
     [
         'icon'  => 'bi-mortarboard-fill',
@@ -665,7 +665,7 @@ $solutions = [
         'detail_intro' => 'Bir LMS (Learning Management System) trafiği sıradan bir siteden çok farklı: aynı anda yüzlerce kullanıcı video izler, sınav alır, ödev yükler. CODEGA Eğitim Hosting; Moodle, Open edX, Chamilo gibi LMS\'leri optimize eder, BigBlueButton (BBB) entegrasyonu ile WebRTC üzerinden canlı ders verir. KVKK uyumlu öğrenci verisi koruması.',
         'features' => [
             ['icon' => 'bi-camera-video-fill',     'title' => 'BBB / WebRTC',        'text' => 'BigBlueButton kurulu, WebRTC + WebSocket portları açık, canlı ders altyapısı hazır.'],
-            ['icon' => 'bi-easel-fill',             'title' => 'Moodle Optimize',     'text' => 'PHP OPcache + Redis session, MariaDB InnoDB tuning, 5000+ aktif öğrenci destekli.'],
+            ['icon' => 'bi-easel-fill',             'title' => 'Moodle Optimize',     'text' => 'PHP OPcache + Redis session, MariaDB InnoDB tuning, Yüksek aktif öğrenci kapasitesi.'],
             ['icon' => 'bi-lock-fill',              'title' => 'KVKK Uyumlu',          'text' => 'Öğrenci kişisel veri şifreli saklama, GDPR/KVKK uyumlu log silme, audit trail.'],
             ['icon' => 'bi-collection-play-fill',  'title' => 'Yüksek Bandwidth',     'text' => 'Ders kayıt videoları için CDN entegrasyonu, HLS streaming, 100 Mbps+ uplink.'],
             ['icon' => 'bi-puzzle-fill',            'title' => 'SCORM / xAPI',         'text' => 'SCORM 1.2/2004 paket desteği, xAPI (Tin Can) Learning Record Store entegrasyonu.'],
@@ -685,7 +685,7 @@ $solutions = [
             ['icon' => 'bi-layers-fill',            'title' => 'Multi-Layer Cache',     'text' => 'Page cache (LSCache) + Object cache (Redis) + Browser cache; viral trafik için 100x ölçeklenir.'],
             ['icon' => 'bi-image-fill',             'title' => 'Image Optimize',       'text' => 'Otomatik WebP/AVIF dönüşüm, lazy load, responsive srcset, %70 boyut azalma.'],
             ['icon' => 'bi-search',                  'title' => 'Elasticsearch',        'text' => 'Tam metin arama; "ilgili haberler" önerileri için ML bazlı içerik benzerliği.'],
-            ['icon' => 'bi-shield-x',                'title' => 'Comment Spam',          'text' => 'Akismet + reCAPTCHA v3 + IP rate-limit; günde 10K+ spam yorum filtrelenir.'],
+            ['icon' => 'bi-shield-x',                'title' => 'Comment Spam',          'text' => 'Akismet + reCAPTCHA v3 + IP rate-limit; spam yorumlar otomatik filtrelenir.'],
             ['icon' => 'bi-phone-fill',              'title' => 'AMP Desteği',           'text' => 'Google AMP HTML servisi, mobil sayfa yükleme &lt; 1sn, Top Stories rank avantajı.'],
         ],
         'audience' => 'Ulusal/yerel haber siteleri, bloglar, magazin portalları, content marketing projeleri ve aylık 500K+ pageview alan yayıncılar için.',
@@ -710,7 +710,7 @@ $solutions = [
 ];
 
 $faqs = [
-    ['q' => 'Hosting hizmetinde performans nasıl sağlanır?', 'a' => 'Tüm sunucularımızda NVMe SSD diskler, LiteSpeed Enterprise web server, son nesil Intel/AMD işlemciler ve ECC RAM kullanılıyor. Bu altyapı ile siteleriniz Apache\'ye göre 9 kat daha hızlı yüklenir.'],
+    ['q' => 'Hosting hizmetinde performans nasıl sağlanır?', 'a' => 'Tüm sunucularımızda NVMe SSD diskler, LiteSpeed Enterprise web server, son nesil Intel/AMD işlemciler ve ECC RAM kullanılıyor. Bu altyapı ile siteleriniz hızlı ve kararlı çalışır.'],
     ['q' => 'Mevcut sitemi CODEGA\'ya nasıl taşırım?', 'a' => 'Hosting paketinizi aldıktan sonra panel üzerinden taşıma talebi oluşturabilirsiniz. Uzman ekibimiz DirectAdmin veya hosting backup\'ınızı alır, veri kaybı olmadan taşır. 5 adete kadar ÜCRETSİZ taşırız.'],
     ['q' => 'Ücretsiz SSL sertifikası nasıl aktif olur?', 'a' => 'Tüm hosting paketlerinde Let\'s Encrypt SSL otomatik kurulur. Domain\'inizi ekledikten sonra DirectAdmin\'de SSL sekmesinden tek tıkla aktif edebilirsiniz. SSL 90 günde bir otomatik yenilenir.'],
     ['q' => '7/24 destek hangi kanallardan sağlanıyor?', 'a' => 'WhatsApp, telefon, e-posta ve panel üzerinden destek talebi açabilirsiniz. Ortalama yanıt süresi 5 dakikanın altındadır.'],
@@ -1302,18 +1302,18 @@ function cdgSolToggle(idx){
     </div>
 </section>
 
-<!-- 13. VERİ MERKEZLERİ -->
+<!-- 13. SUNUCU LOKASYONLARI -->
 <section class="cdg-dc-section cdg-section">
     <div class="cdg-container">
         <div class="cdg-section-head">
-            <div class="cdg-eyebrow">Veri Merkezleri</div>
-            <h2>Tier-3 sertifikalı <span class="cdg-text-gradient">veri merkezleri</span></h2>
-            <p>Türkiye ve Avrupa'da yedekli altyapı ile %99.99 uptime garantisi.</p>
+            <div class="cdg-eyebrow">Sunucu Lokasyonları</div>
+            <h2>Türkiye ve Avrupa'da <span class="cdg-text-gradient">sunucularımız</span></h2>
+            <p>Yerli ve yurt dışı sunucu seçenekleri ile sitenizi hedef kitlenize en yakın yerden yayınlayın.</p>
         </div>
         <div class="cdg-dc-grid">
-            <div class="cdg-dc-card cdg-dc-card-pulse"><div class="cdg-dc-flag">🇹🇷</div><h3>İstanbul</h3><p>Ana veri merkezi · Tier-3 · 24/7 fiziksel güvenlik</p><div class="cdg-dc-specs"><span><i class="bi bi-fire"></i> 7ms ping</span><span><i class="bi bi-shield-fill-check"></i> ISO 27001</span></div></div>
-            <div class="cdg-dc-card cdg-dc-card-pulse"><div class="cdg-dc-flag">🇩🇪</div><h3>Frankfurt</h3><p>Avrupa hub · Tier-3 · 100 Gbps backbone</p><div class="cdg-dc-specs"><span><i class="bi bi-fire"></i> 35ms ping</span><span><i class="bi bi-shield-fill-check"></i> ISO 27001</span></div></div>
-            <div class="cdg-dc-card cdg-dc-card-pulse"><div class="cdg-dc-flag">🇳🇱</div><h3>Amsterdam</h3><p>AMS-IX hub · Tier-3 · DDoS korumalı</p><div class="cdg-dc-specs"><span><i class="bi bi-fire"></i> 42ms ping</span><span><i class="bi bi-shield-fill-check"></i> ISO 27001</span></div></div>
+            <div class="cdg-dc-card cdg-dc-card-pulse"><div class="cdg-dc-flag">🇹🇷</div><h3>Türkiye</h3><p>Yerli sunucu · Düşük gecikme · Türkçe destek</p><div class="cdg-dc-specs"><span><i class="bi bi-fire"></i> Düşük ping</span><span><i class="bi bi-shield-fill-check"></i> Türkiye lokasyonu</span></div></div>
+            <div class="cdg-dc-card cdg-dc-card-pulse"><div class="cdg-dc-flag">🇩🇪</div><h3>Almanya</h3><p>Avrupa konumu · Yüksek bant genişliği</p><div class="cdg-dc-specs"><span><i class="bi bi-fire"></i> Avrupa hub</span><span><i class="bi bi-shield-fill-check"></i> Yedekli ağ</span></div></div>
+            <div class="cdg-dc-card cdg-dc-card-pulse"><div class="cdg-dc-flag">🇳🇱</div><h3>Hollanda</h3><p>Hollanda lokasyonu · DDoS korumalı altyapı</p><div class="cdg-dc-specs"><span><i class="bi bi-fire"></i> Avrupa erişimi</span><span><i class="bi bi-shield-fill-check"></i> Güvenli altyapı</span></div></div>
         </div>
     </div>
 </section>
@@ -1345,14 +1345,14 @@ function cdgSolToggle(idx){
     </div>
 </section>
 
-<!-- 15. SERTİFİKALAR -->
+<!-- 15. SERTİFİKALAR / GÜVENCE -->
 <section class="cdg-certs-section">
     <div class="cdg-container">
         <div class="cdg-certs-row">
-            <div class="cdg-cert-item"><i class="bi bi-shield-fill-check"></i><div><strong>ISO 27001</strong><span>Bilgi Güvenliği</span></div></div>
-            <div class="cdg-cert-item"><i class="bi bi-award-fill"></i><div><strong>ETBİS Kayıtlı</strong><span>E-Ticaret Sistemi</span></div></div>
             <div class="cdg-cert-item"><i class="bi bi-file-earmark-lock-fill"></i><div><strong>KVKK Uyumlu</strong><span>Veri Koruma</span></div></div>
-            <div class="cdg-cert-item"><i class="bi bi-patch-check-fill"></i><div><strong>SSL Korumalı</strong><span>256-bit AES</span></div></div>
+            <div class="cdg-cert-item"><i class="bi bi-patch-check-fill"></i><div><strong>SSL Korumalı</strong><span>256-bit şifreleme</span></div></div>
+            <div class="cdg-cert-item"><i class="bi bi-geo-alt-fill"></i><div><strong>Konya Merkezli</strong><span>Aksoy Group iştiraki</span></div></div>
+            <div class="cdg-cert-item"><i class="bi bi-headset"></i><div><strong>Türkçe Destek</strong><span>WhatsApp / Telefon / Panel</span></div></div>
             <div class="cdg-cert-item"><i class="bi bi-trophy-fill"></i><div><strong>Yerli Yazılım</strong><span>%100 Türk yapımı</span></div></div>
         </div>
     </div>
@@ -1401,10 +1401,10 @@ function cdgSolToggle(idx){
                     <?php if($mod_domain): ?><a href="<?php echo $domain_url; ?>" class="cdg-btn cdg-btn-outline cdg-btn-lg"><i class="bi bi-globe2"></i> Domain Sorgula</a><?php endif; ?>
                 </div>
                 <div class="cdg-final-trust">
-                    <span><i class="bi bi-shield-check"></i> %99.99 Uptime</span>
+                    <span><i class="bi bi-shield-check"></i> Ücretsiz SSL</span>
                     <span><i class="bi bi-arrow-counterclockwise"></i> 30 Gün İade</span>
                     <span><i class="bi bi-headset"></i> 7/24 Destek</span>
-                    <span><i class="bi bi-cpu-fill"></i> AI Optimizasyon</span>
+                    <span><i class="bi bi-hdd-fill"></i> NVMe SSD</span>
                 </div>
             </div>
         </div>
