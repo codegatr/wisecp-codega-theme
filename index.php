@@ -61,7 +61,9 @@ if(!function_exists('cdg_link')) {
             'balance-page'            => 'ac-ps-balance',
             'info'                    => 'ac-ps-info',
             'ac-info'                 => 'ac-ps-info',
-            'products'                => 'ac-ps-products',
+            // KRITIK: 'products' aliasi KALDIRILDI - 'ac-ps-products'a (hesabim/urun-ve-hizmetlerim) gidiyordu!
+            // Artik 'products' slug'i ham olarak isleniyor → /kategori/(type) URL'ine gider (public satin alma)
+            // 'all-orders' aslen muşteri panelindeki sipariş listesi olduğu için aliasta kalır
             'all-orders'              => 'ac-ps-products',
             'products-t'              => 'ac-ps-products-t',
             'product'                 => 'ac-ps-product',
@@ -102,7 +104,22 @@ if(!function_exists('cdg_link')) {
 }
 
 $domain_url   = cdg_link('domain');
-$hosting_url  = cdg_link('products', ['hosting']);
+// $hosting_url: Hosting paketleri kategori sayfasi (public, satin almaya yonlendirir)
+// products slug -> /kategori/hosting (TR locale). cdg_link('products', ['hosting'])
+// olarak isleniyor - artik aliassiz, dogru URL uretir.
+// Eger uretilemezse: cdg-product-list-template.php hosting-products.php sayfasi fallback
+$hosting_url  = '';
+if(function_exists('cdg_route')) {
+    $hosting_url = cdg_route('products', ['hosting']);  // /kategori/hosting
+}
+if(!$hosting_url) {
+    $hosting_url = cdg_link('products', ['hosting']);
+}
+// Son care: tema'nin kendi paket listesi sayfasi
+if(!$hosting_url || strpos($hosting_url, '/hesabim/') !== false) {
+    $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
+    $hosting_url = $base . '/hosting';
+}
 $contact_url  = cdg_link('contact');
 $register_url = cdg_link('register');
 $login_url    = cdg_link('login');
@@ -205,6 +222,7 @@ if($mod_hosting && class_exists('Products')) {
             $features = array_slice($features, 0, 7);
 
             return [
+                'id'        => (int)($product['id'] ?? 0),
                 'name'      => $product['title'] ?? ($product['name'] ?? 'Paket'),
                 'subtitle'  => $product['sub_title'] ?? '',
                 'price'     => $amount_value ?: '-',
@@ -366,33 +384,42 @@ if(isset($_GET['cdg_debug']) && $_GET['cdg_debug'] == '1') {
 }
 
 if(empty($pricing_categories)) {
+    // STATIK FALLBACK - WiseCP'den paket cekilemediginde gosterilir
+    // ID'ler Yunus'un admin panelindeki gercek paket ID'leridir
+    // (Yunus'un ornek URL'leri: /siparis/hosting/103, 104, 105, 106, 16, 17)
+    // Her statik paket icin cdg_buy_link ile gercek satin alma URL'i uretilir
+    $_cdg_static_buy = function($id) {
+        if(!$id) return '';
+        return function_exists('cdg_buy_link') ? cdg_buy_link('hosting', (int)$id) : '';
+    };
+
     $pricing_categories = [
     [
         'id' => 'ekonomik', 'name' => 'Ekonomik SSD Hosting', 'icon' => 'bi-rocket-takeoff', 'color' => '#10b981',
         'desc' => 'Bireysel ve küçük projeler için uygun fiyatlı paketler',
         'packages' => [
-            ['name' => 'Linux Hosting 1', 'subtitle' => 'Bireysel siteler', 'price' => '150', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => '', 'features' => ['1 Web Sitesi', '5 GB NVMe SSD', '50 GB Trafik', '5 E-posta', 'Ücretsiz SSL', 'Günlük Yedekleme']],
-            ['name' => 'Linux Hosting 2', 'subtitle' => 'Hobi siteleri', 'price' => '289', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true, 'buy_link' => '', 'features' => ['3 Web Sitesi', '20 GB NVMe SSD', 'Sınırsız Trafik', '20 E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Günlük Yedekleme']],
-            ['name' => 'Linux Hosting 3', 'subtitle' => 'Küçük işletme', 'price' => '389', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => '', 'features' => ['5 Web Sitesi', '50 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Saatlik Yedek']],
-            ['name' => 'Linux Hosting 4', 'subtitle' => 'Geniş projeler', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => '', 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Saatlik Yedek']],
+            ['id' => 103, 'name' => 'Linux Hosting 1', 'subtitle' => 'Bireysel siteler', 'price' => '150', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(103), 'features' => ['1 Web Sitesi', '5 GB NVMe SSD', '50 GB Trafik', '5 E-posta', 'Ücretsiz SSL', 'Günlük Yedekleme']],
+            ['id' => 104, 'name' => 'Linux Hosting 2', 'subtitle' => 'Hobi siteleri', 'price' => '289', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true,  'buy_link' => $_cdg_static_buy(104), 'features' => ['3 Web Sitesi', '20 GB NVMe SSD', 'Sınırsız Trafik', '20 E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Günlük Yedekleme']],
+            ['id' => 105, 'name' => 'Linux Hosting 3', 'subtitle' => 'Küçük işletme', 'price' => '389', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(105), 'features' => ['5 Web Sitesi', '50 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed', 'Saatlik Yedek']],
+            ['id' => 106, 'name' => 'Linux Hosting 4', 'subtitle' => 'Geniş projeler', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(106), 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', 'Sınırsız E-posta', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Saatlik Yedek']],
         ],
     ],
     [
         'id' => 'profesyonel', 'name' => 'Profesyonel SSD Hosting', 'icon' => 'bi-stars', 'color' => '#2E3B4E',
         'desc' => 'Yüksek trafikli siteler ve kurumsal çözümler için',
         'packages' => [
-            ['name' => 'Profesyonel 1', 'subtitle' => 'Kurumsal başlangıç', 'price' => '450', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => '', 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', '2 Core CPU', '2 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise']],
-            ['name' => 'Profesyonel 2', 'subtitle' => 'Büyük kurumsal', 'price' => '750', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => true, 'buy_link' => '', 'features' => ['25 Web Sitesi', '250 GB NVMe SSD', 'Sınırsız Trafik', '4 Core CPU', '4 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Öncelikli Destek']],
-            ['name' => 'Profesyonel 3', 'subtitle' => 'Yüksek trafik', 'price' => '1.200', 'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => '', 'features' => ['Sınırsız Site', '500 GB NVMe SSD', 'Sınırsız Trafik', '8 Core CPU', '8 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Dedicated IP']],
+            ['id' => 16, 'name' => 'Profesyonel 1', 'subtitle' => 'Kurumsal başlangıç', 'price' => '450',  'currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(16), 'features' => ['10 Web Sitesi', '100 GB NVMe SSD', 'Sınırsız Trafik', '2 Core CPU', '2 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise']],
+            ['id' => 17, 'name' => 'Profesyonel 2', 'subtitle' => 'Büyük kurumsal',     'price' => '750',  'currency' => '₺', 'period' => 'yıllık', 'highlight' => true,  'buy_link' => $_cdg_static_buy(17), 'features' => ['25 Web Sitesi', '250 GB NVMe SSD', 'Sınırsız Trafik', '4 Core CPU', '4 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Öncelikli Destek']],
+            ['id' => 18, 'name' => 'Profesyonel 3', 'subtitle' => 'Yüksek trafik',      'price' => '1.200','currency' => '₺', 'period' => 'yıllık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(18), 'features' => ['Sınırsız Site', '500 GB NVMe SSD', 'Sınırsız Trafik', '8 Core CPU', '8 GB RAM', 'Ücretsiz SSL', 'LiteSpeed Enterprise', 'Dedicated IP']],
         ],
     ],
     [
         'id' => 'bayi', 'name' => 'Bayi (Reseller) Hosting', 'icon' => 'bi-people-fill', 'color' => '#8b5cf6',
         'desc' => 'Web tasarımcıları ve ajanslar için bayilik çözümleri',
         'packages' => [
-            ['name' => 'S BAYİ', 'subtitle' => 'Küçük bayilik', 'price' => '14', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'buy_link' => '', 'features' => ['10 DirectAdmin Hesabı', '20 GB NVMe SSD', '200 GB Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label']],
-            ['name' => 'M BAYİ', 'subtitle' => 'Orta bayilik', 'price' => '24', 'currency' => '$', 'period' => 'aylık', 'highlight' => true, 'buy_link' => '', 'features' => ['25 DirectAdmin Hesabı', '50 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'DirectAdmin Lisansı']],
-            ['name' => 'L BAYİ', 'subtitle' => 'Büyük bayilik', 'price' => '39', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'buy_link' => '', 'features' => ['50 DirectAdmin Hesabı', '100 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'Marka Çözümleri']],
+            ['id' => 19, 'name' => 'S BAYİ', 'subtitle' => 'Küçük bayilik', 'price' => '14', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(19), 'features' => ['10 DirectAdmin Hesabı', '20 GB NVMe SSD', '200 GB Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label']],
+            ['id' => 20, 'name' => 'M BAYİ', 'subtitle' => 'Orta bayilik',  'price' => '24', 'currency' => '$', 'period' => 'aylık', 'highlight' => true,  'buy_link' => $_cdg_static_buy(20), 'features' => ['25 DirectAdmin Hesabı', '50 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'DirectAdmin Lisansı']],
+            ['id' => 21, 'name' => 'L BAYİ', 'subtitle' => 'Büyük bayilik', 'price' => '39', 'currency' => '$', 'period' => 'aylık', 'highlight' => false, 'buy_link' => $_cdg_static_buy(21), 'features' => ['50 DirectAdmin Hesabı', '100 GB NVMe SSD', 'Sınırsız Trafik', 'WHM Yönetim', 'Ücretsiz SSL', 'White Label', 'Marka Çözümleri']],
         ],
     ],
 ];
@@ -928,7 +955,25 @@ $faqs = [
                         <li><i class="bi bi-check-circle-fill"></i> <?php echo htmlspecialchars($feat, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></li>
                         <?php endforeach; ?>
                     </ul>
-                    <a href="<?php echo !empty($pkg['buy_link']) ? htmlspecialchars($pkg['buy_link'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : $hosting_url; ?>" class="cdg-btn <?php echo !empty($pkg['highlight']) ? 'cdg-btn-primary cdg-btn-glow' : 'cdg-btn-outline'; ?> cdg-btn-block">
+                    <?php
+                        // KRITIK: Sepet linki insaasi
+                        // 1) buy_link doluysa kullan (gercek WiseCP veya statik mock'tan gelir)
+                        // 2) buy_link bos ama paket ID varsa: cdg_buy_link ile uret
+                        // 3) Hicbiri yoksa: hosting kategorisi sayfasi (asla /hesabim/... olmasin!)
+                        $_cdg_btn_url = '';
+                        if(!empty($pkg['buy_link'])) {
+                            $_cdg_btn_url = $pkg['buy_link'];
+                        } elseif(!empty($pkg['id']) && function_exists('cdg_buy_link')) {
+                            $_cdg_btn_url = cdg_buy_link('hosting', (int)$pkg['id']);
+                        } else {
+                            $_cdg_btn_url = $hosting_url;
+                        }
+                        // Son kontrol: /hesabim/ ile basliyorsa hosting_url'a dus
+                        if(strpos($_cdg_btn_url, '/hesabim/') !== false) {
+                            $_cdg_btn_url = $hosting_url;
+                        }
+                    ?>
+                    <a href="<?php echo htmlspecialchars($_cdg_btn_url, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>" class="cdg-btn <?php echo !empty($pkg['highlight']) ? 'cdg-btn-primary cdg-btn-glow' : 'cdg-btn-outline'; ?> cdg-btn-block">
                         <i class="bi bi-cart-plus"></i> <?php echo !empty($pkg['buy_label']) ? htmlspecialchars($pkg['buy_label'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : 'Hemen Satın Al'; ?>
                     </a>
                 </div>
