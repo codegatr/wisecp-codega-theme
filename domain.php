@@ -580,6 +580,23 @@ $featured_tlds = isset($box_tldList) && is_array($box_tldList) ? $box_tldList : 
 @media (max-width: 420px) {
     .cdg-search-alt-grid { grid-template-columns: 1fr; }
 }
+
+/* === CODEGA: "Sahibim, Taşı" butonu (unavailable domain için) === */
+.cdg-btn-transfer {
+    background: #fff !important;
+    border: 1.5px solid #10b981 !important;
+    color: #047857 !important;
+    transition: all 0.18s ease !important;
+    font-weight: 700 !important;
+}
+.cdg-btn-transfer:hover {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: #fff !important;
+    border-color: #059669 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(16,185,129,0.30);
+}
+.cdg-btn-transfer i { font-size: 14px; }
 </style>
 
 <!-- HERO + DOMAIN SORGU -->
@@ -1122,7 +1139,8 @@ function handleResponse(result, query) {
             var orderLink = item.order_link || '#';
             actionHTML = '<a href="' + escHTML(orderLink) + '" class="cdg-btn cdg-btn-primary cdg-btn-sm"><i class="bi bi-cart-plus"></i> Sepete Ekle</a>';
         } else if(status === 'unavailable') {
-            actionHTML = '<button class="cdg-btn cdg-btn-outline cdg-btn-sm" disabled style="opacity:0.5;cursor:not-allowed;"><i class="bi bi-x"></i> Alındı</button>';
+            // CODEGA: domain alinmis ise -> "sahibim, tasiyorum" butonu (transfer flow'u tetikler)
+            actionHTML = '<a href="javascript:void(0);" onclick="cdgRequestTransfer(\'' + escHTML(fullDomain) + '\');return false;" class="cdg-btn cdg-btn-outline cdg-btn-sm cdg-btn-transfer" title="Bu domain bana ait, CODEGA\'ya taşımak istiyorum"><i class="bi bi-cloud-arrow-up"></i> Taşı</a>';
         } else if(status === 'premium') {
             actionHTML = contact_button;
         } else {
@@ -1230,4 +1248,63 @@ function showError(msg) {
     st.textContent = '@keyframes cdgSpin { from{transform:rotate(0);} to{transform:rotate(360deg);} }';
     document.head.appendChild(st);
 })();
+
+// =====================================================================
+// CODEGA: "Bu domain bana ait, taşımak istiyorum" akışı
+// Müşteri unavailable bir domain'de "Taşı" butonuna tıklayınca:
+// 1. Domain input'a o domain yazılır
+// 2. Transfer checkbox işaretlenir (EPP kodu input'u açılır)
+// 3. EPP kodu input'una scroll + focus
+// 4. Sayfa üst arama alanına scroll yapar
+// =====================================================================
+window.cdgRequestTransfer = function(fullDomain) {
+    if(!fullDomain) return;
+
+    // 1) Domain input'a yaz
+    var domainInput = document.querySelector('.cdg-domain-search-box input[type="text"]');
+    if(!domainInput) domainInput = document.querySelector('#domain-input, input[name="domain"]');
+    if(domainInput) domainInput.value = fullDomain;
+
+    // 2) Transfer checkbox'ı işaretle
+    var transferCb = document.getElementById('transferCheckbox');
+    var transferBox = document.getElementById('transfercode');
+    if(transferCb) {
+        transferCb.checked = true;
+        if(transferBox) transferBox.style.display = 'block';
+    }
+
+    // 3) Üst arama alanına scroll
+    var searchSection = document.querySelector('.cdg-domain-search-box');
+    if(!searchSection) searchSection = document.querySelector('.cdg-domain-search');
+    if(searchSection) {
+        searchSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // 4) EPP kodu input'una focus (kısa gecikme - scroll bitsin)
+    setTimeout(function(){
+        var eppInput = document.getElementById('eppCode');
+        if(eppInput) {
+            eppInput.focus();
+            // Hafif highlight efekti
+            eppInput.style.transition = 'box-shadow 0.4s';
+            eppInput.style.boxShadow = '0 0 0 4px rgba(16,185,129,0.25)';
+            setTimeout(function(){ eppInput.style.boxShadow = ''; }, 1200);
+        }
+    }, 600);
+
+    // 5) Bilgi mesajı goster (üstte toast)
+    var existingToast = document.getElementById('cdgTransferToast');
+    if(existingToast) existingToast.remove();
+    var toast = document.createElement('div');
+    toast.id = 'cdgTransferToast';
+    toast.innerHTML = '<i class="bi bi-info-circle-fill"></i> <strong>' + fullDomain + '</strong> için transfer başlatılıyor. EPP / Auth kodunuzu girip "Sorgula" butonuna basın.';
+    toast.style.cssText = 'position:fixed;top:90px;left:50%;transform:translateX(-50%);background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:14px 22px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(16,185,129,0.18);z-index:9999;display:flex;align-items:center;gap:10px;max-width:90vw;';
+    document.body.appendChild(toast);
+    setTimeout(function(){
+        toast.style.transition = 'opacity 0.4s, transform 0.4s';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(-10px)';
+        setTimeout(function(){ toast.remove(); }, 500);
+    }, 5000);
+};
 </script>
