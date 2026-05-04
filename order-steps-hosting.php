@@ -44,55 +44,25 @@
     <?php endif; ?>
 
     <?php if($step == 1): ?>
-        <div class="pakettitle" style="margin-top:0px;">
-            <h1><strong><?php echo __("website/osteps/service-time-selection"); ?></strong></h1>
-            <div class="line"></div>
-            <h2><?php echo __("website/osteps/service-time-selection-note"); ?></h2>
-        </div>
 
+        <!-- ======= 2 SUTUNLU LAYOUT: Sol periyod kartlari, Sag siparis ozet karti ======= -->
+        <div class="cdg-os-grid">
+            <div class="cdg-os-main">
+                <div class="pakettitle" style="margin-top:0px;">
+                    <h1><strong><?php echo __("website/osteps/service-time-selection"); ?></strong></h1>
+                    <div class="line"></div>
+                    <h2><?php echo __("website/osteps/service-time-selection-note"); ?></h2>
+                </div>
 
+                <div class="siparisbilgileri">
 
-        <div class="siparisbilgileri">
+                    <form action="<?php echo $links["step"]; ?>" method="post" id="StepForm1">
+                        <?php echo Validation::get_csrf_token('order-steps'); ?>
 
-            <form action="<?php echo $links["step"]; ?>" method="post" id="StepForm1">
-                <?php echo Validation::get_csrf_token('order-steps'); ?>
-
-                <style>
-                    .orderperiodblock.active {
-    box-shadow: 0 0 7px var(--color-primary-two);
-    border: 2px solid var(--color-primary-two);
-}
-
-.active .periodselectbox {
-    border: 2px solid var(--color-primary-two);
-    background: var(--color-primary-two);
-}
-
-.orderperiodblock h3 {
-    color: var(--color-primary-two);
-}
-
-.ribbonperiod span {
-    background: linear-gradient(var(--color-primary-two) 0%, var(--color-primary-two) 100%);
-}
-
-.ribbonperiod span::before {
-    border-left: 3px solid var(--color-primary-two);
-    border-top: 3px solid var(--color-primary-two);
-}
-
-.ribbonperiod span::after {
-    border-right: 3px solid var(--color-primary-two);
-    border-top: 3px solid var(--color-primary-two);
-}
-.orderperiodblock h3 {
-    color: var(--color-primary-two);
-}
-                </style>
-                <div class="orderperiodblock-con">
-                    <input type="hidden" name="selection" value="0">
-                    <?php
-                        $selectp = (int) substr(Filter::init("GET/select","rnumbers"),0,1);
+                        <div class="orderperiodblock-con">
+                            <input type="hidden" name="selection" value="0">
+                            <?php
+                                $selectp = (int) substr(Filter::init("GET/select","rnumbers"),0,1);
                         if(isset($product["price"]) && $product["price"]){
                             foreach ($product["price"] AS $k=>$pe){
                                 $amount     = Money::formatter_symbol($pe["amount"],$pe["cid"],!$product["override_usrcurrency"]);
@@ -102,17 +72,14 @@
                                 ?>
                                 <div class="orderperiodblock<?php echo $setup ? ' setup-fee-period-block' : ''; ?>" id="price-<?php echo $pe["id"]; ?>" data-value="<?php echo $k; ?>">
                                     <?php echo $discount; ?>
-                                    <h3><?php echo $period; ?></h3>
-                                    <h2><?php echo $amount; ?></h2>
-                                    <?php
-                                        if($setup)
-                                        {
-                                            ?>
-                                            <span class="setup-fee-period">+ <?php echo $setup; ?> <?php echo __("website/osteps/setup-fee"); ?></span>
-                                            <?php
-                                        }
-                                    ?>
                                     <div class="periodselectbox"><i class="fa fa-check" aria-hidden="true"></i></div>
+                                    <div class="cdg-period-content">
+                                        <h3 class="cdg-period-name"><?php echo $period; ?></h3>
+                                        <h2 class="cdg-period-price"><?php echo $amount; ?></h2>
+                                        <?php if($setup): ?>
+                                            <span class="setup-fee-period">+ <?php echo $setup; ?> <?php echo __("website/osteps/setup-fee"); ?></span>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                                 <?php
                             }
@@ -125,6 +92,13 @@
                                 $(".orderperiodblock").removeClass("active");
                                 $(this).addClass("active");
                                 $("#StepForm1 input[name=selection]").val($(this).data("value"));
+
+                                // Sag ozet kartini guncelle
+                                var period = $(this).find(".cdg-period-name").text() || $(this).find("h3").text();
+                                var amount = $(this).find(".cdg-period-price").text() || $(this).find("h2").text();
+                                $("#cdg-summary-period").text(period);
+                                $("#cdg-summary-amount").text(amount);
+                                $("#cdg-summary-total").text(amount);
                             });
                             var selected_price = <?php echo $selectp ? (string) $selectp : "0"; ?>;
                             $(".orderperiodblock:eq("+selected_price+") .periodselectbox").trigger("click");
@@ -132,10 +106,8 @@
                     </script>
 
                     <div class="clear"></div>
-                    <div style="margin-top:55px;    margin-bottom: 25px;"><a style="float:none" href="javascript:void(0);" class="btn mio-ajax-submit" mio-ajax-options='{"result":"StepForm1_submit","waiting_text":"<?php echo addslashes(__("website/others/button1-pending")); ?>"}'
-                ><strong><?php echo __("website/osteps/continue-button"); ?> <i class="ion-android-arrow-dropright"></i></strong></a></div>
                 </div>
-                <div class="clear"></div>
+
                 <div class="error" id="result" style="text-align: center; margin-top: 5px; display: none;"></div>
             </form>
             <script type="text/javascript">
@@ -165,7 +137,61 @@
                 }
             </script>
 
-        </div>
+                </div><!-- /.siparisbilgileri -->
+            </div><!-- /.cdg-os-main -->
+
+            <!-- ============== SAG SUTUN: Siparis Ozet Karti (sticky) ============== -->
+            <aside class="cdg-os-aside">
+                <div class="cdg-os-summary">
+                    <div class="cdg-os-summary-head">
+                        <i class="bi bi-receipt"></i>
+                        <span>Sipariş Özeti</span>
+                    </div>
+
+                    <div class="cdg-os-summary-body">
+                        <div class="cdg-os-summary-pkg">
+                            <div class="cdg-os-summary-pkg-name"><?php
+                                $_pname = $product["title"] ?? ($product["name"] ?? '');
+                                echo htmlspecialchars($_pname);
+                            ?></div>
+                            <?php if(isset($product["category"]["title"])): ?>
+                                <div class="cdg-os-summary-pkg-cat"><?php echo htmlspecialchars($product["category"]["title"]); ?></div>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="cdg-os-summary-row">
+                            <span class="lbl">Periyod</span>
+                            <span class="val" id="cdg-summary-period">—</span>
+                        </div>
+                        <div class="cdg-os-summary-row">
+                            <span class="lbl">Tutar</span>
+                            <span class="val" id="cdg-summary-amount">—</span>
+                        </div>
+
+                        <div class="cdg-os-summary-divider"></div>
+
+                        <div class="cdg-os-summary-total">
+                            <span class="lbl">Toplam</span>
+                            <span class="val" id="cdg-summary-total">—</span>
+                        </div>
+
+                        <a href="javascript:void(0);" class="cdg-os-continue-btn mio-ajax-submit"
+                           mio-ajax-options='{"result":"StepForm1_submit","waiting_text":"<?php echo addslashes(__("website/others/button1-pending")); ?>"}'
+                           onclick="$('#StepForm1').submit();">
+                            <span><?php echo __("website/osteps/continue-button"); ?></span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+
+                        <div class="cdg-os-summary-trust">
+                            <span><i class="bi bi-shield-lock-fill"></i> SSL Korumalı</span>
+                            <span><i class="bi bi-credit-card-fill"></i> Güvenli Ödeme</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+        </div><!-- /.cdg-os-grid -->
+
     <?php endif; ?>
 
     <?php if($step == "domain"): ?>
