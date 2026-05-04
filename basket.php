@@ -523,15 +523,6 @@ include __DIR__ . '/inc/cdg-checkout-stepper.php';
     transition: all 0.18s !important;
     box-sizing: border-box;
 }
-/* Block buton baslangicta gizli, JS gerekirse acar */
-#wrapper #continue_block { display: none; }
-/* Go buton baslangicta gizli, JS gerekirse acar */
-#wrapper #continue_go { display: none; }
-/* Inline style ile JS'in display:block atamasini engelleme */
-#wrapper #continue_go[style*="block"],
-#wrapper #continue_block[style*="block"] { display: block !important; }
-#wrapper #continue_go[style*="inline"],
-#wrapper #continue_block[style*="inline"] { display: inline-flex !important; }
 #wrapper #continue_go {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
     color: #fff !important;
@@ -1767,3 +1758,108 @@ include __DIR__ . '/inc/cdg-checkout-stepper.php';
     </form>
 </div>
 </div>
+
+<!-- ===== CODEGA OVERRIDE: Sepeti Temizle + Tekil DEVAM ET garantisi ===== -->
+<script type="text/javascript">
+(function(){
+    // 1) "Sepeti Temizle" butonu ekle (sag siparis ozet kartinin altina)
+    function addClearBasketBtn(){
+        if($("#cdg-clear-basket-btn").length > 0) return;
+
+        // Sag taraftaki #continue_go/block butonlarinin yanina ekle
+        var $continueArea = $("#continue_block").parent();
+        if(!$continueArea.length) $continueArea = $("#continue_go").parent();
+        if(!$continueArea.length) return;
+
+        var $btn = $('<a href="javascript:void(0);" id="cdg-clear-basket-btn" class="cdg-clear-basket-btn"><i class="bi bi-trash3"></i> Sepeti Temizle</a>');
+        $btn.on('click', function(){
+            var $items = $(".sepetlist[id^='basket-item-']");
+            if($items.length === 0) {
+                alert('Sepetiniz zaten boş.');
+                return;
+            }
+            if(!confirm('Sepetteki ' + $items.length + ' ürünün hepsi silinecek. Devam edilsin mi?')) return;
+
+            // Tum item'lari tek tek sil (WiseCP'nin deleteItem fonksiyonu kullanilir)
+            $items.each(function(){
+                var idx = $(this).attr('id').replace('basket-item-', '');
+                var itemId = $(this).find('[onclick*="deleteItem"]').first().attr('onclick');
+                if(itemId){
+                    var match = itemId.match(/deleteItem\((\d+),(\d+)\)/);
+                    if(match && typeof deleteItem === 'function') {
+                        try { deleteItem(parseInt(match[1]), parseInt(match[2])); } catch(e){}
+                    }
+                }
+            });
+
+            // Sayfayi 800ms sonra yenile (silme islemleri tamamlansin)
+            setTimeout(function(){ window.location.reload(); }, 1200);
+        });
+        $continueArea.append($btn);
+    }
+
+    // 2) Cift DEVAM ET butonu fix - sadece bir tane gorunsun
+    function fixContinueButtons(){
+        // Eger continue_go gorunuyorsa continue_block kesinlikle gizli
+        if($("#continue_go").is(":visible") && $("#continue_go").css('display') !== 'none') {
+            $("#continue_block").stop(true,true).hide();
+        }
+        // Eger continue_block gorunuyorsa continue_go kesinlikle gizli
+        else if($("#continue_block").is(":visible") && $("#continue_block").css('display') !== 'none') {
+            $("#continue_go").stop(true,true).hide();
+        }
+    }
+
+    // jQuery hazir oldugunda
+    $(document).ready(function(){
+        // 100ms araliklarla 5 saniye boyunca kontrol et (WiseCP AJAX cevap geldikce)
+        var attempts = 0;
+        var checkInterval = setInterval(function(){
+            attempts++;
+            addClearBasketBtn();
+            fixContinueButtons();
+            if(attempts > 50) clearInterval(checkInterval);
+        }, 100);
+
+        // OrderSummary tamamlanma sonrasi tekrar kontrol
+        setTimeout(addClearBasketBtn, 500);
+        setTimeout(addClearBasketBtn, 1500);
+        setTimeout(fixContinueButtons, 500);
+        setTimeout(fixContinueButtons, 1500);
+    });
+})();
+</script>
+
+<style>
+/* Sepeti Temizle butonu */
+#cdg-clear-basket-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin: 10px 0 0 !important;
+    padding: 12px 22px !important;
+    border-radius: 12px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-align: center;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #dc2626 !important;
+    background: #fef2f2 !important;
+    border: 1px solid #fecaca !important;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+#cdg-clear-basket-btn:hover {
+    background: #fee2e2 !important;
+    border-color: #fca5a5 !important;
+    color: #991b1b !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220,38,38,0.15);
+}
+#cdg-clear-basket-btn i { font-size: 14px; }
+</style>
