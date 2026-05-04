@@ -225,13 +225,6 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     line-height: 1.6;
 }
 
-/* Sag kartin icindeki orderperiodblock-con */
-#wrapper .cdg-period-card .orderperiodblock-con {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-    margin: 0 0 18px !important;
-}
-
 /* === SAG OZET KARTI (Forte stili) — Eski hosting step 1 disinda kullanilir === */
 #wrapper .cdg-os-summary {
     background: #fff;
@@ -419,18 +412,28 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     gap: 14px !important;
     margin: 18px 0 !important;
 }
+
+/* Sag periyod-card icindeki orderperiodblock-con - tek sutun, full genislik */
+#wrapper .cdg-period-card .orderperiodblock-con {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    margin: 0 0 18px !important;
+}
+
 #wrapper .orderperiodblock {
     background: #fff !important;
     border: 2px solid #e2e8f0 !important;
     border-radius: 12px !important;
-    padding: 18px 18px 18px 56px !important;
+    padding: 16px 18px 16px 50px !important;
     text-align: left !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
     position: relative;
-    min-height: 96px;
-    display: flex;
-    align-items: center;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 #wrapper .orderperiodblock:hover {
     border-color: #10b981 !important;
@@ -444,8 +447,8 @@ include __DIR__ . '/cdg-checkout-stepper.php';
 
 /* Sol radio dairesi */
 #wrapper .orderperiodblock .periodselectbox {
-    width: 22px !important;
-    height: 22px !important;
+    width: 20px !important;
+    height: 20px !important;
     border: 2px solid #cbd5e1 !important;
     border-radius: 50% !important;
     margin: 0 !important;
@@ -454,9 +457,10 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     transition: all 0.2s !important;
     position: absolute !important;
     top: 50% !important;
-    left: 18px !important;
+    left: 16px !important;
     transform: translateY(-50%) !important;
     background: #fff;
+    flex-shrink: 0;
 }
 #wrapper .orderperiodblock.active .periodselectbox {
     background: #10b981 !important;
@@ -464,24 +468,31 @@ include __DIR__ . '/cdg-checkout-stepper.php';
 }
 #wrapper .orderperiodblock.active .periodselectbox i {
     color: #fff !important;
-    font-size: 11px;
+    font-size: 10px;
 }
-#wrapper .orderperiodblock .periodselectbox i { color: transparent; font-size: 11px; }
+#wrapper .orderperiodblock .periodselectbox i { color: transparent; font-size: 10px; }
 
-/* Sag icerik (cdg-period-content) */
+/* Sag icerik - "Yillik 150 TL" YAN YANA tek satir akici */
 #wrapper .orderperiodblock .cdg-period-content {
     flex: 1;
     min-width: 0;
+    display: flex !important;
+    align-items: baseline !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    flex-wrap: nowrap !important;
 }
 #wrapper .orderperiodblock .cdg-period-name,
 #wrapper .orderperiodblock h3 {
     color: #0f172a !important;
-    font-size: 15px !important;
+    font-size: 14px !important;
     font-weight: 700 !important;
-    margin: 0 0 6px !important;
+    margin: 0 !important;
     text-transform: none !important;
     letter-spacing: 0;
     line-height: 1.2;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 #wrapper .orderperiodblock.active .cdg-period-name,
 #wrapper .orderperiodblock.active h3 { color: #047857 !important; }
@@ -489,11 +500,13 @@ include __DIR__ . '/cdg-checkout-stepper.php';
 #wrapper .orderperiodblock .cdg-period-price,
 #wrapper .orderperiodblock h2 {
     color: #0f172a !important;
-    font-size: 20px !important;
+    font-size: 18px !important;
     font-weight: 800 !important;
     margin: 0 !important;
     line-height: 1.1;
     letter-spacing: -0.3px;
+    text-align: right;
+    white-space: nowrap;
 }
 #wrapper .orderperiodblock.active .cdg-period-price,
 #wrapper .orderperiodblock.active h2 { color: #059669 !important; }
