@@ -746,10 +746,10 @@ $faqs = [
             <div class="cdg-hero-content">
                 <div class="cdg-hero-eyebrow cdg-hero-eyebrow-glow">
                     <span class="cdg-hero-pulse"></span>
-                    <span>Yeni Nesil Hosting Sağlayıcısı</span>
+                    <span>Konya Merkezli Yazılım & Hosting</span>
                 </div>
-                <h1>Geleceğin <span class="cdg-text-gradient">hosting</span><br>deneyimi <span class="cdg-text-gradient-cyan">bugün</span></h1>
-                <p class="cdg-hero-lead">CODEGA ile siteleriniz <strong>9 kat daha hızlı</strong>, <strong>%99.99 uptime</strong>. AI tabanlı optimizasyon, NVMe SSD, LiteSpeed Enterprise ve 7/24 uzman desteği.</p>
+                <h1>İşinizin <span class="cdg-text-gradient">dijital</span><br>altyapısı <span class="cdg-text-gradient-cyan">CODEGA</span>'da</h1>
+                <p class="cdg-hero-lead">Hosting, alan adı, e-ticaret ve özel yazılım çözümleri. <strong>NVMe SSD</strong> diskli sunucular, <strong>LiteSpeed Enterprise</strong> ve Türkçe destek ekibi ile sitenizi güvenle barındırın.</p>
 
                 <?php if($mod_domain): ?>
                 <form action="<?php echo $domain_url; ?>" method="get" class="cdg-hero-domain cdg-hero-domain-glow">
@@ -772,7 +772,7 @@ $faqs = [
                 <?php endif; ?>
 
                 <div class="cdg-hero-trust">
-                    <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>%99.99 Uptime</span></div>
+                    <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>NVMe SSD</span></div>
                     <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>30 Gün İade</span></div>
                     <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>Ücretsiz SSL</span></div>
                     <div class="cdg-trust-item"><i class="bi bi-check-circle-fill"></i><span>Ücretsiz Taşıma</span></div>
@@ -793,8 +793,8 @@ $faqs = [
                 <div class="cdg-float-card cdg-float-card-1 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#10b981,#34d399);"><i class="bi bi-hdd-network"></i></div><div class="body"><div class="title">Hosting</div><div class="meta">NVMe SSD</div></div></div>
                 <div class="cdg-float-card cdg-float-card-2 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#00D3E5,#00E5FF);"><i class="bi bi-globe2"></i></div><div class="body"><div class="title">Domain</div><div class="meta">500+ uzantı</div></div></div>
                 <div class="cdg-float-card cdg-float-card-3 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#2E3B4E,#485A75);"><i class="bi bi-shield-fill-check"></i></div><div class="body"><div class="title">SSL</div><div class="meta">Ücretsiz</div></div></div>
-                <div class="cdg-float-card cdg-float-card-4 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);"><i class="bi bi-cpu-fill"></i></div><div class="body"><div class="title">AI</div><div class="meta">Otomatik tune</div></div></div>
-                <div class="cdg-float-stat cdg-glass"><div class="num">%99.99</div><div class="lbl">Uptime</div></div>
+                <div class="cdg-float-card cdg-float-card-4 cdg-glass"><div class="icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);"><i class="bi bi-headset"></i></div><div class="body"><div class="title">Destek</div><div class="meta">Türkçe 7/24</div></div></div>
+                <div class="cdg-float-stat cdg-glass"><div class="num">7/24</div><div class="lbl">Destek</div></div>
             </div>
         </div>
     </div>
