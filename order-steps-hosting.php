@@ -45,179 +45,165 @@
 
     <?php if($step == 1): ?>
 
-        <!-- ======= 2 SUTUNLU LAYOUT: Sol periyod kartlari, Sag siparis ozet karti ======= -->
-        <div class="cdg-os-grid">
-            <div class="cdg-os-main">
-                <div class="pakettitle" style="margin-top:0px;">
-                    <h1><strong><?php echo __("website/osteps/service-time-selection"); ?></strong></h1>
-                    <div class="line"></div>
-                    <h2><?php echo __("website/osteps/service-time-selection-note"); ?></h2>
-                </div>
-
-                <div class="siparisbilgileri">
-
-                    <form action="<?php echo $links["step"]; ?>" method="post" id="StepForm1">
-                        <?php echo Validation::get_csrf_token('order-steps'); ?>
-
-                        <div class="orderperiodblock-con">
-                            <input type="hidden" name="selection" value="0">
-                            <?php
-                                $selectp = (int) substr(Filter::init("GET/select","rnumbers"),0,1);
-                        if(isset($product["price"]) && $product["price"]){
-                            foreach ($product["price"] AS $k=>$pe){
-                                $amount     = Money::formatter_symbol($pe["amount"],$pe["cid"],!$product["override_usrcurrency"]);
-                                $setup      = $pe["setup"] > 0.00 ? Money::formatter_symbol($pe["setup"],$pe["cid"],!$product["override_usrcurrency"]) : '';
-                                $period     = View::period($pe["time"],$pe["period"]);
-                                $discount   = $pe["discount"]>0 ? '<div class="ribbonperiod"><span>'.__("website/osteps/rate-discount",['{rate}' => $pe["discount"]]).'</span></div>' : NULL;
-                                ?>
-                                <div class="orderperiodblock<?php echo $setup ? ' setup-fee-period-block' : ''; ?>" id="price-<?php echo $pe["id"]; ?>" data-value="<?php echo $k; ?>">
-                                    <?php echo $discount; ?>
-                                    <div class="periodselectbox"><i class="fa fa-check" aria-hidden="true"></i></div>
-                                    <div class="cdg-period-content">
-                                        <h3 class="cdg-period-name"><?php echo $period; ?></h3>
-                                        <h2 class="cdg-period-price"><?php echo $amount; ?></h2>
-                                        <?php if($setup): ?>
-                                            <span class="setup-fee-period">+ <?php echo $setup; ?> <?php echo __("website/osteps/setup-fee"); ?></span>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                                <?php
-                            }
-                        }
-                    ?>
-                    <script type="text/javascript">
-                        $(document).ready(function(){
-                            $(".orderperiodblock").click(function(){
-                                if($(this).hasClass("active")) return false;
-                                $(".orderperiodblock").removeClass("active");
-                                $(this).addClass("active");
-                                $("#StepForm1 input[name=selection]").val($(this).data("value"));
-                            });
-                            var selected_price = <?php echo $selectp ? (string) $selectp : "0"; ?>;
-                            $(".orderperiodblock:eq("+selected_price+") .periodselectbox").trigger("click");
-                        });
-                    </script>
-
-                    <div class="clear"></div>
-                </div>
-
-                <div class="error" id="result" style="text-align: center; margin-top: 5px; display: none;"></div>
-            </form>
-            <script type="text/javascript">
-                function StepForm1_submit(result) {
-                    if(result != ''){
-                        var solve = getJson(result);
-                        if(solve !== false){
-                            if(solve.status == "error"){
-                                if(solve.for != undefined && solve.for != ''){
-                                    $("#StepForm1 "+solve.for).focus();
-                                    $("#StepForm1 "+solve.for).attr("style","border-bottom:2px solid red; color:red;");
-                                    $("#StepForm1 "+solve.for).change(function(){
-                                        $(this).removeAttr("style");
-                                    });
-                                }
-                                if(solve.message != undefined && solve.message != '')
-                                    $("#StepForm1 #result").fadeIn(300).html(solve.message);
-                                else
-                                    $("#StepForm1 #result").fadeOut(300).html('');
-                            }else if(solve.status == "successful"){
-                                $("#StepForm1 #result").fadeOut(300).html('');
-                                window.location.href = solve.redirect;
-                            }
-                        }else
-                            console.log(result);
+        <?php
+        // === Paket ozellikleri parse (anasayfadakiyle ayni mantik) ===
+        $cdg_features = [];
+        $raw_features = $product['features'] ?? '';
+        $json_features = null;
+        if(is_string($raw_features) && trim($raw_features)) {
+            try {
+                if(class_exists('Utility') && method_exists('Utility', 'jdecode')) {
+                    $json_features = Utility::jdecode($raw_features, true);
+                }
+            } catch(\Throwable $e) {}
+            if(!$json_features) {
+                $decoded = json_decode($raw_features, true);
+                if(is_array($decoded)) $json_features = $decoded;
+            }
+        }
+        // HTML tag temizleyici (admin paneli HTML editorden geliyor: <li><b>5 GB</b></li>)
+        $cdg_clean = function($v) {
+            $v = strip_tags((string)$v);
+            $v = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            return trim($v);
+        };
+        if(is_array($json_features) && isset($columns) && is_array($columns)) {
+            foreach($columns as $col) {
+                $col_id = $col['id'] ?? null;
+                $col_name = $col['name'] ?? '';
+                if($col_id !== null && isset($json_features[$col_id])) {
+                    $val = $json_features[$col_id];
+                    if(is_array($val)) continue;
+                    $clean = $cdg_clean($val);
+                    if($clean !== '') {
+                        $cdg_features[] = ['name' => $cdg_clean($col_name), 'value' => $clean];
                     }
                 }
-            </script>
+            }
+        } elseif(is_array($json_features)) {
+            foreach($json_features as $k => $v) {
+                if(is_array($v)) continue;
+                $clean = $cdg_clean($v);
+                if($clean !== '') {
+                    $cdg_features[] = ['name' => is_string($k) ? $cdg_clean($k) : '', 'value' => $clean];
+                }
+            }
+        } elseif(is_string($raw_features) && trim($raw_features)) {
+            $lines = preg_split('/\r\n|\r|\n|<\/li>|<br\s*\/?>/i', $raw_features);
+            foreach($lines as $line) {
+                $clean = $cdg_clean($line);
+                if($clean !== '') $cdg_features[] = ['name' => '', 'value' => $clean];
+            }
+        }
+        $cdg_features = array_slice($cdg_features, 0, 9);
 
-                </div><!-- /.siparisbilgileri -->
-            </div><!-- /.cdg-os-main -->
+        // Kategori bilgisi
+        $cdg_cat_name = $product['category']['title'] ?? ($product['category']['name'] ?? '');
+        $cdg_pkg_name = $product['title'] ?? ($product['name'] ?? '');
+        $cdg_pkg_sub  = $product['sub_title'] ?? '';
+        ?>
 
-            <!-- ============== SAG SUTUN: Siparis Ozet Karti (sticky) ============== -->
+        <!-- ======= 2 SUTUNLU LAYOUT: SOL paket karti, SAG periyod secim ======= -->
+        <div class="cdg-os-grid cdg-os-grid-rev">
+
+            <!-- ============== SOL: PAKET DETAY KARTI ============== -->
+            <div class="cdg-os-main">
+                <div class="cdg-pkg-card">
+                    <?php if($cdg_cat_name): ?>
+                        <div class="cdg-pkg-cat-tag">
+                            <i class="bi bi-rocket-takeoff"></i>
+                            <span><?php echo htmlspecialchars($cdg_cat_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
+                        </div>
+                    <?php endif; ?>
+
+                    <h2 class="cdg-pkg-name"><?php echo htmlspecialchars($cdg_pkg_name, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h2>
+
+                    <?php if($cdg_pkg_sub): ?>
+                        <p class="cdg-pkg-sub"><?php echo htmlspecialchars($cdg_pkg_sub, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></p>
+                    <?php endif; ?>
+
+                    <?php if(!empty($cdg_features)): ?>
+                        <ul class="cdg-pkg-features">
+                            <?php foreach($cdg_features as $feat): ?>
+                                <li>
+                                    <span class="cdg-feat-tick"><i class="bi bi-check"></i></span>
+                                    <span class="cdg-feat-text">
+                                        <?php if($feat['name']): ?>
+                                            <strong><?php echo htmlspecialchars($feat['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>:</strong>
+                                        <?php endif; ?>
+                                        <?php echo htmlspecialchars($feat['value'], ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                                    </span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+
+                    <div class="cdg-pkg-trust">
+                        <span><i class="bi bi-shield-lock-fill"></i> SSL Korumalı</span>
+                        <span><i class="bi bi-credit-card-fill"></i> Güvenli Ödeme</span>
+                        <span><i class="bi bi-headset"></i> 7/24 Destek</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============== SAG: HIZMET SURESI SECIMI + DEVAM ============== -->
             <aside class="cdg-os-aside">
-                <div class="cdg-os-summary">
-                    <div class="cdg-os-summary-head">
-                        <i class="bi bi-box-seam"></i>
-                        <span>Seçtiğiniz Paket</span>
+                <div class="cdg-period-card">
+                    <div class="cdg-period-card-head">
+                        <i class="bi bi-clock-history"></i>
+                        <span>Hizmet Süresi</span>
                     </div>
 
-                    <div class="cdg-os-summary-body">
-                        <?php if(isset($product["category"]["title"])): ?>
-                            <div class="cdg-os-pkg-badge"><?php echo htmlspecialchars($product["category"]["title"]); ?></div>
-                        <?php endif; ?>
+                    <div class="cdg-period-card-body">
+                        <p class="cdg-period-card-note"><?php echo __("website/osteps/service-time-selection-note"); ?></p>
 
-                        <h3 class="cdg-os-pkg-title"><?php
-                            $_pname = $product["title"] ?? ($product["name"] ?? '');
-                            echo htmlspecialchars($_pname);
-                        ?></h3>
+                        <form action="<?php echo $links["step"]; ?>" method="post" id="StepForm1">
+                            <?php echo Validation::get_csrf_token('order-steps'); ?>
 
-                        <?php if(!empty($product["sub_title"])): ?>
-                            <p class="cdg-os-pkg-subtitle"><?php echo htmlspecialchars($product["sub_title"]); ?></p>
-                        <?php endif; ?>
-
-                        <?php
-                        // === Paket ozelliklerini features JSON + columns ile cikart ===
-                        $cdg_features = [];
-                        $raw_features = $product['features'] ?? '';
-                        $json_features = null;
-                        if(is_string($raw_features) && trim($raw_features)) {
-                            try {
-                                if(class_exists('Utility') && method_exists('Utility', 'jdecode')) {
-                                    $json_features = Utility::jdecode($raw_features, true);
-                                }
-                            } catch(\Throwable $e) {}
-                            if(!$json_features) {
-                                $decoded = json_decode($raw_features, true);
-                                if(is_array($decoded)) $json_features = $decoded;
-                            }
-                        }
-                        if(is_array($json_features) && isset($columns) && is_array($columns)) {
-                            foreach($columns as $col) {
-                                $col_id = $col['id'] ?? null;
-                                $col_name = $col['name'] ?? '';
-                                if($col_id !== null && isset($json_features[$col_id])) {
-                                    $val = $json_features[$col_id];
-                                    if($val !== '' && $val !== null && $val !== false) {
-                                        // "Disk Alani: 5 GB" formati - sayisal ise ozellik adi solda, deger sagda
-                                        if(is_string($val) || is_numeric($val)) {
-                                            $cdg_features[] = ['name' => $col_name, 'value' => (string)$val];
+                            <div class="orderperiodblock-con">
+                                <input type="hidden" name="selection" value="0">
+                                <?php
+                                    $selectp = (int) substr(Filter::init("GET/select","rnumbers"),0,1);
+                                    if(isset($product["price"]) && $product["price"]){
+                                        foreach ($product["price"] AS $k=>$pe){
+                                            $amount     = Money::formatter_symbol($pe["amount"],$pe["cid"],!$product["override_usrcurrency"]);
+                                            $setup      = $pe["setup"] > 0.00 ? Money::formatter_symbol($pe["setup"],$pe["cid"],!$product["override_usrcurrency"]) : '';
+                                            $period     = View::period($pe["time"],$pe["period"]);
+                                            $discount   = $pe["discount"]>0 ? '<div class="ribbonperiod"><span>'.__("website/osteps/rate-discount",['{rate}' => $pe["discount"]]).'</span></div>' : NULL;
+                                            ?>
+                                            <div class="orderperiodblock<?php echo $setup ? ' setup-fee-period-block' : ''; ?>" id="price-<?php echo $pe["id"]; ?>" data-value="<?php echo $k; ?>">
+                                                <?php echo $discount; ?>
+                                                <div class="periodselectbox"><i class="fa fa-check" aria-hidden="true"></i></div>
+                                                <div class="cdg-period-content">
+                                                    <h3 class="cdg-period-name"><?php echo $period; ?></h3>
+                                                    <h2 class="cdg-period-price"><?php echo $amount; ?></h2>
+                                                    <?php if($setup): ?>
+                                                        <span class="setup-fee-period">+ <?php echo $setup; ?> <?php echo __("website/osteps/setup-fee"); ?></span>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                            <?php
                                         }
                                     }
-                                }
-                            }
-                        } elseif(is_array($json_features)) {
-                            foreach($json_features as $k => $v) {
-                                if($v !== '' && $v !== null && $v !== false && !is_array($v)) {
-                                    $cdg_features[] = ['name' => is_string($k) ? $k : '', 'value' => (string)$v];
-                                }
-                            }
-                        } elseif(is_string($raw_features) && trim($raw_features)) {
-                            $lines = preg_split('/\r\n|\r|\n/', $raw_features);
-                            foreach($lines as $line) {
-                                $line = trim($line);
-                                if($line !== '') $cdg_features[] = ['name' => '', 'value' => $line];
-                            }
-                        }
+                                ?>
+                                <script type="text/javascript">
+                                    $(document).ready(function(){
+                                        $(".orderperiodblock").click(function(){
+                                            if($(this).hasClass("active")) return false;
+                                            $(".orderperiodblock").removeClass("active");
+                                            $(this).addClass("active");
+                                            $("#StepForm1 input[name=selection]").val($(this).data("value"));
+                                        });
+                                        var selected_price = <?php echo $selectp ? (string) $selectp : "0"; ?>;
+                                        $(".orderperiodblock:eq("+selected_price+") .periodselectbox").trigger("click");
+                                    });
+                                </script>
 
-                        // Maks 8 ozellik goster
-                        $cdg_features = array_slice($cdg_features, 0, 8);
-                        ?>
+                                <div class="clear"></div>
+                            </div>
 
-                        <?php if(!empty($cdg_features)): ?>
-                            <ul class="cdg-os-features">
-                                <?php foreach($cdg_features as $feat): ?>
-                                    <li>
-                                        <i class="bi bi-check-circle-fill"></i>
-                                        <span>
-                                            <?php if($feat['name']): ?>
-                                                <strong><?php echo htmlspecialchars($feat['name']); ?>:</strong>
-                                            <?php endif; ?>
-                                            <?php echo htmlspecialchars($feat['value']); ?>
-                                        </span>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php endif; ?>
+                            <div class="error" id="result" style="text-align: center; margin-top: 5px; display: none;"></div>
+                        </form>
 
                         <a href="javascript:void(0);" class="cdg-os-continue-btn mio-ajax-submit"
                            mio-ajax-options='{"result":"StepForm1_submit","waiting_text":"<?php echo addslashes(__("website/others/button1-pending")); ?>"}'
@@ -225,14 +211,35 @@
                             <span><?php echo __("website/osteps/continue-button"); ?></span>
                             <i class="bi bi-arrow-right"></i>
                         </a>
-
-                        <div class="cdg-os-summary-trust">
-                            <span><i class="bi bi-shield-lock-fill"></i> SSL Korumalı</span>
-                            <span><i class="bi bi-credit-card-fill"></i> Güvenli Ödeme</span>
-                            <span><i class="bi bi-headset"></i> 7/24 Destek</span>
-                        </div>
                     </div>
                 </div>
+
+                <script type="text/javascript">
+                    function StepForm1_submit(result) {
+                        if(result != ''){
+                            var solve = getJson(result);
+                            if(solve !== false){
+                                if(solve.status == "error"){
+                                    if(solve.for != undefined && solve.for != ''){
+                                        $("#StepForm1 "+solve.for).focus();
+                                        $("#StepForm1 "+solve.for).attr("style","border-bottom:2px solid red; color:red;");
+                                        $("#StepForm1 "+solve.for).change(function(){
+                                            $(this).removeAttr("style");
+                                        });
+                                    }
+                                    if(solve.message != undefined && solve.message != '')
+                                        $("#StepForm1 #result").fadeIn(300).html(solve.message);
+                                    else
+                                        $("#StepForm1 #result").fadeOut(300).html('');
+                                }else if(solve.status == "successful"){
+                                    $("#StepForm1 #result").fadeOut(300).html('');
+                                    window.location.href = solve.redirect;
+                                }
+                            }else
+                                console.log(result);
+                        }
+                    }
+                </script>
             </aside>
 
         </div><!-- /.cdg-os-grid -->
