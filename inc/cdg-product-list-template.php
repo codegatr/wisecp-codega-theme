@@ -24,6 +24,12 @@
  *   $columns, $list (kategori altindaki paketler)
  */
 
+// Route helper (cdg_buy_link, cdg_basket_link) - henuz yuklenmemisse yukle
+if(!function_exists('cdg_buy_link')) {
+    $_cdg_rh = __DIR__ . DS . 'cdg-route-helper.php';
+    if(file_exists($_cdg_rh)) require_once $_cdg_rh;
+}
+
 defined('CORE_FOLDER') OR exit('You can not get in here!');
 
 if(file_exists(__DIR__.DIRECTORY_SEPARATOR.'cdg-public-styles.php')) include __DIR__.DIRECTORY_SEPARATOR.'cdg-public-styles.php';
@@ -209,21 +215,16 @@ if(!$cdg_used_dynamic && class_exists('Products') && method_exists('Products', '
                         } catch(\Throwable $e) {}
                     }
 
-                    // 2) buy_link: Once CRLink dene, basarisizsa direkt URL insa et
-                    // (WiseCP gercek URL formati /order-steps/{type}/{id})
-                    $p['buy_link'] = '';
-                    $buy_try = '';
-                    if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Controllers::$init, 'CRLink')) {
-                        try {
-                            $buy_try = Controllers::$init->CRLink('order-steps-p', [$cdg_pt['type'], (int)$p['id'], 1]);
-                            if(!$buy_try || strpos($buy_try, 'order-steps-p') !== false) $buy_try = '';
-                        } catch(\Throwable $e) { $buy_try = ''; }
-                    }
-                    if(!$buy_try) {
+                    // 2) buy_link: cdg_buy_link() helper'i ile
+                    // TR: /siparis/{type}/{id}/1, EN: /order-steps/{type}/{id}/1
+                    // (route-helper.php tarafindan saglanir, 3 katmanli fallback)
+                    if(function_exists('cdg_buy_link')) {
+                        $p['buy_link'] = cdg_buy_link($cdg_pt['type'], (int)$p['id']);
+                    } else {
+                        // Helper yoksa direkt fallback
                         $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
-                        $buy_try = $base . '/order-steps/' . $cdg_pt['type'] . '/' . (int)$p['id'];
+                        $p['buy_link'] = $base . '/siparis/' . $cdg_pt['type'] . '/' . (int)$p['id'];
                     }
-                    $p['buy_link'] = $buy_try;
 
                     // 3) JSON alanlari decode et
                     if(isset($p['options']) && is_string($p['options'])) {
