@@ -51,6 +51,154 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     margin-top: 0 !important;
 }
 
+/* === 2 SUTUNLU LAYOUT (sol icerik / sag sticky ozet) === */
+#wrapper .cdg-os-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 24px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+#wrapper .cdg-os-main { min-width: 0; }
+#wrapper .cdg-os-aside {
+    position: sticky;
+    top: 24px;
+}
+@media (max-width: 1024px) {
+    #wrapper .cdg-os-grid { grid-template-columns: 1fr; }
+    #wrapper .cdg-os-aside { position: relative; top: 0; }
+}
+
+/* === SAG OZET KARTI (Forte stili) === */
+#wrapper .cdg-os-summary {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(15,23,42,0.06);
+}
+#wrapper .cdg-os-summary-head {
+    background: #fff;
+    color: #0f172a;
+    padding: 18px 22px;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+#wrapper .cdg-os-summary-head i { color: #10b981; font-size: 18px; }
+
+#wrapper .cdg-os-summary-body { padding: 18px 22px 22px; }
+
+#wrapper .cdg-os-summary-pkg {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+}
+#wrapper .cdg-os-summary-pkg-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.3;
+    margin-bottom: 4px;
+}
+#wrapper .cdg-os-summary-pkg-cat {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 600;
+}
+
+#wrapper .cdg-os-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13.5px;
+}
+#wrapper .cdg-os-summary-row .lbl { color: #64748b; font-weight: 500; }
+#wrapper .cdg-os-summary-row .val { color: #0f172a; font-weight: 700; }
+
+#wrapper .cdg-os-summary-divider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 14px 0 6px;
+}
+
+#wrapper .cdg-os-summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 0 18px;
+}
+#wrapper .cdg-os-summary-total .lbl {
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+#wrapper .cdg-os-summary-total .val {
+    color: #059669;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.3px;
+}
+
+#wrapper .cdg-os-continue-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #fff !important;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 99px;
+    text-decoration: none !important;
+    border: 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 14px rgba(16,185,129,0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+#wrapper .cdg-os-continue-btn:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(16,185,129,0.42);
+    color: #fff !important;
+}
+#wrapper .cdg-os-continue-btn i { font-size: 16px; }
+
+#wrapper .cdg-os-summary-trust {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed #e2e8f0;
+}
+#wrapper .cdg-os-summary-trust span {
+    font-size: 12px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#wrapper .cdg-os-summary-trust i { color: #10b981; font-size: 13px; }
+
 /* .pakettitle (adim basligi) Forte-stiline cevir */
 #wrapper .pakettitle {
     background: transparent;
@@ -76,12 +224,6 @@ include __DIR__ . '/cdg-checkout-stepper.php';
 }
 #wrapper .pakettitle .line { display: none !important; }
 
-#wrapper > .cdg-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 16px;
-}
-
 #wrapper .siparisbilgileri {
     background: #fff;
     border: 1px solid #e2e8f0;
@@ -91,10 +233,10 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     box-shadow: 0 1px 3px rgba(15,23,42,0.04);
 }
 
-/* Periyod kartlari */
+/* === Periyod kartlari (Forte tarzi - sol radio + sag icerik) === */
 #wrapper .orderperiodblock-con {
     display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
     gap: 14px !important;
     margin: 18px 0 !important;
 }
@@ -102,12 +244,14 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     background: #fff !important;
     border: 2px solid #e2e8f0 !important;
     border-radius: 12px !important;
-    padding: 22px 18px !important;
+    padding: 18px 18px 18px 56px !important;
     text-align: left !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
     position: relative;
-    overflow: hidden;
+    min-height: 96px;
+    display: flex;
+    align-items: center;
 }
 #wrapper .orderperiodblock:hover {
     border-color: #10b981 !important;
@@ -118,24 +262,8 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     background: linear-gradient(135deg, #fff 0%, #ecfdf5 100%) !important;
     box-shadow: 0 6px 16px rgba(16,185,129,0.18) !important;
 }
-#wrapper .orderperiodblock h3 {
-    color: #0f172a !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    margin: 0 0 4px !important;
-    text-transform: none !important;
-    letter-spacing: 0;
-}
-#wrapper .orderperiodblock.active h3 { color: #047857 !important; }
-#wrapper .orderperiodblock h2 {
-    color: #475569 !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    margin: 0 !important;
-    line-height: 1.4;
-}
-#wrapper .orderperiodblock.active h2 { color: #059669 !important; }
 
+/* Sol radio dairesi */
 #wrapper .orderperiodblock .periodselectbox {
     width: 22px !important;
     height: 22px !important;
@@ -146,8 +274,10 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     place-items: center !important;
     transition: all 0.2s !important;
     position: absolute !important;
-    top: 18px !important;
-    right: 18px !important;
+    top: 50% !important;
+    left: 18px !important;
+    transform: translateY(-50%) !important;
+    background: #fff;
 }
 #wrapper .orderperiodblock.active .periodselectbox {
     background: #10b981 !important;
@@ -159,7 +289,37 @@ include __DIR__ . '/cdg-checkout-stepper.php';
 }
 #wrapper .orderperiodblock .periodselectbox i { color: transparent; font-size: 11px; }
 
-/* Tasarruf rozet - mor pill (Forte tarzı) */
+/* Sag icerik (cdg-period-content) */
+#wrapper .orderperiodblock .cdg-period-content {
+    flex: 1;
+    min-width: 0;
+}
+#wrapper .orderperiodblock .cdg-period-name,
+#wrapper .orderperiodblock h3 {
+    color: #0f172a !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    margin: 0 0 6px !important;
+    text-transform: none !important;
+    letter-spacing: 0;
+    line-height: 1.2;
+}
+#wrapper .orderperiodblock.active .cdg-period-name,
+#wrapper .orderperiodblock.active h3 { color: #047857 !important; }
+
+#wrapper .orderperiodblock .cdg-period-price,
+#wrapper .orderperiodblock h2 {
+    color: #0f172a !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    margin: 0 !important;
+    line-height: 1.1;
+    letter-spacing: -0.3px;
+}
+#wrapper .orderperiodblock.active .cdg-period-price,
+#wrapper .orderperiodblock.active h2 { color: #059669 !important; }
+
+/* Tasarruf rozet - mor pill */
 #wrapper .ribbonperiod {
     position: absolute !important;
     top: -10px !important;
@@ -187,9 +347,10 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     font-weight: 500 !important;
 }
 
-/* Devam butonu - yesil pill */
+/* === Eski form ici Devam butonu (.gonderbtn) - artik sag karta tasidik
+   ama domain step'inde hala kullaniliyor === */
 #wrapper .gonderbtn,
-#wrapper .btn.mio-ajax-submit,
+#wrapper .btn.mio-ajax-submit:not(.cdg-os-continue-btn),
 #wrapper .gonderbtn.mio-ajax-submit {
     display: inline-flex !important;
     align-items: center !important;
@@ -209,7 +370,7 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     min-width: 160px;
 }
 #wrapper .gonderbtn:hover,
-#wrapper .btn.mio-ajax-submit:hover {
+#wrapper .btn.mio-ajax-submit:not(.cdg-os-continue-btn):hover {
     transform: translateY(-1px);
     box-shadow: 0 8px 20px rgba(16,185,129,0.36);
     background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
