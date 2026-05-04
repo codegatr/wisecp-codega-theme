@@ -92,13 +92,6 @@
                                 $(".orderperiodblock").removeClass("active");
                                 $(this).addClass("active");
                                 $("#StepForm1 input[name=selection]").val($(this).data("value"));
-
-                                // Sag ozet kartini guncelle
-                                var period = $(this).find(".cdg-period-name").text() || $(this).find("h3").text();
-                                var amount = $(this).find(".cdg-period-price").text() || $(this).find("h2").text();
-                                $("#cdg-summary-period").text(period);
-                                $("#cdg-summary-amount").text(amount);
-                                $("#cdg-summary-total").text(amount);
                             });
                             var selected_price = <?php echo $selectp ? (string) $selectp : "0"; ?>;
                             $(".orderperiodblock:eq("+selected_price+") .periodselectbox").trigger("click");
@@ -144,36 +137,87 @@
             <aside class="cdg-os-aside">
                 <div class="cdg-os-summary">
                     <div class="cdg-os-summary-head">
-                        <i class="bi bi-receipt"></i>
-                        <span>Sipariş Özeti</span>
+                        <i class="bi bi-box-seam"></i>
+                        <span>Seçtiğiniz Paket</span>
                     </div>
 
                     <div class="cdg-os-summary-body">
-                        <div class="cdg-os-summary-pkg">
-                            <div class="cdg-os-summary-pkg-name"><?php
-                                $_pname = $product["title"] ?? ($product["name"] ?? '');
-                                echo htmlspecialchars($_pname);
-                            ?></div>
-                            <?php if(isset($product["category"]["title"])): ?>
-                                <div class="cdg-os-summary-pkg-cat"><?php echo htmlspecialchars($product["category"]["title"]); ?></div>
-                            <?php endif; ?>
-                        </div>
+                        <?php if(isset($product["category"]["title"])): ?>
+                            <div class="cdg-os-pkg-badge"><?php echo htmlspecialchars($product["category"]["title"]); ?></div>
+                        <?php endif; ?>
 
-                        <div class="cdg-os-summary-row">
-                            <span class="lbl">Periyod</span>
-                            <span class="val" id="cdg-summary-period">—</span>
-                        </div>
-                        <div class="cdg-os-summary-row">
-                            <span class="lbl">Tutar</span>
-                            <span class="val" id="cdg-summary-amount">—</span>
-                        </div>
+                        <h3 class="cdg-os-pkg-title"><?php
+                            $_pname = $product["title"] ?? ($product["name"] ?? '');
+                            echo htmlspecialchars($_pname);
+                        ?></h3>
 
-                        <div class="cdg-os-summary-divider"></div>
+                        <?php if(!empty($product["sub_title"])): ?>
+                            <p class="cdg-os-pkg-subtitle"><?php echo htmlspecialchars($product["sub_title"]); ?></p>
+                        <?php endif; ?>
 
-                        <div class="cdg-os-summary-total">
-                            <span class="lbl">Toplam</span>
-                            <span class="val" id="cdg-summary-total">—</span>
-                        </div>
+                        <?php
+                        // === Paket ozelliklerini features JSON + columns ile cikart ===
+                        $cdg_features = [];
+                        $raw_features = $product['features'] ?? '';
+                        $json_features = null;
+                        if(is_string($raw_features) && trim($raw_features)) {
+                            try {
+                                if(class_exists('Utility') && method_exists('Utility', 'jdecode')) {
+                                    $json_features = Utility::jdecode($raw_features, true);
+                                }
+                            } catch(\Throwable $e) {}
+                            if(!$json_features) {
+                                $decoded = json_decode($raw_features, true);
+                                if(is_array($decoded)) $json_features = $decoded;
+                            }
+                        }
+                        if(is_array($json_features) && isset($columns) && is_array($columns)) {
+                            foreach($columns as $col) {
+                                $col_id = $col['id'] ?? null;
+                                $col_name = $col['name'] ?? '';
+                                if($col_id !== null && isset($json_features[$col_id])) {
+                                    $val = $json_features[$col_id];
+                                    if($val !== '' && $val !== null && $val !== false) {
+                                        // "Disk Alani: 5 GB" formati - sayisal ise ozellik adi solda, deger sagda
+                                        if(is_string($val) || is_numeric($val)) {
+                                            $cdg_features[] = ['name' => $col_name, 'value' => (string)$val];
+                                        }
+                                    }
+                                }
+                            }
+                        } elseif(is_array($json_features)) {
+                            foreach($json_features as $k => $v) {
+                                if($v !== '' && $v !== null && $v !== false && !is_array($v)) {
+                                    $cdg_features[] = ['name' => is_string($k) ? $k : '', 'value' => (string)$v];
+                                }
+                            }
+                        } elseif(is_string($raw_features) && trim($raw_features)) {
+                            $lines = preg_split('/\r\n|\r|\n/', $raw_features);
+                            foreach($lines as $line) {
+                                $line = trim($line);
+                                if($line !== '') $cdg_features[] = ['name' => '', 'value' => $line];
+                            }
+                        }
+
+                        // Maks 8 ozellik goster
+                        $cdg_features = array_slice($cdg_features, 0, 8);
+                        ?>
+
+                        <?php if(!empty($cdg_features)): ?>
+                            <ul class="cdg-os-features">
+                                <?php foreach($cdg_features as $feat): ?>
+                                    <li>
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        <span>
+                                            <?php if($feat['name']): ?>
+                                                <strong><?php echo htmlspecialchars($feat['name']); ?>:</strong>
+                                            <?php endif; ?>
+                                            <?php echo htmlspecialchars($feat['value']); ?>
+                                        </span>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
 
                         <a href="javascript:void(0);" class="cdg-os-continue-btn mio-ajax-submit"
                            mio-ajax-options='{"result":"StepForm1_submit","waiting_text":"<?php echo addslashes(__("website/others/button1-pending")); ?>"}'
@@ -185,6 +229,7 @@
                         <div class="cdg-os-summary-trust">
                             <span><i class="bi bi-shield-lock-fill"></i> SSL Korumalı</span>
                             <span><i class="bi bi-credit-card-fill"></i> Güvenli Ödeme</span>
+                            <span><i class="bi bi-headset"></i> 7/24 Destek</span>
                         </div>
                     </div>
                 </div>
