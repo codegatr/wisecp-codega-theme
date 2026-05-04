@@ -61,17 +61,178 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     margin: 0 auto;
     padding: 0 16px;
 }
+/* Reverse: SOL paket detay (genis), SAG periyod secim (kucuk) */
+#wrapper .cdg-os-grid-rev {
+    grid-template-columns: minmax(0, 1fr) 420px;
+}
 #wrapper .cdg-os-main { min-width: 0; }
 #wrapper .cdg-os-aside {
     position: sticky;
     top: 24px;
 }
 @media (max-width: 1024px) {
-    #wrapper .cdg-os-grid { grid-template-columns: 1fr; }
+    #wrapper .cdg-os-grid,
+    #wrapper .cdg-os-grid-rev { grid-template-columns: 1fr; }
     #wrapper .cdg-os-aside { position: relative; top: 0; }
 }
 
-/* === SAG OZET KARTI (Forte stili) === */
+/* === SOL: PAKET DETAY KARTI (anasayfa pricing card tarzi) === */
+#wrapper .cdg-pkg-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px 32px 28px;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+    position: relative;
+    overflow: hidden;
+}
+#wrapper .cdg-pkg-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+/* Kategori tag (yesil pill) */
+#wrapper .cdg-pkg-cat-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    background: #d1fae5;
+    color: #047857;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin-bottom: 16px;
+}
+#wrapper .cdg-pkg-cat-tag i { font-size: 14px; color: #10b981; }
+
+/* Paket adi */
+#wrapper .cdg-pkg-name {
+    margin: 0 0 6px;
+    font-size: 28px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+}
+
+/* Paket alt baslik */
+#wrapper .cdg-pkg-sub {
+    margin: 0 0 24px;
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* Ozellik listesi (cdg-pkg-features) */
+#wrapper .cdg-pkg-features {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 0 24px !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 4px 18px;
+}
+#wrapper .cdg-pkg-features li {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0 !important;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13.5px;
+    color: #334155;
+    line-height: 1.5;
+    list-style: none !important;
+}
+#wrapper .cdg-pkg-features li:last-child { border-bottom: 0; }
+#wrapper .cdg-pkg-features .cdg-feat-tick {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px; height: 22px;
+    background: #d1fae5;
+    border-radius: 50%;
+    margin-top: 1px;
+}
+#wrapper .cdg-pkg-features .cdg-feat-tick i {
+    color: #047857;
+    font-size: 13px;
+    font-weight: 800;
+}
+#wrapper .cdg-pkg-features .cdg-feat-text {
+    flex: 1;
+    color: #334155;
+    font-weight: 500;
+}
+#wrapper .cdg-pkg-features .cdg-feat-text strong {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+/* Trust footer */
+#wrapper .cdg-pkg-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding-top: 18px;
+    border-top: 1px dashed #e2e8f0;
+}
+#wrapper .cdg-pkg-trust span {
+    font-size: 12.5px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 500;
+}
+#wrapper .cdg-pkg-trust i { color: #10b981; font-size: 14px; }
+
+/* === SAG: HIZMET SURESI SECIM KARTI === */
+#wrapper .cdg-period-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(15,23,42,0.06);
+}
+#wrapper .cdg-period-card-head {
+    background: #fff;
+    color: #0f172a;
+    padding: 18px 22px;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+#wrapper .cdg-period-card-head i { color: #10b981; font-size: 18px; }
+
+#wrapper .cdg-period-card-body { padding: 18px 22px 22px; }
+
+#wrapper .cdg-period-card-note {
+    margin: 0 0 16px;
+    font-size: 12.5px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* Sag kartin icindeki orderperiodblock-con */
+#wrapper .cdg-period-card .orderperiodblock-con {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    margin: 0 0 18px !important;
+}
+
+/* === SAG OZET KARTI (Forte stili) — Eski hosting step 1 disinda kullanilir === */
 #wrapper .cdg-os-summary {
     background: #fff;
     border: 1px solid #e2e8f0;
