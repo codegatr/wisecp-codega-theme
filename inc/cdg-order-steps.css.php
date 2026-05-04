@@ -94,64 +94,82 @@ include __DIR__ . '/cdg-checkout-stepper.php';
 }
 #wrapper .cdg-os-summary-head i { color: #10b981; font-size: 18px; }
 
-#wrapper .cdg-os-summary-body { padding: 18px 22px 22px; }
+#wrapper .cdg-os-summary-body { padding: 22px 22px 22px; }
 
-#wrapper .cdg-os-summary-pkg {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 14px 16px;
-    margin-bottom: 18px;
-}
-#wrapper .cdg-os-summary-pkg-name {
-    font-size: 15px;
-    font-weight: 800;
-    color: #0f172a;
-    line-height: 1.3;
-    margin-bottom: 4px;
-}
-#wrapper .cdg-os-summary-pkg-cat {
-    font-size: 12px;
-    color: #64748b;
-    font-weight: 600;
-}
-
-#wrapper .cdg-os-summary-row {
-    display: flex;
-    justify-content: space-between;
+/* Kategori badge (yesil pill - "EKONOMIK SSD HOSTING" gibi) */
+#wrapper .cdg-os-pkg-badge {
+    display: inline-flex;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #f1f5f9;
-    font-size: 13.5px;
-}
-#wrapper .cdg-os-summary-row .lbl { color: #64748b; font-weight: 500; }
-#wrapper .cdg-os-summary-row .val { color: #0f172a; font-weight: 700; }
-
-#wrapper .cdg-os-summary-divider {
-    height: 1px;
-    background: #e2e8f0;
-    margin: 14px 0 6px;
-}
-
-#wrapper .cdg-os-summary-total {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 10px 0 18px;
-}
-#wrapper .cdg-os-summary-total .lbl {
-    color: #0f172a;
-    font-size: 13px;
+    gap: 6px;
+    padding: 5px 12px;
+    background: #d1fae5;
+    color: #047857;
+    border-radius: 99px;
+    font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
+    margin-bottom: 12px;
 }
-#wrapper .cdg-os-summary-total .val {
-    color: #059669;
-    font-size: 22px;
+#wrapper .cdg-os-pkg-badge::before {
+    content: '\F26B';
+    font-family: 'bootstrap-icons';
+    font-size: 12px;
+    color: #10b981;
+}
+
+/* Paket basligi (Linux Hosting 1) */
+#wrapper .cdg-os-pkg-title {
+    margin: 0 0 4px;
+    font-size: 19px;
     font-weight: 800;
-    line-height: 1;
+    color: #0f172a;
+    line-height: 1.2;
     letter-spacing: -0.3px;
+}
+
+/* Alt baslik (Bireysel siteler) */
+#wrapper .cdg-os-pkg-subtitle {
+    margin: 0 0 18px;
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* Ozellik listesi (1 Web Sitesi, 5 GB NVMe SSD vb. - tikli) */
+#wrapper .cdg-os-features {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 0 20px !important;
+    border-top: 1px dashed #e2e8f0;
+    padding-top: 16px !important;
+}
+#wrapper .cdg-os-features li {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0 !important;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13.5px;
+    color: #334155;
+    line-height: 1.5;
+    list-style: none !important;
+}
+#wrapper .cdg-os-features li:last-child { border-bottom: 0; }
+#wrapper .cdg-os-features li i {
+    color: #10b981;
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+#wrapper .cdg-os-features li span {
+    flex: 1;
+    color: #334155;
+    font-weight: 500;
+}
+#wrapper .cdg-os-features li strong {
+    color: #0f172a;
+    font-weight: 700;
 }
 
 #wrapper .cdg-os-continue-btn {
