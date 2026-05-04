@@ -1780,20 +1780,43 @@ include __DIR__ . '/inc/cdg-checkout-stepper.php';
             }
             if(!confirm('Sepetteki ' + $items.length + ' ürünün hepsi silinecek. Devam edilsin mi?')) return;
 
-            // Tum item'lari tek tek sil (WiseCP'nin deleteItem fonksiyonu kullanilir)
+            // Item ID'lerini topla — render'da: href="javascript:deleteItem(KEY,ID);void 0;"
+            // Regex hem onclick hem href icinden ID'yi cikarir
+            var itemIds = [];
             $items.each(function(){
-                var idx = $(this).attr('id').replace('basket-item-', '');
-                var itemId = $(this).find('[onclick*="deleteItem"]').first().attr('onclick');
-                if(itemId){
-                    var match = itemId.match(/deleteItem\((\d+),(\d+)\)/);
-                    if(match && typeof deleteItem === 'function') {
-                        try { deleteItem(parseInt(match[1]), parseInt(match[2])); } catch(e){}
-                    }
+                var $delLink = $(this).find('a[href*="deleteItem"], a[onclick*="deleteItem"]').first();
+                var raw = $delLink.attr('href') || $delLink.attr('onclick') || '';
+                var match = raw.match(/deleteItem\((\d+)\s*,\s*(\d+)\)/);
+                if(match) {
+                    itemIds.push({ index: parseInt(match[1]), id: parseInt(match[2]) });
                 }
             });
 
-            // Sayfayi 800ms sonra yenile (silme islemleri tamamlansin)
-            setTimeout(function(){ window.location.reload(); }, 1200);
+            if(itemIds.length === 0) {
+                alert('Sepet itemleri okunamadi. Lutfen tek tek silin.');
+                return;
+            }
+
+            // Butonu disable et + loading goster
+            $btn.html('<i class="bi bi-hourglass-split"></i> Temizleniyor...').css({
+                'opacity': '0.6',
+                'pointer-events': 'none'
+            });
+
+            // Tum delete-item endpoint'ine paralel POST at (jQuery deferreds)
+            var deletePromises = itemIds.map(function(it){
+                return $.ajax({
+                    url: <?php echo json_encode($links["bring"].'delete-item'); ?>,
+                    method: 'POST',
+                    data: { id: it.id },
+                    dataType: 'json'
+                });
+            });
+
+            // Hepsi tamamlandiginda sayfayi yenile
+            $.when.apply($, deletePromises).always(function(){
+                setTimeout(function(){ window.location.reload(); }, 300);
+            });
         });
         $continueArea.append($btn);
     }
