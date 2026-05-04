@@ -27,6 +27,11 @@ if(isset($_GET['_diag']) && $_GET['_diag'] === '1') {
     exit;
 }
 
+// === Codega Route Helper (TR=siparis, EN=order-steps slug ceviri) ===
+// cdg_buy_link(), cdg_basket_link(), cdg_route() saglar
+$_cdg_route_helper_path = __DIR__ . DS . 'inc' . DS . 'cdg-route-helper.php';
+if(file_exists($_cdg_route_helper_path)) require_once $_cdg_route_helper_path;
+
 if(!function_exists('cdg_link')) {
     function cdg_link($slug, $params = []) {
         // NOT: $links global'i bazen yanlis URL doner ($links['products']=/products-hosting gibi)
@@ -241,22 +246,12 @@ if($mod_hosting && class_exists('Products')) {
                                 } catch(\Throwable $e) {}
                             }
 
-                            // 2) buy_link: Önce CRLink dene, başarısızsa direkt URL inşa et
-                            // (WiseCP gerçek URL formatı /order-steps/{type}/{id} — vea.com.tr/en/order-steps/software/134 örneği)
-                            $p['buy_link'] = '';
-                            $buy_try = '';
-                            if(class_exists('Controllers') && isset(Controllers::$init) && method_exists(Controllers::$init, 'CRLink')) {
-                                try {
-                                    $buy_try = Controllers::$init->CRLink('order-steps-p', ['hosting', (int)$p['id'], 1]);
-                                    // CRLink slug'ı bilmiyorsa ham slug döndürür → manuel inşa et
-                                    if(!$buy_try || strpos($buy_try, 'order-steps-p') !== false) $buy_try = '';
-                                } catch(\Throwable $e) { $buy_try = ''; }
-                            }
-                            if(!$buy_try) {
-                                $base = defined('APP_URI') ? rtrim(APP_URI, '/') : '';
-                                $buy_try = $base . '/order-steps/hosting/' . (int)$p['id'];
-                            }
-                            $p['buy_link'] = $buy_try;
+                            // 2) buy_link: cdg_buy_link() helper'i ile (route-helper.php)
+                            // TR: /siparis/hosting/103/1, EN: /order-steps/hosting/103/1
+                            // CRLink + website-routes haritasi + manuel fallback (3 katman)
+                            $p['buy_link'] = function_exists('cdg_buy_link')
+                                ? cdg_buy_link('hosting', (int)$p['id'])
+                                : '';
 
                             // 3) JSON alanları decode et (popular flag, button name vb.)
                             if(isset($p['options']) && is_string($p['options'])) {
