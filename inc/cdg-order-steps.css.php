@@ -333,6 +333,7 @@ include __DIR__ . '/cdg-checkout-stepper.php';
     gap: 10px;
     width: 100%;
     padding: 14px 24px;
+    margin-top: 8px;
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: #fff !important;
     font-size: 14px;
