@@ -269,7 +269,16 @@ if(!function_exists('cdg_link')) {
                     $cdg_basket_count = count($_SESSION['Basket']);
                 }
                 ?>
-                <a href="<?php echo (isset($basket_link) && $basket_link && $basket_link != '#') ? $basket_link : cdg_link('basket'); ?>" class="cdg-btn cdg-btn-ghost cdg-btn-sm cdg-cart-btn" title="Sepetim" aria-label="Sepetim">
+                <a href="<?php
+                    // Once $basket_link runtime, sonra cdg_basket_link helper, son care cdg_link('basket')
+                    if(isset($basket_link) && $basket_link && $basket_link != '#') {
+                        echo $basket_link;
+                    } elseif(function_exists('cdg_basket_link')) {
+                        echo cdg_basket_link();
+                    } else {
+                        echo cdg_link('basket');
+                    }
+                ?>" class="cdg-btn cdg-btn-ghost cdg-btn-sm cdg-cart-btn" title="Sepetim" aria-label="Sepetim">
                     <i class="bi bi-cart3"></i>
                     <?php if($cdg_basket_count > 0): ?>
                     <span class="cdg-cart-badge"><?php echo (int)$cdg_basket_count; ?></span>
