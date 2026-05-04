@@ -6,69 +6,7 @@
         'intlTelInput',
     ];
 ?>
-<style>
-/* Order Steps Codega Override CSS */
-#wrapper { background:#f8fafc; padding:32px 0 60px; min-height:60vh; }
-#wrapper .pakettitle { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:24px 28px; margin-bottom:20px; }
-#wrapper .pakettitle h1 { color:#0f172a; font-size:24px; font-weight:800; margin:0 0 6px; letter-spacing:-0.5px; }
-#wrapper .pakettitle h2 { color:#64748b; font-size:14px; font-weight:500; margin:0; }
-#wrapper .pakettitle .line { display:none; }
-
-#wrapper .siparisbilgileri { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:28px; margin-bottom:20px; }
-
-#wrapper .ilanasamalar { display:flex; gap:16px; margin-bottom:24px; flex-wrap:wrap; justify-content:center; }
-#wrapper .ilanasamalar .ilanasamax { flex:1 1 140px; max-width:200px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:14px; text-align:center; transition:all 0.2s; position:relative; }
-#wrapper .ilanasamalar .ilanasamax h3 { background:linear-gradient(135deg,#2E3B4E,#00D3E5); color:#fff; width:32px; height:32px; border-radius:50%; display:grid; place-items:center; font-size:14px; font-weight:800; margin:0 auto 8px; }
-#wrapper .ilanasamalar #asamaaktif { border:2px solid #2E3B4E; box-shadow:0 8px 20px rgba(30,64,175,0.15); }
-#wrapper .ilanasamalar #asamaaktif h3 { background:linear-gradient(135deg,#facc15,#f59e0b); color:#1A2332; }
-#wrapper .asamaline { display:none; }
-
-#wrapper .orderperiodblock-con { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; }
-#wrapper .orderperiodblock { background:#f8fafc; border:2px solid #e2e8f0; border-radius:14px; padding:24px 18px; text-align:center; cursor:pointer; transition:all 0.2s; position:relative; }
-#wrapper .orderperiodblock:hover { border-color:#2E3B4E; transform:translateY(-2px); }
-#wrapper .orderperiodblock.active { border-color:#2E3B4E; background:linear-gradient(135deg,#fff,#eff6ff); box-shadow:0 8px 24px rgba(30,64,175,0.20); }
-#wrapper .orderperiodblock h3 { color:#2E3B4E; font-size:14px; font-weight:700; margin:0 0 8px; text-transform:uppercase; letter-spacing:0.5px; }
-#wrapper .orderperiodblock h2 { color:#0f172a; font-size:24px; font-weight:800; margin:0; }
-#wrapper .orderperiodblock .periodselectbox { width:24px; height:24px; border:2px solid #cbd5e1; border-radius:50%; margin:12px auto 0; display:grid; place-items:center; transition:all 0.2s; }
-#wrapper .orderperiodblock.active .periodselectbox { background:#2E3B4E; border-color:#2E3B4E; }
-#wrapper .orderperiodblock.active .periodselectbox i { color:#fff; }
-#wrapper .orderperiodblock .periodselectbox i { color:transparent; font-size:12px; }
-#wrapper .ribbonperiod { position:absolute; top:-1px; right:-1px; }
-#wrapper .ribbonperiod span { display:inline-block; background:linear-gradient(135deg,#10b981,#059669)!important; color:#fff!important; padding:5px 12px; font-size:11px; font-weight:700; border-radius:0 12px 0 12px; }
-#wrapper .setup-fee-period { display:block; color:#64748b; font-size:11px; margin-top:6px; font-weight:600; }
-
-#wrapper .btn, #wrapper .gonderbtn { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:10px; font-size:14px; font-weight:700; text-decoration:none; transition:all 0.2s; background:linear-gradient(135deg,#2E3B4E,#00D3E5)!important; color:#fff!important; border:0; cursor:pointer; }
-#wrapper .btn:hover, #wrapper .gonderbtn:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(30,64,175,0.25); }
-
-#wrapper .alanadisorgu { background:#f8fafc; padding:20px; border-radius:12px; border:1px solid #e2e8f0; }
-#wrapper .alanadisorgu input[type="text"] { width:60%; padding:12px 14px; border:2px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; }
-#wrapper .alanadisorgu h5 { font-size:13px; color:#64748b; margin-top:14px; font-weight:500; }
-
-#wrapper #accordion h3 { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:16px 20px; margin-bottom:8px; cursor:pointer; font-size:15px; font-weight:700; color:#0f172a; }
-#wrapper #accordion h3.ui-state-active { background:linear-gradient(135deg,#2E3B4E,#00D3E5); color:#fff; }
-
-#wrapper .checkbox-custom-label, #wrapper .radio-custom-label { padding:8px 0; cursor:pointer; font-size:14px; color:#0f172a; }
-#wrapper .zorunlu { color:#ef4444; font-weight:700; }
-
-#wrapper .tescilsonuc { background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:18px; margin-top:12px; }
-#wrapper .tescilsonuc .error { color:#991b1b; }
-#wrapper .tescilsonuc h4 { color:#0f172a; font-size:16px; font-weight:700; }
-
-#wrapper .error#result { padding:12px; background:#fee2e2; border:1px solid #fecaca; border-radius:8px; color:#991b1b; font-weight:600; }
-#wrapper .clear { clear:both; }
-</style>
-
-<section class="cdg-page-hero" style="padding:40px 0;">
-    <div class="cdg-page-hero-bg">
-        <div class="cdg-mesh-gradient"></div>
-        <div class="cdg-hero-grid-pattern"></div>
-    </div>
-    <div class="cdg-container">
-        <div class="cdg-page-hero-content" style="text-align:center;">
-            <div class="cdg-domain-badge"><i class="bi bi-hdd-network-fill"></i> Hosting Sipariş Adımları</div>
-        </div>
-    </div>
-</section>
+<?php $cdg_os_kind = "hosting"; include __DIR__ . "/inc/cdg-order-steps.css.php"; ?>
 
 <div class="cdg-container">
 
