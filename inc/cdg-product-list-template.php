@@ -147,6 +147,7 @@ $cdg_format_pkg = function($product) use (&$columns, $cdg_currency_symbols) {
     }
 
     return [
+        'id'            => (int)($product['id'] ?? 0),
         'name'          => $product['title'] ?? ($product['name'] ?? 'Paket'),
         'subtitle'      => $product['sub_title'] ?? '',
         'amount_value'  => $amount_value ?: '-',
@@ -336,7 +337,20 @@ foreach($cdg_categories as $k => $c) {
                     </ul>
                     <?php endif; ?>
 
-                    <a href="<?php echo htmlspecialchars($pkg['buy_link']); ?>" class="cdg-btn <?php echo $pkg['highlight'] ? 'cdg-btn-primary' : 'cdg-btn-outline'; ?> cdg-btn-block" style="<?php echo $pkg['highlight'] ? 'background:'.htmlspecialchars($cdg_pt['color']).';border-color:'.htmlspecialchars($cdg_pt['color']).';' : ''; ?>">
+                    <?php
+                        // Buy link guvenlik kontrolu - asla /hesabim/... olmamali
+                        $_cdg_pkg_url = $pkg['buy_link'] ?? '';
+                        if(!$_cdg_pkg_url && !empty($pkg['id']) && function_exists('cdg_buy_link')) {
+                            $_cdg_pkg_url = cdg_buy_link($cdg_pt['type'], (int)$pkg['id']);
+                        }
+                        if(strpos($_cdg_pkg_url, '/hesabim/') !== false) {
+                            // Hesabim'a yonlendiriyorsa: cdg_buy_link ile yeniden uret
+                            $_cdg_pkg_url = !empty($pkg['id']) && function_exists('cdg_buy_link')
+                                ? cdg_buy_link($cdg_pt['type'], (int)$pkg['id'])
+                                : '#';
+                        }
+                    ?>
+                    <a href="<?php echo htmlspecialchars($_cdg_pkg_url); ?>" class="cdg-btn <?php echo $pkg['highlight'] ? 'cdg-btn-primary' : 'cdg-btn-outline'; ?> cdg-btn-block" style="<?php echo $pkg['highlight'] ? 'background:'.htmlspecialchars($cdg_pt['color']).';border-color:'.htmlspecialchars($cdg_pt['color']).';' : ''; ?>">
                         <i class="bi bi-cart-plus"></i> <?php echo htmlspecialchars($pkg['buy_label']); ?>
                     </a>
                 </div>
