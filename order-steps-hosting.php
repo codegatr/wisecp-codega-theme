@@ -202,15 +202,15 @@
                                 <div class="clear"></div>
                             </div>
 
-                            <div class="error" id="result" style="text-align: center; margin-top: 5px; display: none;"></div>
-                        </form>
+                            <!-- Devam butonu form ICINDE — mio-ajax-submit closest('form') ile CSRF'i bulur -->
+                            <a href="javascript:void(0);" class="cdg-os-continue-btn mio-ajax-submit"
+                               mio-ajax-options='{"result":"StepForm1_submit","waiting_text":"<?php echo addslashes(__("website/others/button1-pending")); ?>"}'>
+                                <span><?php echo __("website/osteps/continue-button"); ?></span>
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
 
-                        <a href="javascript:void(0);" class="cdg-os-continue-btn mio-ajax-submit"
-                           mio-ajax-options='{"result":"StepForm1_submit","waiting_text":"<?php echo addslashes(__("website/others/button1-pending")); ?>"}'
-                           onclick="$('#StepForm1').submit();">
-                            <span><?php echo __("website/osteps/continue-button"); ?></span>
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
+                            <div class="error" id="result" style="text-align: center; margin-top: 10px; display: none;"></div>
+                        </form>
                     </div>
                 </div>
 
